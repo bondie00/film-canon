@@ -30,7 +30,7 @@ export default function CountryOriginMain() {
           {/* LEFT SIDEBAR - STICKY FILTERS */}
           <div className="col-span-12 lg:col-span-3">
             {/* Paperclip decoration */}
-            <div className="relative">
+            <div className="relative lg:sticky lg:top-8">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"
@@ -41,7 +41,7 @@ export default function CountryOriginMain() {
                 </svg>
               </div>
 
-              <div className="bg-[#fefdfb] rounded-lg shadow-lg p-6 lg:sticky lg:top-8 transform rotate-[-0.5deg] border border-gray-200">
+              <div className="bg-[#fefdfb] rounded-lg shadow-lg p-6 transform rotate-[-0.5deg] border border-gray-200">
                 <h2 className="text-xl font-bold text-gray-900 mb-6">Filters</h2>
 
               {/* POLL SELECTION FILTER */}
