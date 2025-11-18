@@ -117,30 +117,6 @@ export default function CountryOriginMain() {
                   </label>
                 </div>
               </div>
-
-              {/* CURRENT FILTER SUMMARY */}
-              <div className="bg-blue-50 rounded-lg p-4 mb-6">
-                <div className="text-xs font-semibold text-blue-900 mb-2">Currently Showing:</div>
-                <div className="text-sm text-blue-800">
-                  <div className="mb-1">
-                    📅 {selectedPoll === 'all' ? 'All Polls Combined' : `${selectedPoll} Poll`}
-                  </div>
-                  <div className="mb-1">
-                    🎬 {rankRange === 'all' ? 'All 4,851 films' : `Top ${rankRange.replace('top', '')} films`}
-                  </div>
-                  <div className="text-xs text-blue-600 mt-2">117 countries represented</div>
-                </div>
-              </div>
-
-              {/* ACTION BUTTONS */}
-              <div className="space-y-2">
-                <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 font-semibold text-sm transition-colors">
-                  Apply Filters
-                </button>
-                <button className="w-full bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300 text-sm transition-colors">
-                  Reset All
-                </button>
-              </div>
             </div>
           </div>
 
