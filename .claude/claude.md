@@ -707,6 +707,44 @@ xl: 1280px  // Full layout
 - **Different visualization strategies needed for consensus vs. diversity**
 - Compare mode should show changes/differences clearly
 
+### Metrics: Poll Appearances vs. Distinct Films
+
+**PRIMARY METRIC: Poll Appearances**
+
+For the Country Origin visualizations, we use **poll appearances** as the primary metric, not distinct film counts.
+
+**Why Poll Appearances:**
+- Captures canonical weight and persistence across time
+- Shows which countries have sustained critical consensus
+- Works perfectly with filter logic (single poll = that poll's rankings, all polls = accumulated weight)
+- More analytically rich: reveals which countries "punch above their weight" with repeated appearances
+
+**Language Guidelines:**
+
+When **"All Polls Combined"** is selected:
+- Use "poll appearances" or "times ranked" in labels
+- Info banner: "Showing 117 countries across 3,817 poll appearances"
+- Bar chart axis: "Times Ranked" or "Poll Appearances"
+- Tooltips: "French films have been ranked 890 times across all polls"
+
+When **single poll** is selected (e.g., "2022 Poll"):
+- Use "films" in labels (clearer for single poll context)
+- Info banner: "Showing 117 countries across 3,817 films (2022 Poll)"
+- Bar chart axis: "Number of Films"
+- Tooltips: "France: 85 films in 2022 poll"
+
+**Key Distinction:**
+- **Poll appearances** = how many times films appear across poll(s) - measures canonical persistence
+- **Distinct films** = unique film count - measures breadth of contribution
+
+**Example:**
+- France might have 350 unique films but 890 poll appearances
+- This tells us French films appear an average of 2.5 times per film
+- Shows deep canonical persistence vs. one-time appearances
+
+**Optional Enhancement (Future):**
+In detailed views, show both metrics: "890 poll appearances (from 350 unique films)"
+
 ---
 
 ## Testing Priorities

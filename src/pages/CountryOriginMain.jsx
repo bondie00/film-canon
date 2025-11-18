@@ -20,6 +20,11 @@ export default function CountryOriginMain() {
     return `${pollText} • ${rankText}`
   }
 
+  // Helper function to get the correct metric name based on poll selection
+  const getMetricName = () => {
+    return selectedPoll === 'all' ? 'poll appearances' : 'films'
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -101,7 +106,7 @@ export default function CountryOriginMain() {
             {/* INFO BANNER */}
             <div className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-3 mb-8">
               <div className="text-sm text-gray-700">
-                <span className="font-medium">Showing 117 countries across 3,817 films</span>
+                <span className="font-medium">Showing 117 countries across 3,817 {getMetricName()}</span>
                 <span className="mx-2 text-gray-400">|</span>
                 <span className="text-gray-600">Filters: {getFilterText()}</span>
               </div>
@@ -190,8 +195,9 @@ export default function CountryOriginMain() {
                   <div className="text-6xl mb-4">📊</div>
                   <div className="font-bold text-xl mb-3 text-gray-700">Horizontal Bar Chart</div>
                   <div className="text-sm space-y-2">
-                    <p>• Bars sorted by film count (highest to lowest)</p>
-                    <p>• Y-axis: Country names | X-axis: Number of films</p>
+                    <p>• Bars sorted by count (highest to lowest)</p>
+                    <p>• Y-axis: Country names</p>
+                    <p>• X-axis: "Times Ranked" (all polls) or "Number of Films" (single poll)</p>
                     <p>• Click bar to navigate to country page</p>
                     <p>• Hover to see exact count and percentage</p>
                     <p>• Color-coded by continent</p>
