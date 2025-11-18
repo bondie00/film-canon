@@ -21,7 +21,7 @@ export default function CountryOriginMain() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fefdfb]">
+    <div className="min-h-screen bg-[#8B7355]">
       <Header />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -41,7 +41,7 @@ export default function CountryOriginMain() {
                 </svg>
               </div>
 
-              <div className="bg-white rounded-lg shadow-sm p-6 transform rotate-[-0.5deg] border border-gray-300">
+              <div className="bg-white rounded shadow-lg p-6 transform rotate-[-0.5deg] border border-gray-200">
                 <h2 className="text-xl font-bold text-gray-900 mb-6">Filters</h2>
 
               {/* POLL SELECTION FILTER */}
@@ -112,24 +112,39 @@ export default function CountryOriginMain() {
             <h1 className="text-4xl font-bold text-gray-900 mb-6">Films by Country of Origin</h1>
 
             {/* INFO BANNER */}
-            <div className="bg-white border border-gray-300 rounded-lg px-4 py-3 mb-8 shadow-sm">
-              <div className="text-sm text-gray-700">
-                <span className="font-medium">Showing 117 countries across 3,817 films</span>
-                <span className="mx-2 text-gray-400">|</span>
-                <span className="text-gray-600">Filters: {getFilterText()}</span>
+            <div className="relative">
+              {/* Push pin */}
+              <div className="absolute -top-2 left-6 z-10">
+                <div className="w-5 h-5 rounded-full bg-pink-500 shadow-md border-2 border-pink-600"></div>
+                <div className="w-1 h-2 bg-gray-400 mx-auto"></div>
+              </div>
+
+              <div className="bg-white border border-gray-200 rounded shadow-lg px-4 py-3 mb-8 transform rotate-[-0.2deg]">
+                <div className="text-sm text-gray-700">
+                  <span className="font-medium">Showing 117 countries across 3,817 films</span>
+                  <span className="mx-2 text-gray-400">|</span>
+                  <span className="text-gray-600">Filters: {getFilterText()}</span>
+                </div>
               </div>
             </div>
 
             {/* VISUALIZATION 1: WORLD MAP */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6 mb-8">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  Global Distribution
-                </h2>
-                <p className="text-gray-600">
-                  Darker colors indicate more films. Click any country to see detailed analysis.
-                </p>
+            <div className="relative">
+              {/* Push pin */}
+              <div className="absolute -top-2 left-8 z-10">
+                <div className="w-6 h-6 rounded-full bg-red-500 shadow-md border-2 border-red-600"></div>
+                <div className="w-1 h-2 bg-gray-400 mx-auto"></div>
               </div>
+
+              <div className="bg-white rounded shadow-lg border border-gray-200 p-6 mb-8 transform rotate-[0.5deg]">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    Global Distribution
+                  </h2>
+                  <p className="text-gray-600">
+                    Darker colors indicate more films. Click any country to see detailed analysis.
+                  </p>
+                </div>
 
               {/* PLACEHOLDER FOR WORLD MAP */}
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded border-2 border-dashed border-gray-300 h-[500px] flex items-center justify-center">
@@ -172,10 +187,18 @@ export default function CountryOriginMain() {
                   <span className="text-gray-600">500+</span>
                 </div>
               </div>
+              </div>
             </div>
 
             {/* VISUALIZATION 2: BAR CHART - TOP COUNTRIES */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6 mb-8">
+            <div className="relative">
+              {/* Push pin */}
+              <div className="absolute -top-2 right-12 z-10">
+                <div className="w-6 h-6 rounded-full bg-blue-500 shadow-md border-2 border-blue-600"></div>
+                <div className="w-1 h-2 bg-gray-400 mx-auto"></div>
+              </div>
+
+              <div className="bg-white rounded shadow-lg border border-gray-200 p-6 mb-8 transform rotate-[-0.3deg]">
               <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -214,10 +237,18 @@ export default function CountryOriginMain() {
                   </div>
                 </div>
               </div>
+              </div>
             </div>
 
             {/* VISUALIZATION 3: DECADE HEATMAP */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6 mb-8">
+            <div className="relative">
+              {/* Push pin */}
+              <div className="absolute -top-2 left-16 z-10">
+                <div className="w-6 h-6 rounded-full bg-yellow-500 shadow-md border-2 border-yellow-600"></div>
+                <div className="w-1 h-2 bg-gray-400 mx-auto"></div>
+              </div>
+
+              <div className="bg-white rounded shadow-lg border border-gray-200 p-6 mb-8 transform rotate-[0.4deg]">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Films by Decade and Country
@@ -269,10 +300,18 @@ export default function CountryOriginMain() {
                   <span className="text-gray-600">50+</span>
                 </div>
               </div>
+              </div>
             </div>
 
             {/* VISUALIZATION 4: TREEMAP - CONTINENTAL BREAKDOWN */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6 mb-8">
+            <div className="relative">
+              {/* Push pin */}
+              <div className="absolute -top-2 right-20 z-10">
+                <div className="w-6 h-6 rounded-full bg-green-500 shadow-md border-2 border-green-600"></div>
+                <div className="w-1 h-2 bg-gray-400 mx-auto"></div>
+              </div>
+
+              <div className="bg-white rounded shadow-lg border border-gray-200 p-6 mb-8 transform rotate-[-0.2deg]">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Continental & Country Breakdown
@@ -359,10 +398,18 @@ export default function CountryOriginMain() {
                   <span className="text-gray-700 font-medium">Oceania</span>
                 </div>
               </div>
+              </div>
             </div>
 
             {/* KEY INSIGHTS SECTION */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-8 mb-8">
+            <div className="relative">
+              {/* Push pin */}
+              <div className="absolute -top-2 left-24 z-10">
+                <div className="w-6 h-6 rounded-full bg-purple-500 shadow-md border-2 border-purple-600"></div>
+                <div className="w-1 h-2 bg-gray-400 mx-auto"></div>
+              </div>
+
+              <div className="bg-white rounded shadow-lg border border-gray-200 p-8 mb-8 transform rotate-[0.3deg]">
               <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
                 <span className="text-3xl mr-3">💡</span>
                 Key Geographic Insights
@@ -387,10 +434,18 @@ export default function CountryOriginMain() {
                   </ul>
                 </div>
               </div>
+              </div>
             </div>
 
             {/* NAVIGATION: EXPLORE SPECIFIC COUNTRIES */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-8">
+            <div className="relative">
+              {/* Push pin */}
+              <div className="absolute -top-2 right-16 z-10">
+                <div className="w-6 h-6 rounded-full bg-orange-500 shadow-md border-2 border-orange-600"></div>
+                <div className="w-1 h-2 bg-gray-400 mx-auto"></div>
+              </div>
+
+              <div className="bg-white rounded shadow-lg border border-gray-200 p-8 transform rotate-[-0.4deg]">
               <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
                 Explore Individual Countries
               </h2>
@@ -448,6 +503,7 @@ export default function CountryOriginMain() {
                     View All 117 Countries →
                   </a>
                 </div>
+              </div>
               </div>
             </div>
 
