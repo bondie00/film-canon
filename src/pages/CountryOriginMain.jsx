@@ -21,7 +21,7 @@ export default function CountryOriginMain() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#fefdfb]">
       <Header />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -41,7 +41,7 @@ export default function CountryOriginMain() {
                 </svg>
               </div>
 
-              <div className="bg-[#fefdfb] rounded-lg shadow-lg p-6 transform rotate-[-0.5deg] border border-gray-200">
+              <div className="bg-white rounded-lg shadow-sm p-6 transform rotate-[-0.5deg] border border-gray-300">
                 <h2 className="text-xl font-bold text-gray-900 mb-6">Filters</h2>
 
               {/* POLL SELECTION FILTER */}
@@ -112,7 +112,7 @@ export default function CountryOriginMain() {
             <h1 className="text-4xl font-bold text-gray-900 mb-6">Films by Country of Origin</h1>
 
             {/* INFO BANNER */}
-            <div className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-3 mb-8">
+            <div className="bg-white border border-gray-300 rounded-lg px-4 py-3 mb-8 shadow-sm">
               <div className="text-sm text-gray-700">
                 <span className="font-medium">Showing 117 countries across 3,817 films</span>
                 <span className="mx-2 text-gray-400">|</span>
@@ -121,7 +121,7 @@ export default function CountryOriginMain() {
             </div>
 
             {/* VISUALIZATION 1: WORLD MAP */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6 mb-8">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Global Distribution
@@ -175,7 +175,7 @@ export default function CountryOriginMain() {
             </div>
 
             {/* VISUALIZATION 2: BAR CHART - TOP COUNTRIES */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6 mb-8">
               <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -217,7 +217,7 @@ export default function CountryOriginMain() {
             </div>
 
             {/* VISUALIZATION 3: DECADE HEATMAP */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6 mb-8">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Films by Decade and Country
@@ -272,7 +272,7 @@ export default function CountryOriginMain() {
             </div>
 
             {/* VISUALIZATION 4: TREEMAP - CONTINENTAL BREAKDOWN */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6 mb-8">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Continental & Country Breakdown
@@ -286,7 +286,7 @@ export default function CountryOriginMain() {
               {/* Simple stacked bar for continental overview */}
               <div className="mb-6">
                 <div className="text-sm font-medium text-gray-700 mb-2">Continental Distribution</div>
-                <div className="flex h-8 rounded overflow-hidden shadow-sm">
+                <div className="flex h-8 rounded overflow-hidden border border-gray-300">
                   <div className="bg-blue-500 flex items-center justify-center text-white text-xs font-semibold" style={{width: '45%'}}>
                     Europe 45%
                   </div>
@@ -362,7 +362,7 @@ export default function CountryOriginMain() {
             </div>
 
             {/* KEY INSIGHTS SECTION */}
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-8 mb-8">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-8 mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
                 <span className="text-3xl mr-3">💡</span>
                 Key Geographic Insights
@@ -390,7 +390,7 @@ export default function CountryOriginMain() {
             </div>
 
             {/* NAVIGATION: EXPLORE SPECIFIC COUNTRIES */}
-            <div className="bg-white rounded-lg shadow-md p-8">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
                 Explore Individual Countries
               </h2>
