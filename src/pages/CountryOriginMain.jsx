@@ -8,24 +8,32 @@ export default function CountryOriginMain() {
   const [selectedPoll, setSelectedPoll] = useState('2022')
   const [rankRange, setRankRange] = useState('all')
 
+  // Helper function to generate filter description text
+  const getFilterText = () => {
+    let pollText = ''
+    if (pollMode === 'single') {
+      pollText = `${selectedPoll} Poll`
+    } else if (pollMode === 'all') {
+      pollText = 'All Polls Combined'
+    } else if (pollMode === 'compare') {
+      pollText = 'Compare Polls'
+    } else if (pollMode === 'range') {
+      pollText = 'Date Range'
+    }
+
+    let rankText = ''
+    if (rankRange === 'all') {
+      rankText = 'All Films'
+    } else {
+      rankText = `Top ${rankRange.replace('top', '')} Films`
+    }
+
+    return `${pollText} • ${rankText}`
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-
-      {/* PAGE TITLE & BREADCRUMB */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-sm text-gray-500 mb-2">
-            <a href="/visualizations" className="hover:text-gray-700">Visualizations</a>
-            <span> / </span>
-            <span className="text-gray-900">Films by Country of Origin</span>
-          </div>
-          <h1 className="text-4xl font-bold text-gray-900">Films by Country of Origin</h1>
-          <p className="text-lg text-gray-600 mt-2">
-            Explore how different nations and continents are represented across the Sight & Sound canon
-          </p>
-        </div>
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-12 gap-8">
@@ -246,23 +254,22 @@ export default function CountryOriginMain() {
           {/* MAIN CONTENT AREA - VISUALIZATIONS */}
           <div className="col-span-12 lg:col-span-9">
 
-            {/* QUICK STATS BAR */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-                <div className="text-3xl font-bold text-blue-600 mb-1">117</div>
-                <div className="text-sm text-gray-600">Countries</div>
-              </div>
-              <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-                <div className="text-3xl font-bold text-green-600 mb-1">6</div>
-                <div className="text-sm text-gray-600">Continents</div>
-              </div>
-              <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-                <div className="text-3xl font-bold text-purple-600 mb-1">USA</div>
-                <div className="text-sm text-gray-600">Most Films (1780)</div>
-              </div>
-              <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-                <div className="text-3xl font-bold text-orange-600 mb-1">45%</div>
-                <div className="text-sm text-gray-600">Europe's Share</div>
+            {/* BREADCRUMB */}
+            <div className="text-sm text-gray-500 mb-2">
+              <a href="/visualizations" className="hover:text-gray-700">Visualizations</a>
+              <span> / </span>
+              <span className="text-gray-900">Films by Country of Origin</span>
+            </div>
+
+            {/* PAGE TITLE */}
+            <h1 className="text-4xl font-bold text-gray-900 mb-6">Films by Country of Origin</h1>
+
+            {/* INFO BANNER */}
+            <div className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-3 mb-8">
+              <div className="text-sm text-gray-700">
+                <span className="font-medium">Showing 117 countries across 3,817 films</span>
+                <span className="mx-2 text-gray-400">|</span>
+                <span className="text-gray-600">Filters: {getFilterText()}</span>
               </div>
             </div>
 
