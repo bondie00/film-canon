@@ -15,7 +15,7 @@ export default function CountryOriginMain() {
 
     const rankText = rankRange === 'all'
       ? 'All Films'
-      : `Top ${rankRange.replace('top', '')} Films`
+      : 'Top 100 Films'
 
     return `${pollText} • ${rankText}`
   }
@@ -29,8 +29,20 @@ export default function CountryOriginMain() {
 
           {/* LEFT SIDEBAR - STICKY FILTERS */}
           <div className="col-span-12 lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-md p-6 lg:sticky lg:top-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Filters</h2>
+            {/* Paperclip decoration */}
+            <div className="relative">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"
+                        stroke="#6B7280"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"/>
+                </svg>
+              </div>
+
+              <div className="bg-[#fefdfb] rounded-lg shadow-lg p-6 lg:sticky lg:top-8 transform rotate-[-0.5deg] border border-gray-200">
+                <h2 className="text-xl font-bold text-gray-900 mb-6">Filters</h2>
 
               {/* POLL SELECTION FILTER */}
               <div className="mb-6 pb-6 border-b border-gray-200">
@@ -55,67 +67,33 @@ export default function CountryOriginMain() {
               </div>
 
               {/* RANK RANGE FILTER */}
-              <div className="mb-6 pb-6 border-b border-gray-200">
+              <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-3">
                   Film Rank Range
                 </label>
-                <div className="space-y-2">
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="all"
-                      checked={rankRange === 'all'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">All Films (1-4851)</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="top100"
-                      checked={rankRange === 'top100'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Top 100 Only</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="top250"
-                      checked={rankRange === 'top250'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Top 250 Only</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="top500"
-                      checked={rankRange === 'top500'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Top 500 Only</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="top1000"
-                      checked={rankRange === 'top1000'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Top 1000 Only</span>
-                  </label>
+                <div className="grid grid-cols-2 gap-2 bg-gray-100 p-1 rounded-lg">
+                  <button
+                    onClick={() => setRankRange('all')}
+                    className={`py-2 px-3 text-sm font-medium rounded-md transition-all ${
+                      rankRange === 'all'
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    All Films
+                  </button>
+                  <button
+                    onClick={() => setRankRange('top100')}
+                    className={`py-2 px-3 text-sm font-medium rounded-md transition-all ${
+                      rankRange === 'top100'
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    Top 100
+                  </button>
                 </div>
+              </div>
               </div>
             </div>
           </div>
