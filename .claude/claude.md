@@ -225,18 +225,22 @@ tiny: 'text-xs'     // 12px
 - Main content area (9 cols) with visualizations
 
 **Filters Available:**
-1. **Poll Selection** (radio buttons):
-   - Single Poll (dropdown: 2022, 2012, 2002...)
+1. **Poll Selection** (dropdown):
    - All Polls Combined
-   - Compare Two Polls (two dropdowns with "vs")
-   - Date Range (from/to inputs)
+   - 2022 (Latest)
+   - 2012, 2002, 1992, 1982, 1972, 1962, 1952
+   - *Future: Compare Two Polls mode, Date Range mode*
 
-2. **Film Rank Range** (radio buttons):
-   - All Films (1-4851)
+2. **Film Rank Range** (segmented control - 2-button toggle):
+   - All Films
    - Top 100 Only
-   - Top 250 Only
-   - Top 500 Only
-   - Top 1000 Only
+   - *Rationale: Binary choice focuses on core use case (elite canon vs. full periphery). Additional tiers (250, 500, 1000) removed as they don't meaningfully differ from Top 100 for most analyses.*
+
+**Filter Behavior:**
+- **Auto-applying:** Filters apply immediately on change - no "Apply" button needed
+- **No summary box:** Removed "Currently Showing" display to reduce clutter
+- **Sticky positioning:** Filter sidebar remains visible while scrolling through visualizations
+- **Clean UI:** Segmented control provides cleaner interface than radio buttons for binary choice
 
 **Visualizations:**
 1. Quick Stats Bar (4 metrics)
@@ -565,7 +569,8 @@ GET /api/directors/:name
 - Two-tier tooltip system: lightweight hover for exploration + clickable popover for detail
 - Avoid accidental navigation while maintaining intuitive data exploration
 - Sticky filters for maintaining context while scrolling
-- Clear filter summary boxes for feedback on active selections
+- Auto-applying filters for immediate feedback without action buttons
+- Minimal, unobtrusive filter UI that doesn't distract from visualizations
 
 ---
 
