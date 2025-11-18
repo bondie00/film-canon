@@ -4,29 +4,18 @@ import Footer from '../components/Footer'
 
 export default function CountryOriginMain() {
   // Filter state (not functional yet - Phase 2)
-  const [pollMode, setPollMode] = useState('single')
   const [selectedPoll, setSelectedPoll] = useState('2022')
   const [rankRange, setRankRange] = useState('all')
 
   // Helper function to generate filter description text
   const getFilterText = () => {
-    let pollText = ''
-    if (pollMode === 'single') {
-      pollText = `${selectedPoll} Poll`
-    } else if (pollMode === 'all') {
-      pollText = 'All Polls Combined'
-    } else if (pollMode === 'compare') {
-      pollText = 'Compare Polls'
-    } else if (pollMode === 'range') {
-      pollText = 'Date Range'
-    }
+    const pollText = selectedPoll === 'all'
+      ? 'All Polls Combined'
+      : `${selectedPoll} Poll`
 
-    let rankText = ''
-    if (rankRange === 'all') {
-      rankText = 'All Films'
-    } else {
-      rankText = `Top ${rankRange.replace('top', '')} Films`
-    }
+    const rankText = rankRange === 'all'
+      ? 'All Films'
+      : `Top ${rankRange.replace('top', '')} Films`
 
     return `${pollText} • ${rankText}`
   }
@@ -43,124 +32,26 @@ export default function CountryOriginMain() {
             <div className="bg-white rounded-lg shadow-md p-6 lg:sticky lg:top-8">
               <h2 className="text-xl font-bold text-gray-900 mb-6">Filters</h2>
 
-              {/* POLL YEAR FILTER */}
+              {/* POLL SELECTION FILTER */}
               <div className="mb-6 pb-6 border-b border-gray-200">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">
                   Poll Selection
                 </label>
-
-                {/* Filter Mode Radio Buttons */}
-                <div className="space-y-2 mb-4">
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="pollMode"
-                      value="single"
-                      checked={pollMode === 'single'}
-                      onChange={(e) => setPollMode(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Single Poll</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="pollMode"
-                      value="all"
-                      checked={pollMode === 'all'}
-                      onChange={(e) => setPollMode(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">All Polls Combined</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="pollMode"
-                      value="compare"
-                      checked={pollMode === 'compare'}
-                      onChange={(e) => setPollMode(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Compare Two Polls</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="pollMode"
-                      value="range"
-                      checked={pollMode === 'range'}
-                      onChange={(e) => setPollMode(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Date Range</span>
-                  </label>
-                </div>
-
-                {/* Single Poll Dropdown */}
-                {pollMode === 'single' && (
-                  <div className="mb-3">
-                    <label className="block text-xs text-gray-600 mb-1">Select Poll Year</label>
-                    <select
-                      value={selectedPoll}
-                      onChange={(e) => setSelectedPoll(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="2022">2022 (Latest)</option>
-                      <option value="2012">2012</option>
-                      <option value="2002">2002</option>
-                      <option value="1992">1992</option>
-                      <option value="1982">1982</option>
-                      <option value="1972">1972</option>
-                      <option value="1962">1962</option>
-                      <option value="1952">1952</option>
-                    </select>
-                  </div>
-                )}
-
-                {/* Compare Two Polls Dropdowns */}
-                {pollMode === 'compare' && (
-                  <div className="space-y-2 text-xs text-gray-500 bg-gray-50 p-3 rounded">
-                    <div className="flex items-center gap-2">
-                      <select className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs bg-white">
-                        <option>2022</option>
-                        <option>2012</option>
-                        <option>2002</option>
-                      </select>
-                      <span>vs</span>
-                      <select className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs bg-white">
-                        <option>2012</option>
-                        <option>2002</option>
-                        <option>1992</option>
-                      </select>
-                    </div>
-                    <div className="text-xs italic">Shows changes between polls</div>
-                  </div>
-                )}
-
-                {/* Date Range Inputs */}
-                {pollMode === 'range' && (
-                  <div className="space-y-2 text-xs text-gray-500 bg-gray-50 p-3 rounded">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="number"
-                        placeholder="1952"
-                        min="1952"
-                        max="2022"
-                        className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs"
-                      />
-                      <span>to</span>
-                      <input
-                        type="number"
-                        placeholder="2022"
-                        min="1952"
-                        max="2022"
-                        className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs"
-                      />
-                    </div>
-                    <div className="text-xs italic">Combines multiple polls</div>
-                  </div>
-                )}
+                <select
+                  value={selectedPoll}
+                  onChange={(e) => setSelectedPoll(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="all">All Polls Combined</option>
+                  <option value="2022">2022 (Latest)</option>
+                  <option value="2012">2012</option>
+                  <option value="2002">2002</option>
+                  <option value="1992">1992</option>
+                  <option value="1982">1982</option>
+                  <option value="1972">1972</option>
+                  <option value="1962">1962</option>
+                  <option value="1952">1952</option>
+                </select>
               </div>
 
               {/* RANK RANGE FILTER */}
@@ -231,7 +122,9 @@ export default function CountryOriginMain() {
               <div className="bg-blue-50 rounded-lg p-4 mb-6">
                 <div className="text-xs font-semibold text-blue-900 mb-2">Currently Showing:</div>
                 <div className="text-sm text-blue-800">
-                  <div className="mb-1">📅 {selectedPoll} Poll</div>
+                  <div className="mb-1">
+                    📅 {selectedPoll === 'all' ? 'All Polls Combined' : `${selectedPoll} Poll`}
+                  </div>
                   <div className="mb-1">
                     🎬 {rankRange === 'all' ? 'All 4,851 films' : `Top ${rankRange.replace('top', '')} films`}
                   </div>
