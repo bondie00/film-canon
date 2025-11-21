@@ -25,54 +25,20 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
   // Load countries data from JSON
   const [countriesData, setCountriesData] = useState(null)
-  const [filmsData, setFilmsData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    Promise.all([
-      fetch('/data/countries.json').then(r => r.json()),
-      fetch('/data/films.json').then(r => r.json())
-    ])
-      .then(([countries, films]) => {
-        setCountriesData(countries)
-        setFilmsData(films)
+    fetch('/data/countries.json')
+      .then(response => response.json())
+      .then(data => {
+        setCountriesData(data)
         setLoading(false)
       })
       .catch(error => {
-        console.error('Error loading data:', error)
+        console.error('Error loading countries data:', error)
         setLoading(false)
       })
   }, [])
-
-  // Calculate distinct films per country based on rank range
-  const calculateDistinctFilms = useMemo(() => {
-    if (!filmsData) return {}
-
-    const distinctFilmsByCountry = {}
-
-    filmsData.forEach(film => {
-      if (!film.countries || !film.pollHistory) return
-
-      // Check if this film appears in the specified rank range across any poll
-      const appearsInRankRange = film.pollHistory.some(poll => {
-        if (!poll.rank) return false
-        if (rankRange === 'top100') return poll.rank <= 100
-        if (rankRange === 'top250') return poll.rank <= 250
-        return true // 'all' includes everything with a rank
-      })
-
-      if (appearsInRankRange) {
-        film.countries.forEach(country => {
-          if (!distinctFilmsByCountry[country]) {
-            distinctFilmsByCountry[country] = 0
-          }
-          distinctFilmsByCountry[country]++
-        })
-      }
-    })
-
-    return distinctFilmsByCountry
-  }, [filmsData, rankRange])
 
   // Transform countries data based on current filters
   const transformedData = useMemo(() => {
@@ -87,15 +53,10 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         // Sum across all polls
         if (rankRange === 'all') {
           filmCount = countryInfo.totalFilms
-        } else {
-          // Sum the specific rank range across all polls
+        } else if (rankRange === 'top100') {
+          // Sum the top100 across all polls
           filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
-            if (rankRange === 'top100') {
-              return sum + (pollData.top100 || 0)
-            } else if (rankRange === 'top250') {
-              return sum + (pollData.top250 || 0)
-            }
-            return sum
+            return sum + (pollData.top100 || 0)
           }, 0)
         }
       } else {
@@ -106,9 +67,17 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             filmCount = pollData.total
           } else if (rankRange === 'top100') {
             filmCount = pollData.top100
-          } else if (rankRange === 'top250') {
-            filmCount = pollData.top250
           }
+        }
+      }
+
+      // Get distinct films count
+      let distinctFilms = 0
+      if (selectedPoll === 'all') {
+        if (rankRange === 'top100') {
+          distinctFilms = countryInfo.distinctFilmsTop100 || 0
+        } else {
+          distinctFilms = countryInfo.totalFilms || 0
         }
       }
 
@@ -120,7 +89,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         filmCount,
         continent: countryInfo.continent,
         percentOfTotal,
-        distinctFilms: calculateDistinctFilms[countryName] || 0
+        distinctFilms
       })
     })
 
@@ -131,7 +100,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     })
 
     return data.sort((a, b) => b.filmCount - a.filmCount)
-  }, [countriesData, selectedPoll, rankRange, calculateDistinctFilms])
+  }, [countriesData, selectedPoll, rankRange])
 
   // Set initial top 10 countries when data loads or filters change
   useEffect(() => {

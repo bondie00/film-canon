@@ -2,54 +2,39 @@
   "Algeria": {
     "continent": "Africa",
     "totalFilms": 11,
+    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1982": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "2012": {
         "total": 5,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "2022": {
         "total": 7,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       }
     },
     "byDecade": {
@@ -63,54 +48,39 @@
   "Angola": {
     "continent": "Africa",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -120,54 +90,39 @@
   "Argentina": {
     "continent": "Latin America",
     "totalFilms": 34,
+    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 2,
-        "top100": 1,
-        "top250": 2,
-        "top500": 2
+        "top100": 1
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2012": {
         "total": 13,
-        "top100": 0,
-        "top250": 0,
-        "top500": 3
+        "top100": 0
       },
       "2022": {
         "total": 26,
-        "top100": 0,
-        "top250": 4,
-        "top500": 5
+        "top100": 0
       }
     },
     "byDecade": {
@@ -182,54 +137,39 @@
   "Armenia": {
     "continent": "Europe",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -239,54 +179,39 @@
   "Australia": {
     "continent": "Oceania",
     "totalFilms": 49,
+    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 5,
-        "top100": 0,
-        "top250": 5,
-        "top500": 5
+        "top100": 0
       },
       "2012": {
         "total": 11,
-        "top100": 0,
-        "top250": 1,
-        "top500": 2
+        "top100": 0
       },
       "2022": {
         "total": 42,
-        "top100": 1,
-        "top250": 2,
-        "top500": 5
+        "top100": 1
       }
     },
     "byDecade": {
@@ -303,54 +228,39 @@
   "Austria": {
     "continent": "Europe",
     "totalFilms": 51,
+    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 4,
-        "top100": 0,
-        "top250": 4,
-        "top500": 4
+        "top100": 0
       },
       "1992": {
         "total": 3,
-        "top100": 0,
-        "top250": 3,
-        "top500": 3
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 23,
-        "top100": 0,
-        "top250": 1,
-        "top500": 4
+        "top100": 0
       },
       "2022": {
         "total": 41,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -369,54 +279,39 @@
   "Bangladesh": {
     "continent": "Asia",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -427,54 +322,39 @@
   "Belarus": {
     "continent": "Europe",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -485,54 +365,39 @@
   "Belgium": {
     "continent": "Europe",
     "totalFilms": 47,
+    "distinctFilmsTop100": 2,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 1,
-        "top250": 2,
-        "top500": 2
+        "top100": 1
       },
       "2002": {
         "total": 4,
-        "top100": 1,
-        "top250": 4,
-        "top500": 4
+        "top100": 1
       },
       "2012": {
         "total": 12,
-        "top100": 1,
-        "top250": 1,
-        "top500": 3
+        "top100": 1
       },
       "2022": {
         "total": 38,
-        "top100": 2,
-        "top250": 3,
-        "top500": 6
+        "top100": 2
       }
     },
     "byDecade": {
@@ -549,54 +414,39 @@
   "Bolivia": {
     "continent": "Latin America",
     "totalFilms": 6,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 6,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -609,54 +459,39 @@
   "Bosnia and Herzegovina": {
     "continent": "Europe",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -666,54 +501,39 @@
   "Brazil": {
     "continent": "Latin America",
     "totalFilms": 44,
+    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 7,
-        "top100": 2,
-        "top250": 7,
-        "top500": 7
+        "top100": 2
       },
       "1982": {
         "total": 4,
-        "top100": 0,
-        "top250": 4,
-        "top500": 4
+        "top100": 0
       },
       "1992": {
         "total": 5,
-        "top100": 0,
-        "top250": 5,
-        "top500": 5
+        "top100": 0
       },
       "2002": {
         "total": 5,
-        "top100": 1,
-        "top250": 5,
-        "top500": 5
+        "top100": 1
       },
       "2012": {
         "total": 11,
-        "top100": 0,
-        "top250": 0,
-        "top500": 3
+        "top100": 0
       },
       "2022": {
         "total": 38,
-        "top100": 0,
-        "top250": 2,
-        "top500": 5
+        "top100": 0
       }
     },
     "byDecade": {
@@ -731,54 +551,39 @@
   "Bulgaria": {
     "continent": "Europe",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -789,54 +594,39 @@
   "Burkina Faso": {
     "continent": "Africa",
     "totalFilms": 6,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 4,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -849,54 +639,39 @@
   "Cambodia": {
     "continent": "Asia",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -908,54 +683,39 @@
   "Cameroon": {
     "continent": "Africa",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -966,54 +726,39 @@
   "Canada": {
     "continent": "North America",
     "totalFilms": 73,
+    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 2,
-        "top100": 2,
-        "top250": 2,
-        "top500": 2
+        "top100": 2
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 4,
-        "top100": 0,
-        "top250": 4,
-        "top500": 4
+        "top100": 0
       },
       "1982": {
         "total": 6,
-        "top100": 0,
-        "top250": 6,
-        "top500": 6
+        "top100": 0
       },
       "1992": {
         "total": 4,
-        "top100": 1,
-        "top250": 4,
-        "top500": 4
+        "top100": 1
       },
       "2002": {
         "total": 6,
-        "top100": 0,
-        "top250": 6,
-        "top500": 6
+        "top100": 0
       },
       "2012": {
         "total": 22,
-        "top100": 0,
-        "top250": 2,
-        "top500": 7
+        "top100": 0
       },
       "2022": {
         "total": 54,
-        "top100": 0,
-        "top250": 3,
-        "top500": 6
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1031,54 +776,39 @@
   "Chad": {
     "continent": "Africa",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1089,54 +819,39 @@
   "Chile": {
     "continent": "Latin America",
     "totalFilms": 11,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 4,
-        "top100": 0,
-        "top250": 0,
-        "top500": 2
+        "top100": 0
       },
       "2022": {
         "total": 8,
-        "top100": 0,
-        "top250": 1,
-        "top500": 2
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1150,54 +865,39 @@
   "China": {
     "continent": "Asia",
     "totalFilms": 72,
+    "distinctFilmsTop100": 2,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 8,
-        "top100": 2,
-        "top250": 8,
-        "top500": 8
+        "top100": 2
       },
       "2002": {
         "total": 9,
-        "top100": 0,
-        "top250": 9,
-        "top500": 9
+        "top100": 0
       },
       "2012": {
         "total": 23,
-        "top100": 0,
-        "top250": 2,
-        "top500": 6
+        "top100": 0
       },
       "2022": {
         "total": 52,
-        "top100": 0,
-        "top250": 1,
-        "top500": 5
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1214,54 +914,39 @@
   "Colombia": {
     "continent": "Latin America",
     "totalFilms": 6,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 6,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1275,54 +960,39 @@
   "Croatia": {
     "continent": "Europe",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1332,54 +1002,39 @@
   "Cuba": {
     "continent": "North America",
     "totalFilms": 15,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1982": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2002": {
         "total": 4,
-        "top100": 0,
-        "top250": 4,
-        "top500": 4
+        "top100": 0
       },
       "2012": {
         "total": 6,
-        "top100": 0,
-        "top250": 1,
-        "top500": 3
+        "top100": 0
       },
       "2022": {
         "total": 11,
-        "top100": 0,
-        "top250": 2,
-        "top500": 4
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1391,54 +1046,39 @@
   "Czech Republic": {
     "continent": "Europe",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1449,54 +1089,39 @@
   "Czechoslovakia": {
     "continent": "Europe",
     "totalFilms": 30,
+    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 4,
-        "top100": 1,
-        "top250": 4,
-        "top500": 4
+        "top100": 1
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 4,
-        "top100": 0,
-        "top250": 4,
-        "top500": 4
+        "top100": 0
       },
       "2012": {
         "total": 17,
-        "top100": 0,
-        "top250": 2,
-        "top500": 4
+        "top100": 0
       },
       "2022": {
         "total": 23,
-        "top100": 1,
-        "top250": 1,
-        "top500": 2
+        "top100": 1
       }
     },
     "byDecade": {
@@ -1513,54 +1138,39 @@
   "Democratic Republic of the Congo": {
     "continent": "Africa",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1570,54 +1180,39 @@
   "Denmark": {
     "continent": "Europe",
     "totalFilms": 21,
+    "distinctFilmsTop100": 5,
     "byPoll": {
       "1952": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1962": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1972": {
         "total": 3,
-        "top100": 3,
-        "top250": 3,
-        "top500": 3
+        "top100": 3
       },
       "1982": {
         "total": 4,
-        "top100": 2,
-        "top250": 4,
-        "top500": 4
+        "top100": 2
       },
       "1992": {
         "total": 2,
-        "top100": 2,
-        "top250": 2,
-        "top500": 2
+        "top100": 2
       },
       "2002": {
         "total": 5,
-        "top100": 3,
-        "top250": 5,
-        "top500": 5
+        "top100": 3
       },
       "2012": {
         "total": 14,
-        "top100": 2,
-        "top250": 5,
-        "top500": 8
+        "top100": 2
       },
       "2022": {
         "total": 17,
-        "top100": 1,
-        "top250": 3,
-        "top500": 6
+        "top100": 1
       }
     },
     "byDecade": {
@@ -1635,54 +1230,39 @@
   "Dominican Republic": {
     "continent": "North America",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1692,54 +1272,39 @@
   "East Germany": {
     "continent": "Europe",
     "totalFilms": 8,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 4,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 4,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1752,54 +1317,39 @@
   "Egypt": {
     "continent": "Africa",
     "totalFilms": 12,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2012": {
         "total": 4,
-        "top100": 0,
-        "top250": 0,
-        "top500": 2
+        "top100": 0
       },
       "2022": {
         "total": 10,
-        "top100": 0,
-        "top250": 0,
-        "top500": 3
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1815,54 +1365,39 @@
   "Estonia": {
     "continent": "Europe",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1873,54 +1408,39 @@
   "Ethiopia": {
     "continent": "Africa",
     "totalFilms": 4,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1933,54 +1453,39 @@
   "Faroe Islands": {
     "continent": "Europe",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -1990,54 +1495,39 @@
   "Finland": {
     "continent": "Europe",
     "totalFilms": 16,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 7,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 13,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2053,54 +1543,39 @@
   "France": {
     "continent": "Europe",
     "totalFilms": 680,
+    "distinctFilmsTop100": 107,
     "byPoll": {
       "1952": {
         "total": 37,
-        "top100": 37,
-        "top250": 37,
-        "top500": 37
+        "top100": 37
       },
       "1962": {
         "total": 42,
-        "top100": 42,
-        "top250": 42,
-        "top500": 42
+        "top100": 42
       },
       "1972": {
         "total": 72,
-        "top100": 31,
-        "top250": 72,
-        "top500": 72
+        "top100": 31
       },
       "1982": {
         "total": 98,
-        "top100": 29,
-        "top250": 98,
-        "top500": 98
+        "top100": 29
       },
       "1992": {
         "total": 100,
-        "top100": 26,
-        "top250": 100,
-        "top500": 100
+        "top100": 26
       },
       "2002": {
         "total": 94,
-        "top100": 26,
-        "top250": 94,
-        "top500": 94
+        "top100": 26
       },
       "2012": {
         "total": 309,
-        "top100": 23,
-        "top250": 52,
-        "top500": 103
+        "top100": 23
       },
       "2022": {
         "total": 531,
-        "top100": 23,
-        "top250": 51,
-        "top500": 80
+        "top100": 23
       }
     },
     "byDecade": {
@@ -2123,54 +1598,39 @@
   "Germany": {
     "continent": "Europe",
     "totalFilms": 124,
+    "distinctFilmsTop100": 26,
     "byPoll": {
       "1952": {
         "total": 24,
-        "top100": 24,
-        "top250": 24,
-        "top500": 24
+        "top100": 24
       },
       "1962": {
         "total": 10,
-        "top100": 10,
-        "top250": 10,
-        "top500": 10
+        "top100": 10
       },
       "1972": {
         "total": 10,
-        "top100": 4,
-        "top250": 10,
-        "top500": 10
+        "top100": 4
       },
       "1982": {
         "total": 15,
-        "top100": 2,
-        "top250": 15,
-        "top500": 15
+        "top100": 2
       },
       "1992": {
         "total": 15,
-        "top100": 3,
-        "top250": 15,
-        "top500": 15
+        "top100": 3
       },
       "2002": {
         "total": 12,
-        "top100": 3,
-        "top250": 12,
-        "top500": 12
+        "top100": 3
       },
       "2012": {
         "total": 48,
-        "top100": 2,
-        "top250": 10,
-        "top500": 13
+        "top100": 2
       },
       "2022": {
         "total": 93,
-        "top100": 2,
-        "top250": 6,
-        "top500": 17
+        "top100": 2
       }
     },
     "byDecade": {
@@ -2189,54 +1649,39 @@
   "Ghana": {
     "continent": "Africa",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2247,54 +1692,39 @@
   "Greece": {
     "continent": "Europe",
     "totalFilms": 14,
+    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 2,
-        "top100": 1,
-        "top250": 2,
-        "top500": 2
+        "top100": 1
       },
       "1992": {
         "total": 3,
-        "top100": 1,
-        "top250": 3,
-        "top500": 3
+        "top100": 1
       },
       "2002": {
         "total": 2,
-        "top100": 1,
-        "top250": 2,
-        "top500": 2
+        "top100": 1
       },
       "2012": {
         "total": 6,
-        "top100": 0,
-        "top250": 1,
-        "top500": 3
+        "top100": 0
       },
       "2022": {
         "total": 11,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2308,54 +1738,39 @@
   "Guatemala": {
     "continent": "Latin America",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2366,54 +1781,39 @@
   "Guinea-Bissau": {
     "continent": "Africa",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2423,54 +1823,39 @@
   "Guyana": {
     "continent": "Latin America",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2480,54 +1865,39 @@
   "Haiti": {
     "continent": "North America",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2537,54 +1907,39 @@
   "Hong Kong": {
     "continent": "Asia",
     "totalFilms": 65,
+    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 4,
-        "top100": 0,
-        "top250": 4,
-        "top500": 4
+        "top100": 0
       },
       "2002": {
         "total": 5,
-        "top100": 2,
-        "top250": 5,
-        "top500": 5
+        "top100": 2
       },
       "2012": {
         "total": 26,
-        "top100": 1,
-        "top250": 3,
-        "top500": 7
+        "top100": 1
       },
       "2022": {
         "total": 52,
-        "top100": 2,
-        "top250": 4,
-        "top500": 5
+        "top100": 2
       }
     },
     "byDecade": {
@@ -2600,54 +1955,39 @@
   "Hungary": {
     "continent": "Europe",
     "totalFilms": 29,
+    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1982": {
         "total": 3,
-        "top100": 0,
-        "top250": 3,
-        "top500": 3
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 8,
-        "top100": 0,
-        "top250": 2,
-        "top500": 3
+        "top100": 0
       },
       "2022": {
         "total": 21,
-        "top100": 0,
-        "top250": 1,
-        "top500": 2
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2664,54 +2004,39 @@
   "India": {
     "continent": "Asia",
     "totalFilms": 96,
+    "distinctFilmsTop100": 6,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 3,
-        "top100": 3,
-        "top250": 3,
-        "top500": 3
+        "top100": 3
       },
       "1972": {
         "total": 5,
-        "top100": 2,
-        "top250": 5,
-        "top500": 5
+        "top100": 2
       },
       "1982": {
         "total": 9,
-        "top100": 5,
-        "top250": 9,
-        "top500": 9
+        "top100": 5
       },
       "1992": {
         "total": 13,
-        "top100": 5,
-        "top250": 13,
-        "top500": 13
+        "top100": 5
       },
       "2002": {
         "total": 15,
-        "top100": 2,
-        "top250": 15,
-        "top500": 15
+        "top100": 2
       },
       "2012": {
         "total": 32,
-        "top100": 1,
-        "top250": 4,
-        "top500": 7
+        "top100": 1
       },
       "2022": {
         "total": 79,
-        "top100": 1,
-        "top250": 4,
-        "top500": 10
+        "top100": 1
       }
     },
     "byDecade": {
@@ -2730,54 +2055,39 @@
   "Indonesia": {
     "continent": "Asia",
     "totalFilms": 7,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 7,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2790,54 +2100,39 @@
   "Iran": {
     "continent": "Asia",
     "totalFilms": 48,
+    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 12,
-        "top100": 3,
-        "top250": 12,
-        "top500": 12
+        "top100": 3
       },
       "2012": {
         "total": 24,
-        "top100": 1,
-        "top250": 5,
-        "top500": 10
+        "top100": 1
       },
       "2022": {
         "total": 38,
-        "top100": 1,
-        "top250": 4,
-        "top500": 7
+        "top100": 1
       }
     },
     "byDecade": {
@@ -2853,54 +2148,39 @@
   "Iraq": {
     "continent": "Asia",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2912,54 +2192,39 @@
   "Ireland": {
     "continent": "Europe",
     "totalFilms": 16,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 14,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -2973,54 +2238,39 @@
   "Israel": {
     "continent": "Asia",
     "totalFilms": 7,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 4,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3033,54 +2283,39 @@
   "Italy": {
     "continent": "Europe",
     "totalFilms": 245,
+    "distinctFilmsTop100": 39,
     "byPoll": {
       "1952": {
         "total": 7,
-        "top100": 7,
-        "top250": 7,
-        "top500": 7
+        "top100": 7
       },
       "1962": {
         "total": 17,
-        "top100": 17,
-        "top250": 17,
-        "top500": 17
+        "top100": 17
       },
       "1972": {
         "total": 36,
-        "top100": 16,
-        "top250": 36,
-        "top500": 36
+        "top100": 16
       },
       "1982": {
         "total": 53,
-        "top100": 11,
-        "top250": 53,
-        "top500": 53
+        "top100": 11
       },
       "1992": {
         "total": 48,
-        "top100": 15,
-        "top250": 48,
-        "top500": 48
+        "top100": 15
       },
       "2002": {
         "total": 49,
-        "top100": 10,
-        "top250": 49,
-        "top500": 49
+        "top100": 10
       },
       "2012": {
         "total": 117,
-        "top100": 9,
-        "top250": 26,
-        "top500": 41
+        "top100": 9
       },
       "2022": {
         "total": 188,
-        "top100": 8,
-        "top250": 19,
-        "top500": 40
+        "top100": 8
       }
     },
     "byDecade": {
@@ -3102,54 +2337,39 @@
   "Ivory Coast": {
     "continent": "Africa",
     "totalFilms": 3,
+    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3161,54 +2381,39 @@
   "Jamaica": {
     "continent": "North America",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3218,54 +2423,39 @@
   "Japan": {
     "continent": "Asia",
     "totalFilms": 247,
+    "distinctFilmsTop100": 20,
     "byPoll": {
       "1952": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1962": {
         "total": 11,
-        "top100": 11,
-        "top250": 11,
-        "top500": 11
+        "top100": 11
       },
       "1972": {
         "total": 21,
-        "top100": 9,
-        "top250": 21,
-        "top500": 21
+        "top100": 9
       },
       "1982": {
         "total": 31,
-        "top100": 7,
-        "top250": 31,
-        "top500": 31
+        "top100": 7
       },
       "1992": {
         "total": 32,
-        "top100": 10,
-        "top250": 32,
-        "top500": 32
+        "top100": 10
       },
       "2002": {
         "total": 34,
-        "top100": 9,
-        "top250": 34,
-        "top500": 34
+        "top100": 9
       },
       "2012": {
         "total": 110,
-        "top100": 6,
-        "top250": 15,
-        "top500": 29
+        "top100": 6
       },
       "2022": {
         "total": 199,
-        "top100": 8,
-        "top250": 12,
-        "top500": 28
+        "top100": 8
       }
     },
     "byDecade": {
@@ -3285,54 +2475,39 @@
   "Kazakhstan": {
     "continent": "Asia",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3342,54 +2517,39 @@
   "Kenya": {
     "continent": "Africa",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3399,54 +2559,39 @@
   "Kyrgyzstan": {
     "continent": "Asia",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3456,54 +2601,39 @@
   "Lebanon": {
     "continent": "Asia",
     "totalFilms": 8,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 7,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3516,54 +2646,39 @@
   "Lesotho": {
     "continent": "Africa",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3573,54 +2688,39 @@
   "Luxembourg": {
     "continent": "Europe",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3631,54 +2731,39 @@
   "Macedonia": {
     "continent": "Europe",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3689,54 +2774,39 @@
   "Malaysia": {
     "continent": "Asia",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3746,54 +2816,39 @@
   "Mali": {
     "continent": "Africa",
     "totalFilms": 5,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       },
       "2022": {
         "total": 4,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3805,54 +2860,39 @@
   "Martinique": {
     "continent": "North America",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3862,54 +2902,39 @@
   "Mauritania": {
     "continent": "Africa",
     "totalFilms": 4,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       },
       "2022": {
         "total": 4,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3921,54 +2946,39 @@
   "Mexico": {
     "continent": "North America",
     "totalFilms": 50,
+    "distinctFilmsTop100": 5,
     "byPoll": {
       "1952": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1962": {
         "total": 4,
-        "top100": 4,
-        "top250": 4,
-        "top500": 4
+        "top100": 4
       },
       "1972": {
         "total": 5,
-        "top100": 4,
-        "top250": 5,
-        "top500": 5
+        "top100": 4
       },
       "1982": {
         "total": 6,
-        "top100": 3,
-        "top250": 6,
-        "top500": 6
+        "top100": 3
       },
       "1992": {
         "total": 5,
-        "top100": 0,
-        "top250": 5,
-        "top500": 5
+        "top100": 0
       },
       "2002": {
         "total": 6,
-        "top100": 1,
-        "top250": 6,
-        "top500": 6
+        "top100": 1
       },
       "2012": {
         "total": 20,
-        "top100": 0,
-        "top250": 3,
-        "top500": 5
+        "top100": 0
       },
       "2022": {
         "total": 43,
-        "top100": 0,
-        "top250": 2,
-        "top500": 7
+        "top100": 0
       }
     },
     "byDecade": {
@@ -3986,54 +2996,39 @@
   "Mongolia": {
     "continent": "Asia",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4043,54 +3038,39 @@
   "Morocco": {
     "continent": "Africa",
     "totalFilms": 6,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 6,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4103,54 +3083,39 @@
   "Mozambique": {
     "continent": "Africa",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4160,54 +3125,39 @@
   "Nepal": {
     "continent": "Asia",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4217,54 +3167,39 @@
   "Netherlands": {
     "continent": "Europe",
     "totalFilms": 18,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 7,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 14,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4280,54 +3215,39 @@
   "New Zealand": {
     "continent": "Oceania",
     "totalFilms": 21,
+    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 4,
-        "top100": 0,
-        "top250": 1,
-        "top500": 2
+        "top100": 0
       },
       "2022": {
         "total": 21,
-        "top100": 1,
-        "top250": 1,
-        "top500": 4
+        "top100": 1
       }
     },
     "byDecade": {
@@ -4342,54 +3262,39 @@
   "Niger": {
     "continent": "Africa",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4399,54 +3304,39 @@
   "Nigeria": {
     "continent": "Africa",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4457,54 +3347,39 @@
   "Norway": {
     "continent": "Europe",
     "totalFilms": 5,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       },
       "2022": {
         "total": 5,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4517,54 +3392,39 @@
   "Pakistan": {
     "continent": "Asia",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4575,54 +3435,39 @@
   "Palestine": {
     "continent": "Asia",
     "totalFilms": 11,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 5,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       },
       "2022": {
         "total": 8,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4636,54 +3481,39 @@
   "Paraguay": {
     "continent": "Latin America",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4693,54 +3523,39 @@
   "Peru": {
     "continent": "Latin America",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4751,54 +3566,39 @@
   "Philippines": {
     "continent": "Asia",
     "totalFilms": 25,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2012": {
         "total": 9,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       },
       "2022": {
         "total": 20,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4814,54 +3614,39 @@
   "Poland": {
     "continent": "Europe",
     "totalFilms": 47,
+    "distinctFilmsTop100": 7,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 4,
-        "top100": 4,
-        "top250": 4,
-        "top500": 4
+        "top100": 4
       },
       "1972": {
         "total": 3,
-        "top100": 1,
-        "top250": 3,
-        "top500": 3
+        "top100": 1
       },
       "1982": {
         "total": 6,
-        "top100": 1,
-        "top250": 6,
-        "top500": 6
+        "top100": 1
       },
       "1992": {
         "total": 7,
-        "top100": 1,
-        "top250": 7,
-        "top500": 7
+        "top100": 1
       },
       "2002": {
         "total": 6,
-        "top100": 2,
-        "top250": 6,
-        "top500": 6
+        "top100": 2
       },
       "2012": {
         "total": 21,
-        "top100": 0,
-        "top250": 0,
-        "top500": 2
+        "top100": 0
       },
       "2022": {
         "total": 30,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4878,54 +3663,39 @@
   "Portugal": {
     "continent": "Europe",
     "totalFilms": 48,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2012": {
         "total": 16,
-        "top100": 0,
-        "top250": 1,
-        "top500": 4
+        "top100": 0
       },
       "2022": {
         "total": 39,
-        "top100": 0,
-        "top250": 1,
-        "top500": 3
+        "top100": 0
       }
     },
     "byDecade": {
@@ -4942,54 +3712,39 @@
   "Romania": {
     "continent": "Europe",
     "totalFilms": 14,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 6,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2022": {
         "total": 11,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5003,54 +3758,39 @@
   "Russia": {
     "continent": "Europe",
     "totalFilms": 34,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 4,
-        "top100": 0,
-        "top250": 4,
-        "top500": 4
+        "top100": 0
       },
       "2012": {
         "total": 13,
-        "top100": 0,
-        "top250": 1,
-        "top500": 3
+        "top100": 0
       },
       "2022": {
         "total": 25,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5064,54 +3804,39 @@
   "Rwanda": {
     "continent": "Africa",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5121,54 +3846,39 @@
   "Saudi Arabia": {
     "continent": "Asia",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5178,54 +3888,39 @@
   "Senegal": {
     "continent": "Africa",
     "totalFilms": 14,
+    "distinctFilmsTop100": 2,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 3,
-        "top100": 0,
-        "top250": 3,
-        "top500": 3
+        "top100": 0
       },
       "2002": {
         "total": 3,
-        "top100": 0,
-        "top250": 3,
-        "top500": 3
+        "top100": 0
       },
       "2012": {
         "total": 9,
-        "top100": 1,
-        "top250": 1,
-        "top500": 5
+        "top100": 1
       },
       "2022": {
         "total": 13,
-        "top100": 2,
-        "top250": 2,
-        "top500": 6
+        "top100": 2
       }
     },
     "byDecade": {
@@ -5239,54 +3934,39 @@
   "Serbia": {
     "continent": "Europe",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5297,54 +3977,39 @@
   "Slovakia": {
     "continent": "Europe",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5355,54 +4020,39 @@
   "Slovenia": {
     "continent": "Europe",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5412,54 +4062,39 @@
   "Somalia": {
     "continent": "Africa",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5469,54 +4104,39 @@
   "South Africa": {
     "continent": "Africa",
     "totalFilms": 4,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5528,54 +4148,39 @@
   "South Korea": {
     "continent": "Asia",
     "totalFilms": 46,
+    "distinctFilmsTop100": 2,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 1,
-        "top250": 2,
-        "top500": 2
+        "top100": 1
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 16,
-        "top100": 0,
-        "top250": 0,
-        "top500": 2
+        "top100": 0
       },
       "2022": {
         "total": 37,
-        "top100": 1,
-        "top250": 1,
-        "top500": 3
+        "top100": 1
       }
     },
     "byDecade": {
@@ -5592,54 +4197,39 @@
   "Soviet Union": {
     "continent": "Europe",
     "totalFilms": 108,
+    "distinctFilmsTop100": 34,
     "byPoll": {
       "1952": {
         "total": 16,
-        "top100": 16,
-        "top250": 16,
-        "top500": 16
+        "top100": 16
       },
       "1962": {
         "total": 18,
-        "top100": 18,
-        "top250": 18,
-        "top500": 18
+        "top100": 18
       },
       "1972": {
         "total": 20,
-        "top100": 8,
-        "top250": 20,
-        "top500": 20
+        "top100": 8
       },
       "1982": {
         "total": 26,
-        "top100": 8,
-        "top250": 26,
-        "top500": 26
+        "top100": 8
       },
       "1992": {
         "total": 15,
-        "top100": 7,
-        "top250": 15,
-        "top500": 15
+        "top100": 7
       },
       "2002": {
         "total": 21,
-        "top100": 6,
-        "top250": 21,
-        "top500": 21
+        "top100": 6
       },
       "2012": {
         "total": 62,
-        "top100": 6,
-        "top250": 12,
-        "top500": 19
+        "top100": 6
       },
       "2022": {
         "total": 70,
-        "top100": 5,
-        "top250": 10,
-        "top500": 17
+        "top100": 5
       }
     },
     "byDecade": {
@@ -5656,54 +4246,39 @@
   "Spain": {
     "continent": "Europe",
     "totalFilms": 58,
+    "distinctFilmsTop100": 6,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 2,
-        "top100": 2,
-        "top250": 2,
-        "top500": 2
+        "top100": 2
       },
       "1972": {
         "total": 2,
-        "top100": 2,
-        "top250": 2,
-        "top500": 2
+        "top100": 2
       },
       "1982": {
         "total": 4,
-        "top100": 2,
-        "top250": 4,
-        "top500": 4
+        "top100": 2
       },
       "1992": {
         "total": 7,
-        "top100": 1,
-        "top250": 7,
-        "top500": 7
+        "top100": 1
       },
       "2002": {
         "total": 9,
-        "top100": 4,
-        "top250": 9,
-        "top500": 9
+        "top100": 4
       },
       "2012": {
         "total": 31,
-        "top100": 1,
-        "top250": 4,
-        "top500": 11
+        "top100": 1
       },
       "2022": {
         "total": 48,
-        "top100": 1,
-        "top250": 3,
-        "top500": 10
+        "top100": 1
       }
     },
     "byDecade": {
@@ -5721,54 +4296,39 @@
   "Sri Lanka": {
     "continent": "Asia",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5778,54 +4338,39 @@
   "Sudan": {
     "continent": "Africa",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -5837,54 +4382,39 @@
   "Sweden": {
     "continent": "Europe",
     "totalFilms": 57,
+    "distinctFilmsTop100": 15,
     "byPoll": {
       "1952": {
         "total": 6,
-        "top100": 6,
-        "top250": 6,
-        "top500": 6
+        "top100": 6
       },
       "1962": {
         "total": 4,
-        "top100": 4,
-        "top250": 4,
-        "top500": 4
+        "top100": 4
       },
       "1972": {
         "total": 10,
-        "top100": 6,
-        "top250": 10,
-        "top500": 10
+        "top100": 6
       },
       "1982": {
         "total": 11,
-        "top100": 3,
-        "top250": 11,
-        "top500": 11
+        "top100": 3
       },
       "1992": {
         "total": 8,
-        "top100": 4,
-        "top250": 8,
-        "top500": 8
+        "top100": 4
       },
       "2002": {
         "total": 11,
-        "top100": 4,
-        "top250": 11,
-        "top500": 11
+        "top100": 4
       },
       "2012": {
         "total": 25,
-        "top100": 4,
-        "top250": 6,
-        "top500": 12
+        "top100": 4
       },
       "2022": {
         "total": 47,
-        "top100": 1,
-        "top250": 6,
-        "top500": 9
+        "top100": 1
       }
     },
     "byDecade": {
@@ -5904,54 +4434,39 @@
   "Switzerland": {
     "continent": "Europe",
     "totalFilms": 21,
+    "distinctFilmsTop100": 5,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 1,
-        "top100": 1,
-        "top250": 1,
-        "top500": 1
+        "top100": 1
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 3,
-        "top100": 1,
-        "top250": 3,
-        "top500": 3
+        "top100": 1
       },
       "1992": {
         "total": 3,
-        "top100": 2,
-        "top250": 3,
-        "top500": 3
+        "top100": 2
       },
       "2002": {
         "total": 4,
-        "top100": 2,
-        "top250": 4,
-        "top500": 4
+        "top100": 2
       },
       "2012": {
         "total": 10,
-        "top100": 1,
-        "top250": 3,
-        "top500": 5
+        "top100": 1
       },
       "2022": {
         "total": 14,
-        "top100": 1,
-        "top250": 1,
-        "top500": 2
+        "top100": 1
       }
     },
     "byDecade": {
@@ -5968,54 +4483,39 @@
   "Syria": {
     "continent": "Asia",
     "totalFilms": 5,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 5,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -6028,54 +4528,39 @@
   "Taiwan": {
     "continent": "Asia",
     "totalFilms": 38,
+    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 5,
-        "top100": 0,
-        "top250": 5,
-        "top500": 5
+        "top100": 0
       },
       "2002": {
         "total": 9,
-        "top100": 2,
-        "top250": 9,
-        "top500": 9
+        "top100": 2
       },
       "2012": {
         "total": 20,
-        "top100": 2,
-        "top250": 6,
-        "top500": 7
+        "top100": 2
       },
       "2022": {
         "total": 33,
-        "top100": 2,
-        "top250": 6,
-        "top500": 8
+        "top100": 2
       }
     },
     "byDecade": {
@@ -6091,54 +4576,39 @@
   "Thailand": {
     "continent": "Asia",
     "totalFilms": 13,
+    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 6,
-        "top100": 0,
-        "top250": 3,
-        "top500": 4
+        "top100": 0
       },
       "2022": {
         "total": 11,
-        "top100": 1,
-        "top250": 3,
-        "top500": 3
+        "top100": 1
       }
     },
     "byDecade": {
@@ -6152,54 +4622,39 @@
   "Tunisia": {
     "continent": "Africa",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -6210,54 +4665,39 @@
   "Turkey": {
     "continent": "Asia",
     "totalFilms": 17,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2012": {
         "total": 9,
-        "top100": 0,
-        "top250": 0,
-        "top500": 2
+        "top100": 0
       },
       "2022": {
         "total": 10,
-        "top100": 0,
-        "top250": 0,
-        "top500": 1
+        "top100": 0
       }
     },
     "byDecade": {
@@ -6272,54 +4712,39 @@
   "Ukraine": {
     "continent": "Europe",
     "totalFilms": 2,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -6330,54 +4755,39 @@
   "United Kingdom": {
     "continent": "Europe",
     "totalFilms": 457,
+    "distinctFilmsTop100": 42,
     "byPoll": {
       "1952": {
         "total": 19,
-        "top100": 19,
-        "top250": 19,
-        "top500": 19
+        "top100": 19
       },
       "1962": {
         "total": 15,
-        "top100": 15,
-        "top250": 15,
-        "top500": 15
+        "top100": 15
       },
       "1972": {
         "total": 23,
-        "top100": 10,
-        "top250": 23,
-        "top500": 23
+        "top100": 10
       },
       "1982": {
         "total": 49,
-        "top100": 7,
-        "top250": 49,
-        "top500": 49
+        "top100": 7
       },
       "1992": {
         "total": 51,
-        "top100": 8,
-        "top250": 51,
-        "top500": 51
+        "top100": 8
       },
       "2002": {
         "total": 45,
-        "top100": 7,
-        "top250": 45,
-        "top500": 45
+        "top100": 7
       },
       "2012": {
         "total": 166,
-        "top100": 6,
-        "top250": 21,
-        "top500": 37
+        "top100": 6
       },
       "2022": {
         "total": 360,
-        "top100": 6,
-        "top250": 21,
-        "top500": 40
+        "top100": 6
       }
     },
     "byDecade": {
@@ -6400,54 +4810,39 @@
   "United States": {
     "continent": "North America",
     "totalFilms": 1781,
+    "distinctFilmsTop100": 190,
     "byPoll": {
       "1952": {
         "total": 85,
-        "top100": 85,
-        "top250": 85,
-        "top500": 85
+        "top100": 85
       },
       "1962": {
         "total": 71,
-        "top100": 71,
-        "top250": 71,
-        "top500": 71
+        "top100": 71
       },
       "1972": {
         "total": 135,
-        "top100": 53,
-        "top250": 135,
-        "top500": 135
+        "top100": 53
       },
       "1982": {
         "total": 217,
-        "top100": 50,
-        "top250": 217,
-        "top500": 217
+        "top100": 50
       },
       "1992": {
         "total": 233,
-        "top100": 46,
-        "top250": 233,
-        "top500": 233
+        "top100": 46
       },
       "2002": {
         "total": 242,
-        "top100": 50,
-        "top250": 242,
-        "top500": 242
+        "top100": 50
       },
       "2012": {
         "total": 728,
-        "top100": 36,
-        "top250": 101,
-        "top500": 229
+        "top100": 36
       },
       "2022": {
         "total": 1419,
-        "top100": 36,
-        "top250": 98,
-        "top500": 226
+        "top100": 36
       }
     },
     "byDecade": {
@@ -6470,54 +4865,39 @@
   "Uruguay": {
     "continent": "Latin America",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -6527,54 +4907,39 @@
   "Venezuela": {
     "continent": "Latin America",
     "totalFilms": 5,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 4,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -6588,54 +4953,39 @@
   "Vietnam": {
     "continent": "Asia",
     "totalFilms": 3,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {
@@ -6647,54 +4997,39 @@
   "West Germany": {
     "continent": "Europe",
     "totalFilms": 119,
+    "distinctFilmsTop100": 8,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 2,
-        "top100": 2,
-        "top250": 2,
-        "top500": 2
+        "top100": 2
       },
       "1972": {
         "total": 7,
-        "top100": 3,
-        "top250": 7,
-        "top500": 7
+        "top100": 3
       },
       "1982": {
         "total": 17,
-        "top100": 3,
-        "top250": 17,
-        "top500": 17
+        "top100": 3
       },
       "1992": {
         "total": 20,
-        "top100": 1,
-        "top250": 20,
-        "top500": 20
+        "top100": 1
       },
       "2002": {
         "total": 13,
-        "top100": 0,
-        "top250": 13,
-        "top500": 13
+        "top100": 0
       },
       "2012": {
         "total": 56,
-        "top100": 2,
-        "top250": 5,
-        "top500": 18
+        "top100": 2
       },
       "2022": {
         "total": 93,
-        "top100": 1,
-        "top250": 5,
-        "top500": 11
+        "top100": 1
       }
     },
     "byDecade": {
@@ -6708,54 +5043,39 @@
   "Yugoslavia": {
     "continent": "Europe",
     "totalFilms": 24,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0,
-        "top250": 1,
-        "top500": 1
+        "top100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0,
-        "top250": 2,
-        "top500": 2
+        "top100": 0
       },
       "2012": {
         "total": 7,
-        "top100": 0,
-        "top250": 0,
-        "top500": 2
+        "top100": 0
       },
       "2022": {
         "total": 21,
-        "top100": 0,
-        "top250": 0,
-        "top500": 2
+        "top100": 0
       }
     },
     "byDecade": {
@@ -6770,54 +5090,39 @@
   "Zimbabwe": {
     "continent": "Africa",
     "totalFilms": 1,
+    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0,
-        "top250": 0,
-        "top500": 0
+        "top100": 0
       }
     },
     "byDecade": {

@@ -157,7 +157,7 @@ def generate_countries_json(df, output_path):
         for year in POLL_YEARS:
             votes_col = f'{year}votes'
             count = 0
-            top100 = top250 = top500 = 0
+            top100 = 0
 
             for _, row in df.iterrows():
                 if pd.notna(row['ARR_CountryArray']) and str(row['ARR_CountryArray']).strip():
@@ -167,15 +167,27 @@ def generate_countries_json(df, output_path):
                         rank = row[f'{year}rank']
                         if pd.notna(rank):
                             if rank <= 100: top100 += 1
-                            if rank <= 250: top250 += 1
-                            if rank <= 500: top500 += 1
 
             by_poll[str(year)] = {
                 'total': count,
-                'top100': top100,
-                'top250': top250,
-                'top500': top500
+                'top100': top100
             }
+
+        # Count distinct films that appear in top 100 across any poll
+        distinct_films_top100 = 0
+        for _, row in df.iterrows():
+            if pd.notna(row['ARR_CountryArray']) and str(row['ARR_CountryArray']).strip():
+                countries = [c.strip() for c in str(row['ARR_CountryArray']).split(';')]
+                if country in countries:
+                    # Check if this film appears in top 100 of any poll
+                    appears_in_top100 = False
+                    for year in POLL_YEARS:
+                        rank = row[f'{year}rank']
+                        if pd.notna(rank) and rank <= 100:
+                            appears_in_top100 = True
+                            break
+                    if appears_in_top100:
+                        distinct_films_top100 += 1
 
         # Count by decade
         by_decade = {}
@@ -201,6 +213,7 @@ def generate_countries_json(df, output_path):
         countries_data[country] = {
             'continent': continent,
             'totalFilms': total_films,
+            'distinctFilmsTop100': distinct_films_top100,
             'byPoll': by_poll,
             'byDecade': by_decade
         }
