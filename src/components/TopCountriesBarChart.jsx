@@ -99,9 +99,12 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const countriesByContinent = useMemo(() => {
     if (!transformedData.length) return []
 
+    // Filter out countries with 0 films before grouping
+    const countriesWithFilms = transformedData.filter(country => country.filmCount > 0)
+
     // Group by continent
     const grouped = {}
-    transformedData.forEach(country => {
+    countriesWithFilms.forEach(country => {
       if (!grouped[country.continent]) {
         grouped[country.continent] = []
       }
@@ -123,7 +126,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   // Calculate filtered data based on selected countries
   const filteredData = useMemo(() => {
     return transformedData
-      .filter(country => selectedCountries.includes(country.name))
+      .filter(country => selectedCountries.includes(country.name) && country.filmCount > 0)
       .sort((a, b) => b.filmCount - a.filmCount)
   }, [transformedData, selectedCountries])
 
