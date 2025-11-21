@@ -51,7 +51,17 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
       if (selectedPoll === 'all') {
         // Sum across all polls
-        filmCount = countryInfo.totalFilms
+        if (rankRange === 'all') {
+          // Sum all ballot appearances
+          filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
+            return sum + (pollData.total || 0)
+          }, 0)
+        } else if (rankRange === 'top100') {
+          // Sum the top100 across all polls
+          filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
+            return sum + (pollData.top100 || 0)
+          }, 0)
+        }
       } else {
         // Get count for specific poll
         const pollData = countryInfo.byPoll[selectedPoll]
@@ -60,8 +70,26 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             filmCount = pollData.total
           } else if (rankRange === 'top100') {
             filmCount = pollData.top100
-          } else if (rankRange === 'top250') {
-            filmCount = pollData.top250
+          }
+        }
+      }
+
+      // Get distinct films count
+      let distinctFilms = 0
+      if (selectedPoll === 'all') {
+        if (rankRange === 'top100') {
+          distinctFilms = countryInfo.distinctFilmsTop100 || 0
+        } else {
+          distinctFilms = countryInfo.totalFilms || 0
+        }
+      } else {
+        // Get distinct films for specific poll
+        const pollData = countryInfo.byPoll[selectedPoll]
+        if (pollData) {
+          if (rankRange === 'top100') {
+            distinctFilms = pollData.distinctFilmsTop100 || 0
+          } else {
+            distinctFilms = pollData.distinctFilms || 0
           }
         }
       }
@@ -73,7 +101,8 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         name: countryName,
         filmCount,
         continent: countryInfo.continent,
-        percentOfTotal
+        percentOfTotal,
+        distinctFilms
       })
     })
 
@@ -185,12 +214,8 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const handleOpenDropdown = () => {
     setPendingSelection([...selectedCountries])
     setIsDropdownOpen(true)
-    // Initialize all continents as expanded
-    const initialExpanded = {}
-    countriesByContinent.forEach(continent => {
-      initialExpanded[continent.continent] = true
-    })
-    setExpandedContinents(initialExpanded)
+    // Initialize all continents as collapsed for easier navigation
+    setExpandedContinents({})
   }
 
   const handleCloseDropdown = () => {
@@ -283,8 +308,13 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <p className="font-bold text-black uppercase tracking-wide">{data.name}</p>
           <p className="text-sm text-black font-medium">{data.continent}</p>
           <p className="text-lg font-black text-black mt-1">
-            {data.filmCount} films
+            {data.filmCount} ballot appearances
           </p>
+          {data.distinctFilms > 0 && (
+            <p className="text-sm text-black font-medium">
+              {data.distinctFilms} distinct films
+            </p>
+          )}
           <p className="text-xs text-black font-medium">
             {data.percentOfTotal}% of total
           </p>
@@ -319,7 +349,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
         <div>
           <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-            Top Countries by Film Count
+            {selectedPoll === 'all' ? 'Top Countries by Ballot Appearances' : 'Top Countries by Film Count'}
           </h2>
           <p className="text-black font-medium">
             Customize displayed countries using the search bar below
@@ -343,7 +373,15 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#d1d5db" />
-          <XAxis type="number" />
+          <XAxis
+            type="number"
+            label={{
+              value: selectedPoll === 'all' ? 'Ballot Appearances' : 'Films',
+              position: 'insideBottom',
+              offset: -5,
+              style: { fontWeight: 'bold', fill: '#000000' }
+            }}
+          />
           <YAxis
             dataKey="name"
             type="category"

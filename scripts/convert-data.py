@@ -156,26 +156,53 @@ def generate_countries_json(df, output_path):
         by_poll = {}
         for year in POLL_YEARS:
             votes_col = f'{year}votes'
-            count = 0
-            top100 = top250 = top500 = 0
+            rank_col = f'{year}rank'
+            ballot_appearances = 0
+            ballot_appearances_top100 = 0
+            distinct_films = 0
+            distinct_films_top100 = 0
 
             for _, row in df.iterrows():
                 if pd.notna(row['ARR_CountryArray']) and str(row['ARR_CountryArray']).strip():
                     countries = [c.strip() for c in str(row['ARR_CountryArray']).split(';')]
-                    if country in countries and row[votes_col] > 0:
-                        count += 1
-                        rank = row[f'{year}rank']
-                        if pd.notna(rank):
-                            if rank <= 100: top100 += 1
-                            if rank <= 250: top250 += 1
-                            if rank <= 500: top500 += 1
+                    if country in countries:
+                        votes = row[votes_col]
+                        rank = row[rank_col]
+
+                        if pd.notna(votes) and votes > 0:
+                            # Sum ballot appearances (total votes)
+                            ballot_appearances += votes
+
+                            # Count distinct films
+                            distinct_films += 1
+
+                            # Check if in top 100
+                            if pd.notna(rank) and rank <= 100:
+                                ballot_appearances_top100 += votes
+                                distinct_films_top100 += 1
 
             by_poll[str(year)] = {
-                'total': count,
-                'top100': top100,
-                'top250': top250,
-                'top500': top500
+                'total': ballot_appearances,
+                'top100': ballot_appearances_top100,
+                'distinctFilms': distinct_films,
+                'distinctFilmsTop100': distinct_films_top100
             }
+
+        # Count distinct films that appear in top 100 across any poll
+        distinct_films_top100 = 0
+        for _, row in df.iterrows():
+            if pd.notna(row['ARR_CountryArray']) and str(row['ARR_CountryArray']).strip():
+                countries = [c.strip() for c in str(row['ARR_CountryArray']).split(';')]
+                if country in countries:
+                    # Check if this film appears in top 100 of any poll
+                    appears_in_top100 = False
+                    for year in POLL_YEARS:
+                        rank = row[f'{year}rank']
+                        if pd.notna(rank) and rank <= 100:
+                            appears_in_top100 = True
+                            break
+                    if appears_in_top100:
+                        distinct_films_top100 += 1
 
         # Count by decade
         by_decade = {}
@@ -201,6 +228,7 @@ def generate_countries_json(df, output_path):
         countries_data[country] = {
             'continent': continent,
             'totalFilms': total_films,
+            'distinctFilmsTop100': distinct_films_top100,
             'byPoll': by_poll,
             'byDecade': by_decade
         }
