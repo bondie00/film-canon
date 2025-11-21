@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import TopCountriesBarChart from '../components/TopCountriesBarChart'
 
 export default function CountryOriginMain() {
   // Filter state (not functional yet - Phase 2)
@@ -167,47 +168,10 @@ export default function CountryOriginMain() {
             </div>
 
             {/* VISUALIZATION 2: BAR CHART - TOP COUNTRIES */}
-            <div className="bg-white border-4 border-black p-6 mb-8">
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
-                <div>
-                  <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                    Top Countries by Film Count
-                  </h2>
-                  <p className="text-black font-medium">
-                    Compare the most represented nations in the canon
-                  </p>
-                </div>
-
-                {/* Customization Options */}
-                <div className="flex items-center gap-3">
-                  <select className="px-3 py-1 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black font-medium">
-                    <option>Show Top 10</option>
-                    <option>Show Top 15</option>
-                    <option>Show Top 20</option>
-                    <option>Show Top 30</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* PLACEHOLDER FOR BAR CHART */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[400px] flex items-center justify-center">
-                <div className="text-center text-black max-w-2xl p-6">
-                  <div className="text-6xl mb-4">📊</div>
-                  <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Horizontal Bar Chart</div>
-                  <div className="text-sm space-y-2">
-                    <p>• Bars sorted by count (highest to lowest)</p>
-                    <p>• Y-axis: Country names</p>
-                    <p>• X-axis: "Times Ranked" (all polls) or "Number of Films" (single poll)</p>
-                    <p>• Click bar to navigate to country page</p>
-                    <p>• Hover to see exact count and percentage</p>
-                    <p>• Color-coded by continent</p>
-                  </div>
-                  <div className="mt-6 text-xs text-gray-400 italic">
-                    [Phase 3: Recharts implementation]
-                  </div>
-                </div>
-              </div>
-            </div>
+            <TopCountriesBarChart
+              selectedPoll={selectedPoll}
+              rankRange={rankRange}
+            />
 
             {/* VISUALIZATION 3: DECADE HEATMAP */}
             <div className="bg-white border-4 border-black p-6 mb-8">
