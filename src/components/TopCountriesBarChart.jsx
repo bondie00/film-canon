@@ -25,20 +25,54 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
   // Load countries data from JSON
   const [countriesData, setCountriesData] = useState(null)
+  const [filmsData, setFilmsData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/data/countries.json')
-      .then(response => response.json())
-      .then(data => {
-        setCountriesData(data)
+    Promise.all([
+      fetch('/data/countries.json').then(r => r.json()),
+      fetch('/data/films.json').then(r => r.json())
+    ])
+      .then(([countries, films]) => {
+        setCountriesData(countries)
+        setFilmsData(films)
         setLoading(false)
       })
       .catch(error => {
-        console.error('Error loading countries data:', error)
+        console.error('Error loading data:', error)
         setLoading(false)
       })
   }, [])
+
+  // Calculate distinct films per country based on rank range
+  const calculateDistinctFilms = useMemo(() => {
+    if (!filmsData) return {}
+
+    const distinctFilmsByCountry = {}
+
+    filmsData.forEach(film => {
+      if (!film.countries || !film.pollHistory) return
+
+      // Check if this film appears in the specified rank range across any poll
+      const appearsInRankRange = film.pollHistory.some(poll => {
+        if (!poll.rank) return false
+        if (rankRange === 'top100') return poll.rank <= 100
+        if (rankRange === 'top250') return poll.rank <= 250
+        return true // 'all' includes everything with a rank
+      })
+
+      if (appearsInRankRange) {
+        film.countries.forEach(country => {
+          if (!distinctFilmsByCountry[country]) {
+            distinctFilmsByCountry[country] = 0
+          }
+          distinctFilmsByCountry[country]++
+        })
+      }
+    })
+
+    return distinctFilmsByCountry
+  }, [filmsData, rankRange])
 
   // Transform countries data based on current filters
   const transformedData = useMemo(() => {
@@ -86,7 +120,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         filmCount,
         continent: countryInfo.continent,
         percentOfTotal,
-        totalFilms: countryInfo.totalFilms // Distinct films count
+        distinctFilms: calculateDistinctFilms[countryName] || 0
       })
     })
 
@@ -97,7 +131,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     })
 
     return data.sort((a, b) => b.filmCount - a.filmCount)
-  }, [countriesData, selectedPoll, rankRange])
+  }, [countriesData, selectedPoll, rankRange, calculateDistinctFilms])
 
   // Set initial top 10 countries when data loads or filters change
   useEffect(() => {
@@ -295,9 +329,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <p className="text-lg font-black text-black mt-1">
             {data.filmCount} {metricLabel}
           </p>
-          {selectedPoll === 'all' && (
+          {selectedPoll === 'all' && data.distinctFilms > 0 && (
             <p className="text-sm text-black font-medium">
-              {data.totalFilms} distinct films
+              {data.distinctFilms} distinct films
             </p>
           )}
           <p className="text-xs text-black font-medium">
