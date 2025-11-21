@@ -286,12 +286,13 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload
+      const metricLabel = selectedPoll === 'all' ? 'poll appearances' : 'films'
       return (
         <div className="bg-white p-3 border-2 border-black shadow-lg">
           <p className="font-bold text-black uppercase tracking-wide">{data.name}</p>
           <p className="text-sm text-black font-medium">{data.continent}</p>
           <p className="text-lg font-black text-black mt-1">
-            {data.filmCount} films
+            {data.filmCount} {metricLabel}
           </p>
           <p className="text-xs text-black font-medium">
             {data.percentOfTotal}% of total
@@ -327,7 +328,10 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
         <div>
           <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-            Top Countries by Film Count
+            {selectedPoll === 'all'
+              ? (rankRange === 'top100' ? 'Top Countries by Top 100 Poll Appearances' : 'Top Countries by Poll Appearances')
+              : (rankRange === 'top100' ? 'Top Countries by Film Count (Top 100)' : 'Top Countries by Film Count')
+            }
           </h2>
           <p className="text-black font-medium">
             Customize displayed countries using the search bar below
@@ -351,7 +355,15 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#d1d5db" />
-          <XAxis type="number" />
+          <XAxis
+            type="number"
+            label={{
+              value: selectedPoll === 'all' ? 'Poll Appearances' : 'Films',
+              position: 'insideBottom',
+              offset: -5,
+              style: { fontWeight: 'bold', fill: '#000000' }
+            }}
+          />
           <YAxis
             dataKey="name"
             type="category"
