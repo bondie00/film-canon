@@ -82,6 +82,16 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         } else {
           distinctFilms = countryInfo.totalFilms || 0
         }
+      } else {
+        // Get distinct films for specific poll
+        const pollData = countryInfo.byPoll[selectedPoll]
+        if (pollData) {
+          if (rankRange === 'top100') {
+            distinctFilms = pollData.distinctFilmsTop100 || 0
+          } else {
+            distinctFilms = pollData.distinctFilms || 0
+          }
+        }
       }
 
       // Calculate percentage (rough estimate for now)
@@ -293,15 +303,14 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload
-      const metricLabel = selectedPoll === 'all' ? 'ballot appearances' : 'films'
       return (
         <div className="bg-white p-3 border-2 border-black shadow-lg">
           <p className="font-bold text-black uppercase tracking-wide">{data.name}</p>
           <p className="text-sm text-black font-medium">{data.continent}</p>
           <p className="text-lg font-black text-black mt-1">
-            {data.filmCount} {metricLabel}
+            {data.filmCount} ballot appearances
           </p>
-          {selectedPoll === 'all' && data.distinctFilms > 0 && (
+          {data.distinctFilms > 0 && (
             <p className="text-sm text-black font-medium">
               {data.distinctFilms} distinct films
             </p>

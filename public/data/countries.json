@@ -6,35 +6,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
-        "total": 1,
-        "top100": 1
+        "total": 3,
+        "top100": 3,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1982": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 1,
-        "top100": 1
+        "total": 3,
+        "top100": 3,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "2012": {
-        "total": 5,
-        "top100": 1
+        "total": 34,
+        "top100": 30,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 1
       },
       "2022": {
-        "total": 7,
-        "top100": 1
+        "total": 57,
+        "top100": 49,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -52,35 +68,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 1,
-        "top100": 0
+        "total": 21,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -94,35 +126,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
-        "total": 2,
-        "top100": 1
+        "total": 5,
+        "top100": 4,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 1
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 13,
-        "top100": 0
+        "total": 22,
+        "top100": 0,
+        "distinctFilms": 13,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 26,
-        "top100": 0
+        "total": 104,
+        "top100": 0,
+        "distinctFilms": 26,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -141,35 +189,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 1,
-        "top100": 0
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -183,35 +247,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 5,
-        "top100": 0
+        "total": 6,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 11,
-        "top100": 0
+        "total": 22,
+        "top100": 0,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 42,
-        "top100": 1
+        "total": 132,
+        "top100": 46,
+        "distinctFilms": 42,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -232,35 +312,51 @@
     "byPoll": {
       "1952": {
         "total": 1,
-        "top100": 1
+        "top100": 1,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
-        "total": 4,
-        "top100": 0
+        "total": 5,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 23,
-        "top100": 0
+        "total": 43,
+        "top100": 0,
+        "distinctFilms": 23,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 41,
-        "top100": 0
+        "total": 66,
+        "top100": 0,
+        "distinctFilms": 41,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -283,35 +379,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -326,35 +438,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -369,35 +497,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
-        "total": 2,
-        "top100": 1
+        "total": 4,
+        "top100": 3,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 1
       },
       "2002": {
-        "total": 4,
-        "top100": 1
+        "total": 7,
+        "top100": 4,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 1
       },
       "2012": {
-        "total": 12,
-        "top100": 1
+        "total": 50,
+        "top100": 34,
+        "distinctFilms": 12,
+        "distinctFilmsTop100": 1
       },
       "2022": {
-        "total": 38,
-        "top100": 2
+        "total": 345,
+        "top100": 260,
+        "distinctFilms": 38,
+        "distinctFilmsTop100": 2
       }
     },
     "byDecade": {
@@ -418,35 +562,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 6,
-        "top100": 0
+        "total": 7,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -463,35 +623,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 1,
-        "top100": 0
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -505,35 +681,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
-        "total": 7,
-        "top100": 2
+        "total": 11,
+        "top100": 6,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 2
       },
       "1982": {
         "total": 4,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "1992": {
-        "total": 5,
-        "top100": 0
+        "total": 6,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 5,
-        "top100": 1
+        "total": 8,
+        "top100": 3,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 1
       },
       "2012": {
-        "total": 11,
-        "top100": 0
+        "total": 21,
+        "top100": 0,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 38,
-        "top100": 0
+        "total": 97,
+        "top100": 0,
+        "distinctFilms": 38,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -555,35 +747,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -598,35 +806,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 4,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 3,
-        "top100": 0
+        "total": 4,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -643,35 +867,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -687,35 +927,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 2,
-        "top100": 0
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -730,35 +986,51 @@
     "byPoll": {
       "1952": {
         "total": 2,
-        "top100": 2
+        "top100": 2,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 2
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 4,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "1982": {
-        "total": 6,
-        "top100": 0
+        "total": 7,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       },
       "1992": {
-        "total": 4,
-        "top100": 1
+        "total": 7,
+        "top100": 3,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 1
       },
       "2002": {
-        "total": 6,
-        "top100": 0
+        "total": 7,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 22,
-        "top100": 0
+        "total": 60,
+        "top100": 0,
+        "distinctFilms": 22,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 54,
-        "top100": 0
+        "total": 126,
+        "top100": 0,
+        "distinctFilms": 54,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -780,35 +1052,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 1,
-        "top100": 0
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 2,
-        "top100": 0
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -823,35 +1111,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 4,
-        "top100": 0
+        "total": 8,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 8,
-        "top100": 0
+        "total": 25,
+        "top100": 0,
+        "distinctFilms": 8,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -869,35 +1173,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
-        "total": 8,
-        "top100": 2
+        "total": 13,
+        "top100": 7,
+        "distinctFilms": 8,
+        "distinctFilmsTop100": 2
       },
       "2002": {
-        "total": 9,
-        "top100": 0
+        "total": 10,
+        "top100": 0,
+        "distinctFilms": 9,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 23,
-        "top100": 0
+        "total": 56,
+        "top100": 0,
+        "distinctFilms": 23,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 52,
-        "top100": 0
+        "total": 118,
+        "top100": 0,
+        "distinctFilms": 52,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -918,35 +1238,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 6,
-        "top100": 0
+        "total": 15,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -964,35 +1300,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1006,35 +1358,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "1992": {
-        "total": 2,
-        "top100": 0
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 4,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 6,
-        "top100": 0
+        "total": 26,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 11,
-        "top100": 0
+        "total": 56,
+        "top100": 0,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1050,35 +1418,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1093,35 +1477,51 @@
     "byPoll": {
       "1952": {
         "total": 1,
-        "top100": 1
+        "top100": 1,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
-        "total": 4,
-        "top100": 1
+        "total": 5,
+        "top100": 2,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 1
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 4,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 17,
-        "top100": 0
+        "total": 42,
+        "top100": 0,
+        "distinctFilms": 17,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 23,
-        "top100": 1
+        "total": 116,
+        "top100": 63,
+        "distinctFilms": 23,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -1142,35 +1542,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1183,36 +1599,52 @@
     "distinctFilmsTop100": 5,
     "byPoll": {
       "1952": {
-        "total": 1,
-        "top100": 1
+        "total": 3,
+        "top100": 3,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1962": {
-        "total": 1,
-        "top100": 1
+        "total": 3,
+        "top100": 3,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1972": {
-        "total": 3,
-        "top100": 3
+        "total": 11,
+        "top100": 11,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 3
       },
       "1982": {
-        "total": 4,
-        "top100": 2
+        "total": 9,
+        "top100": 7,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 2
       },
       "1992": {
-        "total": 2,
-        "top100": 2
+        "total": 11,
+        "top100": 11,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 2
       },
       "2002": {
-        "total": 5,
-        "top100": 3
+        "total": 16,
+        "top100": 12,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 3
       },
       "2012": {
-        "total": 14,
-        "top100": 2
+        "total": 119,
+        "top100": 73,
+        "distinctFilms": 14,
+        "distinctFilmsTop100": 2
       },
       "2022": {
-        "total": 17,
-        "top100": 1
+        "total": 129,
+        "top100": 48,
+        "distinctFilms": 17,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -1234,35 +1666,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1276,35 +1724,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 4,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 4,
-        "top100": 0
+        "total": 5,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1321,35 +1785,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 4,
-        "top100": 0
+        "total": 8,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 10,
-        "top100": 0
+        "total": 34,
+        "top100": 0,
+        "distinctFilms": 10,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1369,35 +1849,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1412,35 +1908,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1457,35 +1969,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1499,35 +2027,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 7,
-        "top100": 0
+        "total": 10,
+        "top100": 0,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 13,
-        "top100": 0
+        "total": 17,
+        "top100": 0,
+        "distinctFilms": 13,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1546,36 +2090,52 @@
     "distinctFilmsTop100": 107,
     "byPoll": {
       "1952": {
-        "total": 37,
-        "top100": 37
+        "total": 121,
+        "top100": 121,
+        "distinctFilms": 37,
+        "distinctFilmsTop100": 37
       },
       "1962": {
-        "total": 42,
-        "top100": 42
+        "total": 130,
+        "top100": 130,
+        "distinctFilms": 42,
+        "distinctFilmsTop100": 42
       },
       "1972": {
-        "total": 72,
-        "top100": 31
+        "total": 180,
+        "top100": 139,
+        "distinctFilms": 72,
+        "distinctFilmsTop100": 31
       },
       "1982": {
-        "total": 98,
-        "top100": 29
+        "total": 238,
+        "top100": 156,
+        "distinctFilms": 98,
+        "distinctFilmsTop100": 29
       },
       "1992": {
-        "total": 100,
-        "top100": 26
+        "total": 257,
+        "top100": 169,
+        "distinctFilms": 100,
+        "distinctFilmsTop100": 26
       },
       "2002": {
-        "total": 94,
-        "top100": 26
+        "total": 259,
+        "top100": 172,
+        "distinctFilms": 94,
+        "distinctFilmsTop100": 26
       },
       "2012": {
-        "total": 309,
-        "top100": 23
+        "total": 1581,
+        "top100": 811,
+        "distinctFilms": 309,
+        "distinctFilmsTop100": 23
       },
       "2022": {
-        "total": 531,
-        "top100": 23
+        "total": 2865,
+        "top100": 1381,
+        "distinctFilms": 531,
+        "distinctFilmsTop100": 23
       }
     },
     "byDecade": {
@@ -1601,36 +2161,52 @@
     "distinctFilmsTop100": 26,
     "byPoll": {
       "1952": {
-        "total": 24,
-        "top100": 24
+        "total": 38,
+        "top100": 38,
+        "distinctFilms": 24,
+        "distinctFilmsTop100": 24
       },
       "1962": {
         "total": 10,
-        "top100": 10
+        "top100": 10,
+        "distinctFilms": 10,
+        "distinctFilmsTop100": 10
       },
       "1972": {
-        "total": 10,
-        "top100": 4
+        "total": 14,
+        "top100": 8,
+        "distinctFilms": 10,
+        "distinctFilmsTop100": 4
       },
       "1982": {
-        "total": 15,
-        "top100": 2
+        "total": 26,
+        "top100": 9,
+        "distinctFilms": 15,
+        "distinctFilmsTop100": 2
       },
       "1992": {
-        "total": 15,
-        "top100": 3
+        "total": 28,
+        "top100": 12,
+        "distinctFilms": 15,
+        "distinctFilmsTop100": 3
       },
       "2002": {
-        "total": 12,
-        "top100": 3
+        "total": 31,
+        "top100": 19,
+        "distinctFilms": 12,
+        "distinctFilmsTop100": 3
       },
       "2012": {
-        "total": 48,
-        "top100": 2
+        "total": 188,
+        "top100": 61,
+        "distinctFilms": 48,
+        "distinctFilmsTop100": 2
       },
       "2022": {
-        "total": 93,
-        "top100": 2
+        "total": 364,
+        "top100": 93,
+        "distinctFilms": 93,
+        "distinctFilmsTop100": 2
       }
     },
     "byDecade": {
@@ -1653,35 +2229,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1696,35 +2288,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
-        "total": 2,
-        "top100": 1
+        "total": 5,
+        "top100": 4,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 1
       },
       "1992": {
-        "total": 3,
-        "top100": 1
+        "total": 6,
+        "top100": 4,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 1
       },
       "2002": {
-        "total": 2,
-        "top100": 1
+        "total": 6,
+        "top100": 5,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 1
       },
       "2012": {
-        "total": 6,
-        "top100": 0
+        "total": 26,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 11,
-        "top100": 0
+        "total": 25,
+        "top100": 0,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1742,35 +2350,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1785,35 +2409,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1827,35 +2467,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1869,35 +2525,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1911,35 +2583,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 4,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 5,
-        "top100": 2
+        "total": 10,
+        "top100": 7,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 2
       },
       "2012": {
-        "total": 26,
-        "top100": 1
+        "total": 107,
+        "top100": 42,
+        "distinctFilms": 26,
+        "distinctFilmsTop100": 1
       },
       "2022": {
-        "total": 52,
-        "top100": 2
+        "total": 279,
+        "top100": 174,
+        "distinctFilms": 52,
+        "distinctFilmsTop100": 2
       }
     },
     "byDecade": {
@@ -1959,35 +2647,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
-        "total": 1,
-        "top100": 1
+        "total": 2,
+        "top100": 2,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1982": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 1,
-        "top100": 0
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 8,
-        "top100": 0
+        "total": 26,
+        "top100": 0,
+        "distinctFilms": 8,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 21,
-        "top100": 0
+        "total": 51,
+        "top100": 0,
+        "distinctFilms": 21,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2008,35 +2712,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
-        "total": 3,
-        "top100": 3
+        "total": 14,
+        "top100": 14,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 3
       },
       "1972": {
-        "total": 5,
-        "top100": 2
+        "total": 9,
+        "top100": 6,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 2
       },
       "1982": {
-        "total": 9,
-        "top100": 5
+        "total": 25,
+        "top100": 21,
+        "distinctFilms": 9,
+        "distinctFilmsTop100": 5
       },
       "1992": {
-        "total": 13,
-        "top100": 5
+        "total": 43,
+        "top100": 35,
+        "distinctFilms": 13,
+        "distinctFilmsTop100": 5
       },
       "2002": {
-        "total": 15,
-        "top100": 2
+        "total": 29,
+        "top100": 12,
+        "distinctFilms": 15,
+        "distinctFilmsTop100": 2
       },
       "2012": {
-        "total": 32,
-        "top100": 1
+        "total": 100,
+        "top100": 32,
+        "distinctFilms": 32,
+        "distinctFilmsTop100": 1
       },
       "2022": {
-        "total": 79,
-        "top100": 1
+        "total": 258,
+        "top100": 57,
+        "distinctFilms": 79,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -2059,35 +2779,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 7,
-        "top100": 0
+        "total": 17,
+        "top100": 0,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2104,35 +2840,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 12,
-        "top100": 3
+        "total": 22,
+        "top100": 10,
+        "distinctFilms": 12,
+        "distinctFilmsTop100": 3
       },
       "2012": {
-        "total": 24,
-        "top100": 1
+        "total": 98,
+        "top100": 31,
+        "distinctFilms": 24,
+        "distinctFilmsTop100": 1
       },
       "2022": {
-        "total": 38,
-        "top100": 1
+        "total": 220,
+        "top100": 78,
+        "distinctFilms": 38,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -2152,35 +2904,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2196,35 +2964,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 14,
-        "top100": 0
+        "total": 15,
+        "top100": 0,
+        "distinctFilms": 14,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2242,35 +3026,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 4,
-        "top100": 0
+        "total": 5,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2286,36 +3086,52 @@
     "distinctFilmsTop100": 39,
     "byPoll": {
       "1952": {
-        "total": 7,
-        "top100": 7
+        "total": 38,
+        "top100": 38,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 7
       },
       "1962": {
-        "total": 17,
-        "top100": 17
+        "total": 77,
+        "top100": 77,
+        "distinctFilms": 17,
+        "distinctFilmsTop100": 17
       },
       "1972": {
-        "total": 36,
-        "top100": 16
+        "total": 86,
+        "top100": 66,
+        "distinctFilms": 36,
+        "distinctFilmsTop100": 16
       },
       "1982": {
-        "total": 53,
-        "top100": 11
+        "total": 117,
+        "top100": 59,
+        "distinctFilms": 53,
+        "distinctFilmsTop100": 11
       },
       "1992": {
-        "total": 48,
-        "top100": 15
+        "total": 116,
+        "top100": 75,
+        "distinctFilms": 48,
+        "distinctFilmsTop100": 15
       },
       "2002": {
-        "total": 49,
-        "top100": 10
+        "total": 108,
+        "top100": 60,
+        "distinctFilms": 49,
+        "distinctFilmsTop100": 10
       },
       "2012": {
-        "total": 117,
-        "top100": 9
+        "total": 625,
+        "top100": 308,
+        "distinctFilms": 117,
+        "distinctFilmsTop100": 9
       },
       "2022": {
-        "total": 188,
-        "top100": 8
+        "total": 949,
+        "top100": 339,
+        "distinctFilms": 188,
+        "distinctFilmsTop100": 8
       }
     },
     "byDecade": {
@@ -2341,35 +3157,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
-        "total": 1,
-        "top100": 1
+        "total": 2,
+        "top100": 2,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 2,
-        "top100": 0
+        "total": 4,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 3,
-        "top100": 0
+        "total": 6,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2385,35 +3217,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2426,36 +3274,52 @@
     "distinctFilmsTop100": 20,
     "byPoll": {
       "1952": {
-        "total": 1,
-        "top100": 1
+        "total": 2,
+        "top100": 2,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1962": {
-        "total": 11,
-        "top100": 11
+        "total": 42,
+        "top100": 42,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 11
       },
       "1972": {
-        "total": 21,
-        "top100": 9
+        "total": 54,
+        "top100": 42,
+        "distinctFilms": 21,
+        "distinctFilmsTop100": 9
       },
       "1982": {
-        "total": 31,
-        "top100": 7
+        "total": 78,
+        "top100": 47,
+        "distinctFilms": 31,
+        "distinctFilmsTop100": 7
       },
       "1992": {
-        "total": 32,
-        "top100": 10
+        "total": 89,
+        "top100": 63,
+        "distinctFilms": 32,
+        "distinctFilmsTop100": 10
       },
       "2002": {
-        "total": 34,
-        "top100": 9
+        "total": 111,
+        "top100": 81,
+        "distinctFilms": 34,
+        "distinctFilmsTop100": 9
       },
       "2012": {
-        "total": 110,
-        "top100": 6
+        "total": 534,
+        "top100": 301,
+        "distinctFilms": 110,
+        "distinctFilmsTop100": 6
       },
       "2022": {
-        "total": 199,
-        "top100": 8
+        "total": 952,
+        "top100": 479,
+        "distinctFilms": 199,
+        "distinctFilmsTop100": 8
       }
     },
     "byDecade": {
@@ -2479,35 +3343,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2521,35 +3401,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2563,35 +3459,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 1,
-        "top100": 0
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2605,35 +3517,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 7,
-        "top100": 0
+        "total": 8,
+        "top100": 0,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2650,35 +3578,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 1,
-        "top100": 0
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2692,35 +3636,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2735,35 +3695,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2778,35 +3754,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2820,35 +3812,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
-        "total": 2,
-        "top100": 0
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 2,
-        "top100": 0
+        "total": 7,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 4,
-        "top100": 0
+        "total": 13,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2864,35 +3872,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 1,
-        "top100": 0
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 1,
-        "top100": 0
+        "total": 5,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2906,35 +3930,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 1,
-        "top100": 0
+        "total": 4,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 4,
-        "top100": 0
+        "total": 34,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2949,36 +3989,52 @@
     "distinctFilmsTop100": 5,
     "byPoll": {
       "1952": {
-        "total": 1,
-        "top100": 1
+        "total": 5,
+        "top100": 5,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1962": {
-        "total": 4,
-        "top100": 4
+        "total": 11,
+        "top100": 11,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 4
       },
       "1972": {
-        "total": 5,
-        "top100": 4
+        "total": 18,
+        "top100": 17,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 4
       },
       "1982": {
-        "total": 6,
-        "top100": 3
+        "total": 17,
+        "top100": 13,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 3
       },
       "1992": {
-        "total": 5,
-        "top100": 0
+        "total": 9,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 6,
-        "top100": 1
+        "total": 10,
+        "top100": 3,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 1
       },
       "2012": {
-        "total": 20,
-        "top100": 0
+        "total": 69,
+        "top100": 0,
+        "distinctFilms": 20,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 43,
-        "top100": 0
+        "total": 128,
+        "top100": 0,
+        "distinctFilms": 43,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3000,35 +4056,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3042,35 +4114,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 6,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3087,35 +4175,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3129,35 +4233,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3171,35 +4291,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 7,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 14,
-        "top100": 0
+        "total": 22,
+        "top100": 0,
+        "distinctFilms": 14,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3219,35 +4355,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 1,
-        "top100": 0
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 4,
-        "top100": 0
+        "total": 14,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 21,
-        "top100": 1
+        "total": 97,
+        "top100": 46,
+        "distinctFilms": 21,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -3266,35 +4418,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 2,
-        "top100": 0
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3308,35 +4476,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3351,35 +4535,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 1,
-        "top100": 0
+        "total": 5,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 5,
-        "top100": 0
+        "total": 13,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3396,35 +4596,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3439,35 +4655,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 5,
-        "top100": 0
+        "total": 8,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 8,
-        "top100": 0
+        "total": 14,
+        "top100": 0,
+        "distinctFilms": 8,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3485,35 +4717,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3527,35 +4775,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3570,35 +4834,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 9,
-        "top100": 0
+        "total": 12,
+        "top100": 0,
+        "distinctFilms": 9,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 20,
-        "top100": 0
+        "total": 38,
+        "top100": 0,
+        "distinctFilms": 20,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3618,35 +4898,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 4,
-        "top100": 4
+        "top100": 4,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 4
       },
       "1972": {
-        "total": 3,
-        "top100": 1
+        "total": 5,
+        "top100": 3,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 1
       },
       "1982": {
-        "total": 6,
-        "top100": 1
+        "total": 9,
+        "top100": 3,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 1
       },
       "1992": {
-        "total": 7,
-        "top100": 1
+        "total": 12,
+        "top100": 5,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 1
       },
       "2002": {
-        "total": 6,
-        "top100": 2
+        "total": 11,
+        "top100": 7,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 2
       },
       "2012": {
-        "total": 21,
-        "top100": 0
+        "total": 32,
+        "top100": 0,
+        "distinctFilms": 21,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 30,
-        "top100": 0
+        "total": 56,
+        "top100": 0,
+        "distinctFilms": 30,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3667,35 +4963,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 16,
-        "top100": 0
+        "total": 31,
+        "top100": 0,
+        "distinctFilms": 16,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 39,
-        "top100": 0
+        "total": 87,
+        "top100": 0,
+        "distinctFilms": 39,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3716,35 +5028,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 6,
-        "top100": 0
+        "total": 14,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 11,
-        "top100": 0
+        "total": 20,
+        "top100": 0,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3762,35 +5090,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 4,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 13,
-        "top100": 0
+        "total": 28,
+        "top100": 0,
+        "distinctFilms": 13,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 25,
-        "top100": 0
+        "total": 44,
+        "top100": 0,
+        "distinctFilms": 25,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3808,35 +5152,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3850,35 +5210,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3892,35 +5268,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 3,
-        "top100": 0
+        "total": 4,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 9,
-        "top100": 1
+        "total": 38,
+        "top100": 17,
+        "distinctFilms": 9,
+        "distinctFilmsTop100": 1
       },
       "2022": {
-        "total": 13,
-        "top100": 2
+        "total": 114,
+        "top100": 70,
+        "distinctFilms": 13,
+        "distinctFilmsTop100": 2
       }
     },
     "byDecade": {
@@ -3938,35 +5330,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3981,35 +5389,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4024,35 +5448,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4066,35 +5506,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4108,35 +5564,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 3,
-        "top100": 0
+        "total": 5,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4152,35 +5624,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
-        "total": 2,
-        "top100": 1
+        "total": 4,
+        "top100": 3,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 1
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 16,
-        "top100": 0
+        "total": 24,
+        "top100": 0,
+        "distinctFilms": 16,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 37,
-        "top100": 1
+        "total": 101,
+        "top100": 32,
+        "distinctFilms": 37,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -4200,36 +5688,52 @@
     "distinctFilmsTop100": 34,
     "byPoll": {
       "1952": {
-        "total": 16,
-        "top100": 16
+        "total": 56,
+        "top100": 56,
+        "distinctFilms": 16,
+        "distinctFilmsTop100": 16
       },
       "1962": {
-        "total": 18,
-        "top100": 18
+        "total": 73,
+        "top100": 73,
+        "distinctFilms": 18,
+        "distinctFilmsTop100": 18
       },
       "1972": {
-        "total": 20,
-        "top100": 8
+        "total": 53,
+        "top100": 41,
+        "distinctFilms": 20,
+        "distinctFilmsTop100": 8
       },
       "1982": {
-        "total": 26,
-        "top100": 8
+        "total": 72,
+        "top100": 47,
+        "distinctFilms": 26,
+        "distinctFilmsTop100": 8
       },
       "1992": {
-        "total": 15,
-        "top100": 7
+        "total": 58,
+        "top100": 47,
+        "distinctFilms": 15,
+        "distinctFilmsTop100": 7
       },
       "2002": {
-        "total": 21,
-        "top100": 6
+        "total": 64,
+        "top100": 47,
+        "distinctFilms": 21,
+        "distinctFilmsTop100": 6
       },
       "2012": {
-        "total": 62,
-        "top100": 6
+        "total": 431,
+        "top100": 277,
+        "distinctFilms": 62,
+        "distinctFilmsTop100": 6
       },
       "2022": {
-        "total": 70,
-        "top100": 5
+        "total": 543,
+        "top100": 292,
+        "distinctFilms": 70,
+        "distinctFilmsTop100": 5
       }
     },
     "byDecade": {
@@ -4250,35 +5754,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 2,
-        "top100": 2
+        "top100": 2,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 2
       },
       "1972": {
-        "total": 2,
-        "top100": 2
+        "total": 11,
+        "top100": 11,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 2
       },
       "1982": {
-        "total": 4,
-        "top100": 2
+        "total": 11,
+        "top100": 9,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 2
       },
       "1992": {
-        "total": 7,
-        "top100": 1
+        "total": 11,
+        "top100": 4,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 1
       },
       "2002": {
-        "total": 9,
-        "top100": 4
+        "total": 19,
+        "top100": 13,
+        "distinctFilms": 9,
+        "distinctFilmsTop100": 4
       },
       "2012": {
-        "total": 31,
-        "top100": 1
+        "total": 109,
+        "top100": 20,
+        "distinctFilms": 31,
+        "distinctFilmsTop100": 1
       },
       "2022": {
-        "total": 48,
-        "top100": 1
+        "total": 176,
+        "top100": 34,
+        "distinctFilms": 48,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -4300,35 +5820,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4342,35 +5878,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 3,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4385,36 +5937,52 @@
     "distinctFilmsTop100": 15,
     "byPoll": {
       "1952": {
-        "total": 6,
-        "top100": 6
+        "total": 10,
+        "top100": 10,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 6
       },
       "1962": {
-        "total": 4,
-        "top100": 4
+        "total": 9,
+        "top100": 9,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 4
       },
       "1972": {
-        "total": 10,
-        "top100": 6
+        "total": 35,
+        "top100": 31,
+        "distinctFilms": 10,
+        "distinctFilmsTop100": 6
       },
       "1982": {
-        "total": 11,
-        "top100": 3
+        "total": 28,
+        "top100": 16,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 3
       },
       "1992": {
-        "total": 8,
-        "top100": 4
+        "total": 24,
+        "top100": 20,
+        "distinctFilms": 8,
+        "distinctFilmsTop100": 4
       },
       "2002": {
-        "total": 11,
-        "top100": 4
+        "total": 29,
+        "top100": 22,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 4
       },
       "2012": {
-        "total": 25,
-        "top100": 4
+        "total": 166,
+        "top100": 108,
+        "distinctFilms": 25,
+        "distinctFilmsTop100": 4
       },
       "2022": {
-        "total": 47,
-        "top100": 1
+        "total": 264,
+        "top100": 76,
+        "distinctFilms": 47,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -4438,35 +6006,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 1,
-        "top100": 1
+        "top100": 1,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 1
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
-        "total": 3,
-        "top100": 1
+        "total": 7,
+        "top100": 5,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 1
       },
       "1992": {
-        "total": 3,
-        "top100": 2
+        "total": 9,
+        "top100": 8,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 2
       },
       "2002": {
-        "total": 4,
-        "top100": 2
+        "total": 9,
+        "top100": 7,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 2
       },
       "2012": {
-        "total": 10,
-        "top100": 1
+        "total": 65,
+        "top100": 34,
+        "distinctFilms": 10,
+        "distinctFilmsTop100": 1
       },
       "2022": {
-        "total": 14,
-        "top100": 1
+        "total": 55,
+        "top100": 35,
+        "distinctFilms": 14,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -4487,35 +6071,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 3,
-        "top100": 0
+        "total": 4,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 5,
-        "top100": 0
+        "total": 7,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4532,35 +6132,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
-        "total": 5,
-        "top100": 0
+        "total": 6,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 9,
-        "top100": 2
+        "total": 18,
+        "top100": 8,
+        "distinctFilms": 9,
+        "distinctFilmsTop100": 2
       },
       "2012": {
-        "total": 20,
-        "top100": 2
+        "total": 97,
+        "top100": 36,
+        "distinctFilms": 20,
+        "distinctFilmsTop100": 2
       },
       "2022": {
-        "total": 33,
-        "top100": 2
+        "total": 219,
+        "top100": 67,
+        "distinctFilms": 33,
+        "distinctFilmsTop100": 2
       }
     },
     "byDecade": {
@@ -4580,35 +6196,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 6,
-        "top100": 0
+        "total": 33,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 11,
-        "top100": 1
+        "total": 74,
+        "top100": 31,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -4626,35 +6258,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
-        "total": 1,
-        "top100": 0
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 3,
-        "top100": 0
+        "total": 4,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4669,35 +6317,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 9,
-        "top100": 0
+        "total": 14,
+        "top100": 0,
+        "distinctFilms": 9,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 10,
-        "top100": 0
+        "total": 26,
+        "top100": 0,
+        "distinctFilms": 10,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4716,35 +6380,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4758,36 +6438,52 @@
     "distinctFilmsTop100": 42,
     "byPoll": {
       "1952": {
-        "total": 19,
-        "top100": 19
+        "total": 37,
+        "top100": 37,
+        "distinctFilms": 19,
+        "distinctFilmsTop100": 19
       },
       "1962": {
-        "total": 15,
-        "top100": 15
+        "total": 21,
+        "top100": 21,
+        "distinctFilms": 15,
+        "distinctFilmsTop100": 15
       },
       "1972": {
-        "total": 23,
-        "top100": 10
+        "total": 40,
+        "top100": 27,
+        "distinctFilms": 23,
+        "distinctFilmsTop100": 10
       },
       "1982": {
-        "total": 49,
-        "top100": 7
+        "total": 87,
+        "top100": 39,
+        "distinctFilms": 49,
+        "distinctFilmsTop100": 7
       },
       "1992": {
-        "total": 51,
-        "top100": 8
+        "total": 91,
+        "top100": 41,
+        "distinctFilms": 51,
+        "distinctFilmsTop100": 8
       },
       "2002": {
-        "total": 45,
-        "top100": 7
+        "total": 96,
+        "top100": 49,
+        "distinctFilms": 45,
+        "distinctFilmsTop100": 7
       },
       "2012": {
-        "total": 166,
-        "top100": 6
+        "total": 569,
+        "top100": 192,
+        "distinctFilms": 166,
+        "distinctFilmsTop100": 6
       },
       "2022": {
-        "total": 360,
-        "top100": 6
+        "total": 1211,
+        "top100": 325,
+        "distinctFilms": 360,
+        "distinctFilmsTop100": 6
       }
     },
     "byDecade": {
@@ -4813,36 +6509,52 @@
     "distinctFilmsTop100": 190,
     "byPoll": {
       "1952": {
-        "total": 85,
-        "top100": 85
+        "total": 240,
+        "top100": 240,
+        "distinctFilms": 85,
+        "distinctFilmsTop100": 85
       },
       "1962": {
-        "total": 71,
-        "top100": 71
+        "total": 178,
+        "top100": 178,
+        "distinctFilms": 71,
+        "distinctFilmsTop100": 71
       },
       "1972": {
-        "total": 135,
-        "top100": 53
+        "total": 293,
+        "top100": 211,
+        "distinctFilms": 135,
+        "distinctFilmsTop100": 53
       },
       "1982": {
-        "total": 217,
-        "top100": 50
+        "total": 508,
+        "top100": 313,
+        "distinctFilms": 217,
+        "distinctFilmsTop100": 50
       },
       "1992": {
-        "total": 233,
-        "top100": 46
+        "total": 520,
+        "top100": 296,
+        "distinctFilms": 233,
+        "distinctFilmsTop100": 46
       },
       "2002": {
-        "total": 242,
-        "top100": 50
+        "total": 600,
+        "top100": 378,
+        "distinctFilms": 242,
+        "distinctFilmsTop100": 50
       },
       "2012": {
-        "total": 728,
-        "top100": 36
+        "total": 3226,
+        "top100": 1474,
+        "distinctFilms": 728,
+        "distinctFilmsTop100": 36
       },
       "2022": {
-        "total": 1419,
-        "top100": 36
+        "total": 6519,
+        "top100": 2302,
+        "distinctFilms": 1419,
+        "distinctFilmsTop100": 36
       }
     },
     "byDecade": {
@@ -4869,35 +6581,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4911,35 +6639,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 4,
-        "top100": 0
+        "total": 5,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4957,35 +6701,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5001,35 +6761,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 2,
-        "top100": 2
+        "top100": 2,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 2
       },
       "1972": {
-        "total": 7,
-        "top100": 3
+        "total": 13,
+        "top100": 9,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 3
       },
       "1982": {
-        "total": 17,
-        "top100": 3
+        "total": 28,
+        "top100": 11,
+        "distinctFilms": 17,
+        "distinctFilmsTop100": 3
       },
       "1992": {
-        "total": 20,
-        "top100": 1
+        "total": 28,
+        "top100": 4,
+        "distinctFilms": 20,
+        "distinctFilmsTop100": 1
       },
       "2002": {
-        "total": 13,
-        "top100": 0
+        "total": 16,
+        "top100": 0,
+        "distinctFilms": 13,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 56,
-        "top100": 2
+        "total": 161,
+        "top100": 35,
+        "distinctFilms": 56,
+        "distinctFilmsTop100": 2
       },
       "2022": {
-        "total": 93,
-        "top100": 1
+        "total": 311,
+        "top100": 45,
+        "distinctFilms": 93,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -5047,35 +6823,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 2,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       },
       "2012": {
-        "total": 7,
-        "top100": 0
+        "total": 12,
+        "top100": 0,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 0
       },
       "2022": {
-        "total": 21,
-        "top100": 0
+        "total": 34,
+        "top100": 0,
+        "distinctFilms": 21,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5094,35 +6886,51 @@
     "byPoll": {
       "1952": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1962": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1972": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1982": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "1992": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2002": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2012": {
         "total": 0,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 0,
+        "distinctFilmsTop100": 0
       },
       "2022": {
         "total": 1,
-        "top100": 0
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
