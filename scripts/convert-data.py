@@ -112,6 +112,7 @@ def generate_films_json(df, output_path):
             'key': int(row['key']),
             'FilmTitle': str(row['FilmTitle']),
             'databaseFilmTitle': str(row['databaseFilmTitle']),
+            'AlternateTitle': str(row['AlternateTitle']) if pd.notna(row['AlternateTitle']) else None,
             'Year': str(row['Year']) if pd.notna(row['Year']) else None,
             'directors': directors,
             'countries': countries,
