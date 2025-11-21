@@ -29,18 +29,18 @@ export default function CountryOriginMain() {
 
           {/* LEFT SIDEBAR - STICKY FILTERS */}
           <div className="col-span-12 lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-md p-6 lg:sticky lg:top-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Filters</h2>
+            <div className="bg-white border-4 border-black p-6 lg:sticky lg:top-8">
+              <h2 className="text-3xl font-bold text-black mb-6 uppercase tracking-wider">Filters</h2>
 
               {/* POLL SELECTION FILTER */}
-              <div className="mb-6 pb-6 border-b border-gray-200">
-                <label className="block text-sm font-semibold text-gray-700 mb-3">
+              <div className="mb-6 pb-6 border-b-2 border-gray-300">
+                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
                   Poll Selection
                 </label>
                 <select
                   value={selectedPoll}
                   onChange={(e) => setSelectedPoll(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black"
                 >
                   <option value="all">All Polls Combined</option>
                   <option value="2022">2022 (Latest)</option>
@@ -55,8 +55,8 @@ export default function CountryOriginMain() {
               </div>
 
               {/* RANK RANGE FILTER */}
-              <div className="mb-6 pb-6 border-b border-gray-200">
-                <label className="block text-sm font-semibold text-gray-700 mb-3">
+              <div className="mb-6 pb-6 border-b-2 border-gray-300">
+                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
                   Film Rank Range
                 </label>
                 <div className="space-y-2">
@@ -119,9 +119,9 @@ export default function CountryOriginMain() {
               </div>
 
               {/* CURRENT FILTER SUMMARY */}
-              <div className="bg-blue-50 rounded-lg p-4 mb-6">
-                <div className="text-xs font-semibold text-blue-900 mb-2">Currently Showing:</div>
-                <div className="text-sm text-blue-800">
+              <div className="bg-blue-50 border-2 border-black p-4 mb-6">
+                <div className="text-xs font-semibold text-black mb-2 uppercase tracking-wider">Currently Showing:</div>
+                <div className="text-sm text-black">
                   <div className="mb-1">
                     📅 {selectedPoll === 'all' ? 'All Polls Combined' : `${selectedPoll} Poll`}
                   </div>
@@ -134,10 +134,10 @@ export default function CountryOriginMain() {
 
               {/* ACTION BUTTONS */}
               <div className="space-y-2">
-                <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 font-semibold text-sm transition-colors">
+                <button className="w-full bg-black text-white py-2 border-2 border-black hover:bg-gray-900 font-bold text-sm transition-colors uppercase tracking-wider">
                   Apply Filters
                 </button>
-                <button className="w-full bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300 text-sm transition-colors">
+                <button className="w-full bg-white text-black py-2 border-2 border-black hover:bg-gray-100 text-sm transition-colors uppercase tracking-wider font-bold">
                   Reset All
                 </button>
               </div>
@@ -148,40 +148,40 @@ export default function CountryOriginMain() {
           <div className="col-span-12 lg:col-span-9">
 
             {/* BREADCRUMB */}
-            <div className="text-sm text-gray-500 mb-2">
-              <a href="/visualizations" className="hover:text-gray-700">Visualizations</a>
+            <div className="text-sm text-black mb-2 uppercase tracking-wide">
+              <a href="/visualizations" className="hover:underline font-bold">Visualizations</a>
               <span> / </span>
-              <span className="text-gray-900">Films by Country of Origin</span>
+              <span className="font-bold">Films by Country of Origin</span>
             </div>
 
             {/* PAGE TITLE */}
-            <h1 className="text-4xl font-bold text-gray-900 mb-6">Films by Country of Origin</h1>
+            <h1 className="text-6xl font-black text-black mb-6 uppercase tracking-tight border-b-4 border-black pb-4">Films by Country of Origin</h1>
 
             {/* INFO BANNER */}
-            <div className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-3 mb-8">
-              <div className="text-sm text-gray-700">
-                <span className="font-medium">Showing 117 countries across 3,817 films</span>
-                <span className="mx-2 text-gray-400">|</span>
-                <span className="text-gray-600">Filters: {getFilterText()}</span>
+            <div className="bg-white border-2 border-black px-4 py-3 mb-8">
+              <div className="text-sm text-black">
+                <span className="font-bold uppercase tracking-wide">Showing 117 countries across 3,817 films</span>
+                <span className="mx-2 text-black">|</span>
+                <span className="font-medium">Filters: {getFilterText()}</span>
               </div>
             </div>
 
             {/* VISUALIZATION 1: WORLD MAP */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <div className="bg-white border-4 border-black p-6 mb-8">
+              <div className="mb-6 border-b-2 border-gray-300 pb-4">
+                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
                   Global Distribution
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-black font-medium">
                   Darker colors indicate more films. Click any country to see detailed analysis.
                 </p>
               </div>
 
               {/* PLACEHOLDER FOR WORLD MAP */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded border-2 border-dashed border-gray-300 h-[500px] flex items-center justify-center">
-                <div className="text-center text-gray-500 max-w-2xl p-6">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[500px] flex items-center justify-center">
+                <div className="text-center text-black max-w-2xl p-6">
                   <div className="text-6xl mb-4">🗺️</div>
-                  <div className="font-bold text-xl mb-3 text-gray-700">Interactive World Map - Choropleth</div>
+                  <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Interactive World Map - Choropleth</div>
                   <div className="text-sm space-y-2">
                     <p>• Countries colored by film count (gradient from light to dark)</p>
                     <p>• Hover to see country name and exact film count</p>
@@ -195,46 +195,46 @@ export default function CountryOriginMain() {
               </div>
 
               {/* Map Legend */}
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm">
-                <span className="text-gray-600 font-medium">Film Count:</span>
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
+                <span className="text-black font-bold uppercase tracking-wide">Film Count:</span>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-100 border border-gray-300"></div>
-                  <span className="text-gray-600">1-10</span>
+                  <div className="w-8 h-4 bg-blue-100 border-2 border-black"></div>
+                  <span className="text-black font-medium">1-10</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-300 border border-gray-300"></div>
-                  <span className="text-gray-600">10-50</span>
+                  <div className="w-8 h-4 bg-blue-300 border-2 border-black"></div>
+                  <span className="text-black font-medium">10-50</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-500 border border-gray-300"></div>
-                  <span className="text-gray-600">50-100</span>
+                  <div className="w-8 h-4 bg-blue-500 border-2 border-black"></div>
+                  <span className="text-black font-medium">50-100</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-700 border border-gray-300"></div>
-                  <span className="text-gray-600">100-500</span>
+                  <div className="w-8 h-4 bg-blue-700 border-2 border-black"></div>
+                  <span className="text-black font-medium">100-500</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-900 border border-gray-300"></div>
-                  <span className="text-gray-600">500+</span>
+                  <div className="w-8 h-4 bg-blue-900 border-2 border-black"></div>
+                  <span className="text-black font-medium">500+</span>
                 </div>
               </div>
             </div>
 
             {/* VISUALIZATION 2: BAR CHART - TOP COUNTRIES */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4">
+            <div className="bg-white border-4 border-black p-6 mb-8">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
                     Top Countries by Film Count
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-black font-medium">
                     Compare the most represented nations in the canon
                   </p>
                 </div>
 
                 {/* Customization Options */}
                 <div className="flex items-center gap-3">
-                  <select className="px-3 py-1 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <select className="px-3 py-1 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black font-medium">
                     <option>Show Top 10</option>
                     <option>Show Top 15</option>
                     <option>Show Top 20</option>
@@ -244,10 +244,10 @@ export default function CountryOriginMain() {
               </div>
 
               {/* PLACEHOLDER FOR BAR CHART */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded border-2 border-dashed border-gray-300 h-[400px] flex items-center justify-center">
-                <div className="text-center text-gray-500 max-w-2xl p-6">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[400px] flex items-center justify-center">
+                <div className="text-center text-black max-w-2xl p-6">
                   <div className="text-6xl mb-4">📊</div>
-                  <div className="font-bold text-xl mb-3 text-gray-700">Horizontal Bar Chart</div>
+                  <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Horizontal Bar Chart</div>
                   <div className="text-sm space-y-2">
                     <p>• Bars sorted by film count (highest to lowest)</p>
                     <p>• Y-axis: Country names | X-axis: Number of films</p>
@@ -263,21 +263,21 @@ export default function CountryOriginMain() {
             </div>
 
             {/* VISUALIZATION 3: DECADE HEATMAP */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <div className="bg-white border-4 border-black p-6 mb-8">
+              <div className="mb-6 border-b-2 border-gray-300 pb-4">
+                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
                   Films by Decade and Country
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-black font-medium">
                   When were films produced that appear in the canon? See which decades shaped each nation's contribution.
                 </p>
               </div>
 
               {/* PLACEHOLDER FOR HEATMAP */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded border-2 border-dashed border-gray-300 h-[500px] flex items-center justify-center">
-                <div className="text-center text-gray-500 max-w-2xl p-6">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[500px] flex items-center justify-center">
+                <div className="text-center text-black max-w-2xl p-6">
                   <div className="text-6xl mb-4">🔥</div>
-                  <div className="font-bold text-xl mb-3 text-gray-700">Interactive Heatmap</div>
+                  <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Interactive Heatmap</div>
                   <div className="text-sm space-y-2">
                     <p>• Y-axis: Top 20-30 countries</p>
                     <p>• X-axis: Decades (1910s, 1920s... 2020s)</p>
@@ -292,38 +292,38 @@ export default function CountryOriginMain() {
               </div>
 
               {/* Heatmap Legend */}
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm">
-                <span className="text-gray-600 font-medium">Films per decade:</span>
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
+                <span className="text-black font-bold uppercase tracking-wide">Films per decade:</span>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-100 border border-gray-300"></div>
-                  <span className="text-gray-600">1-5</span>
+                  <div className="w-8 h-4 bg-blue-100 border-2 border-black"></div>
+                  <span className="text-black font-medium">1-5</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-300 border border-gray-300"></div>
-                  <span className="text-gray-600">5-15</span>
+                  <div className="w-8 h-4 bg-blue-300 border-2 border-black"></div>
+                  <span className="text-black font-medium">5-15</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-500 border border-gray-300"></div>
-                  <span className="text-gray-600">15-30</span>
+                  <div className="w-8 h-4 bg-blue-500 border-2 border-black"></div>
+                  <span className="text-black font-medium">15-30</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-700 border border-gray-300"></div>
-                  <span className="text-gray-600">30-50</span>
+                  <div className="w-8 h-4 bg-blue-700 border-2 border-black"></div>
+                  <span className="text-black font-medium">30-50</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-900 border border-gray-300"></div>
-                  <span className="text-gray-600">50+</span>
+                  <div className="w-8 h-4 bg-blue-900 border-2 border-black"></div>
+                  <span className="text-black font-medium">50+</span>
                 </div>
               </div>
             </div>
 
             {/* VISUALIZATION 4: TREEMAP - CONTINENTAL BREAKDOWN */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <div className="bg-white border-4 border-black p-6 mb-8">
+              <div className="mb-6 border-b-2 border-gray-300 pb-4">
+                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
                   Continental & Country Breakdown
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-black font-medium">
                   See both continent-level patterns and individual country contributions.
                   Size represents film count.
                 </p>
@@ -331,8 +331,8 @@ export default function CountryOriginMain() {
 
               {/* Simple stacked bar for continental overview */}
               <div className="mb-6">
-                <div className="text-sm font-medium text-gray-700 mb-2">Continental Distribution</div>
-                <div className="flex h-8 rounded overflow-hidden shadow-sm">
+                <div className="text-sm font-bold text-black mb-2 uppercase tracking-wide">Continental Distribution</div>
+                <div className="flex h-8 border-2 border-black overflow-hidden">
                   <div className="bg-blue-500 flex items-center justify-center text-white text-xs font-semibold" style={{width: '45%'}}>
                     Europe 45%
                   </div>
@@ -355,18 +355,18 @@ export default function CountryOriginMain() {
               </div>
 
               {/* PLACEHOLDER FOR TREEMAP */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded border-2 border-dashed border-gray-300 h-[600px] flex items-center justify-center">
-                <div className="text-center text-gray-500 max-w-2xl p-6">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[600px] flex items-center justify-center">
+                <div className="text-center text-black max-w-2xl p-6">
                   <div className="text-6xl mb-4">🗂️</div>
-                  <div className="font-bold text-xl mb-3 text-gray-700">Interactive Treemap Visualization</div>
+                  <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Interactive Treemap Visualization</div>
                   <div className="text-sm space-y-3">
                     <div>
-                      <strong className="text-gray-700">Structure:</strong><br/>
+                      <strong className="text-black font-bold">Structure:</strong><br/>
                       Large rectangles = Continents (sized by total films)<br/>
                       Nested rectangles = Individual countries
                     </div>
                     <div>
-                      <strong className="text-gray-700">Interactions:</strong><br/>
+                      <strong className="text-black font-bold">Interactions:</strong><br/>
                       • Hover: "France: 679 films (15.9% of Europe, 7.2% of total)"<br/>
                       • Click country: Navigate to detail page<br/>
                       • Click continent: Filter view to that continent
@@ -379,44 +379,44 @@ export default function CountryOriginMain() {
               </div>
 
               {/* Continent Color Legend */}
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm">
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-blue-500 rounded border border-gray-300"></div>
-                  <span className="text-gray-700 font-medium">Europe</span>
+                  <div className="w-6 h-6 bg-blue-500 border-2 border-black"></div>
+                  <span className="text-black font-bold">Europe</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-green-500 rounded border border-gray-300"></div>
-                  <span className="text-gray-700 font-medium">Asia</span>
+                  <div className="w-6 h-6 bg-green-500 border-2 border-black"></div>
+                  <span className="text-black font-bold">Asia</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-purple-500 rounded border border-gray-300"></div>
-                  <span className="text-gray-700 font-medium">North America</span>
+                  <div className="w-6 h-6 bg-purple-500 border-2 border-black"></div>
+                  <span className="text-black font-bold">North America</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-orange-500 rounded border border-gray-300"></div>
-                  <span className="text-gray-700 font-medium">Latin America</span>
+                  <div className="w-6 h-6 bg-orange-500 border-2 border-black"></div>
+                  <span className="text-black font-bold">Latin America</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-red-500 rounded border border-gray-300"></div>
-                  <span className="text-gray-700 font-medium">Africa</span>
+                  <div className="w-6 h-6 bg-red-500 border-2 border-black"></div>
+                  <span className="text-black font-bold">Africa</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-pink-500 rounded border border-gray-300"></div>
-                  <span className="text-gray-700 font-medium">Oceania</span>
+                  <div className="w-6 h-6 bg-pink-500 border-2 border-black"></div>
+                  <span className="text-black font-bold">Oceania</span>
                 </div>
               </div>
             </div>
 
             {/* KEY INSIGHTS SECTION */}
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-8 mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+            <div className="bg-white border-4 border-black p-8 mb-8">
+              <h2 className="text-3xl font-black text-black mb-4 flex items-center uppercase tracking-wide border-b-2 border-gray-300 pb-4">
                 <span className="text-3xl mr-3">💡</span>
                 Key Geographic Insights
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-2">Domination Patterns</h3>
-                  <ul className="space-y-2 text-gray-700 text-sm">
+                  <h3 className="font-black text-black mb-2 uppercase tracking-wide text-lg">Domination Patterns</h3>
+                  <ul className="space-y-2 text-black text-sm font-medium">
                     <li>• USA represents 1,780 films (37% of all films in the dataset)</li>
                     <li>• Europe remains the most represented continent at 45%</li>
                     <li>• France leads Europe with 679 films</li>
@@ -424,8 +424,8 @@ export default function CountryOriginMain() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-2">Temporal Patterns</h3>
-                  <ul className="space-y-2 text-gray-700 text-sm">
+                  <h3 className="font-black text-black mb-2 uppercase tracking-wide text-lg">Temporal Patterns</h3>
+                  <ul className="space-y-2 text-black text-sm font-medium">
                     <li>• France's 1960s dominance reflects the New Wave movement</li>
                     <li>• Japan's golden age (1950s) heavily represented with Kurosawa/Ozu</li>
                     <li>• Recent decades show growth from East Asian cinema (Korea, China)</li>
@@ -436,11 +436,11 @@ export default function CountryOriginMain() {
             </div>
 
             {/* NAVIGATION: EXPLORE SPECIFIC COUNTRIES */}
-            <div className="bg-white rounded-lg shadow-md p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
+            <div className="bg-white border-4 border-black p-8">
+              <h2 className="text-3xl font-black text-black mb-4 text-center uppercase tracking-wide border-b-2 border-gray-300 pb-4">
                 Explore Individual Countries
               </h2>
-              <p className="text-gray-600 text-center mb-6">
+              <p className="text-black text-center mb-6 font-medium">
                 Dive deep into any country's cinematic contribution with detailed analysis,
                 rank progressions, and notable films
               </p>
@@ -451,9 +451,9 @@ export default function CountryOriginMain() {
                   <input
                     type="text"
                     placeholder="Search for a country (e.g., France, Japan, Brazil)..."
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    className="w-full px-4 py-3 border-2 border-black focus:outline-none focus:ring-2 focus:ring-black font-medium"
                   />
-                  <button className="absolute right-2 top-2 px-4 py-1.5 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors">
+                  <button className="absolute right-2 top-2 px-4 py-1.5 bg-black text-white border-2 border-black text-sm hover:bg-gray-900 transition-colors font-bold uppercase tracking-wider">
                     Go
                   </button>
                 </div>
@@ -461,36 +461,36 @@ export default function CountryOriginMain() {
 
               {/* Popular Countries Quick Links */}
               <div className="text-center">
-                <div className="text-sm font-semibold text-gray-600 mb-3">Popular Countries:</div>
+                <div className="text-sm font-bold text-black mb-3 uppercase tracking-wider">Popular Countries:</div>
                 <div className="flex flex-wrap justify-center gap-3">
-                  <a href="#" className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-blue-100 hover:text-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     🇺🇸 United States
                   </a>
-                  <a href="#" className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-blue-100 hover:text-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     🇫🇷 France
                   </a>
-                  <a href="#" className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-blue-100 hover:text-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     🇯🇵 Japan
                   </a>
-                  <a href="#" className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-blue-100 hover:text-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     🇮🇹 Italy
                   </a>
-                  <a href="#" className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-blue-100 hover:text-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     🇬🇧 United Kingdom
                   </a>
-                  <a href="#" className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-blue-100 hover:text-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     🇩🇪 Germany
                   </a>
-                  <a href="#" className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-blue-100 hover:text-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     🇮🇳 India
                   </a>
-                  <a href="#" className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-blue-100 hover:text-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     🇰🇷 South Korea
                   </a>
-                  <a href="#" className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-blue-100 hover:text-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     🇧🇷 Brazil
                   </a>
-                  <a href="#" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium text-sm transition-colors">
+                  <a href="#" className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-gray-900 font-black text-sm transition-colors uppercase tracking-wider">
                     View All 117 Countries →
                   </a>
                 </div>
