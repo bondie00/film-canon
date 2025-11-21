@@ -12,10 +12,8 @@ const continentColors = {
 }
 
 export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange = 'all' }) {
-  // Country selection state - default to top 10
-  const [selectedCountries, setSelectedCountries] = useState([
-    'United States', 'France', 'Japan', 'Italy', 'United Kingdom', 'Germany', 'India', 'Spain', 'South Korea', 'Sweden'
-  ])
+  // Country selection state - will be set to top 10 dynamically
+  const [selectedCountries, setSelectedCountries] = useState([])
 
   // Dropdown and pending selection state
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -87,6 +85,15 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
     return data.sort((a, b) => b.filmCount - a.filmCount)
   }, [countriesData, selectedPoll, rankRange])
+
+  // Set initial top 10 countries when data loads or filters change
+  useEffect(() => {
+    if (transformedData.length > 0 && selectedCountries.length === 0) {
+      // Only set initial top 10 if no countries are currently selected
+      const top10 = transformedData.slice(0, 10).map(c => c.name)
+      setSelectedCountries(top10)
+    }
+  }, [transformedData])
 
   // Group countries by continent
   const countriesByContinent = useMemo(() => {
