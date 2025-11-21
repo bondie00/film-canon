@@ -85,7 +85,8 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         name: countryName,
         filmCount,
         continent: countryInfo.continent,
-        percentOfTotal
+        percentOfTotal,
+        totalFilms: countryInfo.totalFilms // Distinct films count
       })
     })
 
@@ -294,6 +295,11 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <p className="text-lg font-black text-black mt-1">
             {data.filmCount} {metricLabel}
           </p>
+          {selectedPoll === 'all' && (
+            <p className="text-sm text-black font-medium">
+              {data.totalFilms} distinct films
+            </p>
+          )}
           <p className="text-xs text-black font-medium">
             {data.percentOfTotal}% of total
           </p>
