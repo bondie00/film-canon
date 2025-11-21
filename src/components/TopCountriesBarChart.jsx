@@ -328,10 +328,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
         <div>
           <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-            {selectedPoll === 'all'
-              ? (rankRange === 'top100' ? 'Top Countries by Top 100 Poll Appearances' : 'Top Countries by Poll Appearances')
-              : (rankRange === 'top100' ? 'Top Countries by Film Count (Top 100)' : 'Top Countries by Film Count')
-            }
+            {selectedPoll === 'all' ? 'Top Countries by Poll Appearances' : 'Top Countries by Film Count'}
           </h2>
           <p className="text-black font-medium">
             Customize displayed countries using the search bar below
