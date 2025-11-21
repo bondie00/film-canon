@@ -15,9 +15,14 @@ export default function CountryOriginMain() {
 
     const rankText = rankRange === 'all'
       ? 'All Films'
-      : `Top ${rankRange.replace('top', '')} Films`
+      : 'Top 100 Films'
 
     return `${pollText} • ${rankText}`
+  }
+
+  // Helper function to get the correct metric name based on poll selection
+  const getMetricName = () => {
+    return selectedPoll === 'all' ? 'poll appearances' : 'films'
   }
 
   return (
@@ -55,91 +60,32 @@ export default function CountryOriginMain() {
               </div>
 
               {/* RANK RANGE FILTER */}
-              <div className="mb-6 pb-6 border-b-2 border-gray-300">
+              <div>
                 <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
                   Film Rank Range
                 </label>
-                <div className="space-y-2">
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="all"
-                      checked={rankRange === 'all'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">All Films (1-4851)</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="top100"
-                      checked={rankRange === 'top100'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Top 100 Only</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="top250"
-                      checked={rankRange === 'top250'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Top 250 Only</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="top500"
-                      checked={rankRange === 'top500'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Top 500 Only</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="rankRange"
-                      value="top1000"
-                      checked={rankRange === 'top1000'}
-                      onChange={(e) => setRankRange(e.target.value)}
-                      className="text-blue-600"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">Top 1000 Only</span>
-                  </label>
+                <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
+                  <button
+                    onClick={() => setRankRange('all')}
+                    className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all ${
+                      rankRange === 'all'
+                        ? 'bg-black text-white border-2 border-black'
+                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
+                    }`}
+                  >
+                    All Films
+                  </button>
+                  <button
+                    onClick={() => setRankRange('top100')}
+                    className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all ${
+                      rankRange === 'top100'
+                        ? 'bg-black text-white border-2 border-black'
+                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
+                    }`}
+                  >
+                    Top 100
+                  </button>
                 </div>
-              </div>
-
-              {/* CURRENT FILTER SUMMARY */}
-              <div className="bg-blue-50 border-2 border-black p-4 mb-6">
-                <div className="text-xs font-semibold text-black mb-2 uppercase tracking-wider">Currently Showing:</div>
-                <div className="text-sm text-black">
-                  <div className="mb-1">
-                    📅 {selectedPoll === 'all' ? 'All Polls Combined' : `${selectedPoll} Poll`}
-                  </div>
-                  <div className="mb-1">
-                    🎬 {rankRange === 'all' ? 'All 4,851 films' : `Top ${rankRange.replace('top', '')} films`}
-                  </div>
-                  <div className="text-xs text-blue-600 mt-2">117 countries represented</div>
-                </div>
-              </div>
-
-              {/* ACTION BUTTONS */}
-              <div className="space-y-2">
-                <button className="w-full bg-black text-white py-2 border-2 border-black hover:bg-gray-900 font-bold text-sm transition-colors uppercase tracking-wider">
-                  Apply Filters
-                </button>
-                <button className="w-full bg-white text-black py-2 border-2 border-black hover:bg-gray-100 text-sm transition-colors uppercase tracking-wider font-bold">
-                  Reset All
-                </button>
               </div>
             </div>
           </div>
@@ -160,7 +106,7 @@ export default function CountryOriginMain() {
             {/* INFO BANNER */}
             <div className="bg-white border-2 border-black px-4 py-3 mb-8">
               <div className="text-sm text-black">
-                <span className="font-bold uppercase tracking-wide">Showing 117 countries across 3,817 films</span>
+                <span className="font-bold uppercase tracking-wide">Showing 117 countries across 3,817 {getMetricName()}</span>
                 <span className="mx-2 text-black">|</span>
                 <span className="font-medium">Filters: {getFilterText()}</span>
               </div>
@@ -249,8 +195,9 @@ export default function CountryOriginMain() {
                   <div className="text-6xl mb-4">📊</div>
                   <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Horizontal Bar Chart</div>
                   <div className="text-sm space-y-2">
-                    <p>• Bars sorted by film count (highest to lowest)</p>
-                    <p>• Y-axis: Country names | X-axis: Number of films</p>
+                    <p>• Bars sorted by count (highest to lowest)</p>
+                    <p>• Y-axis: Country names</p>
+                    <p>• X-axis: "Times Ranked" (all polls) or "Number of Films" (single poll)</p>
                     <p>• Click bar to navigate to country page</p>
                     <p>• Hover to see exact count and percentage</p>
                     <p>• Color-coded by continent</p>
