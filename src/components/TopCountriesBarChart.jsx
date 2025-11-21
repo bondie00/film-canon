@@ -197,12 +197,8 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const handleOpenDropdown = () => {
     setPendingSelection([...selectedCountries])
     setIsDropdownOpen(true)
-    // Initialize all continents as expanded
-    const initialExpanded = {}
-    countriesByContinent.forEach(continent => {
-      initialExpanded[continent.continent] = true
-    })
-    setExpandedContinents(initialExpanded)
+    // Initialize all continents as collapsed for easier navigation
+    setExpandedContinents({})
   }
 
   const handleCloseDropdown = () => {
