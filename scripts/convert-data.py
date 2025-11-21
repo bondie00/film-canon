@@ -26,6 +26,7 @@ CONTINENT_MAP = {
     # North America
     'United States': 'North America', 'Canada': 'North America', 'Mexico': 'North America',
     'Cuba': 'North America', 'Dominican Republic': 'North America', 'Greenland': 'North America',
+    'Haiti': 'North America', 'Jamaica': 'North America', 'Martinique': 'North America',
 
     # Latin America
     'Argentina': 'Latin America', 'Brazil': 'Latin America', 'Chile': 'Latin America',
@@ -33,6 +34,7 @@ CONTINENT_MAP = {
     'Uruguay': 'Latin America', 'Venezuela': 'Latin America', 'Ecuador': 'Latin America',
     'Paraguay': 'Latin America', 'Guatemala': 'Latin America', 'Nicaragua': 'Latin America',
     'Costa Rica': 'Latin America', 'Panama': 'Latin America', 'El Salvador': 'Latin America',
+    'Guyana': 'Latin America',
 
     # Europe
     'United Kingdom': 'Europe', 'France': 'Europe', 'Germany': 'Europe', 'Italy': 'Europe',
@@ -46,6 +48,7 @@ CONTINENT_MAP = {
     'Albania': 'Europe', 'Macedonia': 'Europe', 'Montenegro': 'Europe', 'Kosovo': 'Europe',
     'Belarus': 'Europe', 'Ukraine': 'Europe', 'Moldova': 'Europe', 'Armenia': 'Europe',
     'Georgia': 'Europe', 'Luxembourg': 'Europe', 'Malta': 'Europe', 'Cyprus': 'Europe',
+    'Faroe Islands': 'Europe',
 
     # Historic Europe
     'West Germany': 'Europe', 'East Germany': 'Europe', 'Soviet Union': 'Europe',
@@ -68,6 +71,8 @@ CONTINENT_MAP = {
     'Mali': 'Africa', 'Burkina Faso': 'Africa', 'Cameroon': 'Africa', 'Chad': 'Africa',
     'Angola': 'Africa', 'Zimbabwe': 'Africa', 'Ghana': 'Africa', 'Ethiopia': 'Africa',
     'Democratic Republic of the Congo': 'Africa', 'Mauritania': 'Africa',
+    'Ivory Coast': 'Africa', 'Sudan': 'Africa', 'Niger': 'Africa', 'Guinea-Bissau': 'Africa',
+    'Lesotho': 'Africa', 'Mozambique': 'Africa', 'Rwanda': 'Africa', 'Somalia': 'Africa',
 
     # Oceania
     'Australia': 'Oceania', 'New Zealand': 'Oceania', 'Fiji': 'Oceania'
@@ -107,6 +112,7 @@ def generate_films_json(df, output_path):
             'key': int(row['key']),
             'FilmTitle': str(row['FilmTitle']),
             'databaseFilmTitle': str(row['databaseFilmTitle']),
+            'AlternateTitle': str(row['AlternateTitle']) if pd.notna(row['AlternateTitle']) else None,
             'Year': str(row['Year']) if pd.notna(row['Year']) else None,
             'directors': directors,
             'countries': countries,
