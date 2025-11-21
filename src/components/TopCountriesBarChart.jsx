@@ -1,151 +1,12 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
-
-// Mock data for different polls - comprehensive country list
-const mockDataByPoll = {
-  2022: [
-    // North America
-    { code: 'USA', name: 'United States', continent: 'North America', filmCount: 847, percentOfTotal: 17.5 },
-    { code: 'CAN', name: 'Canada', continent: 'North America', filmCount: 87, percentOfTotal: 1.8 },
-    { code: 'MEX', name: 'Mexico', continent: 'North America', filmCount: 89, percentOfTotal: 1.8 },
-    { code: 'CUB', name: 'Cuba', continent: 'North America', filmCount: 12, percentOfTotal: 0.2 },
-    { code: 'DOM', name: 'Dominican Republic', continent: 'North America', filmCount: 3, percentOfTotal: 0.06 },
-    { code: 'GTM', name: 'Guatemala', continent: 'North America', filmCount: 5, percentOfTotal: 0.1 },
-    { code: 'HTI', name: 'Haiti', continent: 'North America', filmCount: 4, percentOfTotal: 0.08 },
-    { code: 'JAM', name: 'Jamaica', continent: 'North America', filmCount: 6, percentOfTotal: 0.12 },
-    { code: 'MTQ', name: 'Martinique', continent: 'North America', filmCount: 2, percentOfTotal: 0.04 },
-
-    // South America
-    { code: 'ARG', name: 'Argentina', continent: 'South America', filmCount: 71, percentOfTotal: 1.5 },
-    { code: 'BRA', name: 'Brazil', continent: 'South America', filmCount: 143, percentOfTotal: 2.9 },
-    { code: 'CHL', name: 'Chile', continent: 'South America', filmCount: 34, percentOfTotal: 0.7 },
-    { code: 'COL', name: 'Colombia', continent: 'South America', filmCount: 18, percentOfTotal: 0.4 },
-    { code: 'PER', name: 'Peru', continent: 'South America', filmCount: 22, percentOfTotal: 0.5 },
-    { code: 'VEN', name: 'Venezuela', continent: 'South America', filmCount: 15, percentOfTotal: 0.3 },
-    { code: 'URY', name: 'Uruguay', continent: 'South America', filmCount: 11, percentOfTotal: 0.2 },
-    { code: 'BOL', name: 'Bolivia', continent: 'South America', filmCount: 8, percentOfTotal: 0.2 },
-    { code: 'PRY', name: 'Paraguay', continent: 'South America', filmCount: 4, percentOfTotal: 0.08 },
-    { code: 'GUY', name: 'Guyana', continent: 'South America', filmCount: 2, percentOfTotal: 0.04 },
-
-    // Europe
-    { code: 'FRA', name: 'France', continent: 'Europe', filmCount: 623, percentOfTotal: 12.8 },
-    { code: 'ITA', name: 'Italy', continent: 'Europe', filmCount: 445, percentOfTotal: 9.2 },
-    { code: 'GBR', name: 'United Kingdom', continent: 'Europe', filmCount: 398, percentOfTotal: 8.2 },
-    { code: 'DEU', name: 'Germany', continent: 'Europe', filmCount: 287, percentOfTotal: 5.9 },
-    { code: 'ESP', name: 'Spain', continent: 'Europe', filmCount: 198, percentOfTotal: 4.1 },
-    { code: 'SWE', name: 'Sweden', continent: 'Europe', filmCount: 165, percentOfTotal: 3.4 },
-    { code: 'POL', name: 'Poland', continent: 'Europe', filmCount: 132, percentOfTotal: 2.7 },
-    { code: 'RUS', name: 'Russia', continent: 'Europe', filmCount: 121, percentOfTotal: 2.5 },
-    { code: 'DNK', name: 'Denmark', continent: 'Europe', filmCount: 76, percentOfTotal: 1.6 },
-    { code: 'BEL', name: 'Belgium', continent: 'Europe', filmCount: 68, percentOfTotal: 1.4 },
-    { code: 'AUT', name: 'Austria', continent: 'Europe', filmCount: 54, percentOfTotal: 1.1 },
-    { code: 'NLD', name: 'Netherlands', continent: 'Europe', filmCount: 52, percentOfTotal: 1.1 },
-    { code: 'CHE', name: 'Switzerland', continent: 'Europe', filmCount: 47, percentOfTotal: 1.0 },
-    { code: 'GRC', name: 'Greece', continent: 'Europe', filmCount: 43, percentOfTotal: 0.9 },
-    { code: 'PRT', name: 'Portugal', continent: 'Europe', filmCount: 39, percentOfTotal: 0.8 },
-    { code: 'HUN', name: 'Hungary', continent: 'Europe', filmCount: 36, percentOfTotal: 0.7 },
-    { code: 'NOR', name: 'Norway', continent: 'Europe', filmCount: 31, percentOfTotal: 0.6 },
-    { code: 'FIN', name: 'Finland', continent: 'Europe', filmCount: 28, percentOfTotal: 0.6 },
-    { code: 'IRL', name: 'Ireland', continent: 'Europe', filmCount: 24, percentOfTotal: 0.5 },
-    { code: 'SUN', name: 'Soviet Union', continent: 'Europe', filmCount: 89, percentOfTotal: 1.8 },
-    { code: 'YUG', name: 'Yugoslavia', continent: 'Europe', filmCount: 42, percentOfTotal: 0.9 },
-    { code: 'CSK', name: 'Czechoslovakia', continent: 'Europe', filmCount: 51, percentOfTotal: 1.1 },
-    { code: 'CZE', name: 'Czech Republic', continent: 'Europe', filmCount: 33, percentOfTotal: 0.7 },
-    { code: 'DEE', name: 'East Germany', continent: 'Europe', filmCount: 22, percentOfTotal: 0.5 },
-    { code: 'DEW', name: 'West Germany', continent: 'Europe', filmCount: 38, percentOfTotal: 0.8 },
-    { code: 'HRV', name: 'Croatia', continent: 'Europe', filmCount: 15, percentOfTotal: 0.3 },
-    { code: 'SRB', name: 'Serbia', continent: 'Europe', filmCount: 18, percentOfTotal: 0.4 },
-    { code: 'SVK', name: 'Slovakia', continent: 'Europe', filmCount: 12, percentOfTotal: 0.2 },
-    { code: 'SVN', name: 'Slovenia', continent: 'Europe', filmCount: 9, percentOfTotal: 0.2 },
-    { code: 'BGR', name: 'Bulgaria', continent: 'Europe', filmCount: 14, percentOfTotal: 0.3 },
-    { code: 'UKR', name: 'Ukraine', continent: 'Europe', filmCount: 19, percentOfTotal: 0.4 },
-    { code: 'BLR', name: 'Belarus', continent: 'Europe', filmCount: 8, percentOfTotal: 0.2 },
-    { code: 'EST', name: 'Estonia', continent: 'Europe', filmCount: 7, percentOfTotal: 0.1 },
-    { code: 'BIH', name: 'Bosnia and Herzegovina', continent: 'Europe', filmCount: 11, percentOfTotal: 0.2 },
-    { code: 'MKD', name: 'Macedonia', continent: 'Europe', filmCount: 6, percentOfTotal: 0.1 },
-    { code: 'LUX', name: 'Luxembourg', continent: 'Europe', filmCount: 5, percentOfTotal: 0.1 },
-    { code: 'FRO', name: 'Faroe Islands', continent: 'Europe', filmCount: 2, percentOfTotal: 0.04 },
-
-    // Asia
-    { code: 'JPN', name: 'Japan', continent: 'Asia', filmCount: 512, percentOfTotal: 10.6 },
-    { code: 'IND', name: 'India', continent: 'Asia', filmCount: 256, percentOfTotal: 5.3 },
-    { code: 'KOR', name: 'South Korea', continent: 'Asia', filmCount: 187, percentOfTotal: 3.9 },
-    { code: 'CHN', name: 'China', continent: 'Asia', filmCount: 128, percentOfTotal: 2.6 },
-    { code: 'HKG', name: 'Hong Kong', continent: 'Asia', filmCount: 94, percentOfTotal: 1.9 },
-    { code: 'TWN', name: 'Taiwan', continent: 'Asia', filmCount: 67, percentOfTotal: 1.4 },
-    { code: 'IRN', name: 'Iran', continent: 'Asia', filmCount: 73, percentOfTotal: 1.5 },
-    { code: 'TUR', name: 'Turkey', continent: 'Asia', filmCount: 56, percentOfTotal: 1.2 },
-    { code: 'ISR', name: 'Israel', continent: 'Asia', filmCount: 48, percentOfTotal: 1.0 },
-    { code: 'THA', name: 'Thailand', continent: 'Asia', filmCount: 41, percentOfTotal: 0.8 },
-    { code: 'LBN', name: 'Lebanon', continent: 'Asia', filmCount: 29, percentOfTotal: 0.6 },
-    { code: 'PAK', name: 'Pakistan', continent: 'Asia', filmCount: 23, percentOfTotal: 0.5 },
-    { code: 'IDN', name: 'Indonesia', continent: 'Asia', filmCount: 19, percentOfTotal: 0.4 },
-    { code: 'VNM', name: 'Vietnam', continent: 'Asia', filmCount: 17, percentOfTotal: 0.3 },
-    { code: 'SGP', name: 'Singapore', continent: 'Asia', filmCount: 15, percentOfTotal: 0.3 },
-    { code: 'KHM', name: 'Cambodia', continent: 'Asia', filmCount: 12, percentOfTotal: 0.2 },
-    { code: 'LKA', name: 'Sri Lanka', continent: 'Asia', filmCount: 11, percentOfTotal: 0.2 },
-    { code: 'BGD', name: 'Bangladesh', continent: 'Asia', filmCount: 9, percentOfTotal: 0.2 },
-    { code: 'SYR', name: 'Syria', continent: 'Asia', filmCount: 13, percentOfTotal: 0.3 },
-    { code: 'IRQ', name: 'Iraq', continent: 'Asia', filmCount: 8, percentOfTotal: 0.2 },
-    { code: 'PSE', name: 'Palestine', continent: 'Asia', filmCount: 14, percentOfTotal: 0.3 },
-    { code: 'ARM', name: 'Armenia', continent: 'Asia', filmCount: 7, percentOfTotal: 0.1 },
-    { code: 'KAZ', name: 'Kazakhstan', continent: 'Asia', filmCount: 10, percentOfTotal: 0.2 },
-    { code: 'KGZ', name: 'Kyrgyzstan', continent: 'Asia', filmCount: 5, percentOfTotal: 0.1 },
-    { code: 'MNG', name: 'Mongolia', continent: 'Asia', filmCount: 4, percentOfTotal: 0.08 },
-    { code: 'NPL', name: 'Nepal', continent: 'Asia', filmCount: 3, percentOfTotal: 0.06 },
-    { code: 'SAU', name: 'Saudi Arabia', continent: 'Asia', filmCount: 6, percentOfTotal: 0.12 },
-
-    // Africa
-    { code: 'EGY', name: 'Egypt', continent: 'Africa', filmCount: 45, percentOfTotal: 0.9 },
-    { code: 'ZAF', name: 'South Africa', continent: 'Africa', filmCount: 38, percentOfTotal: 0.8 },
-    { code: 'DZA', name: 'Algeria', continent: 'Africa', filmCount: 32, percentOfTotal: 0.7 },
-    { code: 'MAR', name: 'Morocco', continent: 'Africa', filmCount: 28, percentOfTotal: 0.6 },
-    { code: 'SEN', name: 'Senegal', continent: 'Africa', filmCount: 24, percentOfTotal: 0.5 },
-    { code: 'TUN', name: 'Tunisia', continent: 'Africa', filmCount: 21, percentOfTotal: 0.4 },
-    { code: 'MLI', name: 'Mali', continent: 'Africa', filmCount: 18, percentOfTotal: 0.4 },
-    { code: 'BFA', name: 'Burkina Faso', continent: 'Africa', filmCount: 16, percentOfTotal: 0.3 },
-    { code: 'CIV', name: 'Ivory Coast', continent: 'Africa', filmCount: 14, percentOfTotal: 0.3 },
-    { code: 'NGA', name: 'Nigeria', continent: 'Africa', filmCount: 13, percentOfTotal: 0.3 },
-    { code: 'CMR', name: 'Cameroon', continent: 'Africa', filmCount: 11, percentOfTotal: 0.2 },
-    { code: 'KEN', name: 'Kenya', continent: 'Africa', filmCount: 10, percentOfTotal: 0.2 },
-    { code: 'ETH', name: 'Ethiopia', continent: 'Africa', filmCount: 9, percentOfTotal: 0.2 },
-    { code: 'GHA', name: 'Ghana', continent: 'Africa', filmCount: 8, percentOfTotal: 0.2 },
-    { code: 'MRT', name: 'Mauritania', continent: 'Africa', filmCount: 7, percentOfTotal: 0.1 },
-    { code: 'TCD', name: 'Chad', continent: 'Africa', filmCount: 6, percentOfTotal: 0.12 },
-    { code: 'MOZ', name: 'Mozambique', continent: 'Africa', filmCount: 5, percentOfTotal: 0.1 },
-    { code: 'NER', name: 'Niger', continent: 'Africa', filmCount: 5, percentOfTotal: 0.1 },
-    { code: 'GNB', name: 'Guinea-Bissau', continent: 'Africa', filmCount: 4, percentOfTotal: 0.08 },
-    { code: 'ZWE', name: 'Zimbabwe', continent: 'Africa', filmCount: 4, percentOfTotal: 0.08 },
-    { code: 'RWA', name: 'Rwanda', continent: 'Africa', filmCount: 3, percentOfTotal: 0.06 },
-    { code: 'SOM', name: 'Somalia', continent: 'Africa', filmCount: 3, percentOfTotal: 0.06 },
-    { code: 'SDN', name: 'Sudan', continent: 'Africa', filmCount: 3, percentOfTotal: 0.06 },
-    { code: 'LSO', name: 'Lesotho', continent: 'Africa', filmCount: 2, percentOfTotal: 0.04 },
-    { code: 'COD', name: 'Democratic Republic of the Congo', continent: 'Africa', filmCount: 7, percentOfTotal: 0.1 },
-
-    // Oceania
-    { code: 'AUS', name: 'Australia', continent: 'Oceania', filmCount: 98, percentOfTotal: 2.0 },
-    { code: 'NZL', name: 'New Zealand', continent: 'Oceania', filmCount: 34, percentOfTotal: 0.7 },
-  ],
-  2012: [
-    { code: 'USA', name: 'United States', continent: 'North America', filmCount: 892, percentOfTotal: 18.4 },
-    { code: 'FRA', name: 'France', continent: 'Europe', filmCount: 687, percentOfTotal: 14.2 },
-    { code: 'JPN', name: 'Japan', continent: 'Asia', filmCount: 543, percentOfTotal: 11.2 },
-    { code: 'ITA', name: 'Italy', continent: 'Europe', filmCount: 478, percentOfTotal: 9.9 },
-    { code: 'GBR', name: 'United Kingdom', continent: 'Europe', filmCount: 412, percentOfTotal: 8.5 },
-    { code: 'DEU', name: 'Germany', continent: 'Europe', filmCount: 298, percentOfTotal: 6.1 },
-    { code: 'IND', name: 'India', continent: 'Asia', filmCount: 234, percentOfTotal: 4.8 },
-    { code: 'ESP', name: 'Spain', continent: 'Europe', filmCount: 189, percentOfTotal: 3.9 },
-    { code: 'SWE', name: 'Sweden', continent: 'Europe', filmCount: 176, percentOfTotal: 3.6 },
-    { code: 'KOR', name: 'South Korea', continent: 'Asia', filmCount: 98, percentOfTotal: 2.0 },
-  ],
-}
 
 // Continent color mapping - matching the page's color scheme
 const continentColors = {
   'Europe': '#3b82f6',        // blue-500
   'Asia': '#10b981',          // green-500
   'North America': '#8b5cf6', // purple-500
-  'South America': '#f59e0b', // orange-500
+  'Latin America': '#f59e0b', // orange-500
   'Africa': '#ef4444',        // red-500
   'Oceania': '#ec4899',       // pink-500
 }
@@ -153,7 +14,7 @@ const continentColors = {
 export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange = 'all' }) {
   // Country selection state - default to top 10
   const [selectedCountries, setSelectedCountries] = useState([
-    'USA', 'FRA', 'JPN', 'ITA', 'GBR', 'DEU', 'IND', 'ESP', 'KOR', 'SWE'
+    'United States', 'France', 'Japan', 'Italy', 'United Kingdom', 'Germany', 'India', 'Spain', 'South Korea', 'Sweden'
   ])
 
   // Dropdown and pending selection state
@@ -164,31 +25,76 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   // Accordion state for continents (track which are expanded)
   const [expandedContinents, setExpandedContinents] = useState({})
 
+  // Load countries data from JSON
+  const [countriesData, setCountriesData] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/data/countries.json')
+      .then(response => response.json())
+      .then(data => {
+        setCountriesData(data)
+        setLoading(false)
+      })
+      .catch(error => {
+        console.error('Error loading countries data:', error)
+        setLoading(false)
+      })
+  }, [])
+
+  // Transform countries data based on current filters
+  const transformedData = useMemo(() => {
+    if (!countriesData) return []
+
+    const data = []
+
+    Object.entries(countriesData).forEach(([countryName, countryInfo]) => {
+      let filmCount = 0
+
+      if (selectedPoll === 'all') {
+        // Sum across all polls
+        filmCount = countryInfo.totalFilms
+      } else {
+        // Get count for specific poll
+        const pollData = countryInfo.byPoll[selectedPoll]
+        if (pollData) {
+          if (rankRange === 'all') {
+            filmCount = pollData.total
+          } else if (rankRange === 'top100') {
+            filmCount = pollData.top100
+          } else if (rankRange === 'top250') {
+            filmCount = pollData.top250
+          }
+        }
+      }
+
+      // Calculate percentage (rough estimate for now)
+      const percentOfTotal = 0 // We'll calculate this properly later
+
+      data.push({
+        name: countryName,
+        filmCount,
+        continent: countryInfo.continent,
+        percentOfTotal
+      })
+    })
+
+    // Calculate percentages based on total
+    const totalFilms = data.reduce((sum, country) => sum + country.filmCount, 0)
+    data.forEach(country => {
+      country.percentOfTotal = totalFilms > 0 ? ((country.filmCount / totalFilms) * 100).toFixed(1) : 0
+    })
+
+    return data.sort((a, b) => b.filmCount - a.filmCount)
+  }, [countriesData, selectedPoll, rankRange])
+
   // Group countries by continent
   const countriesByContinent = useMemo(() => {
-    let allCountriesData = []
-
-    if (selectedPoll === 'all') {
-      allCountriesData = [...mockDataByPoll['2022']]
-    } else {
-      allCountriesData = [...(mockDataByPoll[selectedPoll] || mockDataByPoll['2022'])]
-    }
-
-    if (rankRange !== 'all') {
-      const multipliers = {
-        'top100': 0.15,
-        'top250': 0.35,
-      }
-      const multiplier = multipliers[rankRange] || 1
-      allCountriesData = allCountriesData.map(country => ({
-        ...country,
-        filmCount: Math.round(country.filmCount * multiplier),
-      }))
-    }
+    if (!transformedData.length) return []
 
     // Group by continent
     const grouped = {}
-    allCountriesData.forEach(country => {
+    transformedData.forEach(country => {
       if (!grouped[country.continent]) {
         grouped[country.continent] = []
       }
@@ -205,36 +111,14 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       .sort((a, b) => b.totalFilms - a.totalFilms)
 
     return continentOrder
-  }, [selectedPoll, rankRange])
+  }, [transformedData])
 
-  // Calculate filtered data based on current filter settings
+  // Calculate filtered data based on selected countries
   const filteredData = useMemo(() => {
-    let data = []
-
-    if (selectedPoll === 'all') {
-      data = [...mockDataByPoll['2022']]
-    } else {
-      data = [...(mockDataByPoll[selectedPoll] || mockDataByPoll['2022'])]
-    }
-
-    // Apply rank range filter
-    if (rankRange !== 'all') {
-      const multipliers = {
-        'top100': 0.15,
-        'top250': 0.35,
-      }
-      const multiplier = multipliers[rankRange] || 1
-      data = data.map(country => ({
-        ...country,
-        filmCount: Math.round(country.filmCount * multiplier),
-      }))
-    }
-
-    // Filter to only selected countries and maintain their order by film count
-    return data
-      .filter(country => selectedCountries.includes(country.code))
+    return transformedData
+      .filter(country => selectedCountries.includes(country.name))
       .sort((a, b) => b.filmCount - a.filmCount)
-  }, [selectedPoll, rankRange, selectedCountries])
+  }, [transformedData, selectedCountries])
 
   // Filter continents by search query
   const filteredContinents = useMemo(() => {
@@ -282,7 +166,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   }, [filteredData.length])
 
   const handleResetToTop10 = () => {
-    setSelectedCountries(['USA', 'FRA', 'JPN', 'ITA', 'GBR', 'DEU', 'IND', 'ESP', 'KOR', 'SWE'])
+    // Reset to top 10 from current transformed data
+    const top10 = transformedData.slice(0, 10).map(c => c.name)
+    setSelectedCountries(top10)
   }
 
   // Dropdown handlers
@@ -318,13 +204,13 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     }
   }
 
-  const handleToggleCountry = (countryCode) => {
+  const handleToggleCountry = (countryName) => {
     setPendingSelection(prev => {
-      if (prev.includes(countryCode)) {
-        return prev.filter(code => code !== countryCode)
+      if (prev.includes(countryName)) {
+        return prev.filter(name => name !== countryName)
       } else {
         if (prev.length < 40) {
-          return [...prev, countryCode]
+          return [...prev, countryName]
         }
         return prev
       }
@@ -332,19 +218,19 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   }
 
   const handleToggleContinent = (continent) => {
-    const continentCountries = continent.countries.map(c => c.code)
-    const allSelected = continentCountries.every(code => pendingSelection.includes(code))
+    const continentCountries = continent.countries.map(c => c.name)
+    const allSelected = continentCountries.every(name => pendingSelection.includes(name))
 
     if (allSelected) {
       // Deselect all countries from this continent
-      setPendingSelection(prev => prev.filter(code => !continentCountries.includes(code)))
+      setPendingSelection(prev => prev.filter(name => !continentCountries.includes(name)))
     } else {
       // Select all countries from this continent (up to limit of 40)
       setPendingSelection(prev => {
         const newSelection = [...prev]
-        continentCountries.forEach(code => {
-          if (!newSelection.includes(code) && newSelection.length < 40) {
-            newSelection.push(code)
+        continentCountries.forEach(name => {
+          if (!newSelection.includes(name) && newSelection.length < 40) {
+            newSelection.push(name)
           }
         })
         return newSelection
@@ -397,6 +283,26 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     return null
   }
 
+  if (loading) {
+    return (
+      <div className="bg-white border-4 border-black p-6 mb-8">
+        <div className="text-center text-black font-medium py-8">
+          Loading country data...
+        </div>
+      </div>
+    )
+  }
+
+  if (!countriesData) {
+    return (
+      <div className="bg-white border-4 border-black p-6 mb-8">
+        <div className="text-center text-black font-medium py-8">
+          Error loading country data
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="bg-white border-4 border-black p-6 mb-8">
       <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
@@ -439,7 +345,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             dataKey="filmCount"
             radius={[0, 0, 0, 0]}
             cursor="pointer"
-            onClick={(data) => console.log('Navigate to:', data.code)}
+            onClick={(data) => console.log('Navigate to:', data.name)}
           >
             {filteredData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={continentColors[entry.continent]} />
@@ -506,11 +412,11 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
               {/* Scrollable continent list */}
               <div className="overflow-y-auto flex-1 p-3">
                 {filteredContinents.map((continent) => {
-                  const continentCountryCodes = continent.countries.map(c => c.code)
-                  const selectedInContinent = continentCountryCodes.filter(code =>
-                    pendingSelection.includes(code)
+                  const continentCountryNames = continent.countries.map(c => c.name)
+                  const selectedInContinent = continentCountryNames.filter(name =>
+                    pendingSelection.includes(name)
                   ).length
-                  const totalInContinent = continentCountryCodes.length
+                  const totalInContinent = continentCountryNames.length
                   const allSelected = selectedInContinent === totalInContinent
                   const someSelected = selectedInContinent > 0 && selectedInContinent < totalInContinent
                   const isExpanded = expandedContinents[continent.continent]
@@ -555,12 +461,12 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                       {isExpanded && (
                         <div className="ml-6 space-y-1">
                           {continent.countries.map((country) => {
-                            const isSelected = pendingSelection.includes(country.code)
+                            const isSelected = pendingSelection.includes(country.name)
                             const isDisabled = !isSelected && pendingSelection.length >= 40
 
                             return (
                               <label
-                                key={country.code}
+                                key={country.name}
                                 className={`flex items-center gap-2 p-1.5 cursor-pointer ${
                                   isDisabled
                                     ? 'opacity-50 cursor-not-allowed'
@@ -571,7 +477,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                                   type="checkbox"
                                   checked={isSelected}
                                   disabled={isDisabled}
-                                  onChange={() => handleToggleCountry(country.code)}
+                                  onChange={() => handleToggleCountry(country.name)}
                                   className="w-4 h-4"
                                 />
                                 <span className="text-sm text-black font-medium">

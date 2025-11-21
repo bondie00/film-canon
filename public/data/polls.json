@@ -1,0 +1,74 @@
+{
+  "1952": {
+    "year": 1952,
+    "filmsWithVotes": 199,
+    "topFilm": {
+      "title": "Bicycle Thieves",
+      "rank": 1,
+      "votes": 25
+    }
+  },
+  "1962": {
+    "year": 1962,
+    "filmsWithVotes": 199,
+    "topFilm": {
+      "title": "Citizen Kane",
+      "rank": 1,
+      "votes": 22
+    }
+  },
+  "1972": {
+    "year": 1972,
+    "filmsWithVotes": 363,
+    "topFilm": {
+      "title": "Citizen Kane",
+      "rank": 1,
+      "votes": 32
+    }
+  },
+  "1982": {
+    "year": 1982,
+    "filmsWithVotes": 554,
+    "topFilm": {
+      "title": "Citizen Kane",
+      "rank": 1,
+      "votes": 45
+    }
+  },
+  "1992": {
+    "year": 1992,
+    "filmsWithVotes": 583,
+    "topFilm": {
+      "title": "Citizen Kane",
+      "rank": 1,
+      "votes": 43
+    }
+  },
+  "2002": {
+    "year": 2002,
+    "filmsWithVotes": 630,
+    "topFilm": {
+      "title": "Citizen Kane",
+      "rank": 1,
+      "votes": 46
+    }
+  },
+  "2012": {
+    "year": 2012,
+    "filmsWithVotes": 2001,
+    "topFilm": {
+      "title": "Vertigo",
+      "rank": 1,
+      "votes": 191
+    }
+  },
+  "2022": {
+    "year": 2022,
+    "filmsWithVotes": 3817,
+    "topFilm": {
+      "title": "Jeanne Dielman, 23, Quai du Commerce, 1080 Bruxelles",
+      "rank": 1,
+      "votes": 215
+    }
+  }
+}
