@@ -229,13 +229,14 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
   const handleToggleContinent = (continent) => {
     const continentCountries = continent.countries.map(c => c.name)
-    const allSelected = continentCountries.every(name => pendingSelection.includes(name))
+    const anySelected = continentCountries.some(name => pendingSelection.includes(name))
 
-    if (allSelected) {
-      // Deselect all countries from this continent
+    if (anySelected) {
+      // If ANY countries from this continent are selected, deselect ALL of them
+      // This allows users to clear space even when at the 40-country limit
       setPendingSelection(prev => prev.filter(name => !continentCountries.includes(name)))
     } else {
-      // Select all countries from this continent (up to limit of 40)
+      // If NO countries from this continent are selected, add ALL of them (up to limit of 40)
       setPendingSelection(prev => {
         const newSelection = [...prev]
         continentCountries.forEach(name => {
