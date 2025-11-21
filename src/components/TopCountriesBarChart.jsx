@@ -52,7 +52,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       if (selectedPoll === 'all') {
         // Sum across all polls
         if (rankRange === 'all') {
-          // Sum all poll appearances
+          // Sum all ballot appearances
           filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
             return sum + (pollData.total || 0)
           }, 0)
@@ -293,7 +293,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload
-      const metricLabel = selectedPoll === 'all' ? 'poll appearances' : 'films'
+      const metricLabel = selectedPoll === 'all' ? 'ballot appearances' : 'films'
       return (
         <div className="bg-white p-3 border-2 border-black shadow-lg">
           <p className="font-bold text-black uppercase tracking-wide">{data.name}</p>
@@ -340,7 +340,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
         <div>
           <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-            {selectedPoll === 'all' ? 'Top Countries by Poll Appearances' : 'Top Countries by Film Count'}
+            {selectedPoll === 'all' ? 'Top Countries by Ballot Appearances' : 'Top Countries by Film Count'}
           </h2>
           <p className="text-black font-medium">
             Customize displayed countries using the search bar below
@@ -367,7 +367,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <XAxis
             type="number"
             label={{
-              value: selectedPoll === 'all' ? 'Poll Appearances' : 'Films',
+              value: selectedPoll === 'all' ? 'Ballot Appearances' : 'Films',
               position: 'insideBottom',
               offset: -5,
               style: { fontWeight: 'bold', fill: '#000000' }
