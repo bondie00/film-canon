@@ -10,6 +10,8 @@ export default {
         primary: '#2563eb',
         secondary: '#10b981',
         accent: '#8b5cf6',
+        cream: '#FFFEF2',
+        brown: '#4A3728',
       },
     },
   },
