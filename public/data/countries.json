@@ -1931,7 +1931,7 @@
     }
   },
   "Faroe Islands": {
-    "continent": "Unknown",
+    "continent": "Europe",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -2364,7 +2364,7 @@
     }
   },
   "Guinea-Bissau": {
-    "continent": "Unknown",
+    "continent": "Africa",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -2421,7 +2421,7 @@
     }
   },
   "Guyana": {
-    "continent": "Unknown",
+    "continent": "Latin America",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -2478,7 +2478,7 @@
     }
   },
   "Haiti": {
-    "continent": "Unknown",
+    "continent": "North America",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -3100,7 +3100,7 @@
     }
   },
   "Ivory Coast": {
-    "continent": "Unknown",
+    "continent": "Africa",
     "totalFilms": 3,
     "byPoll": {
       "1952": {
@@ -3159,7 +3159,7 @@
     }
   },
   "Jamaica": {
-    "continent": "Unknown",
+    "continent": "North America",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -3514,7 +3514,7 @@
     }
   },
   "Lesotho": {
-    "continent": "Unknown",
+    "continent": "Africa",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -3803,7 +3803,7 @@
     }
   },
   "Martinique": {
-    "continent": "Unknown",
+    "continent": "North America",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -4101,7 +4101,7 @@
     }
   },
   "Mozambique": {
-    "continent": "Unknown",
+    "continent": "Africa",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -4340,7 +4340,7 @@
     }
   },
   "Niger": {
-    "continent": "Unknown",
+    "continent": "Africa",
     "totalFilms": 2,
     "byPoll": {
       "1952": {
@@ -5119,7 +5119,7 @@
     }
   },
   "Rwanda": {
-    "continent": "Unknown",
+    "continent": "Africa",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -5467,7 +5467,7 @@
     }
   },
   "Somalia": {
-    "continent": "Unknown",
+    "continent": "Africa",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -5833,7 +5833,7 @@
     }
   },
   "Sudan": {
-    "continent": "Unknown",
+    "continent": "Africa",
     "totalFilms": 3,
     "byPoll": {
       "1952": {
