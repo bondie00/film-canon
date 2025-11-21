@@ -225,18 +225,22 @@ tiny: 'text-xs'     // 12px
 - Main content area (9 cols) with visualizations
 
 **Filters Available:**
-1. **Poll Selection** (radio buttons):
-   - Single Poll (dropdown: 2022, 2012, 2002...)
+1. **Poll Selection** (dropdown):
    - All Polls Combined
-   - Compare Two Polls (two dropdowns with "vs")
-   - Date Range (from/to inputs)
+   - 2022 (Latest)
+   - 2012, 2002, 1992, 1982, 1972, 1962, 1952
+   - *Future: Compare Two Polls mode, Date Range mode*
 
-2. **Film Rank Range** (radio buttons):
-   - All Films (1-4851)
+2. **Film Rank Range** (segmented control - 2-button toggle):
+   - All Films
    - Top 100 Only
-   - Top 250 Only
-   - Top 500 Only
-   - Top 1000 Only
+   - *Rationale: Binary choice focuses on core use case (elite canon vs. full periphery). Additional tiers (250, 500, 1000) removed as they don't meaningfully differ from Top 100 for most analyses.*
+
+**Filter Behavior:**
+- **Auto-applying:** Filters apply immediately on change - no "Apply" button needed
+- **No summary box:** Removed "Currently Showing" display to reduce clutter
+- **Sticky positioning:** Filter sidebar remains visible while scrolling through visualizations
+- **Clean UI:** Segmented control provides cleaner interface than radio buttons for binary choice
 
 **Visualizations:**
 1. Quick Stats Bar (4 metrics)
@@ -565,7 +569,8 @@ GET /api/directors/:name
 - Two-tier tooltip system: lightweight hover for exploration + clickable popover for detail
 - Avoid accidental navigation while maintaining intuitive data exploration
 - Sticky filters for maintaining context while scrolling
-- Clear filter summary boxes for feedback on active selections
+- Auto-applying filters for immediate feedback without action buttons
+- Minimal, unobtrusive filter UI that doesn't distract from visualizations
 
 ---
 
@@ -706,6 +711,44 @@ xl: 1280px  // Full layout
 - **Rank mobility:** Films move up and down significantly between polls
 - **Different visualization strategies needed for consensus vs. diversity**
 - Compare mode should show changes/differences clearly
+
+### Metrics: Poll Appearances vs. Distinct Films
+
+**PRIMARY METRIC: Poll Appearances**
+
+For the Country Origin visualizations, we use **poll appearances** as the primary metric, not distinct film counts.
+
+**Why Poll Appearances:**
+- Captures canonical weight and persistence across time
+- Shows which countries have sustained critical consensus
+- Works perfectly with filter logic (single poll = that poll's rankings, all polls = accumulated weight)
+- More analytically rich: reveals which countries "punch above their weight" with repeated appearances
+
+**Language Guidelines:**
+
+When **"All Polls Combined"** is selected:
+- Use "poll appearances" or "times ranked" in labels
+- Info banner: "Showing 117 countries across 3,817 poll appearances"
+- Bar chart axis: "Times Ranked" or "Poll Appearances"
+- Tooltips: "French films have been ranked 890 times across all polls"
+
+When **single poll** is selected (e.g., "2022 Poll"):
+- Use "films" in labels (clearer for single poll context)
+- Info banner: "Showing 117 countries across 3,817 films (2022 Poll)"
+- Bar chart axis: "Number of Films"
+- Tooltips: "France: 85 films in 2022 poll"
+
+**Key Distinction:**
+- **Poll appearances** = how many times films appear across poll(s) - measures canonical persistence
+- **Distinct films** = unique film count - measures breadth of contribution
+
+**Example:**
+- France might have 350 unique films but 890 poll appearances
+- This tells us French films appear an average of 2.5 times per film
+- Shows deep canonical persistence vs. one-time appearances
+
+**Optional Enhancement (Future):**
+In detailed views, show both metrics: "890 poll appearances (from 350 unique films)"
 
 ---
 
