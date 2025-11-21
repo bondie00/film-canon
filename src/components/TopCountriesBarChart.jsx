@@ -51,7 +51,19 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
       if (selectedPoll === 'all') {
         // Sum across all polls
-        filmCount = countryInfo.totalFilms
+        if (rankRange === 'all') {
+          filmCount = countryInfo.totalFilms
+        } else {
+          // Sum the specific rank range across all polls
+          filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
+            if (rankRange === 'top100') {
+              return sum + (pollData.top100 || 0)
+            } else if (rankRange === 'top250') {
+              return sum + (pollData.top250 || 0)
+            }
+            return sum
+          }, 0)
+        }
       } else {
         // Get count for specific poll
         const pollData = countryInfo.byPoll[selectedPoll]
