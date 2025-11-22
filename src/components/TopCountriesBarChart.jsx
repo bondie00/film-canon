@@ -52,7 +52,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       if (selectedPoll === 'all') {
         // Sum across all polls
         if (rankRange === 'all') {
-          // Sum all ballot appearances
+          // Sum all votes
           filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
             return sum + (pollData.total || 0)
           }, 0)
@@ -140,7 +140,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       grouped[country.continent].push(country)
     })
 
-    // Sort continents by total film count
+    // Sort continents by total votes
     const continentOrder = Object.entries(grouped)
       .map(([continent, countries]) => ({
         continent,
@@ -308,7 +308,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <p className="font-bold text-black uppercase tracking-wide">{data.name}</p>
           <p className="text-sm text-black font-medium">{data.continent}</p>
           <p className="text-lg font-black text-black mt-1">
-            {data.filmCount} ballot appearances
+            {data.filmCount} votes
           </p>
           {data.distinctFilms > 0 && (
             <p className="text-sm text-black font-medium">
@@ -349,7 +349,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
         <div>
           <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-            {selectedPoll === 'all' ? 'Top Countries by Ballot Appearances' : 'Top Countries by Film Count'}
+            Countries by Votes
           </h2>
           <p className="text-black font-medium">
             Customize displayed countries using the search bar below
@@ -376,7 +376,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <XAxis
             type="number"
             label={{
-              value: selectedPoll === 'all' ? 'Ballot Appearances' : 'Films',
+              value: 'Votes',
               position: 'insideBottom',
               offset: -5,
               style: { fontWeight: 'bold', fill: '#000000' }

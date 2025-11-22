@@ -21,10 +21,6 @@ export default function CountryOriginMain() {
     return `${pollText} • ${rankText}`
   }
 
-  // Helper function to get the correct metric name based on poll selection
-  const getMetricName = () => {
-    return selectedPoll === 'all' ? 'poll appearances' : 'films'
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -107,7 +103,7 @@ export default function CountryOriginMain() {
             {/* INFO BANNER */}
             <div className="bg-white border-2 border-black px-4 py-3 mb-8">
               <div className="text-sm text-black">
-                <span className="font-bold uppercase tracking-wide">Showing 117 countries across 3,817 {getMetricName()}</span>
+                <span className="font-bold uppercase tracking-wide">Showing 117 countries across 3,817 votes</span>
                 <span className="mx-2 text-black">|</span>
                 <span className="font-medium">Filters: {getFilterText()}</span>
               </div>
@@ -130,8 +126,8 @@ export default function CountryOriginMain() {
                   <div className="text-6xl mb-4">🗺️</div>
                   <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Interactive World Map - Choropleth</div>
                   <div className="text-sm space-y-2">
-                    <p>• Countries colored by film count (gradient from light to dark)</p>
-                    <p>• Hover to see country name and exact film count</p>
+                    <p>• Countries colored by vote count (gradient from light to dark)</p>
+                    <p>• Hover to see country name and exact vote count</p>
                     <p>• Click any country to navigate to that country's detail page</p>
                     <p>• Legend showing color scale</p>
                   </div>
@@ -143,7 +139,7 @@ export default function CountryOriginMain() {
 
               {/* Map Legend */}
               <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
-                <span className="text-black font-bold uppercase tracking-wide">Film Count:</span>
+                <span className="text-black font-bold uppercase tracking-wide">Vote Count:</span>
                 <div className="flex items-center space-x-2">
                   <div className="w-8 h-4 bg-blue-100 border-2 border-black"></div>
                   <span className="text-black font-medium">1-10</span>
@@ -236,7 +232,7 @@ export default function CountryOriginMain() {
                 </h2>
                 <p className="text-black font-medium">
                   See both continent-level patterns and individual country contributions.
-                  Size represents film count.
+                  Size represents vote count.
                 </p>
               </div>
 
@@ -273,12 +269,12 @@ export default function CountryOriginMain() {
                   <div className="text-sm space-y-3">
                     <div>
                       <strong className="text-black font-bold">Structure:</strong><br/>
-                      Large rectangles = Continents (sized by total films)<br/>
+                      Large rectangles = Continents (sized by total votes)<br/>
                       Nested rectangles = Individual countries
                     </div>
                     <div>
                       <strong className="text-black font-bold">Interactions:</strong><br/>
-                      • Hover: "France: 679 films (15.9% of Europe, 7.2% of total)"<br/>
+                      • Hover: "France: 679 votes (15.9% of Europe, 7.2% of total)"<br/>
                       • Click country: Navigate to detail page<br/>
                       • Click continent: Filter view to that continent
                     </div>
@@ -328,10 +324,10 @@ export default function CountryOriginMain() {
                 <div>
                   <h3 className="font-black text-black mb-2 uppercase tracking-wide text-lg">Domination Patterns</h3>
                   <ul className="space-y-2 text-black text-sm font-medium">
-                    <li>• USA represents 1,780 films (37% of all films in the dataset)</li>
+                    <li>• USA represents 1,780 votes (37% of total votes in the dataset)</li>
                     <li>• Europe remains the most represented continent at 45%</li>
-                    <li>• France leads Europe with 679 films</li>
-                    <li>• Japan is the most represented Asian country with 247 films</li>
+                    <li>• France leads Europe with 679 votes</li>
+                    <li>• Japan is the most represented Asian country with 247 votes</li>
                   </ul>
                 </div>
                 <div>
