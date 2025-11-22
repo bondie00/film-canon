@@ -304,18 +304,18 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     if (active && payload && payload.length) {
       const data = payload[0].payload
       return (
-        <div className="bg-white p-3 border-2 border-black shadow-lg">
-          <p className="font-bold text-black uppercase tracking-wide">{data.name}</p>
-          <p className="text-sm text-black font-medium">{data.continent}</p>
-          <p className="text-lg font-black text-black mt-1">
+        <div className="bg-white p-4 border-2 border-black shadow-lg">
+          <p className="font-bold text-base text-black uppercase tracking-wide">{data.name}</p>
+          <p className="text-xs text-black font-medium mb-2">{data.continent}</p>
+          <p className="text-2xl font-black text-black my-2">
             {data.filmCount} votes
           </p>
           {data.distinctFilms > 0 && (
-            <p className="text-sm text-black font-medium">
+            <p className="text-sm text-black font-medium mt-1">
               {data.distinctFilms} distinct films
             </p>
           )}
-          <p className="text-xs text-black font-medium">
+          <p className="text-xs text-black font-medium mt-2 text-gray-600">
             {data.percentOfTotal}% of total
           </p>
         </div>
