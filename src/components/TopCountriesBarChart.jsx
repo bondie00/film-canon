@@ -210,6 +210,28 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     setSelectedCountries(top10)
   }
 
+  const handleSelectContinent = (continentName) => {
+    // Get all countries from the selected continent that have votes
+    const continentCountries = transformedData
+      .filter(country => country.continent === continentName && country.filmCount > 0)
+      .map(c => c.name)
+
+    if (continentCountries.length > 0) {
+      setSelectedCountries(continentCountries)
+    }
+  }
+
+  // Calculate which continents have countries with votes
+  const activeContinents = useMemo(() => {
+    const continents = new Set()
+    transformedData.forEach(country => {
+      if (country.filmCount > 0) {
+        continents.add(country.continent)
+      }
+    })
+    return continents
+  }, [transformedData])
+
   // Dropdown handlers
   const handleOpenDropdown = () => {
     setPendingSelection([...selectedCountries])
@@ -346,8 +368,8 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
   return (
     <div className="bg-white border-4 border-black p-6 mb-8">
-      <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
-        <div>
+      <div className="mb-6 border-b-2 border-gray-300 pb-4">
+        <div className="mb-4">
           <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
             Countries by Votes
           </h2>
@@ -356,13 +378,43 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           </p>
         </div>
 
-        {/* Reset to Top 10 Button */}
-        <button
-          onClick={handleResetToTop10}
-          className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white text-sm font-bold uppercase tracking-wide transition-colors"
-        >
-          Reset to Top 10
-        </button>
+        {/* Quick Filter Buttons */}
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={handleResetToTop10}
+            className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white text-sm font-bold uppercase tracking-wide transition-colors"
+          >
+            Top 10
+          </button>
+
+          {Object.entries(continentColors).map(([continent, color]) => {
+            const isActive = activeContinents.has(continent)
+            return (
+              <button
+                key={continent}
+                onClick={() => isActive && handleSelectContinent(continent)}
+                disabled={!isActive}
+                className={`px-4 py-2 text-sm font-bold uppercase tracking-wide transition-colors border-2 ${
+                  isActive
+                    ? 'bg-white text-black border-black hover:text-white'
+                    : 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
+                }`}
+                style={isActive ? {
+                  borderColor: color,
+                  '--hover-bg': color
+                } : {}}
+                onMouseEnter={(e) => {
+                  if (isActive) e.currentTarget.style.backgroundColor = color
+                }}
+                onMouseLeave={(e) => {
+                  if (isActive) e.currentTarget.style.backgroundColor = 'white'
+                }}
+              >
+                {continent}
+              </button>
+            )
+          })}
+        </div>
       </div>
 
       {/* BAR CHART */}
