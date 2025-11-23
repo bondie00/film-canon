@@ -382,23 +382,29 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         </div>
 
         {/* Quick Filter Buttons */}
-        <div className="bg-white border-2 border-black p-1">
-          <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-2">
+          <div className="bg-white border-2 border-black p-1 flex-shrink-0">
             <button
               onClick={handleResetToTop10}
               className="py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all bg-white text-black border-2 border-black hover:bg-black hover:text-white"
             >
               Top 10
             </button>
+          </div>
 
-            {Object.entries(continentColors).map(([continent, color]) => {
-              const isActive = activeContinents.has(continent)
-              return (
+          {Object.entries(continentColors).map(([continent, color]) => {
+            const isActive = activeContinents.has(continent)
+            return (
+              <div
+                key={continent}
+                className={`border-2 p-1 flex-1 min-w-[120px] ${
+                  isActive ? 'bg-white border-black' : 'bg-gray-100 border-gray-300'
+                }`}
+              >
                 <button
-                  key={continent}
                   onClick={() => isActive && handleSelectContinent(continent)}
                   disabled={!isActive}
-                  className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 ${
+                  className={`w-full py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 ${
                     isActive
                       ? 'bg-white text-black border-black hover:text-white'
                       : 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
@@ -419,9 +425,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                 >
                   {continent}
                 </button>
-              )
-            })}
-          </div>
+              </div>
+            )
+          })}
         </div>
       </div>
 
