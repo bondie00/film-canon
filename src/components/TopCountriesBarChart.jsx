@@ -404,6 +404,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <CartesianGrid strokeDasharray="3 3" stroke="#d1d5db" />
           <XAxis
             type="number"
+            allowDecimals={false}
             label={{
               value: 'Votes',
               position: 'insideBottom',
