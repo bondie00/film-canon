@@ -65,8 +65,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         }
       }
 
-      // Calculate percentage (rough estimate for now)
-      const percentOfTotal = 0 // We'll calculate this properly later
+      // Calculate percentage based on true poll total (not country-aggregated total)
+      const truePollTotal = countriesData._pollMetadata?.[selectedPoll]?.[rankRange]?.votes || 1
+      const percentOfTotal = truePollTotal > 0 ? parseFloat(((filmCount / truePollTotal) * 100).toFixed(1)) : 0
 
       data.push({
         name: countryName,
@@ -75,12 +76,6 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         percentOfTotal,
         distinctFilms
       })
-    })
-
-    // Calculate percentages based on total
-    const totalFilms = data.reduce((sum, country) => sum + country.filmCount, 0)
-    data.forEach(country => {
-      country.percentOfTotal = totalFilms > 0 ? ((country.filmCount / totalFilms) * 100).toFixed(1) : 0
     })
 
     return data.sort((a, b) => b.filmCount - a.filmCount)
