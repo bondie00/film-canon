@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
@@ -7,6 +7,61 @@ export default function CountryOriginMain() {
   // Filter state (not functional yet - Phase 2)
   const [selectedPoll, setSelectedPoll] = useState('2022')
   const [rankRange, setRankRange] = useState('all')
+  const [countriesData, setCountriesData] = useState(null)
+
+  // Load countries data
+  useEffect(() => {
+    fetch('/data/countries.json')
+      .then(response => response.json())
+      .then(data => setCountriesData(data))
+      .catch(error => console.error('Error loading countries data:', error))
+  }, [])
+
+  // Calculate dynamic metrics based on current filters
+  const metrics = useMemo(() => {
+    if (!countriesData) return { countries: 0, votes: 0, films: 0 }
+
+    let totalVotes = 0
+    let countriesWithVotes = 0
+    let totalDistinctFilms = 0
+
+    Object.entries(countriesData).forEach(([countryName, countryInfo]) => {
+      let votes = 0
+      let distinctFilms = 0
+
+      if (selectedPoll === 'all') {
+        // Sum across all polls
+        if (rankRange === 'all') {
+          votes = Object.values(countryInfo.byPoll).reduce((sum, pollData) =>
+            sum + (pollData.total || 0), 0)
+          distinctFilms = countryInfo.totalFilms || 0
+        } else {
+          votes = Object.values(countryInfo.byPoll).reduce((sum, pollData) =>
+            sum + (pollData.top100 || 0), 0)
+          distinctFilms = countryInfo.distinctFilmsTop100 || 0
+        }
+      } else {
+        // Specific poll
+        const pollData = countryInfo.byPoll[selectedPoll]
+        if (pollData) {
+          votes = rankRange === 'all' ? pollData.total : pollData.top100
+          distinctFilms = rankRange === 'all' ? pollData.distinctFilms : pollData.distinctFilmsTop100
+        }
+      }
+
+      if (votes > 0) {
+        countriesWithVotes++
+        totalVotes += votes
+        totalDistinctFilms += distinctFilms
+      }
+    })
+
+    return {
+      countries: countriesWithVotes,
+      votes: totalVotes,
+      films: totalDistinctFilms
+    }
+  }, [countriesData, selectedPoll, rankRange])
 
   // Helper function to generate filter description text
   const getFilterText = () => {
@@ -103,9 +158,11 @@ export default function CountryOriginMain() {
             {/* INFO BANNER */}
             <div className="bg-white border-2 border-black px-4 py-3 mb-8">
               <div className="text-sm text-black">
-                <span className="font-bold uppercase tracking-wide">Showing 117 countries across 3,817 votes</span>
+                <span className="font-bold uppercase tracking-wide">
+                  {metrics.countries} countries • {metrics.votes.toLocaleString()} votes • {metrics.films.toLocaleString()} films
+                </span>
                 <span className="mx-2 text-black">|</span>
-                <span className="font-medium">Filters: {getFilterText()}</span>
+                <span className="font-medium">{getFilterText()}</span>
               </div>
             </div>
 
