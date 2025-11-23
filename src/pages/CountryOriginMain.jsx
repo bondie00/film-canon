@@ -71,7 +71,7 @@ export default function CountryOriginMain() {
 
     const rankText = rankRange === 'all'
       ? 'All Films'
-      : 'Top 100 Films'
+      : 'Top 100'
 
     return `${pollText} • ${rankText}`
   }
