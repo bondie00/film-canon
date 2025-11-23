@@ -397,14 +397,14 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             return (
               <div
                 key={continent}
-                className={`border-2 p-1 flex-1 min-w-[120px] ${
+                className={`border-2 p-1 flex-shrink-0 ${
                   isActive ? 'bg-white border-black' : 'bg-gray-100 border-gray-300'
                 }`}
               >
                 <button
                   onClick={() => isActive && handleSelectContinent(continent)}
                   disabled={!isActive}
-                  className={`w-full py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 ${
+                  className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 ${
                     isActive
                       ? 'bg-white text-black border-black hover:text-white'
                       : 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
