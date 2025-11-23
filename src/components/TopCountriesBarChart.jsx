@@ -329,18 +329,18 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     if (active && payload && payload.length) {
       const data = payload[0].payload
       return (
-        <div className="bg-white p-4 border-2 border-black shadow-lg">
-          <p className="font-bold text-base text-black uppercase tracking-wide">{data.name}</p>
-          <p className="text-xs text-black font-medium mb-2">{data.continent}</p>
-          <p className="text-2xl font-black text-black my-2">
+        <div className="bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]">
+          <p className="font-bold text-sm text-black uppercase tracking-wide">{data.name}</p>
+          <p className="text-[10px] text-black font-medium mb-1">{data.continent}</p>
+          <p className="text-xl font-black text-black my-1">
             {data.filmCount} votes
           </p>
           {data.distinctFilms > 0 && (
-            <p className="text-sm text-black font-medium mt-1">
+            <p className="text-xs text-black font-medium mt-0.5">
               {data.distinctFilms} distinct films
             </p>
           )}
-          <p className="text-xs text-black font-medium mt-2 text-gray-600">
+          <p className="text-[10px] text-black font-medium mt-1 text-gray-600">
             {data.percentOfTotal}% of total
           </p>
         </div>
@@ -382,41 +382,46 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         </div>
 
         {/* Quick Filter Buttons */}
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={handleResetToTop10}
-            className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white text-sm font-bold uppercase tracking-wide transition-colors"
-          >
-            Top 10
-          </button>
+        <div className="bg-white border-2 border-black p-1">
+          <div className="flex flex-wrap gap-1">
+            <button
+              onClick={handleResetToTop10}
+              className="py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all bg-white text-black border-2 border-black hover:bg-black hover:text-white"
+            >
+              Top 10
+            </button>
 
-          {Object.entries(continentColors).map(([continent, color]) => {
-            const isActive = activeContinents.has(continent)
-            return (
-              <button
-                key={continent}
-                onClick={() => isActive && handleSelectContinent(continent)}
-                disabled={!isActive}
-                className={`px-4 py-2 text-sm font-bold uppercase tracking-wide transition-colors border-2 ${
-                  isActive
-                    ? 'bg-white text-black border-black hover:text-white'
-                    : 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
-                }`}
-                style={isActive ? {
-                  borderColor: color,
-                  '--hover-bg': color
-                } : {}}
-                onMouseEnter={(e) => {
-                  if (isActive) e.currentTarget.style.backgroundColor = color
-                }}
-                onMouseLeave={(e) => {
-                  if (isActive) e.currentTarget.style.backgroundColor = 'white'
-                }}
-              >
-                {continent}
-              </button>
-            )
-          })}
+            {Object.entries(continentColors).map(([continent, color]) => {
+              const isActive = activeContinents.has(continent)
+              return (
+                <button
+                  key={continent}
+                  onClick={() => isActive && handleSelectContinent(continent)}
+                  disabled={!isActive}
+                  className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 ${
+                    isActive
+                      ? 'bg-white text-black border-black hover:text-white'
+                      : 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
+                  }`}
+                  style={isActive ? { borderColor: color } : {}}
+                  onMouseEnter={(e) => {
+                    if (isActive) {
+                      e.currentTarget.style.backgroundColor = color
+                      e.currentTarget.style.borderColor = color
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (isActive) {
+                      e.currentTarget.style.backgroundColor = 'white'
+                      e.currentTarget.style.borderColor = color
+                    }
+                  }}
+                >
+                  {continent}
+                </button>
+              )
+            })}
+          </div>
         </div>
       </div>
 
