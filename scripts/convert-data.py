@@ -167,13 +167,17 @@ def generate_countries_json(df, output_path):
     all_polls_films_all = len(df[df[[f'{year}votes' for year in POLL_YEARS]].gt(0).any(axis=1)])
     all_polls_votes_all = sum(int(df[f'{year}votes'].sum()) for year in POLL_YEARS)
 
-    # For "top100" - count films that appear in top 100 of ANY poll
-    top100_mask = df[[f'{year}rank' for year in POLL_YEARS]].le(100).any(axis=1)
-    all_polls_films_top100 = len(df[top100_mask])
-    all_polls_votes_top100 = sum(
-        int(df[df[f'{year}rank'] <= 100][f'{year}votes'].sum())
-        for year in POLL_YEARS
-    )
+    # For "top100" - get top 100 films by aggregated vote totals across all polls
+    # Calculate total votes for each film across all polls
+    df['total_votes_all_polls'] = df[[f'{year}votes' for year in POLL_YEARS]].fillna(0).sum(axis=1)
+
+    # Get top 100 films by total votes
+    top100_films = df.nlargest(100, 'total_votes_all_polls')
+    all_polls_films_top100 = len(top100_films)
+    all_polls_votes_top100 = int(top100_films['total_votes_all_polls'].sum())
+
+    # Clean up temporary column
+    df.drop('total_votes_all_polls', axis=1, inplace=True)
 
     poll_metadata['all'] = {
         'all': {
