@@ -54,7 +54,7 @@ This is a data visualization and database platform called the **Sight & Sound Ca
 - **"main data" sheet** - PRIMARY SHEET (4,851 films × 26 columns) - **USE THIS FOR ALL VISUALIZATIONS**
 - **"votes per poll" sheet** - Aggregated poll data (8,340 rows with Poll Year, Rank, Votes, Film Title)
 - **Individual poll sheets:**
-  - **"1952"** - 251 voters with their top film picks
+  - **"1952"** - 47 voters (variable ballot lengths: 545 total votes for 199 distinct films, ~11.6 votes/voter average)
   - **"1962"** - 248 voters (10 films each)
   - **"1972"** - 450 voters (10 films each)
   - **"1982"** - 679 voters (10 films each)
@@ -62,6 +62,10 @@ This is a data visualization and database platform called the **Sight & Sound Ca
   - **"2002"** - 778 voters (10 films each)
   - **"2012"** - 2,850 voters (10 films each)
   - **"2022"** - 5,455 voters (10 films each)
+
+**Note on Ballot Formats:**
+- **1952**: Variable-length ballots (voters could submit different numbers of films)
+- **1962-2022**: Standardized format with exactly 10 films per ballot
 
 **How to Load Data:**
 ```javascript
