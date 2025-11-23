@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
@@ -7,6 +7,61 @@ export default function CountryOriginMain() {
   // Filter state (not functional yet - Phase 2)
   const [selectedPoll, setSelectedPoll] = useState('2022')
   const [rankRange, setRankRange] = useState('all')
+  const [countriesData, setCountriesData] = useState(null)
+
+  // Load countries data
+  useEffect(() => {
+    fetch('/data/countries.json')
+      .then(response => response.json())
+      .then(data => setCountriesData(data))
+      .catch(error => console.error('Error loading countries data:', error))
+  }, [])
+
+  // Calculate dynamic metrics based on current filters
+  const metrics = useMemo(() => {
+    if (!countriesData) return { countries: 0, votes: 0, films: 0 }
+
+    // Get true poll totals from metadata (without co-production inflation)
+    const pollKey = selectedPoll === 'all' ? 'all' : selectedPoll
+    const rangeKey = rankRange === 'all' ? 'all' : 'top100'
+
+    const pollMetadata = countriesData._pollMetadata?.[pollKey]?.[rangeKey]
+    const trueTotalVotes = pollMetadata?.votes || 0
+    const trueDistinctFilms = pollMetadata?.films || 0
+
+    // Count countries with votes (still need to iterate for this)
+    let countriesWithVotes = 0
+    Object.entries(countriesData).forEach(([countryName, countryInfo]) => {
+      // Skip metadata key
+      if (countryName.startsWith('_')) return
+
+      let votes = 0
+      if (selectedPoll === 'all') {
+        if (rankRange === 'all') {
+          votes = Object.values(countryInfo.byPoll).reduce((sum, pollData) =>
+            sum + (pollData.total || 0), 0)
+        } else {
+          votes = Object.values(countryInfo.byPoll).reduce((sum, pollData) =>
+            sum + (pollData.top100 || 0), 0)
+        }
+      } else {
+        const pollData = countryInfo.byPoll[selectedPoll]
+        if (pollData) {
+          votes = rankRange === 'all' ? pollData.total : pollData.top100
+        }
+      }
+
+      if (votes > 0) {
+        countriesWithVotes++
+      }
+    })
+
+    return {
+      countries: countriesWithVotes,
+      votes: trueTotalVotes,
+      films: trueDistinctFilms
+    }
+  }, [countriesData, selectedPoll, rankRange])
 
   // Helper function to generate filter description text
   const getFilterText = () => {
@@ -16,15 +71,11 @@ export default function CountryOriginMain() {
 
     const rankText = rankRange === 'all'
       ? 'All Films'
-      : 'Top 100 Films'
+      : 'Top 100'
 
     return `${pollText} • ${rankText}`
   }
 
-  // Helper function to get the correct metric name based on poll selection
-  const getMetricName = () => {
-    return selectedPoll === 'all' ? 'poll appearances' : 'films'
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -107,9 +158,11 @@ export default function CountryOriginMain() {
             {/* INFO BANNER */}
             <div className="bg-white border-2 border-black px-4 py-3 mb-8">
               <div className="text-sm text-black">
-                <span className="font-bold uppercase tracking-wide">Showing 117 countries across 3,817 {getMetricName()}</span>
+                <span className="font-bold uppercase tracking-wide">
+                  {metrics.countries} countries • {metrics.votes.toLocaleString()} votes • {metrics.films.toLocaleString()} films
+                </span>
                 <span className="mx-2 text-black">|</span>
-                <span className="font-medium">Filters: {getFilterText()}</span>
+                <span className="font-medium">{getFilterText()}</span>
               </div>
             </div>
 
@@ -130,8 +183,8 @@ export default function CountryOriginMain() {
                   <div className="text-6xl mb-4">🗺️</div>
                   <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Interactive World Map - Choropleth</div>
                   <div className="text-sm space-y-2">
-                    <p>• Countries colored by film count (gradient from light to dark)</p>
-                    <p>• Hover to see country name and exact film count</p>
+                    <p>• Countries colored by vote count (gradient from light to dark)</p>
+                    <p>• Hover to see country name and exact vote count</p>
                     <p>• Click any country to navigate to that country's detail page</p>
                     <p>• Legend showing color scale</p>
                   </div>
@@ -143,7 +196,7 @@ export default function CountryOriginMain() {
 
               {/* Map Legend */}
               <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
-                <span className="text-black font-bold uppercase tracking-wide">Film Count:</span>
+                <span className="text-black font-bold uppercase tracking-wide">Vote Count:</span>
                 <div className="flex items-center space-x-2">
                   <div className="w-8 h-4 bg-blue-100 border-2 border-black"></div>
                   <span className="text-black font-medium">1-10</span>
@@ -236,7 +289,7 @@ export default function CountryOriginMain() {
                 </h2>
                 <p className="text-black font-medium">
                   See both continent-level patterns and individual country contributions.
-                  Size represents film count.
+                  Size represents vote count.
                 </p>
               </div>
 
@@ -273,12 +326,12 @@ export default function CountryOriginMain() {
                   <div className="text-sm space-y-3">
                     <div>
                       <strong className="text-black font-bold">Structure:</strong><br/>
-                      Large rectangles = Continents (sized by total films)<br/>
+                      Large rectangles = Continents (sized by total votes)<br/>
                       Nested rectangles = Individual countries
                     </div>
                     <div>
                       <strong className="text-black font-bold">Interactions:</strong><br/>
-                      • Hover: "France: 679 films (15.9% of Europe, 7.2% of total)"<br/>
+                      • Hover: "France: 679 votes (15.9% of Europe, 7.2% of total)"<br/>
                       • Click country: Navigate to detail page<br/>
                       • Click continent: Filter view to that continent
                     </div>
@@ -328,10 +381,10 @@ export default function CountryOriginMain() {
                 <div>
                   <h3 className="font-black text-black mb-2 uppercase tracking-wide text-lg">Domination Patterns</h3>
                   <ul className="space-y-2 text-black text-sm font-medium">
-                    <li>• USA represents 1,780 films (37% of all films in the dataset)</li>
+                    <li>• USA represents 1,780 votes (37% of total votes in the dataset)</li>
                     <li>• Europe remains the most represented continent at 45%</li>
-                    <li>• France leads Europe with 679 films</li>
-                    <li>• Japan is the most represented Asian country with 247 films</li>
+                    <li>• France leads Europe with 679 votes</li>
+                    <li>• Japan is the most represented Asian country with 247 votes</li>
                   </ul>
                 </div>
                 <div>

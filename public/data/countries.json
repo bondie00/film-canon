@@ -1,8 +1,99 @@
 {
+  "_pollMetadata": {
+    "1952": {
+      "all": {
+        "votes": 545,
+        "films": 199
+      },
+      "top100": {
+        "votes": 545,
+        "films": 199
+      }
+    },
+    "1962": {
+      "all": {
+        "votes": 571,
+        "films": 199
+      },
+      "top100": {
+        "votes": 571,
+        "films": 199
+      }
+    },
+    "1972": {
+      "all": {
+        "votes": 827,
+        "films": 363
+      },
+      "top100": {
+        "votes": 618,
+        "films": 154
+      }
+    },
+    "1982": {
+      "all": {
+        "votes": 1239,
+        "films": 554
+      },
+      "top100": {
+        "votes": 727,
+        "films": 129
+      }
+    },
+    "1992": {
+      "all": {
+        "votes": 1314,
+        "films": 583
+      },
+      "top100": {
+        "votes": 775,
+        "films": 130
+      }
+    },
+    "2002": {
+      "all": {
+        "votes": 1462,
+        "films": 630
+      },
+      "top100": {
+        "votes": 866,
+        "films": 130
+      }
+    },
+    "2012": {
+      "all": {
+        "votes": 8456,
+        "films": 2001
+      },
+      "top100": {
+        "votes": 3716,
+        "films": 101
+      }
+    },
+    "2022": {
+      "all": {
+        "votes": 16283,
+        "films": 3817
+      },
+      "top100": {
+        "votes": 5793,
+        "films": 100
+      }
+    },
+    "all": {
+      "all": {
+        "votes": 30697,
+        "films": 4851
+      },
+      "top100": {
+        "votes": 11647,
+        "films": 100
+      }
+    }
+  },
   "Algeria": {
     "continent": "Africa",
     "totalFilms": 11,
-    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -51,6 +142,12 @@
         "top100": 49,
         "distinctFilms": 7,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 101,
+        "top100": 86,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -64,7 +161,6 @@
   "Angola": {
     "continent": "Africa",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -113,6 +209,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 22,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -122,7 +224,6 @@
   "Argentina": {
     "continent": "Latin America",
     "totalFilms": 34,
-    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -171,6 +272,12 @@
         "top100": 0,
         "distinctFilms": 26,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 136,
+        "top100": 0,
+        "distinctFilms": 34,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -185,7 +292,6 @@
   "Armenia": {
     "continent": "Europe",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -234,6 +340,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -243,7 +355,6 @@
   "Australia": {
     "continent": "Oceania",
     "totalFilms": 49,
-    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -292,6 +403,12 @@
         "top100": 46,
         "distinctFilms": 42,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 162,
+        "top100": 0,
+        "distinctFilms": 49,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -308,7 +425,6 @@
   "Austria": {
     "continent": "Europe",
     "totalFilms": 51,
-    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 1,
@@ -357,6 +473,12 @@
         "top100": 0,
         "distinctFilms": 41,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 119,
+        "top100": 0,
+        "distinctFilms": 51,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -375,7 +497,6 @@
   "Bangladesh": {
     "continent": "Asia",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -424,6 +545,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 4,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -434,7 +561,6 @@
   "Belarus": {
     "continent": "Europe",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -479,6 +605,12 @@
         "distinctFilmsTop100": 0
       },
       "2022": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
         "total": 2,
         "top100": 0,
         "distinctFilms": 2,
@@ -493,7 +625,6 @@
   "Belgium": {
     "continent": "Europe",
     "totalFilms": 47,
-    "distinctFilmsTop100": 2,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -542,6 +673,12 @@
         "top100": 260,
         "distinctFilms": 38,
         "distinctFilmsTop100": 2
+      },
+      "all": {
+        "total": 407,
+        "top100": 256,
+        "distinctFilms": 47,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -558,7 +695,6 @@
   "Bolivia": {
     "continent": "Latin America",
     "totalFilms": 6,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -607,6 +743,12 @@
         "top100": 0,
         "distinctFilms": 6,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 8,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -619,7 +761,6 @@
   "Bosnia and Herzegovina": {
     "continent": "Europe",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -668,6 +809,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -677,7 +824,6 @@
   "Brazil": {
     "continent": "Latin America",
     "totalFilms": 44,
-    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -726,6 +872,12 @@
         "top100": 0,
         "distinctFilms": 38,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 147,
+        "top100": 0,
+        "distinctFilms": 44,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -743,7 +895,6 @@
   "Bulgaria": {
     "continent": "Europe",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -792,6 +943,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -802,7 +959,6 @@
   "Burkina Faso": {
     "continent": "Africa",
     "totalFilms": 6,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -851,6 +1007,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 9,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -863,7 +1025,6 @@
   "Cambodia": {
     "continent": "Asia",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -912,6 +1073,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -923,7 +1090,6 @@
   "Cameroon": {
     "continent": "Africa",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -972,6 +1138,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 7,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -982,7 +1154,6 @@
   "Canada": {
     "continent": "North America",
     "totalFilms": 73,
-    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 2,
@@ -1031,6 +1202,12 @@
         "top100": 0,
         "distinctFilms": 54,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 213,
+        "top100": 0,
+        "distinctFilms": 73,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1048,7 +1225,6 @@
   "Chad": {
     "continent": "Africa",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1097,6 +1273,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 5,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1107,7 +1289,6 @@
   "Chile": {
     "continent": "Latin America",
     "totalFilms": 11,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1156,6 +1337,12 @@
         "top100": 0,
         "distinctFilms": 8,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 36,
+        "top100": 0,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1169,7 +1356,6 @@
   "China": {
     "continent": "Asia",
     "totalFilms": 72,
-    "distinctFilmsTop100": 2,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1218,6 +1404,12 @@
         "top100": 0,
         "distinctFilms": 52,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 200,
+        "top100": 0,
+        "distinctFilms": 72,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1234,7 +1426,6 @@
   "Colombia": {
     "continent": "Latin America",
     "totalFilms": 6,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1283,6 +1474,12 @@
         "top100": 0,
         "distinctFilms": 6,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 16,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1296,7 +1493,6 @@
   "Croatia": {
     "continent": "Europe",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1345,6 +1541,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1354,7 +1556,6 @@
   "Cuba": {
     "continent": "North America",
     "totalFilms": 15,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1403,6 +1604,12 @@
         "top100": 0,
         "distinctFilms": 11,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 92,
+        "top100": 0,
+        "distinctFilms": 15,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1414,7 +1621,6 @@
   "Czech Republic": {
     "continent": "Europe",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1463,6 +1669,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1473,7 +1685,6 @@
   "Czechoslovakia": {
     "continent": "Europe",
     "totalFilms": 30,
-    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 1,
@@ -1522,6 +1733,12 @@
         "top100": 63,
         "distinctFilms": 23,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 169,
+        "top100": 73,
+        "distinctFilms": 30,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -1538,7 +1755,6 @@
   "Democratic Republic of the Congo": {
     "continent": "Africa",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1587,6 +1803,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1596,7 +1818,6 @@
   "Denmark": {
     "continent": "Europe",
     "totalFilms": 21,
-    "distinctFilmsTop100": 5,
     "byPoll": {
       "1952": {
         "total": 3,
@@ -1645,6 +1866,12 @@
         "top100": 48,
         "distinctFilms": 17,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 301,
+        "top100": 173,
+        "distinctFilms": 21,
+        "distinctFilmsTop100": 2
       }
     },
     "byDecade": {
@@ -1662,7 +1889,6 @@
   "Dominican Republic": {
     "continent": "North America",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1711,6 +1937,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1720,7 +1952,6 @@
   "East Germany": {
     "continent": "Europe",
     "totalFilms": 8,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1769,6 +2000,12 @@
         "top100": 0,
         "distinctFilms": 4,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 10,
+        "top100": 0,
+        "distinctFilms": 8,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1781,7 +2018,6 @@
   "Egypt": {
     "continent": "Africa",
     "totalFilms": 12,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1830,6 +2066,12 @@
         "top100": 0,
         "distinctFilms": 10,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 46,
+        "top100": 0,
+        "distinctFilms": 12,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1845,7 +2087,6 @@
   "Estonia": {
     "continent": "Europe",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1894,6 +2135,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1904,7 +2151,6 @@
   "Ethiopia": {
     "continent": "Africa",
     "totalFilms": 4,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -1953,6 +2199,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 6,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -1965,7 +2217,6 @@
   "Faroe Islands": {
     "continent": "Europe",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2014,6 +2265,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2023,7 +2280,6 @@
   "Finland": {
     "continent": "Europe",
     "totalFilms": 16,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2072,6 +2328,12 @@
         "top100": 0,
         "distinctFilms": 13,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 28,
+        "top100": 0,
+        "distinctFilms": 16,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2087,7 +2349,6 @@
   "France": {
     "continent": "Europe",
     "totalFilms": 680,
-    "distinctFilmsTop100": 107,
     "byPoll": {
       "1952": {
         "total": 121,
@@ -2136,6 +2397,12 @@
         "top100": 1381,
         "distinctFilms": 531,
         "distinctFilmsTop100": 23
+      },
+      "all": {
+        "total": 5631,
+        "top100": 2686,
+        "distinctFilms": 680,
+        "distinctFilmsTop100": 24
       }
     },
     "byDecade": {
@@ -2158,7 +2425,6 @@
   "Germany": {
     "continent": "Europe",
     "totalFilms": 124,
-    "distinctFilmsTop100": 26,
     "byPoll": {
       "1952": {
         "total": 38,
@@ -2207,6 +2473,12 @@
         "top100": 93,
         "distinctFilms": 93,
         "distinctFilmsTop100": 2
+      },
+      "all": {
+        "total": 699,
+        "top100": 190,
+        "distinctFilms": 124,
+        "distinctFilmsTop100": 2
       }
     },
     "byDecade": {
@@ -2225,7 +2497,6 @@
   "Ghana": {
     "continent": "Africa",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2274,6 +2545,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2284,7 +2561,6 @@
   "Greece": {
     "continent": "Europe",
     "totalFilms": 14,
-    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2333,6 +2609,12 @@
         "top100": 0,
         "distinctFilms": 11,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 68,
+        "top100": 0,
+        "distinctFilms": 14,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2346,7 +2628,6 @@
   "Guatemala": {
     "continent": "Latin America",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2394,6 +2675,12 @@
         "total": 1,
         "top100": 0,
         "distinctFilms": 1,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 2,
         "distinctFilmsTop100": 0
       }
     },
@@ -2405,7 +2692,6 @@
   "Guinea-Bissau": {
     "continent": "Africa",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2450,6 +2736,12 @@
         "distinctFilmsTop100": 0
       },
       "2022": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
         "total": 1,
         "top100": 0,
         "distinctFilms": 1,
@@ -2463,7 +2755,6 @@
   "Guyana": {
     "continent": "Latin America",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2508,6 +2799,12 @@
         "distinctFilmsTop100": 0
       },
       "2022": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
         "total": 1,
         "top100": 0,
         "distinctFilms": 1,
@@ -2521,7 +2818,6 @@
   "Haiti": {
     "continent": "North America",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2570,6 +2866,12 @@
         "top100": 0,
         "distinctFilms": 0,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2579,7 +2881,6 @@
   "Hong Kong": {
     "continent": "Asia",
     "totalFilms": 65,
-    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2628,6 +2929,12 @@
         "top100": 174,
         "distinctFilms": 52,
         "distinctFilmsTop100": 2
+      },
+      "all": {
+        "total": 401,
+        "top100": 184,
+        "distinctFilms": 65,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -2643,7 +2950,6 @@
   "Hungary": {
     "continent": "Europe",
     "totalFilms": 29,
-    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2692,6 +2998,12 @@
         "top100": 0,
         "distinctFilms": 21,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 85,
+        "top100": 0,
+        "distinctFilms": 29,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2708,7 +3020,6 @@
   "India": {
     "continent": "Asia",
     "totalFilms": 96,
-    "distinctFilmsTop100": 6,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2757,6 +3068,12 @@
         "top100": 57,
         "distinctFilms": 79,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 478,
+        "top100": 132,
+        "distinctFilms": 96,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -2775,7 +3092,6 @@
   "Indonesia": {
     "continent": "Asia",
     "totalFilms": 7,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2824,6 +3140,12 @@
         "top100": 0,
         "distinctFilms": 7,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 19,
+        "top100": 0,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2836,7 +3158,6 @@
   "Iran": {
     "continent": "Asia",
     "totalFilms": 48,
-    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2885,6 +3206,12 @@
         "top100": 78,
         "distinctFilms": 38,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 340,
+        "top100": 113,
+        "distinctFilms": 48,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -2900,7 +3227,6 @@
   "Iraq": {
     "continent": "Asia",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -2949,6 +3275,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -2960,7 +3292,6 @@
   "Ireland": {
     "continent": "Europe",
     "totalFilms": 16,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3009,6 +3340,12 @@
         "top100": 0,
         "distinctFilms": 14,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 17,
+        "top100": 0,
+        "distinctFilms": 16,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3022,7 +3359,6 @@
   "Israel": {
     "continent": "Asia",
     "totalFilms": 7,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3071,6 +3407,12 @@
         "top100": 0,
         "distinctFilms": 4,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 10,
+        "top100": 0,
+        "distinctFilms": 7,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3083,7 +3425,6 @@
   "Italy": {
     "continent": "Europe",
     "totalFilms": 245,
-    "distinctFilmsTop100": 39,
     "byPoll": {
       "1952": {
         "total": 38,
@@ -3132,6 +3473,12 @@
         "top100": 339,
         "distinctFilms": 188,
         "distinctFilmsTop100": 8
+      },
+      "all": {
+        "total": 2116,
+        "top100": 873,
+        "distinctFilms": 245,
+        "distinctFilmsTop100": 8
       }
     },
     "byDecade": {
@@ -3153,7 +3500,6 @@
   "Ivory Coast": {
     "continent": "Africa",
     "totalFilms": 3,
-    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3202,6 +3548,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 13,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3213,7 +3565,6 @@
   "Jamaica": {
     "continent": "North America",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3262,6 +3613,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3271,7 +3628,6 @@
   "Japan": {
     "continent": "Asia",
     "totalFilms": 247,
-    "distinctFilmsTop100": 20,
     "byPoll": {
       "1952": {
         "total": 2,
@@ -3320,6 +3676,12 @@
         "top100": 479,
         "distinctFilms": 199,
         "distinctFilmsTop100": 8
+      },
+      "all": {
+        "total": 1862,
+        "top100": 976,
+        "distinctFilms": 247,
+        "distinctFilmsTop100": 7
       }
     },
     "byDecade": {
@@ -3339,7 +3701,6 @@
   "Kazakhstan": {
     "continent": "Asia",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3384,6 +3745,12 @@
         "distinctFilmsTop100": 0
       },
       "2022": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
         "total": 1,
         "top100": 0,
         "distinctFilms": 1,
@@ -3397,7 +3764,6 @@
   "Kenya": {
     "continent": "Africa",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3446,6 +3812,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3455,7 +3827,6 @@
   "Kyrgyzstan": {
     "continent": "Asia",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3504,6 +3875,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3513,7 +3890,6 @@
   "Lebanon": {
     "continent": "Asia",
     "totalFilms": 8,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3562,6 +3938,12 @@
         "top100": 0,
         "distinctFilms": 7,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 9,
+        "top100": 0,
+        "distinctFilms": 8,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3574,7 +3956,6 @@
   "Lesotho": {
     "continent": "Africa",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3623,6 +4004,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3632,7 +4019,6 @@
   "Luxembourg": {
     "continent": "Europe",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3677,6 +4063,12 @@
         "distinctFilmsTop100": 0
       },
       "2022": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
         "total": 2,
         "top100": 0,
         "distinctFilms": 2,
@@ -3691,7 +4083,6 @@
   "Macedonia": {
     "continent": "Europe",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3740,6 +4131,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3750,7 +4147,6 @@
   "Malaysia": {
     "continent": "Asia",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3799,6 +4195,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3808,7 +4210,6 @@
   "Mali": {
     "continent": "Africa",
     "totalFilms": 5,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3857,6 +4258,12 @@
         "top100": 0,
         "distinctFilms": 4,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 24,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3868,7 +4275,6 @@
   "Martinique": {
     "continent": "North America",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3917,6 +4323,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 8,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3926,7 +4338,6 @@
   "Mauritania": {
     "continent": "Africa",
     "totalFilms": 4,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -3975,6 +4386,12 @@
         "top100": 0,
         "distinctFilms": 4,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 39,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -3986,7 +4403,6 @@
   "Mexico": {
     "continent": "North America",
     "totalFilms": 50,
-    "distinctFilmsTop100": 5,
     "byPoll": {
       "1952": {
         "total": 5,
@@ -4035,6 +4451,12 @@
         "top100": 0,
         "distinctFilms": 43,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 267,
+        "top100": 0,
+        "distinctFilms": 50,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4052,7 +4474,6 @@
   "Mongolia": {
     "continent": "Asia",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4101,6 +4522,12 @@
         "top100": 0,
         "distinctFilms": 0,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4110,7 +4537,6 @@
   "Morocco": {
     "continent": "Africa",
     "totalFilms": 6,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4159,6 +4585,12 @@
         "top100": 0,
         "distinctFilms": 6,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 6,
+        "top100": 0,
+        "distinctFilms": 6,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4171,7 +4603,6 @@
   "Mozambique": {
     "continent": "Africa",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4216,6 +4647,12 @@
         "distinctFilmsTop100": 0
       },
       "2022": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
         "total": 1,
         "top100": 0,
         "distinctFilms": 1,
@@ -4229,7 +4666,6 @@
   "Nepal": {
     "continent": "Asia",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4278,6 +4714,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4287,7 +4729,6 @@
   "Netherlands": {
     "continent": "Europe",
     "totalFilms": 18,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4336,6 +4777,12 @@
         "top100": 0,
         "distinctFilms": 14,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 31,
+        "top100": 0,
+        "distinctFilms": 18,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4351,7 +4798,6 @@
   "New Zealand": {
     "continent": "Oceania",
     "totalFilms": 21,
-    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4400,6 +4846,12 @@
         "top100": 46,
         "distinctFilms": 21,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 113,
+        "top100": 0,
+        "distinctFilms": 21,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4414,7 +4866,6 @@
   "Niger": {
     "continent": "Africa",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4463,6 +4914,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4472,7 +4929,6 @@
   "Nigeria": {
     "continent": "Africa",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4521,6 +4977,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4531,7 +4993,6 @@
   "Norway": {
     "continent": "Europe",
     "totalFilms": 5,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4580,6 +5041,12 @@
         "top100": 0,
         "distinctFilms": 5,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 18,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4592,7 +5059,6 @@
   "Pakistan": {
     "continent": "Asia",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4641,6 +5107,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4651,7 +5123,6 @@
   "Palestine": {
     "continent": "Asia",
     "totalFilms": 11,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4700,6 +5171,12 @@
         "top100": 0,
         "distinctFilms": 8,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 24,
+        "top100": 0,
+        "distinctFilms": 11,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4713,7 +5190,6 @@
   "Paraguay": {
     "continent": "Latin America",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4762,6 +5238,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4771,7 +5253,6 @@
   "Peru": {
     "continent": "Latin America",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4820,6 +5301,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4830,7 +5317,6 @@
   "Philippines": {
     "continent": "Asia",
     "totalFilms": 25,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4879,6 +5365,12 @@
         "top100": 0,
         "distinctFilms": 20,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 54,
+        "top100": 0,
+        "distinctFilms": 25,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4894,7 +5386,6 @@
   "Poland": {
     "continent": "Europe",
     "totalFilms": 47,
-    "distinctFilmsTop100": 7,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -4943,6 +5434,12 @@
         "top100": 0,
         "distinctFilms": 30,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 129,
+        "top100": 0,
+        "distinctFilms": 47,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -4959,7 +5456,6 @@
   "Portugal": {
     "continent": "Europe",
     "totalFilms": 48,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5008,6 +5504,12 @@
         "top100": 0,
         "distinctFilms": 39,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 121,
+        "top100": 0,
+        "distinctFilms": 48,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5024,7 +5526,6 @@
   "Romania": {
     "continent": "Europe",
     "totalFilms": 14,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5073,6 +5574,12 @@
         "top100": 0,
         "distinctFilms": 11,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 34,
+        "top100": 0,
+        "distinctFilms": 14,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5086,7 +5593,6 @@
   "Russia": {
     "continent": "Europe",
     "totalFilms": 34,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5135,6 +5641,12 @@
         "top100": 0,
         "distinctFilms": 25,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 76,
+        "top100": 0,
+        "distinctFilms": 34,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5148,7 +5660,6 @@
   "Rwanda": {
     "continent": "Africa",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5193,6 +5704,12 @@
         "distinctFilmsTop100": 0
       },
       "2022": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
         "total": 1,
         "top100": 0,
         "distinctFilms": 1,
@@ -5206,7 +5723,6 @@
   "Saudi Arabia": {
     "continent": "Asia",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5255,6 +5771,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5264,7 +5786,6 @@
   "Senegal": {
     "continent": "Africa",
     "totalFilms": 14,
-    "distinctFilmsTop100": 2,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5313,6 +5834,12 @@
         "top100": 70,
         "distinctFilms": 13,
         "distinctFilmsTop100": 2
+      },
+      "all": {
+        "total": 161,
+        "top100": 57,
+        "distinctFilms": 14,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -5326,7 +5853,6 @@
   "Serbia": {
     "continent": "Europe",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5375,6 +5901,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5385,7 +5917,6 @@
   "Slovakia": {
     "continent": "Europe",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5434,6 +5965,12 @@
         "top100": 0,
         "distinctFilms": 0,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5444,7 +5981,6 @@
   "Slovenia": {
     "continent": "Europe",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5489,6 +6025,12 @@
         "distinctFilmsTop100": 0
       },
       "2022": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
         "total": 1,
         "top100": 0,
         "distinctFilms": 1,
@@ -5502,7 +6044,6 @@
   "Somalia": {
     "continent": "Africa",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5551,6 +6092,12 @@
         "top100": 0,
         "distinctFilms": 1,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5560,7 +6107,6 @@
   "South Africa": {
     "continent": "Africa",
     "totalFilms": 4,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5609,6 +6155,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 7,
+        "top100": 0,
+        "distinctFilms": 4,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5620,7 +6172,6 @@
   "South Korea": {
     "continent": "Asia",
     "totalFilms": 46,
-    "distinctFilmsTop100": 2,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5669,6 +6220,12 @@
         "top100": 32,
         "distinctFilms": 37,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 131,
+        "top100": 0,
+        "distinctFilms": 46,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5685,7 +6242,6 @@
   "Soviet Union": {
     "continent": "Europe",
     "totalFilms": 108,
-    "distinctFilmsTop100": 34,
     "byPoll": {
       "1952": {
         "total": 56,
@@ -5734,6 +6290,12 @@
         "top100": 292,
         "distinctFilms": 70,
         "distinctFilmsTop100": 5
+      },
+      "all": {
+        "total": 1350,
+        "top100": 775,
+        "distinctFilms": 108,
+        "distinctFilmsTop100": 6
       }
     },
     "byDecade": {
@@ -5750,7 +6312,6 @@
   "Spain": {
     "continent": "Europe",
     "totalFilms": 58,
-    "distinctFilmsTop100": 6,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5799,6 +6360,12 @@
         "top100": 34,
         "distinctFilms": 48,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 339,
+        "top100": 56,
+        "distinctFilms": 58,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -5816,7 +6383,6 @@
   "Sri Lanka": {
     "continent": "Asia",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5865,6 +6431,12 @@
         "top100": 0,
         "distinctFilms": 0,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5874,7 +6446,6 @@
   "Sudan": {
     "continent": "Africa",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -5923,6 +6494,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -5934,7 +6511,6 @@
   "Sweden": {
     "continent": "Europe",
     "totalFilms": 57,
-    "distinctFilmsTop100": 15,
     "byPoll": {
       "1952": {
         "total": 10,
@@ -5983,6 +6559,12 @@
         "top100": 76,
         "distinctFilms": 47,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 565,
+        "top100": 236,
+        "distinctFilms": 57,
+        "distinctFilmsTop100": 2
       }
     },
     "byDecade": {
@@ -6002,7 +6584,6 @@
   "Switzerland": {
     "continent": "Europe",
     "totalFilms": 21,
-    "distinctFilmsTop100": 5,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6051,6 +6632,12 @@
         "top100": 35,
         "distinctFilms": 14,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 146,
+        "top100": 70,
+        "distinctFilms": 21,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -6067,7 +6654,6 @@
   "Syria": {
     "continent": "Asia",
     "totalFilms": 5,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6116,6 +6702,12 @@
         "top100": 0,
         "distinctFilms": 5,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 12,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6128,7 +6720,6 @@
   "Taiwan": {
     "continent": "Asia",
     "totalFilms": 38,
-    "distinctFilmsTop100": 3,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6177,6 +6768,12 @@
         "top100": 67,
         "distinctFilms": 33,
         "distinctFilmsTop100": 2
+      },
+      "all": {
+        "total": 340,
+        "top100": 0,
+        "distinctFilms": 38,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6192,7 +6789,6 @@
   "Thailand": {
     "continent": "Asia",
     "totalFilms": 13,
-    "distinctFilmsTop100": 1,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6241,6 +6837,12 @@
         "top100": 31,
         "distinctFilms": 11,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 108,
+        "top100": 0,
+        "distinctFilms": 13,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6254,7 +6856,6 @@
   "Tunisia": {
     "continent": "Africa",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6303,6 +6904,12 @@
         "top100": 0,
         "distinctFilms": 3,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 7,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6313,7 +6920,6 @@
   "Turkey": {
     "continent": "Asia",
     "totalFilms": 17,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6362,6 +6968,12 @@
         "top100": 0,
         "distinctFilms": 10,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 43,
+        "top100": 0,
+        "distinctFilms": 17,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6376,7 +6988,6 @@
   "Ukraine": {
     "continent": "Europe",
     "totalFilms": 2,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6425,6 +7036,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 2,
+        "top100": 0,
+        "distinctFilms": 2,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6435,7 +7052,6 @@
   "United Kingdom": {
     "continent": "Europe",
     "totalFilms": 457,
-    "distinctFilmsTop100": 42,
     "byPoll": {
       "1952": {
         "total": 37,
@@ -6484,6 +7100,12 @@
         "top100": 325,
         "distinctFilms": 360,
         "distinctFilmsTop100": 6
+      },
+      "all": {
+        "total": 2152,
+        "top100": 506,
+        "distinctFilms": 457,
+        "distinctFilmsTop100": 4
       }
     },
     "byDecade": {
@@ -6506,7 +7128,6 @@
   "United States": {
     "continent": "North America",
     "totalFilms": 1781,
-    "distinctFilmsTop100": 190,
     "byPoll": {
       "1952": {
         "total": 240,
@@ -6555,6 +7176,12 @@
         "top100": 2302,
         "distinctFilms": 1419,
         "distinctFilmsTop100": 36
+      },
+      "all": {
+        "total": 12084,
+        "top100": 4904,
+        "distinctFilms": 1781,
+        "distinctFilmsTop100": 40
       }
     },
     "byDecade": {
@@ -6577,7 +7204,6 @@
   "Uruguay": {
     "continent": "Latin America",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6626,6 +7252,12 @@
         "top100": 0,
         "distinctFilms": 0,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6635,7 +7267,6 @@
   "Venezuela": {
     "continent": "Latin America",
     "totalFilms": 5,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6684,6 +7315,12 @@
         "top100": 0,
         "distinctFilms": 4,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 6,
+        "top100": 0,
+        "distinctFilms": 5,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6697,7 +7334,6 @@
   "Vietnam": {
     "continent": "Asia",
     "totalFilms": 3,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6746,6 +7382,12 @@
         "top100": 0,
         "distinctFilms": 2,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 3,
+        "top100": 0,
+        "distinctFilms": 3,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6757,7 +7399,6 @@
   "West Germany": {
     "continent": "Europe",
     "totalFilms": 119,
-    "distinctFilmsTop100": 8,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6806,6 +7447,12 @@
         "top100": 45,
         "distinctFilms": 93,
         "distinctFilmsTop100": 1
+      },
+      "all": {
+        "total": 559,
+        "top100": 62,
+        "distinctFilms": 119,
+        "distinctFilmsTop100": 1
       }
     },
     "byDecade": {
@@ -6819,7 +7466,6 @@
   "Yugoslavia": {
     "continent": "Europe",
     "totalFilms": 24,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6868,6 +7514,12 @@
         "top100": 0,
         "distinctFilms": 21,
         "distinctFilmsTop100": 0
+      },
+      "all": {
+        "total": 51,
+        "top100": 0,
+        "distinctFilms": 24,
+        "distinctFilmsTop100": 0
       }
     },
     "byDecade": {
@@ -6882,7 +7534,6 @@
   "Zimbabwe": {
     "continent": "Africa",
     "totalFilms": 1,
-    "distinctFilmsTop100": 0,
     "byPoll": {
       "1952": {
         "total": 0,
@@ -6927,6 +7578,12 @@
         "distinctFilmsTop100": 0
       },
       "2022": {
+        "total": 1,
+        "top100": 0,
+        "distinctFilms": 1,
+        "distinctFilmsTop100": 0
+      },
+      "all": {
         "total": 1,
         "top100": 0,
         "distinctFilms": 1,

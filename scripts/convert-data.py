@@ -134,6 +134,65 @@ def generate_countries_json(df, output_path):
     """Generate countries.json with country statistics"""
     print("\nGenerating countries.json...")
 
+    # First, calculate true poll metadata (without co-production inflation)
+    poll_metadata = {}
+    for year in POLL_YEARS:
+        votes_col = f'{year}votes'
+        rank_col = f'{year}rank'
+
+        # Filter films with votes in this poll
+        films_in_poll = df[df[votes_col] > 0]
+
+        # Count distinct films
+        distinct_films_all = len(films_in_poll)
+        distinct_films_top100 = len(films_in_poll[films_in_poll[rank_col] <= 100])
+
+        # Sum total votes
+        total_votes_all = int(films_in_poll[votes_col].sum())
+        total_votes_top100 = int(films_in_poll[films_in_poll[rank_col] <= 100][votes_col].sum())
+
+        poll_metadata[str(year)] = {
+            'all': {
+                'votes': total_votes_all,
+                'films': distinct_films_all
+            },
+            'top100': {
+                'votes': total_votes_top100,
+                'films': distinct_films_top100
+            }
+        }
+
+    # Calculate "all polls combined" metadata
+    # For "all" - count films that appear in ANY poll
+    all_polls_films_all = len(df[df[[f'{year}votes' for year in POLL_YEARS]].gt(0).any(axis=1)])
+    all_polls_votes_all = sum(int(df[f'{year}votes'].sum()) for year in POLL_YEARS)
+
+    # For "top100" - get top 100 films by aggregated vote totals across all polls
+    # Calculate total votes for each film across all polls
+    df['total_votes_all_polls'] = df[[f'{year}votes' for year in POLL_YEARS]].fillna(0).sum(axis=1)
+
+    # Get top 100 films by total votes
+    top100_films = df.nlargest(100, 'total_votes_all_polls')
+    all_polls_films_top100 = len(top100_films)
+    all_polls_votes_top100 = int(top100_films['total_votes_all_polls'].sum())
+
+    # Store the keys of films in the true top 100 for later use
+    top100_film_keys = set(top100_films['key'].tolist())
+
+    # Clean up temporary column
+    df.drop('total_votes_all_polls', axis=1, inplace=True)
+
+    poll_metadata['all'] = {
+        'all': {
+            'votes': all_polls_votes_all,
+            'films': all_polls_films_all
+        },
+        'top100': {
+            'votes': all_polls_votes_top100,
+            'films': all_polls_films_top100
+        }
+    }
+
     # Collect all unique countries
     all_countries = set()
     for countries_str in df['ARR_CountryArray'].dropna():
@@ -141,7 +200,9 @@ def generate_countries_json(df, output_path):
             countries = [c.strip() for c in str(countries_str).split(';')]
             all_countries.update([c for c in countries if c])
 
-    countries_data = {}
+    countries_data = {
+        '_pollMetadata': poll_metadata
+    }
 
     for country in sorted(all_countries):
         # Count total films
@@ -188,21 +249,42 @@ def generate_countries_json(df, output_path):
                 'distinctFilmsTop100': distinct_films_top100
             }
 
-        # Count distinct films that appear in top 100 across any poll
-        distinct_films_top100 = 0
+        # Calculate "all polls combined" statistics
+        all_polls_votes_all = 0
+        all_polls_votes_top100 = 0
+        all_polls_distinct_films_all = 0
+        all_polls_distinct_films_top100 = 0
+
         for _, row in df.iterrows():
             if pd.notna(row['ARR_CountryArray']) and str(row['ARR_CountryArray']).strip():
                 countries = [c.strip() for c in str(row['ARR_CountryArray']).split(';')]
                 if country in countries:
-                    # Check if this film appears in top 100 of any poll
-                    appears_in_top100 = False
+                    # Check if film has votes in any poll
+                    total_votes_for_film = 0
+                    has_votes = False
                     for year in POLL_YEARS:
-                        rank = row[f'{year}rank']
-                        if pd.notna(rank) and rank <= 100:
-                            appears_in_top100 = True
-                            break
-                    if appears_in_top100:
-                        distinct_films_top100 += 1
+                        votes = row[f'{year}votes']
+                        if pd.notna(votes) and votes > 0:
+                            total_votes_for_film += votes
+                            has_votes = True
+
+                    if has_votes:
+                        # Count for "all films"
+                        all_polls_votes_all += total_votes_for_film
+                        all_polls_distinct_films_all += 1
+
+                        # Count for "true top 100 by aggregated votes"
+                        if row['key'] in top100_film_keys:
+                            all_polls_votes_top100 += total_votes_for_film
+                            all_polls_distinct_films_top100 += 1
+
+        # Add "all" entry to by_poll
+        by_poll['all'] = {
+            'total': int(all_polls_votes_all),
+            'top100': int(all_polls_votes_top100),
+            'distinctFilms': all_polls_distinct_films_all,
+            'distinctFilmsTop100': all_polls_distinct_films_top100
+        }
 
         # Count by decade
         by_decade = {}
@@ -228,7 +310,6 @@ def generate_countries_json(df, output_path):
         countries_data[country] = {
             'continent': continent,
             'totalFilms': total_films,
-            'distinctFilmsTop100': distinct_films_top100,
             'byPoll': by_poll,
             'byDecade': by_decade
         }
@@ -239,12 +320,20 @@ def generate_countries_json(df, output_path):
 
     file_size = Path(output_path).stat().st_size
     print(f"✓ Generated {output_path}")
-    print(f"  Total countries: {len(countries_data):,}")
+    print(f"  Total countries: {len(countries_data) - 1:,}")  # -1 for _pollMetadata
     print(f"  File size: {file_size:,} bytes ({file_size/1024:.1f}K)")
+
+    # Show poll metadata
+    print("\n  Poll Metadata (true totals without co-production inflation):")
+    for poll_year in ['1952', '1962', '1972', '1982', '1992', '2002', '2012', '2022']:
+        metadata = poll_metadata[poll_year]['all']
+        print(f"    {poll_year}: {metadata['votes']:,} votes across {metadata['films']:,} films")
 
     # Show top 10 countries
     print("\n  Top 10 countries by total films:")
-    sorted_countries = sorted(countries_data.items(), key=lambda x: x[1]['totalFilms'], reverse=True)
+    # Filter out _pollMetadata from the sorting
+    country_items = [(k, v) for k, v in countries_data.items() if not k.startswith('_')]
+    sorted_countries = sorted(country_items, key=lambda x: x[1]['totalFilms'], reverse=True)
     for i, (country, data) in enumerate(sorted_countries[:10], 1):
         print(f"    {i:2}. {country:25s} - {data['totalFilms']:4d} films ({data['continent']})")
 

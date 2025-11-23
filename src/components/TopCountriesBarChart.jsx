@@ -47,55 +47,27 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     const data = []
 
     Object.entries(countriesData).forEach(([countryName, countryInfo]) => {
+      // Skip metadata keys
+      if (countryName.startsWith('_')) return
+
       let filmCount = 0
-
-      if (selectedPoll === 'all') {
-        // Sum across all polls
-        if (rankRange === 'all') {
-          // Sum all ballot appearances
-          filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
-            return sum + (pollData.total || 0)
-          }, 0)
-        } else if (rankRange === 'top100') {
-          // Sum the top100 across all polls
-          filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
-            return sum + (pollData.top100 || 0)
-          }, 0)
-        }
-      } else {
-        // Get count for specific poll
-        const pollData = countryInfo.byPoll[selectedPoll]
-        if (pollData) {
-          if (rankRange === 'all') {
-            filmCount = pollData.total
-          } else if (rankRange === 'top100') {
-            filmCount = pollData.top100
-          }
-        }
-      }
-
-      // Get distinct films count
       let distinctFilms = 0
-      if (selectedPoll === 'all') {
-        if (rankRange === 'top100') {
-          distinctFilms = countryInfo.distinctFilmsTop100 || 0
-        } else {
-          distinctFilms = countryInfo.totalFilms || 0
-        }
-      } else {
-        // Get distinct films for specific poll
-        const pollData = countryInfo.byPoll[selectedPoll]
-        if (pollData) {
-          if (rankRange === 'top100') {
-            distinctFilms = pollData.distinctFilmsTop100 || 0
-          } else {
-            distinctFilms = pollData.distinctFilms || 0
-          }
+
+      // Get data for selected poll (including 'all')
+      const pollData = countryInfo.byPoll[selectedPoll]
+      if (pollData) {
+        if (rankRange === 'all') {
+          filmCount = pollData.total || 0
+          distinctFilms = pollData.distinctFilms || 0
+        } else if (rankRange === 'top100') {
+          filmCount = pollData.top100 || 0
+          distinctFilms = pollData.distinctFilmsTop100 || 0
         }
       }
 
-      // Calculate percentage (rough estimate for now)
-      const percentOfTotal = 0 // We'll calculate this properly later
+      // Calculate percentage based on true poll total (not country-aggregated total)
+      const truePollTotal = countriesData._pollMetadata?.[selectedPoll]?.[rankRange]?.votes || 1
+      const percentOfTotal = truePollTotal > 0 ? parseFloat(((filmCount / truePollTotal) * 100).toFixed(1)) : 0
 
       data.push({
         name: countryName,
@@ -104,12 +76,6 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         percentOfTotal,
         distinctFilms
       })
-    })
-
-    // Calculate percentages based on total
-    const totalFilms = data.reduce((sum, country) => sum + country.filmCount, 0)
-    data.forEach(country => {
-      country.percentOfTotal = totalFilms > 0 ? ((country.filmCount / totalFilms) * 100).toFixed(1) : 0
     })
 
     return data.sort((a, b) => b.filmCount - a.filmCount)
@@ -140,7 +106,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       grouped[country.continent].push(country)
     })
 
-    // Sort continents by total film count
+    // Sort continents by total votes
     const continentOrder = Object.entries(grouped)
       .map(([continent, countries]) => ({
         continent,
@@ -209,6 +175,28 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     const top10 = transformedData.slice(0, 10).map(c => c.name)
     setSelectedCountries(top10)
   }
+
+  const handleSelectContinent = (continentName) => {
+    // Get all countries from the selected continent that have votes
+    const continentCountries = transformedData
+      .filter(country => country.continent === continentName && country.filmCount > 0)
+      .map(c => c.name)
+
+    if (continentCountries.length > 0) {
+      setSelectedCountries(continentCountries)
+    }
+  }
+
+  // Calculate which continents have countries with votes
+  const activeContinents = useMemo(() => {
+    const continents = new Set()
+    transformedData.forEach(country => {
+      if (country.filmCount > 0) {
+        continents.add(country.continent)
+      }
+    })
+    return continents
+  }, [transformedData])
 
   // Dropdown handlers
   const handleOpenDropdown = () => {
@@ -304,18 +292,18 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     if (active && payload && payload.length) {
       const data = payload[0].payload
       return (
-        <div className="bg-white p-3 border-2 border-black shadow-lg">
-          <p className="font-bold text-black uppercase tracking-wide">{data.name}</p>
-          <p className="text-sm text-black font-medium">{data.continent}</p>
-          <p className="text-lg font-black text-black mt-1">
-            {data.filmCount} ballot appearances
+        <div className="bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]">
+          <p className="font-bold text-sm text-black uppercase tracking-wide">{data.name}</p>
+          <p className="text-[10px] text-black font-medium mb-1">{data.continent}</p>
+          <p className="text-xl font-black text-black my-1">
+            {data.filmCount} votes
           </p>
           {data.distinctFilms > 0 && (
-            <p className="text-sm text-black font-medium">
+            <p className="text-xs text-black font-medium mt-0.5">
               {data.distinctFilms} distinct films
             </p>
           )}
-          <p className="text-xs text-black font-medium">
+          <p className="text-[10px] text-black font-medium mt-1 text-gray-600">
             {data.percentOfTotal}% of total
           </p>
         </div>
@@ -346,23 +334,64 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
   return (
     <div className="bg-white border-4 border-black p-6 mb-8">
-      <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4 border-b-2 border-gray-300 pb-4">
-        <div>
+      <div className="mb-6 border-b-2 border-gray-300 pb-4">
+        <div className="mb-4">
           <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-            {selectedPoll === 'all' ? 'Top Countries by Ballot Appearances' : 'Top Countries by Film Count'}
+            Countries by Votes
           </h2>
           <p className="text-black font-medium">
             Customize displayed countries using the search bar below
           </p>
         </div>
 
-        {/* Reset to Top 10 Button */}
-        <button
-          onClick={handleResetToTop10}
-          className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white text-sm font-bold uppercase tracking-wide transition-colors"
-        >
-          Reset to Top 10
-        </button>
+        {/* Quick Filter Buttons */}
+        <div className="flex flex-wrap gap-2">
+          <div className="bg-white border-2 border-black p-1 flex-shrink-0">
+            <button
+              onClick={handleResetToTop10}
+              className="py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all bg-white text-black border-2 border-black hover:bg-black hover:text-white"
+            >
+              Top 10
+            </button>
+          </div>
+
+          {Object.entries(continentColors).map(([continent, color]) => {
+            const isActive = activeContinents.has(continent)
+            return (
+              <div
+                key={continent}
+                className={`border-2 p-1 flex-shrink-0 ${
+                  isActive ? 'bg-white border-black' : 'bg-gray-100 border-gray-300'
+                }`}
+              >
+                <button
+                  onClick={() => isActive && handleSelectContinent(continent)}
+                  disabled={!isActive}
+                  className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 ${
+                    isActive
+                      ? 'bg-white text-black border-black hover:text-white'
+                      : 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
+                  }`}
+                  style={isActive ? { borderColor: color } : {}}
+                  onMouseEnter={(e) => {
+                    if (isActive) {
+                      e.currentTarget.style.backgroundColor = color
+                      e.currentTarget.style.borderColor = color
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (isActive) {
+                      e.currentTarget.style.backgroundColor = 'white'
+                      e.currentTarget.style.borderColor = color
+                    }
+                  }}
+                >
+                  {continent}
+                </button>
+              </div>
+            )
+          })}
+        </div>
       </div>
 
       {/* BAR CHART */}
@@ -375,8 +404,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <CartesianGrid strokeDasharray="3 3" stroke="#d1d5db" />
           <XAxis
             type="number"
+            allowDecimals={false}
             label={{
-              value: selectedPoll === 'all' ? 'Ballot Appearances' : 'Films',
+              value: 'Votes',
               position: 'insideBottom',
               offset: -5,
               style: { fontWeight: 'bold', fill: '#000000' }
