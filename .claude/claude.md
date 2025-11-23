@@ -55,13 +55,13 @@ This is a data visualization and database platform called the **Sight & Sound Ca
 - **"votes per poll" sheet** - Aggregated poll data (8,340 rows with Poll Year, Rank, Votes, Film Title)
 - **Individual poll sheets:**
   - **"1952"** - 47 voters (variable ballot lengths: 545 total votes for 199 distinct films, ~11.6 votes/voter average)
-  - **"1962"** - 248 voters (10 films each)
-  - **"1972"** - 450 voters (10 films each)
-  - **"1982"** - 679 voters (10 films each)
-  - **"1992"** - 716 voters (10 films each)
-  - **"2002"** - 778 voters (10 films each)
-  - **"2012"** - 2,850 voters (10 films each)
-  - **"2022"** - 5,455 voters (10 films each)
+  - **"1962"** - 45 voters (10 films each = 450 votes)
+  - **"1972"** - 81 voters (10 films each = 810 votes)
+  - **"1982"** - 122 voters (10 films each = 1,220 votes)
+  - **"1992"** - 130 voters (10 films each = 1,300 votes)
+  - **"2002"** - 145 voters (10 films each = 1,450 votes)
+  - **"2012"** - 846 voters (10 films each = 8,460 votes)
+  - **"2022"** - 1,635 voters (10 films each = 16,350 votes)
 
 **Note on Ballot Formats:**
 - **1952**: Variable-length ballots (voters could submit different numbers of films)
