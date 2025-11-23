@@ -51,49 +51,17 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       if (countryName.startsWith('_')) return
 
       let filmCount = 0
-
-      if (selectedPoll === 'all') {
-        // Sum across all polls
-        if (rankRange === 'all') {
-          // Sum all votes
-          filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
-            return sum + (pollData.total || 0)
-          }, 0)
-        } else if (rankRange === 'top100') {
-          // Sum the top100 across all polls
-          filmCount = Object.values(countryInfo.byPoll).reduce((sum, pollData) => {
-            return sum + (pollData.top100 || 0)
-          }, 0)
-        }
-      } else {
-        // Get count for specific poll
-        const pollData = countryInfo.byPoll[selectedPoll]
-        if (pollData) {
-          if (rankRange === 'all') {
-            filmCount = pollData.total
-          } else if (rankRange === 'top100') {
-            filmCount = pollData.top100
-          }
-        }
-      }
-
-      // Get distinct films count
       let distinctFilms = 0
-      if (selectedPoll === 'all') {
-        if (rankRange === 'top100') {
-          distinctFilms = countryInfo.distinctFilmsTop100 || 0
-        } else {
-          distinctFilms = countryInfo.totalFilms || 0
-        }
-      } else {
-        // Get distinct films for specific poll
-        const pollData = countryInfo.byPoll[selectedPoll]
-        if (pollData) {
-          if (rankRange === 'top100') {
-            distinctFilms = pollData.distinctFilmsTop100 || 0
-          } else {
-            distinctFilms = pollData.distinctFilms || 0
-          }
+
+      // Get data for selected poll (including 'all')
+      const pollData = countryInfo.byPoll[selectedPoll]
+      if (pollData) {
+        if (rankRange === 'all') {
+          filmCount = pollData.total || 0
+          distinctFilms = pollData.distinctFilms || 0
+        } else if (rankRange === 'top100') {
+          filmCount = pollData.top100 || 0
+          distinctFilms = pollData.distinctFilmsTop100 || 0
         }
       }
 

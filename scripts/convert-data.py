@@ -176,6 +176,9 @@ def generate_countries_json(df, output_path):
     all_polls_films_top100 = len(top100_films)
     all_polls_votes_top100 = int(top100_films['total_votes_all_polls'].sum())
 
+    # Store the keys of films in the true top 100 for later use
+    top100_film_keys = set(top100_films['key'].tolist())
+
     # Clean up temporary column
     df.drop('total_votes_all_polls', axis=1, inplace=True)
 
@@ -246,21 +249,42 @@ def generate_countries_json(df, output_path):
                 'distinctFilmsTop100': distinct_films_top100
             }
 
-        # Count distinct films that appear in top 100 across any poll
-        distinct_films_top100 = 0
+        # Calculate "all polls combined" statistics
+        all_polls_votes_all = 0
+        all_polls_votes_top100 = 0
+        all_polls_distinct_films_all = 0
+        all_polls_distinct_films_top100 = 0
+
         for _, row in df.iterrows():
             if pd.notna(row['ARR_CountryArray']) and str(row['ARR_CountryArray']).strip():
                 countries = [c.strip() for c in str(row['ARR_CountryArray']).split(';')]
                 if country in countries:
-                    # Check if this film appears in top 100 of any poll
-                    appears_in_top100 = False
+                    # Check if film has votes in any poll
+                    total_votes_for_film = 0
+                    has_votes = False
                     for year in POLL_YEARS:
-                        rank = row[f'{year}rank']
-                        if pd.notna(rank) and rank <= 100:
-                            appears_in_top100 = True
-                            break
-                    if appears_in_top100:
-                        distinct_films_top100 += 1
+                        votes = row[f'{year}votes']
+                        if pd.notna(votes) and votes > 0:
+                            total_votes_for_film += votes
+                            has_votes = True
+
+                    if has_votes:
+                        # Count for "all films"
+                        all_polls_votes_all += total_votes_for_film
+                        all_polls_distinct_films_all += 1
+
+                        # Count for "true top 100 by aggregated votes"
+                        if row['key'] in top100_film_keys:
+                            all_polls_votes_top100 += total_votes_for_film
+                            all_polls_distinct_films_top100 += 1
+
+        # Add "all" entry to by_poll
+        by_poll['all'] = {
+            'total': int(all_polls_votes_all),
+            'top100': int(all_polls_votes_top100),
+            'distinctFilms': all_polls_distinct_films_all,
+            'distinctFilmsTop100': all_polls_distinct_films_top100
+        }
 
         # Count by decade
         by_decade = {}
@@ -286,7 +310,6 @@ def generate_countries_json(df, output_path):
         countries_data[country] = {
             'continent': continent,
             'totalFilms': total_films,
-            'distinctFilmsTop100': distinct_films_top100,
             'byPoll': by_poll,
             'byDecade': by_decade
         }
