@@ -21,45 +21,45 @@ export default function CountryOriginMain() {
   const metrics = useMemo(() => {
     if (!countriesData) return { countries: 0, votes: 0, films: 0 }
 
-    let totalVotes = 0
+    // Get true poll totals from metadata (without co-production inflation)
+    const pollKey = selectedPoll === 'all' ? 'all' : selectedPoll
+    const rangeKey = rankRange === 'all' ? 'all' : 'top100'
+
+    const pollMetadata = countriesData._pollMetadata?.[pollKey]?.[rangeKey]
+    const trueTotalVotes = pollMetadata?.votes || 0
+    const trueDistinctFilms = pollMetadata?.films || 0
+
+    // Count countries with votes (still need to iterate for this)
     let countriesWithVotes = 0
-    let totalDistinctFilms = 0
-
     Object.entries(countriesData).forEach(([countryName, countryInfo]) => {
-      let votes = 0
-      let distinctFilms = 0
+      // Skip metadata key
+      if (countryName.startsWith('_')) return
 
+      let votes = 0
       if (selectedPoll === 'all') {
-        // Sum across all polls
         if (rankRange === 'all') {
           votes = Object.values(countryInfo.byPoll).reduce((sum, pollData) =>
             sum + (pollData.total || 0), 0)
-          distinctFilms = countryInfo.totalFilms || 0
         } else {
           votes = Object.values(countryInfo.byPoll).reduce((sum, pollData) =>
             sum + (pollData.top100 || 0), 0)
-          distinctFilms = countryInfo.distinctFilmsTop100 || 0
         }
       } else {
-        // Specific poll
         const pollData = countryInfo.byPoll[selectedPoll]
         if (pollData) {
           votes = rankRange === 'all' ? pollData.total : pollData.top100
-          distinctFilms = rankRange === 'all' ? pollData.distinctFilms : pollData.distinctFilmsTop100
         }
       }
 
       if (votes > 0) {
         countriesWithVotes++
-        totalVotes += votes
-        totalDistinctFilms += distinctFilms
       }
     })
 
     return {
       countries: countriesWithVotes,
-      votes: totalVotes,
-      films: totalDistinctFilms
+      votes: trueTotalVotes,
+      films: trueDistinctFilms
     }
   }, [countriesData, selectedPoll, rankRange])
 

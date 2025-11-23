@@ -1,4 +1,96 @@
 {
+  "_pollMetadata": {
+    "1952": {
+      "all": {
+        "votes": 545,
+        "films": 199
+      },
+      "top100": {
+        "votes": 545,
+        "films": 199
+      }
+    },
+    "1962": {
+      "all": {
+        "votes": 571,
+        "films": 199
+      },
+      "top100": {
+        "votes": 571,
+        "films": 199
+      }
+    },
+    "1972": {
+      "all": {
+        "votes": 827,
+        "films": 363
+      },
+      "top100": {
+        "votes": 618,
+        "films": 154
+      }
+    },
+    "1982": {
+      "all": {
+        "votes": 1239,
+        "films": 554
+      },
+      "top100": {
+        "votes": 727,
+        "films": 129
+      }
+    },
+    "1992": {
+      "all": {
+        "votes": 1314,
+        "films": 583
+      },
+      "top100": {
+        "votes": 775,
+        "films": 130
+      }
+    },
+    "2002": {
+      "all": {
+        "votes": 1462,
+        "films": 630
+      },
+      "top100": {
+        "votes": 866,
+        "films": 130
+      }
+    },
+    "2012": {
+      "all": {
+        "votes": 8456,
+        "films": 2001
+      },
+      "top100": {
+        "votes": 3716,
+        "films": 101
+      }
+    },
+    "2022": {
+      "all": {
+        "votes": 16283,
+        "films": 3817
+      },
+      "top100": {
+        "votes": 5793,
+        "films": 100
+      }
+    },
+    "all": {
+      "all": {
+        "votes": 30697,
+        "films": 4851
+      },
+      "top100": {
+        "votes": 13611,
+        "films": 525
+      }
+    }
+  },
   "Algeria": {
     "continent": "Africa",
     "totalFilms": 11,

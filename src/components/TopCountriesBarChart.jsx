@@ -47,6 +47,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     const data = []
 
     Object.entries(countriesData).forEach(([countryName, countryInfo]) => {
+      // Skip metadata keys
+      if (countryName.startsWith('_')) return
+
       let filmCount = 0
 
       if (selectedPoll === 'all') {
