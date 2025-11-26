@@ -183,6 +183,12 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
         data-tooltip-html={tooltipContent}
         onWheel={handleWheel}
       >
+        {/* CSS for smooth zoom transitions */}
+        <style>{`
+          .rsm-zoomable-group {
+            transition: transform 0.3s ease-out;
+          }
+        `}</style>
         <ComposableMap
           projection="geoNaturalEarth1"
           projectionConfig={{
