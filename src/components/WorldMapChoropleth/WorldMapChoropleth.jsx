@@ -23,7 +23,7 @@ const COLOR_RANGE = [
   '#1d4ed8', // blue-700
 ]
 
-const NO_DATA_COLOR = '#f3f4f6' // gray-100 - subtle, almost matches background
+const NO_DATA_COLOR = '#e5e7eb' // gray-200 - slightly more visible
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipContent, setTooltipContent] = useState('')
