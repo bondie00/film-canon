@@ -148,7 +148,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
 
   if (!countriesData) {
     return (
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[250px] flex items-center justify-center">
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[380px] flex items-center justify-center">
         <div className="text-black font-bold">Loading map data...</div>
       </div>
     )
@@ -177,7 +177,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
       {/* Map Container */}
       <div
         ref={mapRef}
-        className="bg-gray-50 border-2 border-black h-[280px] overflow-hidden select-none"
+        className="bg-gray-50 border-2 border-black h-[380px] overflow-hidden select-none"
         style={{ userSelect: 'none' }}
         data-tooltip-id="map-tooltip"
         data-tooltip-html={tooltipContent}
