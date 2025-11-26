@@ -311,7 +311,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <p className="font-bold text-sm text-black uppercase tracking-wide">{data.name}</p>
           <p className="text-[10px] text-black font-medium mb-1">{data.continent}</p>
           <p className="text-xl font-black text-black my-1">
-            {data.filmCount} votes
+            {data.filmCount.toLocaleString()} votes
           </p>
           {data.rank && (
             <p className="text-xs text-black font-medium mt-0.5">
