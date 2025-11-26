@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useRef } from 'react'
 import {
   ComposableMap,
   Geographies,
@@ -27,22 +27,28 @@ const NO_DATA_COLOR = '#e5e7eb' // gray-200
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipContent, setTooltipContent] = useState('')
-  const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 })
+  const [position, setPosition] = useState({ coordinates: [0, 20], zoom: 1.3 })
+  const mapRef = useRef(null)
 
-  // Zoom controls
+  // Zoom controls with smoother increments
   const handleZoomIn = () => {
     if (position.zoom >= 8) return
-    setPosition(pos => ({ ...pos, zoom: pos.zoom * 1.5 }))
+    setPosition(pos => ({ ...pos, zoom: pos.zoom * 1.4 }))
   }
 
   const handleZoomOut = () => {
     if (position.zoom <= 1) return
-    setPosition(pos => ({ ...pos, zoom: pos.zoom / 1.5 }))
+    setPosition(pos => ({ ...pos, zoom: Math.max(1, pos.zoom / 1.4) }))
   }
 
-  const handleMoveEnd = (position) => {
-    setPosition(position)
+  const handleMoveEnd = (newPosition) => {
+    setPosition(newPosition)
   }
+
+  // Prevent scroll wheel zoom
+  const handleWheel = useCallback((e) => {
+    e.stopPropagation()
+  }, [])
 
   // Aggregate data by ISO code (combines historical entities like East/West Germany)
   const dataByISO = useMemo(() => {
@@ -170,14 +176,17 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
 
       {/* Map Container */}
       <div
-        className="bg-gray-50 border-2 border-black h-[280px] overflow-hidden"
+        ref={mapRef}
+        className="bg-gray-50 border-2 border-black h-[280px] overflow-hidden select-none"
+        style={{ userSelect: 'none' }}
         data-tooltip-id="map-tooltip"
         data-tooltip-html={tooltipContent}
+        onWheel={handleWheel}
       >
         <ComposableMap
           projection="geoNaturalEarth1"
           projectionConfig={{
-            scale: 160,
+            scale: 180,
             center: [0, 0]
           }}
           style={{
@@ -189,10 +198,8 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
             zoom={position.zoom}
             center={position.coordinates}
             onMoveEnd={handleMoveEnd}
-            filterZoomEvent={(evt) => {
-              // Disable scroll wheel zoom, allow double-click
-              return evt.type === 'dblclick'
-            }}
+            minZoom={1}
+            maxZoom={8}
           >
             <Geographies geography={GEO_URL}>
               {({ geographies }) =>
@@ -211,14 +218,16 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
                       strokeWidth={0.5}
                       style={{
                         default: {
-                          outline: 'none'
+                          outline: 'none',
+                          transition: 'fill 0.2s'
                         },
                         hover: hasData
                           ? {
                               outline: 'none',
                               stroke: '#000',
                               strokeWidth: 1.5,
-                              cursor: 'pointer'
+                              cursor: 'pointer',
+                              transition: 'fill 0.2s'
                             }
                           : {
                               outline: 'none'
