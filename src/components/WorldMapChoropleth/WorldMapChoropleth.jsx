@@ -23,7 +23,7 @@ const COLOR_RANGE = [
   '#1d4ed8', // blue-700
 ]
 
-const NO_DATA_COLOR = '#e5e7eb' // gray-200
+const NO_DATA_COLOR = '#f3f4f6' // gray-100 - subtle, almost matches background
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipContent, setTooltipContent] = useState('')
@@ -225,8 +225,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
                         key={geo.rsmKey}
                         geography={geo}
                         fill={getFillColor(iso)}
-                        stroke="#1f2937"
-                        strokeWidth={1}
+                        stroke="none"
                         style={{
                           default: {
                             outline: 'none'
@@ -252,8 +251,8 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
                     <Geography
                       geography={hoveredGeo}
                       fill="transparent"
-                      stroke="#facc15"
-                      strokeWidth={2}
+                      stroke="#fbbf24"
+                      strokeWidth={2.5}
                       style={{
                         default: {
                           outline: 'none',
