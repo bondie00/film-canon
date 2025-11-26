@@ -5,9 +5,9 @@ import {
   Geography,
   ZoomableGroup
 } from 'react-simple-maps'
-import { scaleQuantize } from 'd3-scale'
+import { scaleQuantile } from 'd3-scale'
 import { Tooltip } from 'react-tooltip'
-import { COUNTRY_NAME_TO_ISO, ISO_TO_COUNTRY_NAMES } from './countryCodeMapping'
+import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
 
 // Natural Earth 110m world topology - lower resolution for performance
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
@@ -27,6 +27,22 @@ const NO_DATA_COLOR = '#e5e7eb' // gray-200
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipContent, setTooltipContent] = useState('')
+  const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 })
+
+  // Zoom controls
+  const handleZoomIn = () => {
+    if (position.zoom >= 8) return
+    setPosition(pos => ({ ...pos, zoom: pos.zoom * 1.5 }))
+  }
+
+  const handleZoomOut = () => {
+    if (position.zoom <= 1) return
+    setPosition(pos => ({ ...pos, zoom: pos.zoom / 1.5 }))
+  }
+
+  const handleMoveEnd = (position) => {
+    setPosition(position)
+  }
 
   // Aggregate data by ISO code (combines historical entities like East/West Germany)
   const dataByISO = useMemo(() => {
@@ -64,20 +80,19 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
     return aggregated
   }, [countriesData, selectedPoll, rankRange])
 
-  // Calculate color scale based on current data
+  // Calculate color scale using quantile (equal number of countries per color bucket)
   const colorScale = useMemo(() => {
     const values = Object.values(dataByISO)
       .map(d => d.votes)
       .filter(v => v > 0)
+      .sort((a, b) => a - b)
 
     if (values.length === 0) {
-      return scaleQuantize().domain([1, 100]).range(COLOR_RANGE)
+      return scaleQuantile().domain([1, 100]).range(COLOR_RANGE)
     }
 
-    const maxValue = Math.max(...values)
-
-    return scaleQuantize()
-      .domain([1, maxValue])
+    return scaleQuantile()
+      .domain(values)
       .range(COLOR_RANGE)
   }, [dataByISO])
 
@@ -125,37 +140,37 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
     setTooltipContent('')
   }, [])
 
-  // Get legend thresholds for display
-  const legendThresholds = useMemo(() => {
-    const values = Object.values(dataByISO)
-      .map(d => d.votes)
-      .filter(v => v > 0)
-
-    if (values.length === 0) return []
-
-    const maxValue = Math.max(...values)
-    const step = maxValue / COLOR_RANGE.length
-
-    return COLOR_RANGE.map((color, i) => ({
-      color,
-      min: Math.round(i * step) + (i === 0 ? 1 : 0),
-      max: i === COLOR_RANGE.length - 1 ? maxValue : Math.round((i + 1) * step)
-    }))
-  }, [dataByISO])
-
   if (!countriesData) {
     return (
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[500px] flex items-center justify-center">
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[250px] flex items-center justify-center">
         <div className="text-black font-bold">Loading map data...</div>
       </div>
     )
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
+      {/* Zoom Controls */}
+      <div className="absolute top-2 right-2 z-10 flex flex-col gap-1">
+        <button
+          onClick={handleZoomIn}
+          className="w-8 h-8 bg-white border-2 border-black text-black font-bold hover:bg-gray-100 flex items-center justify-center"
+          title="Zoom in"
+        >
+          +
+        </button>
+        <button
+          onClick={handleZoomOut}
+          className="w-8 h-8 bg-white border-2 border-black text-black font-bold hover:bg-gray-100 flex items-center justify-center"
+          title="Zoom out"
+        >
+          −
+        </button>
+      </div>
+
       {/* Map Container */}
       <div
-        className="bg-gray-50 border-2 border-black"
+        className="bg-gray-50 border-2 border-black h-[280px] overflow-hidden"
         data-tooltip-id="map-tooltip"
         data-tooltip-html={tooltipContent}
       >
@@ -167,10 +182,18 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
           }}
           style={{
             width: '100%',
-            height: 'auto'
+            height: '100%'
           }}
         >
-          <ZoomableGroup>
+          <ZoomableGroup
+            zoom={position.zoom}
+            center={position.coordinates}
+            onMoveEnd={handleMoveEnd}
+            filterZoomEvent={(evt) => {
+              // Disable scroll wheel zoom, allow double-click
+              return evt.type === 'dblclick'
+            }}
+          >
             <Geographies geography={GEO_URL}>
               {({ geographies }) =>
                 geographies.map((geo) => {
@@ -230,32 +253,6 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
           boxShadow: '4px 4px 0 rgba(0,0,0,0.2)'
         }}
       />
-
-      {/* Legend */}
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
-        <span className="text-black font-bold uppercase tracking-wide">Vote Count:</span>
-        <div className="flex items-center space-x-2">
-          <div
-            className="w-8 h-4 border-2 border-black"
-            style={{ backgroundColor: NO_DATA_COLOR }}
-          />
-          <span className="text-black font-medium">No data</span>
-        </div>
-        {legendThresholds.map((threshold, i) => (
-          <div key={i} className="flex items-center space-x-2">
-            <div
-              className="w-8 h-4 border-2 border-black"
-              style={{ backgroundColor: threshold.color }}
-            />
-            <span className="text-black font-medium">
-              {threshold.min === threshold.max
-                ? threshold.min.toLocaleString()
-                : `${threshold.min.toLocaleString()}-${threshold.max.toLocaleString()}`
-              }
-            </span>
-          </div>
-        ))}
-      </div>
     </div>
   )
 }
