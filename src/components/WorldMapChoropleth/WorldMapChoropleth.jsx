@@ -174,8 +174,8 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
             <Geographies geography={GEO_URL}>
               {({ geographies }) =>
                 geographies.map((geo) => {
-                  // Get ISO code from properties
-                  const iso = geo.properties.ISO_A3 || geo.id
+                  // world-atlas uses ISO 3166-1 numeric codes as the id
+                  const iso = geo.id
                   const data = dataByISO[iso]
                   const hasData = data && data.votes > 0
 
