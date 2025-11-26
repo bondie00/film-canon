@@ -27,7 +27,7 @@ const NO_DATA_COLOR = '#f9fafb' // gray-50 - barely visible
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipContent, setTooltipContent] = useState('')
-  const [position, setPosition] = useState({ coordinates: [0, 20], zoom: 1.3 })
+  const [position, setPosition] = useState({ coordinates: [0, 20], zoom: 1.5 })
   const [hoveredGeo, setHoveredGeo] = useState(null) // Track hovered geography for overlay
   const mapRef = useRef(null)
 
@@ -152,7 +152,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
 
   if (!countriesData) {
     return (
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[380px] flex items-center justify-center">
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[455px] flex items-center justify-center">
         <div className="text-black font-bold">Loading map data...</div>
       </div>
     )
@@ -181,8 +181,8 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
       {/* Map Container */}
       <div
         ref={mapRef}
-        className="border-2 border-black h-[380px] overflow-hidden select-none"
-        style={{ userSelect: 'none', backgroundColor: '#e0f2fe' }}
+        className="border-2 border-black h-[455px] overflow-hidden select-none"
+        style={{ userSelect: 'none', backgroundColor: '#ffffff' }}
         data-tooltip-id="map-tooltip"
         data-tooltip-html={tooltipContent}
         onWheel={handleWheel}
