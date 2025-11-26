@@ -225,7 +225,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
                         key={geo.rsmKey}
                         geography={geo}
                         fill={getFillColor(iso)}
-                        stroke="#9ca3af"
+                        stroke="#1f2937"
                         strokeWidth={1}
                         style={{
                           default: {
@@ -252,8 +252,8 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
                     <Geography
                       geography={hoveredGeo}
                       fill="transparent"
-                      stroke="#000"
-                      strokeWidth={1.5}
+                      stroke="#facc15"
+                      strokeWidth={2}
                       style={{
                         default: {
                           outline: 'none',
