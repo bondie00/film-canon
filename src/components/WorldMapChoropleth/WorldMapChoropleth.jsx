@@ -12,15 +12,15 @@ import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
 // Natural Earth 110m world topology - lower resolution for performance
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
 
-// Color palette for the choropleth (light to dark blue)
+// Color palette for the choropleth (light to dark green)
 const COLOR_RANGE = [
-  '#dbeafe', // blue-100
-  '#bfdbfe', // blue-200
-  '#93c5fd', // blue-300
-  '#60a5fa', // blue-400
-  '#3b82f6', // blue-500
-  '#2563eb', // blue-600
-  '#1d4ed8', // blue-700
+  '#dcfce7', // green-100
+  '#bbf7d0', // green-200
+  '#86efac', // green-300
+  '#4ade80', // green-400
+  '#22c55e', // green-500
+  '#16a34a', // green-600
+  '#166534', // green-800
 ]
 
 const NO_DATA_COLOR = '#e5e7eb' // gray-200 - slightly more visible
@@ -181,8 +181,8 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
       {/* Map Container */}
       <div
         ref={mapRef}
-        className="bg-gray-50 border-2 border-black h-[380px] overflow-hidden select-none"
-        style={{ userSelect: 'none' }}
+        className="border-2 border-black h-[380px] overflow-hidden select-none"
+        style={{ userSelect: 'none', backgroundColor: '#bfdbfe' }}
         data-tooltip-id="map-tooltip"
         data-tooltip-html={tooltipContent}
         onWheel={handleWheel}
