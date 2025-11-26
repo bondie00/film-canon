@@ -23,11 +23,11 @@ const COLOR_RANGE = [
   '#166534', // green-800
 ]
 
-const NO_DATA_COLOR = '#f9fafb' // gray-50 - barely visible
+const NO_DATA_COLOR = '#e5e7eb' // gray-200
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipContent, setTooltipContent] = useState('')
-  const [position, setPosition] = useState({ coordinates: [0, 20], zoom: 1.5 })
+  const [position, setPosition] = useState({ coordinates: [0, 20], zoom: 1.4 })
   const [hoveredGeo, setHoveredGeo] = useState(null) // Track hovered geography for overlay
   const mapRef = useRef(null)
 
