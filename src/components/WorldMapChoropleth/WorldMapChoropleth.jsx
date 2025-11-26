@@ -23,7 +23,7 @@ const COLOR_RANGE = [
   '#166534', // green-800
 ]
 
-const NO_DATA_COLOR = '#e5e7eb' // gray-200 - slightly more visible
+const NO_DATA_COLOR = '#f9fafb' // gray-50 - barely visible
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipContent, setTooltipContent] = useState('')
@@ -182,7 +182,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
       <div
         ref={mapRef}
         className="border-2 border-black h-[380px] overflow-hidden select-none"
-        style={{ userSelect: 'none', backgroundColor: '#bfdbfe' }}
+        style={{ userSelect: 'none', backgroundColor: '#e0f2fe' }}
         data-tooltip-id="map-tooltip"
         data-tooltip-html={tooltipContent}
         onWheel={handleWheel}
