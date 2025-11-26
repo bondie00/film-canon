@@ -28,6 +28,7 @@ const NO_DATA_COLOR = '#e5e7eb' // gray-200
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipContent, setTooltipContent] = useState('')
   const [position, setPosition] = useState({ coordinates: [0, 20], zoom: 1.3 })
+  const [hoveredGeo, setHoveredGeo] = useState(null) // Track hovered geography for overlay
   const mapRef = useRef(null)
 
   // Zoom controls with smoother increments
@@ -125,9 +126,11 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
   }, [dataByISO, colorScale])
 
   // Handle mouse enter on country
-  const handleMouseEnter = useCallback((iso) => {
+  const handleMouseEnter = useCallback((iso, geo) => {
     const data = dataByISO[iso]
     if (!data || data.votes === 0) return
+
+    setHoveredGeo(geo) // Store the geography for overlay rendering
 
     const rank = countryRankings[iso]
     const countryNames = data.countries.join(' + ')
@@ -144,6 +147,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
   // Handle mouse leave
   const handleMouseLeave = useCallback(() => {
     setTooltipContent('')
+    setHoveredGeo(null)
   }, [])
 
   if (!countriesData) {
@@ -208,47 +212,66 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
             maxZoom={8}
           >
             <Geographies geography={GEO_URL}>
-              {({ geographies }) =>
-                geographies.map((geo) => {
-                  // world-atlas uses ISO 3166-1 numeric codes as the id
-                  const iso = geo.id
-                  const data = dataByISO[iso]
-                  const hasData = data && data.votes > 0
+              {({ geographies }) => (
+                <>
+                  {/* Base layer: all countries */}
+                  {geographies.map((geo) => {
+                    const iso = geo.id
+                    const data = dataByISO[iso]
+                    const hasData = data && data.votes > 0
 
-                  return (
+                    return (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        fill={getFillColor(iso)}
+                        stroke="#9ca3af"
+                        strokeWidth={0.5}
+                        style={{
+                          default: {
+                            outline: 'none'
+                          },
+                          hover: {
+                            outline: 'none',
+                            cursor: hasData ? 'pointer' : 'default'
+                          },
+                          pressed: {
+                            outline: 'none'
+                          }
+                        }}
+                        onMouseEnter={() => {
+                          if (hasData) handleMouseEnter(iso, geo)
+                        }}
+                        onMouseLeave={handleMouseLeave}
+                      />
+                    )
+                  })}
+
+                  {/* Overlay layer: hovered country rendered on top with outline */}
+                  {hoveredGeo && (
                     <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill={getFillColor(iso)}
-                      stroke="#9ca3af"
-                      strokeWidth={0.5}
+                      geography={hoveredGeo}
+                      fill="transparent"
+                      stroke="#000"
+                      strokeWidth={2}
                       style={{
                         default: {
                           outline: 'none',
-                          transition: 'filter 0.2s, fill 0.2s'
+                          pointerEvents: 'none' // Don't capture mouse events
                         },
-                        hover: hasData
-                          ? {
-                              outline: 'none',
-                              filter: 'drop-shadow(0 0 2px #000) drop-shadow(0 0 1px #000)',
-                              cursor: 'pointer',
-                              transition: 'filter 0.2s, fill 0.2s'
-                            }
-                          : {
-                              outline: 'none'
-                            },
+                        hover: {
+                          outline: 'none',
+                          pointerEvents: 'none'
+                        },
                         pressed: {
-                          outline: 'none'
+                          outline: 'none',
+                          pointerEvents: 'none'
                         }
                       }}
-                      onMouseEnter={() => {
-                        if (hasData) handleMouseEnter(iso)
-                      }}
-                      onMouseLeave={handleMouseLeave}
                     />
-                  )
-                })
-              }
+                  )}
+                </>
+              )}
             </Geographies>
           </ZoomableGroup>
         </ComposableMap>
