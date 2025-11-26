@@ -225,25 +225,20 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
                       style={{
                         default: {
                           outline: 'none',
-                          transition: 'fill 0.2s',
-                          vectorEffect: 'non-scaling-stroke'
+                          transition: 'filter 0.2s, fill 0.2s'
                         },
                         hover: hasData
                           ? {
                               outline: 'none',
-                              stroke: '#000',
-                              strokeWidth: 2,
+                              filter: 'drop-shadow(0 0 2px #000) drop-shadow(0 0 1px #000)',
                               cursor: 'pointer',
-                              transition: 'fill 0.2s',
-                              vectorEffect: 'non-scaling-stroke'
+                              transition: 'filter 0.2s, fill 0.2s'
                             }
                           : {
-                              outline: 'none',
-                              vectorEffect: 'non-scaling-stroke'
+                              outline: 'none'
                             },
                         pressed: {
-                          outline: 'none',
-                          vectorEffect: 'non-scaling-stroke'
+                          outline: 'none'
                         }
                       }}
                       onMouseEnter={() => {
