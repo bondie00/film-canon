@@ -65,20 +65,35 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         }
       }
 
-      // Calculate percentage based on true poll total (not country-aggregated total)
-      const truePollTotal = countriesData._pollMetadata?.[selectedPoll]?.[rankRange]?.votes || 1
-      const percentOfTotal = truePollTotal > 0 ? parseFloat(((filmCount / truePollTotal) * 100).toFixed(1)) : 0
-
       data.push({
         name: countryName,
         filmCount,
         continent: countryInfo.continent,
-        percentOfTotal,
         distinctFilms
       })
     })
 
-    return data.sort((a, b) => b.filmCount - a.filmCount)
+    // Sort by filmCount descending and assign ranks
+    const sorted = data.sort((a, b) => b.filmCount - a.filmCount)
+
+    // Count countries with votes and assign ranks
+    const countriesWithVotes = sorted.filter(c => c.filmCount > 0)
+    const totalCountriesWithVotes = countriesWithVotes.length
+
+    // Assign rank only to countries with votes
+    let currentRank = 1
+    sorted.forEach(country => {
+      if (country.filmCount > 0) {
+        country.rank = currentRank
+        country.totalCountries = totalCountriesWithVotes
+        currentRank++
+      } else {
+        country.rank = null
+        country.totalCountries = totalCountriesWithVotes
+      }
+    })
+
+    return sorted
   }, [countriesData, selectedPoll, rankRange])
 
   // Set initial top 10 countries when data loads or filters change
@@ -303,9 +318,11 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
               {data.distinctFilms} distinct films
             </p>
           )}
-          <p className="text-[10px] text-black font-medium mt-1 text-gray-600">
-            {data.percentOfTotal}% of total
-          </p>
+          {data.rank && (
+            <p className="text-[10px] text-black font-medium mt-1 text-gray-600">
+              Rank {data.rank} of {data.totalCountries}
+            </p>
+          )}
         </div>
       )
     }
