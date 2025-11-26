@@ -320,7 +320,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           )}
           {data.rank && (
             <p className="text-[10px] text-black font-medium mt-1 text-gray-600">
-              Rank {data.rank} of {data.totalCountries}
+              #{data.rank} out of {data.totalCountries} countries
             </p>
           )}
         </div>
