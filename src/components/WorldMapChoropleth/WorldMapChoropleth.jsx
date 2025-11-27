@@ -279,6 +279,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
       {/* Tooltip */}
       <Tooltip
         id="map-tooltip"
+        float={true}
         className="z-50"
         style={{
           backgroundColor: 'white',
