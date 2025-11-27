@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
+import WorldMapChoropleth from '../components/WorldMapChoropleth'
 
 export default function CountryOriginMain() {
   // Filter state (not functional yet - Phase 2)
@@ -177,47 +178,12 @@ export default function CountryOriginMain() {
                 </p>
               </div>
 
-              {/* PLACEHOLDER FOR WORLD MAP */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[500px] flex items-center justify-center">
-                <div className="text-center text-black max-w-2xl p-6">
-                  <div className="text-6xl mb-4">🗺️</div>
-                  <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Interactive World Map - Choropleth</div>
-                  <div className="text-sm space-y-2">
-                    <p>• Countries colored by vote count (gradient from light to dark)</p>
-                    <p>• Hover to see country name and exact vote count</p>
-                    <p>• Click any country to navigate to that country's detail page</p>
-                    <p>• Legend showing color scale</p>
-                  </div>
-                  <div className="mt-6 text-xs text-gray-400 italic">
-                    [Phase 3: D3.js implementation]
-                  </div>
-                </div>
-              </div>
-
-              {/* Map Legend */}
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
-                <span className="text-black font-bold uppercase tracking-wide">Vote Count:</span>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-100 border-2 border-black"></div>
-                  <span className="text-black font-medium">1-10</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-300 border-2 border-black"></div>
-                  <span className="text-black font-medium">10-50</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-500 border-2 border-black"></div>
-                  <span className="text-black font-medium">50-100</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-700 border-2 border-black"></div>
-                  <span className="text-black font-medium">100-500</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-900 border-2 border-black"></div>
-                  <span className="text-black font-medium">500+</span>
-                </div>
-              </div>
+              {/* World Map Choropleth */}
+              <WorldMapChoropleth
+                countriesData={countriesData}
+                selectedPoll={selectedPoll}
+                rankRange={rankRange}
+              />
             </div>
 
             {/* VISUALIZATION 2: BAR CHART - TOP COUNTRIES */}
