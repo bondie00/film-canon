@@ -252,7 +252,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
                       geography={hoveredGeo}
                       fill="transparent"
                       stroke="#fbbf24"
-                      strokeWidth={2.5}
+                      strokeWidth={1.5}
                       style={{
                         default: {
                           outline: 'none',
