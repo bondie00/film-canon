@@ -136,11 +136,11 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
     const countryNames = data.countries.join(' + ')
 
     setTooltipContent(
-      `<div class="font-bold text-base">${countryNames}</div>` +
-      `<div class="text-sm text-gray-600 mb-2">${data.continent}</div>` +
-      `<div class="text-sm"><span class="font-semibold">${data.votes.toLocaleString()}</span> votes</div>` +
-      `<div class="text-sm"><span class="font-semibold">${data.distinctFilms.toLocaleString()}</span> distinct films</div>` +
-      `<div class="text-sm text-gray-600 mt-1">#${rank} of ${totalCountriesWithVotes} countries</div>`
+      `<p class="font-bold text-base text-black uppercase tracking-wide">${countryNames}</p>` +
+      `<p class="text-xs text-black font-medium mb-1">${data.continent}</p>` +
+      `<p class="text-xl font-black text-black my-1">${data.votes.toLocaleString()} votes</p>` +
+      `<p class="text-xs text-black font-medium mt-0.5">#${rank} out of ${totalCountriesWithVotes} countries</p>` +
+      `<p class="text-xs text-black font-medium mt-0.5">${data.distinctFilms.toLocaleString()} distinct films</p>`
     )
   }, [dataByISO, countryRankings, totalCountriesWithVotes])
 
@@ -285,8 +285,9 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
           color: 'black',
           border: '2px solid black',
           borderRadius: '0',
-          padding: '12px',
-          boxShadow: '4px 4px 0 rgba(0,0,0,0.2)'
+          padding: '10px',
+          maxWidth: '180px',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
         }}
       />
     </div>
