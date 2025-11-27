@@ -286,7 +286,9 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
         <div
           className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]"
           style={{
-            left: mousePos.x + 12,
+            ...(mousePos.x < window.innerWidth / 2
+              ? { left: mousePos.x + 12 }
+              : { right: window.innerWidth - mousePos.x + 12 }),
             top: mousePos.y + 12
           }}
         >
