@@ -6,7 +6,6 @@ import {
   ZoomableGroup
 } from 'react-simple-maps'
 import { scaleQuantile } from 'd3-scale'
-import { Tooltip } from 'react-tooltip'
 import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
 
 // Natural Earth 110m world topology - lower resolution for performance
@@ -26,7 +25,8 @@ const COLOR_RANGE = [
 const NO_DATA_COLOR = '#e5e7eb' // gray-200
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
-  const [tooltipContent, setTooltipContent] = useState('')
+  const [tooltipData, setTooltipData] = useState(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [position, setPosition] = useState({ coordinates: [13, 13], zoom: 1.35 })
   const [hoveredGeo, setHoveredGeo] = useState(null) // Track hovered geography for overlay
   const mapRef = useRef(null)
@@ -49,6 +49,11 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
   // Prevent scroll wheel zoom
   const handleWheel = useCallback((e) => {
     e.stopPropagation()
+  }, [])
+
+  // Track mouse position for tooltip
+  const handleMouseMove = useCallback((e) => {
+    setMousePos({ x: e.clientX, y: e.clientY })
   }, [])
 
   // Aggregate data by ISO code (combines historical entities like East/West Germany)
@@ -135,18 +140,19 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
     const rank = countryRankings[iso]
     const countryNames = data.countries.join(' + ')
 
-    setTooltipContent(
-      `<p class="font-bold text-base text-black uppercase tracking-wide">${countryNames}</p>` +
-      `<p class="text-xs text-black font-medium mb-1">${data.continent}</p>` +
-      `<p class="text-xl font-black text-black my-1">${data.votes.toLocaleString()} votes</p>` +
-      `<p class="text-xs text-black font-medium mt-0.5">#${rank} out of ${totalCountriesWithVotes} countries</p>` +
-      `<p class="text-xs text-black font-medium mt-0.5">${data.distinctFilms.toLocaleString()} distinct films</p>`
-    )
+    setTooltipData({
+      name: countryNames,
+      continent: data.continent,
+      votes: data.votes,
+      rank: rank,
+      totalCountries: totalCountriesWithVotes,
+      distinctFilms: data.distinctFilms
+    })
   }, [dataByISO, countryRankings, totalCountriesWithVotes])
 
   // Handle mouse leave
   const handleMouseLeave = useCallback(() => {
-    setTooltipContent('')
+    setTooltipData(null)
     setHoveredGeo(null)
   }, [])
 
@@ -183,9 +189,8 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
         ref={mapRef}
         className="border-2 border-black h-[455px] overflow-hidden select-none"
         style={{ userSelect: 'none', backgroundColor: '#ffffff' }}
-        data-tooltip-id="map-tooltip"
-        data-tooltip-html={tooltipContent}
         onWheel={handleWheel}
+        onMouseMove={handleMouseMove}
       >
         {/* CSS for smooth zoom transitions */}
         <style>{`
@@ -276,21 +281,28 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
         </ComposableMap>
       </div>
 
-      {/* Tooltip */}
-      <Tooltip
-        id="map-tooltip"
-        float={true}
-        className="z-50"
-        style={{
-          backgroundColor: 'white',
-          color: 'black',
-          border: '2px solid black',
-          borderRadius: '0',
-          padding: '10px',
-          maxWidth: '180px',
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
-        }}
-      />
+      {/* Custom Tooltip - same style as bar chart */}
+      {tooltipData && (
+        <div
+          className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]"
+          style={{
+            left: mousePos.x + 12,
+            top: mousePos.y + 12
+          }}
+        >
+          <p className="font-bold text-base text-black uppercase tracking-wide">{tooltipData.name}</p>
+          <p className="text-xs text-black font-medium mb-1">{tooltipData.continent}</p>
+          <p className="text-xl font-black text-black my-1">
+            {tooltipData.votes.toLocaleString()} votes
+          </p>
+          <p className="text-xs text-black font-medium mt-0.5">
+            #{tooltipData.rank} out of {tooltipData.totalCountries} countries
+          </p>
+          <p className="text-xs text-black font-medium mt-0.5">
+            {tooltipData.distinctFilms.toLocaleString()} distinct films
+          </p>
+        </div>
+      )}
     </div>
   )
 }
