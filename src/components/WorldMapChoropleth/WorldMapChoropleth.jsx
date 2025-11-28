@@ -216,7 +216,7 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
             onMoveEnd={handleMoveEnd}
             minZoom={1}
             maxZoom={8}
-            translateExtent={[[-Infinity, -Infinity], [Infinity, Infinity]]}
+            translateExtent={[[-300, -150], [300, 150]]}
           >
             <Geographies geography={GEO_URL}>
               {({ geographies }) => (
