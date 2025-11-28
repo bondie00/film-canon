@@ -13,6 +13,7 @@ const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
 
 // Color palette for the choropleth - emerald shades to match Asia bar chart color (#10b981)
 const COLOR_RANGE = [
+  '#ecfdf5', // emerald-50
   '#d1fae5', // emerald-100
   '#a7f3d0', // emerald-200
   '#6ee7b7', // emerald-300
@@ -21,7 +22,6 @@ const COLOR_RANGE = [
   '#059669', // emerald-600
   '#047857', // emerald-700
   '#065f46', // emerald-800
-  '#064e3b', // emerald-900
 ]
 
 const NO_DATA_COLOR = '#e5e7eb' // gray-200
