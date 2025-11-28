@@ -11,19 +11,19 @@ import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
 // Natural Earth 110m world topology - lower resolution for performance
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
 
-// Color palette for the choropleth (light to dark green)
+// Color palette for the choropleth - emerald shades to match Asia bar chart color (#10b981)
 const COLOR_RANGE = [
-  '#dcfce7', // green-100
-  '#bbf7d0', // green-200
-  '#86efac', // green-300
-  '#4ade80', // green-400
-  '#22c55e', // green-500
-  '#16a34a', // green-600
-  '#166534', // green-800
+  '#d1fae5', // emerald-100
+  '#a7f3d0', // emerald-200
+  '#6ee7b7', // emerald-300
+  '#34d399', // emerald-400
+  '#10b981', // emerald-500 (Asia bar chart color)
+  '#059669', // emerald-600
+  '#047857', // emerald-700
 ]
 
 const NO_DATA_COLOR = '#e5e7eb' // gray-200
-const BORDER_COLOR = '#052e16' // green-950 - subtle dark border to separate countries
+const BORDER_COLOR = '#022c22' // emerald-950 - subtle dark border to separate countries
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipData, setTooltipData] = useState(null)
