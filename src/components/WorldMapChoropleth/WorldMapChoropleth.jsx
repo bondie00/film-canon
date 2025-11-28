@@ -23,6 +23,7 @@ const COLOR_RANGE = [
 ]
 
 const NO_DATA_COLOR = '#e5e7eb' // gray-200
+const BORDER_COLOR = '#052e16' // green-950 - subtle dark border to separate countries
 
 export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
   const [tooltipData, setTooltipData] = useState(null)
@@ -230,7 +231,8 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
                         key={geo.rsmKey}
                         geography={geo}
                         fill={getFillColor(iso)}
-                        stroke="none"
+                        stroke={BORDER_COLOR}
+                        strokeWidth={0.4 / (position.zoom / 1.35)}
                         style={{
                           default: {
                             outline: 'none'
