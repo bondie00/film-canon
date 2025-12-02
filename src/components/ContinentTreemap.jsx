@@ -28,19 +28,36 @@ const BASE_HEIGHT = 500
 // Initial zoom to fill the space better
 const INITIAL_ZOOM = 1.15
 
-// Calculate max pan for a given zoom level (allows panning almost off screen)
-// Scales linearly with zoom so behavior feels consistent at all zoom levels
-const getMaxPan = (zoomLevel) => ({
-  x: BASE_WIDTH * (zoomLevel - 1) / 2,
-  y: BASE_HEIGHT * (zoomLevel - 1) / 2
-})
+// Calculate pan limits based on content bounds and zoom level
+// Allows panning until the last circle is almost off the visible area
+const getPanLimits = (contentBounds, zoomLevel) => {
+  if (!contentBounds) {
+    return { minX: 0, maxX: 0, minY: 0, maxY: 0 }
+  }
 
-// Clamp pan values to stay within boundaries
-const clampPan = (panValue, zoomLevel) => {
-  const maxPan = getMaxPan(zoomLevel)
+  const { minX, maxX, minY, maxY } = contentBounds
+  const centerX = BASE_WIDTH / 2
+  const centerY = BASE_HEIGHT / 2
+  const viewportHalfW = BASE_WIDTH / (2 * zoomLevel)
+  const viewportHalfH = BASE_HEIGHT / (2 * zoomLevel)
+
+  // Pan limits: content edge can reach opposite viewport edge
+  // When panning right (positive pan), content moves right, so left content edge can reach right viewport edge
+  // When panning left (negative pan), content moves left, so right content edge can reach left viewport edge
   return {
-    x: Math.max(-maxPan.x, Math.min(maxPan.x, panValue.x)),
-    y: Math.max(-maxPan.y, Math.min(maxPan.y, panValue.y))
+    minX: -(maxX - centerX) + viewportHalfW,  // Right content edge to left viewport edge
+    maxX: -(minX - centerX) - viewportHalfW,  // Left content edge to right viewport edge
+    minY: -(maxY - centerY) + viewportHalfH,  // Bottom content edge to top viewport edge
+    maxY: -(minY - centerY) - viewportHalfH   // Top content edge to bottom viewport edge
+  }
+}
+
+// Clamp pan values to stay within content-based boundaries
+const clampPan = (panValue, zoomLevel, contentBounds) => {
+  const limits = getPanLimits(contentBounds, zoomLevel)
+  return {
+    x: Math.max(limits.minX, Math.min(limits.maxX, panValue.x)),
+    y: Math.max(limits.minY, Math.min(limits.maxY, panValue.y))
   }
 }
 
@@ -51,6 +68,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const containerRef = useRef(null)
   const svgRef = useRef(null)
+  const contentBoundsRef = useRef(null)
 
   // Zoom and pan state - start slightly zoomed in
   const [zoom, setZoom] = useState(INITIAL_ZOOM)
@@ -77,7 +95,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     setZoom(z => {
       const newZoom = Math.min(z * 1.4, 8)
       // Clamp pan for new zoom level
-      setPan(p => clampPan(p, newZoom))
+      setPan(p => clampPan(p, newZoom, contentBoundsRef.current))
       return newZoom
     })
   }, [])
@@ -86,7 +104,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     setZoom(z => {
       const newZoom = Math.max(z / 1.4, 1)
       // Clamp pan for new zoom level
-      setPan(p => clampPan(p, newZoom))
+      setPan(p => clampPan(p, newZoom, contentBoundsRef.current))
       return newZoom
     })
   }, [])
@@ -120,7 +138,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     const newPan = clampPan({
       x: pan.x - svgClickX / zoom,
       y: pan.y - svgClickY / zoom
-    }, newZoom)
+    }, newZoom, contentBoundsRef.current)
 
     setPan(newPan)
     setZoom(newZoom)
@@ -157,7 +175,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     const newPan = clampPan({
       x: svgMouseX / newZoom - svgPointX,
       y: svgMouseY / newZoom - svgPointY
-    }, newZoom)
+    }, newZoom, contentBoundsRef.current)
 
     setPan(newPan)
     setZoom(newZoom)
@@ -186,7 +204,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
       setPan(clampPan({
         x: panStart.x + dx,
         y: panStart.y + dy
-      }, zoom))
+      }, zoom, contentBoundsRef.current))
     }
   }, [isDragging, dragStart, panStart, zoom])
 
@@ -195,9 +213,9 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
   }, [])
 
   // Transform data into hierarchical format and compute circle packing
-  const { packedData, totalVotes, continentTotals, continentPercentages, continentData } = useMemo(() => {
+  const { packedData, totalVotes, continentTotals, continentPercentages, continentData, contentBounds } = useMemo(() => {
     if (!countriesData) {
-      return { packedData: null, totalVotes: 0, continentTotals: {}, continentPercentages: {}, continentData: [] }
+      return { packedData: null, totalVotes: 0, continentTotals: {}, continentPercentages: {}, continentData: [], contentBounds: null }
     }
 
     // Group countries by continent with their vote counts
@@ -280,12 +298,28 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
 
     const packed = packLayout(root)
 
+    // Calculate content bounds from all circles (including radii)
+    const allCircles = packed.descendants().filter(d => d.depth > 0)
+    let contentBounds = null
+    if (allCircles.length > 0) {
+      contentBounds = {
+        minX: Math.min(...allCircles.map(d => d.x - d.r)),
+        maxX: Math.max(...allCircles.map(d => d.x + d.r)),
+        minY: Math.min(...allCircles.map(d => d.y - d.r)),
+        maxY: Math.max(...allCircles.map(d => d.y + d.r))
+      }
+    }
+
+    // Store content bounds in ref for use by handlers
+    contentBoundsRef.current = contentBounds
+
     return {
       packedData: packed,
       totalVotes: grandTotal,
       continentTotals: totals,
       continentPercentages: percentages,
-      continentData: sortedContinents
+      continentData: sortedContinents,
+      contentBounds
     }
   }, [countriesData, selectedPoll, rankRange])
 
