@@ -27,7 +27,7 @@ const COLOR_RANGE = [
 const NO_DATA_COLOR = '#e5e7eb' // gray-200
 const BORDER_COLOR = '#022c22' // emerald-950 - subtle dark border to separate countries
 
-export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
+export default function WorldMapChoropleth({ countriesData, filmsData, selectedPoll, rankRange }) {
   const [tooltipData, setTooltipData] = useState(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [position, setPosition] = useState({ coordinates: [13, 13], zoom: 1.35 })

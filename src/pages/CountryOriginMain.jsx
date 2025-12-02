@@ -9,13 +9,20 @@ export default function CountryOriginMain() {
   const [selectedPoll, setSelectedPoll] = useState('2022')
   const [rankRange, setRankRange] = useState('all')
   const [countriesData, setCountriesData] = useState(null)
+  const [filmsData, setFilmsData] = useState(null)
 
-  // Load countries data
+  // Load countries and films data
   useEffect(() => {
-    fetch('/data/countries.json')
-      .then(response => response.json())
-      .then(data => setCountriesData(data))
-      .catch(error => console.error('Error loading countries data:', error))
+    // Load both data sources in parallel
+    Promise.all([
+      fetch('/data/countries.json').then(res => res.json()),
+      fetch('/data/films.json').then(res => res.json())
+    ])
+      .then(([countries, films]) => {
+        setCountriesData(countries)
+        setFilmsData(films)
+      })
+      .catch(error => console.error('Error loading data:', error))
   }, [])
 
   // Calculate dynamic metrics based on current filters
@@ -181,6 +188,7 @@ export default function CountryOriginMain() {
               {/* World Map Choropleth */}
               <WorldMapChoropleth
                 countriesData={countriesData}
+                filmsData={filmsData}
                 selectedPoll={selectedPoll}
                 rankRange={rankRange}
               />
