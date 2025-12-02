@@ -53,7 +53,19 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
       })
   }, [])
 
-  // Zoom controls
+  // Convert screen coordinates to SVG coordinates
+  const screenToSVG = useCallback((clientX, clientY) => {
+    if (!containerRef.current) return { x: BASE_WIDTH / 2, y: BASE_HEIGHT / 2 }
+    const rect = containerRef.current.getBoundingClientRect()
+    const scaleX = BASE_WIDTH / rect.width
+    const scaleY = BASE_HEIGHT / rect.height
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY
+    }
+  }, [])
+
+  // Zoom controls with smooth transitions
   const handleZoomIn = useCallback(() => {
     setZoom(z => Math.min(z * 1.4, 8))
   }, [])
@@ -67,6 +79,43 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     setPan({ x: 0, y: 0 })
   }, [])
 
+  // Double-click to zoom in centered on click location
+  const handleDoubleClick = useCallback((e) => {
+    e.preventDefault()
+    if (zoom >= 8) return
+
+    const svgPoint = screenToSVG(e.clientX, e.clientY)
+    const newZoom = Math.min(zoom * 1.5, 8)
+
+    // Adjust pan to center on the clicked point
+    const zoomRatio = newZoom / zoom
+    setPan(p => ({
+      x: p.x + (svgPoint.x - BASE_WIDTH / 2 - p.x) * (1 - 1 / zoomRatio),
+      y: p.y + (svgPoint.y - BASE_HEIGHT / 2 - p.y) * (1 - 1 / zoomRatio)
+    }))
+    setZoom(newZoom)
+  }, [zoom, screenToSVG])
+
+  // Scroll wheel zoom
+  const handleWheel = useCallback((e) => {
+    e.preventDefault()
+
+    const delta = e.deltaY > 0 ? 0.9 : 1.1 // Zoom out or in
+    const newZoom = Math.max(1, Math.min(8, zoom * delta))
+
+    if (newZoom === zoom) return
+
+    const svgPoint = screenToSVG(e.clientX, e.clientY)
+    const zoomRatio = newZoom / zoom
+
+    // Adjust pan to zoom toward mouse position
+    setPan(p => ({
+      x: p.x + (svgPoint.x - BASE_WIDTH / 2 - p.x) * (1 - 1 / zoomRatio),
+      y: p.y + (svgPoint.y - BASE_HEIGHT / 2 - p.y) * (1 - 1 / zoomRatio)
+    }))
+    setZoom(newZoom)
+  }, [zoom, screenToSVG])
+
   // Drag handlers for panning
   const handleMouseDown = useCallback((e) => {
     if (e.button !== 0) return // Only left click
@@ -77,23 +126,21 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
 
   const handleMouseMove = useCallback((e) => {
     if (isDragging) {
-      const dx = e.clientX - dragStart.x
-      const dy = e.clientY - dragStart.y
-      // Scale the drag by zoom level for consistent feel
+      const rect = containerRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const scaleX = BASE_WIDTH / rect.width
+      const scaleY = BASE_HEIGHT / rect.height
+      const dx = (e.clientX - dragStart.x) * scaleX / zoom
+      const dy = (e.clientY - dragStart.y) * scaleY / zoom
       setPan({
-        x: panStart.x + dx / zoom,
-        y: panStart.y + dy / zoom
+        x: panStart.x + dx,
+        y: panStart.y + dy
       })
     }
   }, [isDragging, dragStart, panStart, zoom])
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false)
-  }, [])
-
-  // Prevent scroll wheel zoom
-  const handleWheel = useCallback((e) => {
-    e.stopPropagation()
   }, [])
 
   // Transform data into hierarchical format and compute circle packing
@@ -317,11 +364,8 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
 
         <div
           ref={containerRef}
-          className="border-2 border-black bg-gray-50 relative overflow-hidden"
-          style={{
-            height: '500px',
-            cursor: isDragging ? 'grabbing' : (zoom > 1 ? 'grab' : 'default')
-          }}
+          className="border-2 border-black bg-gray-50 relative overflow-hidden select-none"
+          style={{ height: '500px' }}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -330,103 +374,117 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
             handleNodeMouseLeave()
           }}
           onWheel={handleWheel}
+          onDoubleClick={handleDoubleClick}
         >
+          {/* CSS for smooth zoom transitions */}
+          <style>{`
+            .zoom-group {
+              transition: transform 0.3s ease-out;
+            }
+          `}</style>
           <svg
             ref={svgRef}
             width="100%"
             height="100%"
-            viewBox={viewBox}
+            viewBox={`0 0 ${BASE_WIDTH} ${BASE_HEIGHT}`}
             preserveAspectRatio="xMidYMid meet"
-            style={{ transition: isDragging ? 'none' : 'viewBox 0.15s ease-out' }}
           >
-            {/* Continent circles (background) */}
-            {continentNodes.map((node, i) => (
-              <g key={`continent-${i}`}>
-                <circle
-                  cx={node.x}
-                  cy={node.y}
-                  r={node.r}
-                  fill={continentColorsLight[node.data.name]}
-                  stroke={continentColors[node.data.name]}
-                  strokeWidth={2 / zoom}
-                  strokeDasharray={`${4 / zoom} ${2 / zoom}`}
-                />
-                {/* Continent label at top of circle */}
-                {node.r > 40 && (
-                  <text
-                    x={node.x}
-                    y={node.y - node.r + 16 / zoom}
-                    textAnchor="middle"
-                    fill={continentColors[node.data.name]}
-                    fontSize={11 / Math.max(zoom * 0.7, 1)}
-                    fontWeight="700"
-                    style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}
-                  >
-                    {node.data.name}
-                  </text>
-                )}
-              </g>
-            ))}
-
-            {/* Country circles */}
-            {countryNodes.map((node, i) => {
-              const isHovered = hoveredNode && hoveredNode.data.name === node.data.name
-              const color = continentColors[node.data.continent]
-
-              // Adjust label visibility based on zoom
-              const effectiveRadius = node.r * zoom
-              const showLabel = effectiveRadius > 18
-              const showAbbrev = effectiveRadius > 10 && effectiveRadius <= 18
-
-              let displayName = ''
-              if (showLabel) {
-                const maxChars = Math.floor((node.r * zoom) / 4)
-                displayName = node.data.name.length > maxChars
-                  ? node.data.name.substring(0, maxChars - 1) + '…'
-                  : node.data.name
-              } else if (showAbbrev) {
-                displayName = node.data.name.substring(0, 2)
-              }
-
-              return (
-                <g
-                  key={`country-${i}`}
-                  onMouseMove={(e) => !isDragging && handleNodeMouseMove(e, node)}
-                  onMouseLeave={handleNodeMouseLeave}
-                  style={{ cursor: isDragging ? 'grabbing' : 'pointer' }}
-                >
+            <g
+              className="zoom-group"
+              style={{
+                transform: `translate(${BASE_WIDTH / 2}px, ${BASE_HEIGHT / 2}px) scale(${zoom}) translate(${-BASE_WIDTH / 2 + pan.x}px, ${-BASE_HEIGHT / 2 + pan.y}px)`,
+                transformOrigin: 'center center'
+              }}
+            >
+              {/* Continent circles (background) */}
+              {continentNodes.map((node, i) => (
+                <g key={`continent-${i}`}>
                   <circle
                     cx={node.x}
                     cy={node.y}
                     r={node.r}
-                    fill={color}
-                    stroke={isHovered ? '#000000' : '#ffffff'}
-                    strokeWidth={(isHovered ? 3 : 1.5) / zoom}
-                    style={{
-                      transition: 'stroke-width 0.15s ease',
-                      filter: isHovered ? 'brightness(1.1)' : 'none'
-                    }}
+                    fill={continentColorsLight[node.data.name]}
+                    stroke={continentColors[node.data.name]}
+                    strokeWidth={2 / zoom}
+                    strokeDasharray={`${4 / zoom} ${2 / zoom}`}
                   />
-                  {displayName && (
+                  {/* Continent label at top of circle */}
+                  {node.r > 40 && (
                     <text
                       x={node.x}
-                      y={node.y}
+                      y={node.y - node.r + 16 / zoom}
                       textAnchor="middle"
-                      dominantBaseline="middle"
-                      fill="#ffffff"
-                      fontSize={Math.min(11, (node.r * zoom) / 3) / zoom}
-                      fontWeight="600"
-                      style={{
-                        pointerEvents: 'none',
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                      }}
+                      fill={continentColors[node.data.name]}
+                      fontSize={11 / Math.max(zoom * 0.7, 1)}
+                      fontWeight="700"
+                      style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}
                     >
-                      {displayName}
+                      {node.data.name}
                     </text>
                   )}
                 </g>
-              )
-            })}
+              ))}
+
+              {/* Country circles */}
+              {countryNodes.map((node, i) => {
+                const isHovered = hoveredNode && hoveredNode.data.name === node.data.name
+                const color = continentColors[node.data.continent]
+
+                // Adjust label visibility based on zoom
+                const effectiveRadius = node.r * zoom
+                const showLabel = effectiveRadius > 18
+                const showAbbrev = effectiveRadius > 10 && effectiveRadius <= 18
+
+                let displayName = ''
+                if (showLabel) {
+                  const maxChars = Math.floor((node.r * zoom) / 4)
+                  displayName = node.data.name.length > maxChars
+                    ? node.data.name.substring(0, maxChars - 1) + '…'
+                    : node.data.name
+                } else if (showAbbrev) {
+                  displayName = node.data.name.substring(0, 2)
+                }
+
+                return (
+                  <g
+                    key={`country-${i}`}
+                    onMouseMove={(e) => !isDragging && handleNodeMouseMove(e, node)}
+                    onMouseLeave={handleNodeMouseLeave}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <circle
+                      cx={node.x}
+                      cy={node.y}
+                      r={node.r}
+                      fill={color}
+                      stroke={isHovered ? '#000000' : '#ffffff'}
+                      strokeWidth={(isHovered ? 3 : 1.5) / zoom}
+                      style={{
+                        transition: 'stroke-width 0.15s ease',
+                        filter: isHovered ? 'brightness(1.1)' : 'none'
+                      }}
+                    />
+                    {displayName && (
+                      <text
+                        x={node.x}
+                        y={node.y}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        fill="#ffffff"
+                        fontSize={Math.min(11, (node.r * zoom) / 3) / zoom}
+                        fontWeight="600"
+                        style={{
+                          pointerEvents: 'none',
+                          textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                        }}
+                      >
+                        {displayName}
+                      </text>
+                    )}
+                  </g>
+                )
+              })}
+            </g>
           </svg>
 
           {/* Custom Tooltip */}
