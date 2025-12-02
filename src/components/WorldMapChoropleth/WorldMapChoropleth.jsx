@@ -295,11 +295,11 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
             className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]"
             style={{
               ...(mousePos.x < window.innerWidth / 2
-                ? { left: mousePos.x + 6 }
-                : { right: window.innerWidth - mousePos.x + 6 }),
+                ? { left: mousePos.x }
+                : { right: window.innerWidth - mousePos.x }),
               ...(isBottomHalf
-                ? { bottom: window.innerHeight - mousePos.y + 6 }
-                : { top: mousePos.y + 6 })
+                ? { bottom: window.innerHeight - mousePos.y }
+                : { top: mousePos.y })
             }}
           >
           <p className="font-bold text-base text-black uppercase tracking-wide">{tooltipData.name}</p>
