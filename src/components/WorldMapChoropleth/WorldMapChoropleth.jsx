@@ -405,7 +405,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
         return (
           <div
-            className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg w-[220px]"
+            className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg w-[180px]"
             style={{
               left: mousePos.x,
               top: mousePos.y,
