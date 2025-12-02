@@ -28,6 +28,21 @@ const BASE_HEIGHT = 500
 // Initial zoom to fill the space better
 const INITIAL_ZOOM = 1.15
 
+// Calculate max pan for a given zoom level (keeps content visible)
+const getMaxPan = (zoomLevel) => ({
+  x: BASE_WIDTH * (zoomLevel - 1) / (2 * zoomLevel),
+  y: BASE_HEIGHT * (zoomLevel - 1) / (2 * zoomLevel)
+})
+
+// Clamp pan values to stay within boundaries
+const clampPan = (panValue, zoomLevel) => {
+  const maxPan = getMaxPan(zoomLevel)
+  return {
+    x: Math.max(-maxPan.x, Math.min(maxPan.x, panValue.x)),
+    y: Math.max(-maxPan.y, Math.min(maxPan.y, panValue.y))
+  }
+}
+
 export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'all' }) {
   const [countriesData, setCountriesData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -58,11 +73,21 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
 
   // Zoom controls with smooth transitions
   const handleZoomIn = useCallback(() => {
-    setZoom(z => Math.min(z * 1.4, 8))
+    setZoom(z => {
+      const newZoom = Math.min(z * 1.4, 8)
+      // Clamp pan for new zoom level
+      setPan(p => clampPan(p, newZoom))
+      return newZoom
+    })
   }, [])
 
   const handleZoomOut = useCallback(() => {
-    setZoom(z => Math.max(z / 1.4, 1))
+    setZoom(z => {
+      const newZoom = Math.max(z / 1.4, 1)
+      // Clamp pan for new zoom level
+      setPan(p => clampPan(p, newZoom))
+      return newZoom
+    })
   }, [])
 
   const handleReset = useCallback(() => {
@@ -78,26 +103,27 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     const rect = containerRef.current?.getBoundingClientRect()
     if (!rect) return
 
-    // Get click position relative to container center
+    // Get click position relative to container center, scaled to SVG coordinates
     const clickX = e.clientX - rect.left - rect.width / 2
     const clickY = e.clientY - rect.top - rect.height / 2
-
-    // Scale to SVG coordinates
     const scaleX = BASE_WIDTH / rect.width
     const scaleY = BASE_HEIGHT / rect.height
     const svgClickX = clickX * scaleX
     const svgClickY = clickY * scaleY
 
     const newZoom = Math.min(zoom * 1.5, 8)
-    const zoomChange = newZoom / zoom
 
-    // Pan to center on clicked point
-    setPan(p => ({
-      x: p.x * zoomChange + svgClickX * (1 - zoomChange) / zoom,
-      y: p.y * zoomChange + svgClickY * (1 - zoomChange) / zoom
-    }))
+    // Calculate new pan to center on clicked point
+    // The clicked SVG point is at: CENTER + svgClick/zoom - pan
+    // To center it, we need: newPan = pan - svgClick/zoom
+    const newPan = clampPan({
+      x: pan.x - svgClickX / zoom,
+      y: pan.y - svgClickY / zoom
+    }, newZoom)
+
+    setPan(newPan)
     setZoom(newZoom)
-  }, [zoom])
+  }, [zoom, pan])
 
   // Scroll wheel zoom
   const handleWheel = useCallback((e) => {
@@ -111,25 +137,30 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
 
     if (newZoom === zoom) return
 
-    // Get mouse position relative to container center
+    // Get mouse position relative to container center, scaled to SVG coordinates
     const mouseX = e.clientX - rect.left - rect.width / 2
     const mouseY = e.clientY - rect.top - rect.height / 2
-
-    // Scale to SVG coordinates
     const scaleX = BASE_WIDTH / rect.width
     const scaleY = BASE_HEIGHT / rect.height
     const svgMouseX = mouseX * scaleX
     const svgMouseY = mouseY * scaleY
 
-    const zoomChange = newZoom / zoom
+    // Calculate the SVG point under the mouse
+    // svgPoint = svgMouse/zoom - pan (relative to center)
+    const svgPointX = svgMouseX / zoom - pan.x
+    const svgPointY = svgMouseY / zoom - pan.y
 
-    // Pan to zoom toward mouse position
-    setPan(p => ({
-      x: p.x * zoomChange + svgMouseX * (1 - zoomChange) / zoom,
-      y: p.y * zoomChange + svgMouseY * (1 - zoomChange) / zoom
-    }))
+    // After zoom, we want the same SVG point to be under the mouse
+    // svgMouse/newZoom - newPan = svgPoint
+    // newPan = svgMouse/newZoom - svgPoint
+    const newPan = clampPan({
+      x: svgMouseX / newZoom - svgPointX,
+      y: svgMouseY / newZoom - svgPointY
+    }, newZoom)
+
+    setPan(newPan)
     setZoom(newZoom)
-  }, [zoom])
+  }, [zoom, pan])
 
   // Drag handlers for panning
   const handleMouseDown = useCallback((e) => {
@@ -150,10 +181,11 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
       const scaleY = BASE_HEIGHT / rect.height
       const dx = (e.clientX - dragStart.x) * scaleX / zoom
       const dy = (e.clientY - dragStart.y) * scaleY / zoom
-      setPan({
+      // Clamp pan to boundaries
+      setPan(clampPan({
         x: panStart.x + dx,
         y: panStart.y + dy
-      })
+      }, zoom))
     }
   }, [isDragging, dragStart, panStart, zoom])
 
