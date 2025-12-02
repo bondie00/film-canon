@@ -6,7 +6,7 @@ const continentColors = {
   'Europe': '#3b82f6',        // blue-500
   'Asia': '#10b981',          // green-500
   'North America': '#8b5cf6', // purple-500
-  'Latin America': '#f59e0b', // orange-500
+  'South America': '#f59e0b', // orange-500
   'Africa': '#ef4444',        // red-500
   'Oceania': '#ec4899',       // pink-500
 }

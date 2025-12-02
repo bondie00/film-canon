@@ -332,7 +332,7 @@ export default function CountryOriginMain() {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-orange-500 border-2 border-black"></div>
-                  <span className="text-black font-bold">Latin America</span>
+                  <span className="text-black font-bold">South America</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-red-500 border-2 border-black"></div>

@@ -222,7 +222,7 @@
     }
   },
   "Argentina": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 34,
     "byPoll": {
       "1952": {
@@ -693,7 +693,7 @@
     }
   },
   "Bolivia": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 6,
     "byPoll": {
       "1952": {
@@ -822,7 +822,7 @@
     }
   },
   "Brazil": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 44,
     "byPoll": {
       "1952": {
@@ -1287,7 +1287,7 @@
     }
   },
   "Chile": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 11,
     "byPoll": {
       "1952": {
@@ -1424,7 +1424,7 @@
     }
   },
   "Colombia": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 6,
     "byPoll": {
       "1952": {
@@ -2626,7 +2626,7 @@
     }
   },
   "Guatemala": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 2,
     "byPoll": {
       "1952": {
@@ -2753,7 +2753,7 @@
     }
   },
   "Guyana": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -5188,7 +5188,7 @@
     }
   },
   "Paraguay": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -5251,7 +5251,7 @@
     }
   },
   "Peru": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 2,
     "byPoll": {
       "1952": {
@@ -7202,7 +7202,7 @@
     }
   },
   "Uruguay": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 1,
     "byPoll": {
       "1952": {
@@ -7265,7 +7265,7 @@
     }
   },
   "Venezuela": {
-    "continent": "Latin America",
+    "continent": "South America",
     "totalFilms": 5,
     "byPoll": {
       "1952": {
