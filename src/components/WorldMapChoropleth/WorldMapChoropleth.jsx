@@ -89,7 +89,11 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
 
       aggregated[iso].votes += votes || 0
       aggregated[iso].distinctFilms += distinctFilms || 0
-      aggregated[iso].countries.push(countryName)
+      aggregated[iso].countries.push({
+        name: countryName,
+        votes: votes || 0,
+        distinctFilms: distinctFilms || 0
+      })
     })
 
     return aggregated
@@ -141,15 +145,14 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
     setHoveredGeo(geo) // Store the geography for overlay rendering
 
     const rank = countryRankings[iso]
-    const countryNames = data.countries.join(' + ')
 
     setTooltipData({
-      name: countryNames,
+      countries: data.countries,
       continent: data.continent,
-      votes: data.votes,
+      totalVotes: data.votes,
       rank: rank,
       totalCountries: totalCountriesWithVotes,
-      distinctFilms: data.distinctFilms
+      totalDistinctFilms: data.distinctFilms
     })
   }, [dataByISO, countryRankings, totalCountriesWithVotes])
 
@@ -296,9 +299,14 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
         const translateX = isRightHalf ? 'calc(-100% - 10px)' : '10px'
         const translateY = isBottomHalf ? 'calc(-100% - 10px)' : '10px'
 
+        const hasMultipleCountries = tooltipData.countries.length > 1
+        const displayName = hasMultipleCountries
+          ? tooltipData.countries.map(c => c.name).join(' + ')
+          : tooltipData.countries[0].name
+
         return (
           <div
-            className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]"
+            className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg max-w-[220px]"
             style={{
               left: mousePos.x,
               top: mousePos.y,
@@ -306,17 +314,31 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
               transition: 'transform 0.15s ease-out, left 0.08s ease-out, top 0.08s ease-out'
             }}
           >
-          <p className="font-bold text-base text-black uppercase tracking-wide">{tooltipData.name}</p>
+          <p className="font-bold text-base text-black uppercase tracking-wide">{displayName}</p>
           <p className="text-xs text-black font-medium mb-1">{tooltipData.continent}</p>
           <p className="text-xl font-black text-black my-1">
-            {tooltipData.votes.toLocaleString()} votes
+            {tooltipData.totalVotes.toLocaleString()} votes
           </p>
           <p className="text-xs text-black font-medium mt-0.5">
             #{tooltipData.rank} out of {tooltipData.totalCountries} countries
           </p>
           <p className="text-xs text-black font-medium mt-0.5">
-            {tooltipData.distinctFilms.toLocaleString()} distinct films
+            {tooltipData.totalDistinctFilms.toLocaleString()} distinct films
           </p>
+
+          {/* Individual country breakdown for combined entities */}
+          {hasMultipleCountries && (
+            <div className="mt-2 pt-2 border-t border-gray-300">
+              {tooltipData.countries.map((country, idx) => (
+                <div key={country.name} className={idx > 0 ? 'mt-1.5 pt-1.5 border-t border-gray-200' : ''}>
+                  <p className="font-semibold text-xs text-black uppercase tracking-wide">{country.name}</p>
+                  <p className="text-xs text-black">
+                    {country.votes.toLocaleString()} votes · {country.distinctFilms.toLocaleString()} films
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         )
       })()}
