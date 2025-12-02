@@ -6,7 +6,7 @@ const continentColors = {
   'Europe': '#3b82f6',        // blue-500
   'Asia': '#10b981',          // green-500
   'North America': '#8b5cf6', // purple-500
-  'Latin America': '#f59e0b', // orange-500
+  'South America': '#f59e0b', // orange-500
   'Africa': '#ef4444',        // red-500
   'Oceania': '#ec4899',       // pink-500
 }
@@ -422,6 +422,10 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <XAxis
             type="number"
             allowDecimals={false}
+            stroke="#000000"
+            tick={{ fill: '#000000', fontSize: 12 }}
+            axisLine={{ stroke: '#000000', strokeWidth: 2 }}
+            tickLine={{ stroke: '#000000' }}
             label={{
               value: 'Votes',
               position: 'insideBottom',
@@ -434,6 +438,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             type="category"
             width={95}
             interval={0}
+            stroke="#000000"
+            axisLine={{ stroke: '#000000', strokeWidth: 2 }}
+            tickLine={{ stroke: '#000000' }}
             tick={<CustomYAxisTick />}
           />
           <Tooltip content={<CustomTooltip />} />
@@ -444,7 +451,12 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             onClick={(data) => console.log('Navigate to:', data.name)}
           >
             {filteredData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={continentColors[entry.continent]} />
+              <Cell
+                key={`cell-${index}`}
+                fill={continentColors[entry.continent]}
+                stroke="#000000"
+                strokeWidth={1}
+              />
             ))}
           </Bar>
         </BarChart>

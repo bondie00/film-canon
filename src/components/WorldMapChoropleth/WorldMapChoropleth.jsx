@@ -11,24 +11,28 @@ import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
 // Natural Earth 110m world topology - lower resolution for performance
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
 
-// Color palette for the choropleth (light to dark green)
+// Color palette for the choropleth - emerald shades to match Asia bar chart color (#10b981)
 const COLOR_RANGE = [
-  '#dcfce7', // green-100
-  '#bbf7d0', // green-200
-  '#86efac', // green-300
-  '#4ade80', // green-400
-  '#22c55e', // green-500
-  '#16a34a', // green-600
-  '#166534', // green-800
+  '#ecfdf5', // emerald-50
+  '#d1fae5', // emerald-100
+  '#a7f3d0', // emerald-200
+  '#6ee7b7', // emerald-300
+  '#34d399', // emerald-400
+  '#10b981', // emerald-500 (Asia bar chart color)
+  '#059669', // emerald-600
+  '#047857', // emerald-700
+  '#065741', // emerald-850 (interpolated)
 ]
 
 const NO_DATA_COLOR = '#e5e7eb' // gray-200
+const BORDER_COLOR = '#022c22' // emerald-950 - subtle dark border to separate countries
 
-export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRange }) {
+export default function WorldMapChoropleth({ countriesData, filmsData, selectedPoll, rankRange }) {
   const [tooltipData, setTooltipData] = useState(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [position, setPosition] = useState({ coordinates: [13, 13], zoom: 1.35 })
   const [hoveredGeo, setHoveredGeo] = useState(null) // Track hovered geography for overlay
+  const [selectedCountry, setSelectedCountry] = useState(null) // ISO code of selected country for expanded view
   const mapRef = useRef(null)
 
   // Zoom controls with smoother increments
@@ -86,7 +90,11 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
 
       aggregated[iso].votes += votes || 0
       aggregated[iso].distinctFilms += distinctFilms || 0
-      aggregated[iso].countries.push(countryName)
+      aggregated[iso].countries.push({
+        name: countryName,
+        votes: votes || 0,
+        distinctFilms: distinctFilms || 0
+      })
     })
 
     return aggregated
@@ -138,15 +146,14 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
     setHoveredGeo(geo) // Store the geography for overlay rendering
 
     const rank = countryRankings[iso]
-    const countryNames = data.countries.join(' + ')
 
     setTooltipData({
-      name: countryNames,
+      countries: data.countries,
       continent: data.continent,
-      votes: data.votes,
+      totalVotes: data.votes,
       rank: rank,
       totalCountries: totalCountriesWithVotes,
-      distinctFilms: data.distinctFilms
+      totalDistinctFilms: data.distinctFilms
     })
   }, [dataByISO, countryRankings, totalCountriesWithVotes])
 
@@ -155,6 +162,98 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
     setTooltipData(null)
     setHoveredGeo(null)
   }, [])
+
+  // Handle country click - open expanded view
+  const handleCountryClick = useCallback((iso) => {
+    if (selectedCountry) return // Already have a country selected
+    const data = dataByISO[iso]
+    if (!data || data.votes === 0) return
+
+    setSelectedCountry(iso)
+    setTooltipData(null)
+    setHoveredGeo(null)
+  }, [selectedCountry, dataByISO])
+
+  // Close expanded view
+  const handleCloseExpanded = useCallback(() => {
+    setSelectedCountry(null)
+  }, [])
+
+  // Get films for a specific country based on current filters
+  const getFilmsForCountry = useCallback((countryName) => {
+    if (!filmsData) return []
+
+    return filmsData
+      .filter(film => film.countries?.includes(countryName))
+      .map(film => {
+        let votes = 0
+        let rank = null
+
+        if (selectedPoll === 'all') {
+          // Sum votes across all polls
+          votes = film.pollHistory?.reduce((sum, poll) => sum + (poll.votes || 0), 0) || 0
+          // No rank for "all polls"
+          rank = null
+        } else {
+          // Find the specific poll
+          const pollEntry = film.pollHistory?.find(p => p.year === parseInt(selectedPoll))
+          votes = pollEntry?.votes || 0
+          rank = pollEntry?.rank || null
+        }
+
+        // Filter by rank range if top100
+        if (rankRange === 'top100') {
+          // For top100, only include films that had rank <= 100 in any poll (for "all") or specific poll
+          if (selectedPoll === 'all') {
+            const hasTop100 = film.pollHistory?.some(p => p.rank && p.rank <= 100)
+            if (!hasTop100) return null
+          } else {
+            if (!rank || rank > 100) return null
+          }
+        }
+
+        if (votes === 0) return null
+
+        return {
+          title: film.FilmTitle,
+          year: film.Year,
+          votes,
+          rank,
+          directors: film.directors
+        }
+      })
+      .filter(Boolean)
+      .sort((a, b) => {
+        // Sort by votes descending, then by rank ascending if available
+        if (b.votes !== a.votes) return b.votes - a.votes
+        if (a.rank && b.rank) return a.rank - b.rank
+        return 0
+      })
+  }, [filmsData, selectedPoll, rankRange])
+
+  // Get selected country data for expanded view
+  const selectedCountryData = useMemo(() => {
+    if (!selectedCountry || !dataByISO[selectedCountry]) return null
+
+    const data = dataByISO[selectedCountry]
+    const rank = countryRankings[selectedCountry]
+
+    // Get films for each country in this ISO group
+    const countriesWithFilms = data.countries.map(country => ({
+      ...country,
+      films: getFilmsForCountry(country.name)
+    }))
+
+    return {
+      iso: selectedCountry,
+      countries: countriesWithFilms,
+      continent: data.continent,
+      totalVotes: data.votes,
+      rank,
+      totalCountries: totalCountriesWithVotes,
+      totalDistinctFilms: data.distinctFilms
+    }
+  }, [selectedCountry, dataByISO, countryRankings, totalCountriesWithVotes, getFilmsForCountry])
 
   if (!countriesData) {
     return (
@@ -224,29 +323,36 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
                     const iso = geo.id
                     const data = dataByISO[iso]
                     const hasData = data && data.votes > 0
+                    const isInteractionDisabled = !!selectedCountry
 
                     return (
                       <Geography
                         key={geo.rsmKey}
                         geography={geo}
                         fill={getFillColor(iso)}
-                        stroke="none"
+                        stroke={BORDER_COLOR}
+                        strokeWidth={0.4 / (position.zoom / 1.35)}
                         style={{
                           default: {
                             outline: 'none'
                           },
                           hover: {
                             outline: 'none',
-                            cursor: hasData ? 'pointer' : 'default'
+                            cursor: isInteractionDisabled ? 'default' : (hasData ? 'pointer' : 'default')
                           },
                           pressed: {
                             outline: 'none'
                           }
                         }}
                         onMouseEnter={() => {
-                          if (hasData) handleMouseEnter(iso, geo)
+                          if (!isInteractionDisabled && hasData) handleMouseEnter(iso, geo)
                         }}
-                        onMouseLeave={handleMouseLeave}
+                        onMouseLeave={() => {
+                          if (!isInteractionDisabled) handleMouseLeave()
+                        }}
+                        onClick={() => {
+                          if (!isInteractionDisabled && hasData) handleCountryClick(iso)
+                        }}
                       />
                     )
                   })}
@@ -281,28 +387,152 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
         </ComposableMap>
       </div>
 
-      {/* Custom Tooltip - same style as bar chart */}
-      {tooltipData && (
-        <div
-          className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]"
-          style={{
-            ...(mousePos.x < window.innerWidth / 2
-              ? { left: mousePos.x + 12 }
-              : { right: window.innerWidth - mousePos.x + 12 }),
-            top: mousePos.y + 12
-          }}
-        >
-          <p className="font-bold text-base text-black uppercase tracking-wide">{tooltipData.name}</p>
+      {/* Custom Tooltip - same style as bar chart with smooth transitions */}
+      {tooltipData && (() => {
+        const mapRect = mapRef.current?.getBoundingClientRect()
+        if (!mapRect) return null
+
+        const hasMultipleCountries = tooltipData.countries.length > 1
+        const displayName = hasMultipleCountries
+          ? tooltipData.countries.map(c => c.name).join(' + ')
+          : tooltipData.countries[0].name
+
+        // Estimate tooltip height based on content
+        const baseHeight = 130 // Single country tooltip
+        const extraPerCountry = 55 // Additional height per country in combined entities
+        const tooltipHeight = hasMultipleCountries
+          ? baseHeight + 20 + (tooltipData.countries.length * extraPerCountry) // +20 for divider/spacing
+          : baseHeight
+        const tooltipWidth = 180
+        const offset = 10
+
+        // Determine horizontal position
+        const isRightHalf = mousePos.x > window.innerWidth / 2
+        let tooltipX = isRightHalf ? mousePos.x - tooltipWidth - offset : mousePos.x + offset
+
+        // Determine vertical position - prefer below cursor, flip if would go beyond map bottom
+        const mapMidY = mapRect.top + mapRect.height / 2
+        const isBottomHalf = mousePos.y > mapMidY
+        let tooltipY = isBottomHalf ? mousePos.y - tooltipHeight - offset : mousePos.y + offset
+
+        // Clamp to stay within map boundaries
+        const minY = mapRect.top
+        const maxY = mapRect.bottom - tooltipHeight
+        tooltipY = Math.max(minY, Math.min(maxY, tooltipY))
+
+        return (
+          <div
+            className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg w-[180px]"
+            style={{
+              left: tooltipX,
+              top: tooltipY,
+              transition: 'left 0.08s ease-out, top 0.08s ease-out'
+            }}
+          >
+          <p className="font-bold text-base text-black uppercase tracking-wide">{displayName}</p>
           <p className="text-xs text-black font-medium mb-1">{tooltipData.continent}</p>
           <p className="text-xl font-black text-black my-1">
-            {tooltipData.votes.toLocaleString()} votes
+            {tooltipData.totalVotes.toLocaleString()} votes
           </p>
           <p className="text-xs text-black font-medium mt-0.5">
             #{tooltipData.rank} out of {tooltipData.totalCountries} countries
           </p>
           <p className="text-xs text-black font-medium mt-0.5">
-            {tooltipData.distinctFilms.toLocaleString()} distinct films
+            {tooltipData.totalDistinctFilms.toLocaleString()} distinct films
           </p>
+
+          {/* Individual country breakdown for combined entities */}
+          {hasMultipleCountries && (
+            <div className="mt-2 pt-2 border-t border-gray-300">
+              {tooltipData.countries.map((country, idx) => (
+                <div key={country.name} className={idx > 0 ? 'mt-1.5 pt-1.5 border-t border-gray-200' : ''}>
+                  <p className="font-semibold text-xs text-black uppercase tracking-wide">{country.name}</p>
+                  <p className="text-xs text-black">
+                    {country.votes.toLocaleString()} votes · {country.distinctFilms.toLocaleString()} films
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        )
+      })()}
+
+      {/* Expanded Country Panel */}
+      {selectedCountryData && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center p-4 pointer-events-none">
+          {/* Semi-transparent overlay to dim the map */}
+          <div
+            className="absolute inset-0 bg-black bg-opacity-20 pointer-events-auto"
+            onClick={handleCloseExpanded}
+          />
+
+          {/* Expanded panel - centered with margin, showing map around edges */}
+          <div className="relative w-[calc(100%-32px)] h-[calc(100%-32px)] max-w-full max-h-full bg-white border-4 border-black pointer-events-auto flex flex-col shadow-xl">
+            {/* Close button */}
+            <button
+              onClick={handleCloseExpanded}
+              className="absolute -top-3 -right-3 w-8 h-8 bg-white border-2 border-black text-black font-black text-lg hover:bg-black hover:text-white transition-colors flex items-center justify-center z-10"
+              title="Close"
+            >
+              ×
+            </button>
+
+            {/* Film lists - horizontal layout for countries */}
+            <div className={`flex-1 overflow-hidden flex ${selectedCountryData.countries.length > 1 ? 'overflow-x-auto divide-x-2 divide-gray-300' : ''}`}>
+              {selectedCountryData.countries.map((country) => (
+                <div key={country.name} className={`flex flex-col ${selectedCountryData.countries.length > 1 ? 'w-[400px] flex-shrink-0' : 'flex-1'}`}>
+                  {/* Country header */}
+                  <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
+                    <h4 className="font-black text-lg text-black uppercase tracking-wide">{country.name}</h4>
+                    <p className="text-xs text-black font-medium">{selectedCountryData.continent}</p>
+                    <div className="flex gap-3 mt-1">
+                      <span className="text-base font-black text-black">
+                        {country.votes.toLocaleString()} votes
+                      </span>
+                      <span className="text-sm text-black font-medium self-end">
+                        {country.films.length} films
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Scrollable film list */}
+                  <div className="flex-1 overflow-y-auto">
+                    {/* Table header */}
+                    <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
+                      {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
+                      <span className="flex-1">Title</span>
+                      <span className="w-16 text-right">Votes</span>
+                    </div>
+
+                    {/* Film rows */}
+                    {country.films.map((film, idx) => (
+                      <div
+                        key={`${film.title}-${idx}`}
+                        className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
+                      >
+                        {selectedPoll !== 'all' && (
+                          <span className="w-12 font-bold text-black">
+                            {film.rank ? `#${film.rank}` : '—'}
+                          </span>
+                        )}
+                        <span className="flex-1 text-black font-medium truncate" title={`${film.title} (${film.year})`}>
+                          {film.title} <span className="text-gray-500">({film.year})</span>
+                        </span>
+                        <span className="w-16 text-right font-bold text-black">{film.votes}</span>
+                      </div>
+                    ))}
+
+                    {country.films.length === 0 && (
+                      <div className="px-4 py-8 text-center text-gray-500 text-sm">
+                        No films found for current filters
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
