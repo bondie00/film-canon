@@ -423,7 +423,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             type="number"
             allowDecimals={false}
             stroke="#000000"
-            tick={{ fill: '#000000', fontWeight: 600 }}
+            tick={{ fill: '#000000', fontSize: 12 }}
             axisLine={{ stroke: '#000000', strokeWidth: 2 }}
             tickLine={{ stroke: '#000000' }}
             label={{
@@ -455,7 +455,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                 key={`cell-${index}`}
                 fill={continentColors[entry.continent]}
                 stroke="#000000"
-                strokeWidth={2}
+                strokeWidth={1}
               />
             ))}
           </Bar>
