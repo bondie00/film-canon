@@ -30,25 +30,35 @@ const INITIAL_ZOOM = 1.15
 
 // Calculate pan limits based on content bounds and zoom level
 // Allows panning until the last circle is almost off the visible area
+//
+// How the transform works:
+//   translate(CENTER) scale(zoom) translate(-CENTER + pan)
+//
+// For SVG point (x, y), screen position is:
+//   screenX = CENTER + zoom * (x - CENTER + pan.x)
+//
+// Visible SVG region when panning:
+//   visibleLeft  = CENTER - halfViewport - pan.x
+//   visibleRight = CENTER + halfViewport - pan.x
+//
+// Pan limits allow content edge to reach opposite viewport edge:
+// - minX: rightmost content (maxX) can reach left viewport edge (when content is shifted left)
+// - maxX: leftmost content (minX) can reach right viewport edge (when content is shifted right)
 const getPanLimits = (contentBounds, zoomLevel) => {
   if (!contentBounds) {
     return { minX: 0, maxX: 0, minY: 0, maxY: 0 }
   }
 
-  const { minX, maxX, minY, maxY } = contentBounds
   const centerX = BASE_WIDTH / 2
   const centerY = BASE_HEIGHT / 2
-  const viewportHalfW = BASE_WIDTH / (2 * zoomLevel)
-  const viewportHalfH = BASE_HEIGHT / (2 * zoomLevel)
+  const halfViewportW = BASE_WIDTH / (2 * zoomLevel)
+  const halfViewportH = BASE_HEIGHT / (2 * zoomLevel)
 
-  // Pan limits: content edge can reach opposite viewport edge
-  // When panning right (positive pan), content moves right, so left content edge can reach right viewport edge
-  // When panning left (negative pan), content moves left, so right content edge can reach left viewport edge
   return {
-    minX: -(maxX - centerX) + viewportHalfW,  // Right content edge to left viewport edge
-    maxX: -(minX - centerX) - viewportHalfW,  // Left content edge to right viewport edge
-    minY: -(maxY - centerY) + viewportHalfH,  // Bottom content edge to top viewport edge
-    maxY: -(minY - centerY) - viewportHalfH   // Top content edge to bottom viewport edge
+    minX: centerX - halfViewportW - contentBounds.maxX,  // rightmost content at left edge
+    maxX: centerX + halfViewportW - contentBounds.minX,  // leftmost content at right edge
+    minY: centerY - halfViewportH - contentBounds.maxY,  // bottommost content at top edge
+    maxY: centerY + halfViewportH - contentBounds.minY   // topmost content at bottom edge
   }
 }
 
