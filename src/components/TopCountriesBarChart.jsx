@@ -444,7 +444,12 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             onClick={(data) => console.log('Navigate to:', data.name)}
           >
             {filteredData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={continentColors[entry.continent]} />
+              <Cell
+                key={`cell-${index}`}
+                fill={continentColors[entry.continent]}
+                stroke="#000000"
+                strokeWidth={2}
+              />
             ))}
           </Bar>
         </BarChart>
