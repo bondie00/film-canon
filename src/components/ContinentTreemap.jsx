@@ -309,14 +309,16 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     const packed = packLayout(root)
 
     // Calculate content bounds from all circles (including radii)
+    // Add padding so user can pan a bit beyond the exact edge of circles
+    const CONTENT_PADDING = 30
     const allCircles = packed.descendants().filter(d => d.depth > 0)
     let contentBounds = null
     if (allCircles.length > 0) {
       contentBounds = {
-        minX: Math.min(...allCircles.map(d => d.x - d.r)),
-        maxX: Math.max(...allCircles.map(d => d.x + d.r)),
-        minY: Math.min(...allCircles.map(d => d.y - d.r)),
-        maxY: Math.max(...allCircles.map(d => d.y + d.r))
+        minX: Math.min(...allCircles.map(d => d.x - d.r)) - CONTENT_PADDING,
+        maxX: Math.max(...allCircles.map(d => d.x + d.r)) + CONTENT_PADDING,
+        minY: Math.min(...allCircles.map(d => d.y - d.r)) - CONTENT_PADDING,
+        maxY: Math.max(...allCircles.map(d => d.y + d.r)) + CONTENT_PADDING
       }
     }
 
