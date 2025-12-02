@@ -286,16 +286,22 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
       </div>
 
       {/* Custom Tooltip - same style as bar chart */}
-      {tooltipData && (
-        <div
-          className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]"
-          style={{
-            ...(mousePos.x < window.innerWidth / 2
-              ? { left: mousePos.x + 12 }
-              : { right: window.innerWidth - mousePos.x + 12 }),
-            top: mousePos.y + 12
-          }}
-        >
+      {tooltipData && (() => {
+        const mapRect = mapRef.current?.getBoundingClientRect()
+        const mapMidY = mapRect ? mapRect.top + mapRect.height / 2 : window.innerHeight / 2
+        const isBottomHalf = mousePos.y > mapMidY
+        return (
+          <div
+            className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]"
+            style={{
+              ...(mousePos.x < window.innerWidth / 2
+                ? { left: mousePos.x + 12 }
+                : { right: window.innerWidth - mousePos.x + 12 }),
+              ...(isBottomHalf
+                ? { bottom: window.innerHeight - mousePos.y + 12 }
+                : { top: mousePos.y + 12 })
+            }}
+          >
           <p className="font-bold text-base text-black uppercase tracking-wide">{tooltipData.name}</p>
           <p className="text-xs text-black font-medium mb-1">{tooltipData.continent}</p>
           <p className="text-xl font-black text-black my-1">
@@ -308,7 +314,8 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
             {tooltipData.distinctFilms.toLocaleString()} distinct films
           </p>
         </div>
-      )}
+        )
+      })()}
     </div>
   )
 }
