@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect } from 'react'
-import { Treemap, ResponsiveContainer, Tooltip } from 'recharts'
+import { useState, useMemo, useEffect, useRef } from 'react'
+import { hierarchy, pack } from 'd3-hierarchy'
 
 // Continent color mapping - matching the page's color scheme
 const continentColors = {
@@ -11,128 +11,22 @@ const continentColors = {
   'Oceania': '#ec4899',       // pink-500
 }
 
-// Lighter shades for variation within continents
+// Lighter/translucent versions for continent background circles
 const continentColorsLight = {
-  'Europe': '#60a5fa',        // blue-400
-  'Asia': '#34d399',          // green-400
-  'North America': '#a78bfa', // purple-400
-  'South America': '#fbbf24', // yellow-400
-  'Africa': '#f87171',        // red-400
-  'Oceania': '#f472b6',       // pink-400
-}
-
-// Custom content renderer for treemap cells
-const CustomTreemapContent = (props) => {
-  const { x, y, width, height, name, continent, depth, root } = props
-
-  // Skip rendering if dimensions are too small
-  if (width < 2 || height < 2) return null
-
-  // depth 1 = continent level (we don't render these as visible rectangles)
-  // depth 2 = country level
-  if (depth === 1) {
-    return null
-  }
-
-  const color = continentColors[continent] || '#6b7280'
-
-  // Determine if we should show text based on cell size
-  const showFullName = width > 60 && height > 30
-  const showAbbreviation = width > 30 && height > 20 && !showFullName
-
-  // Truncate name if needed
-  const getDisplayName = () => {
-    if (!showFullName && !showAbbreviation) return ''
-    if (showFullName) {
-      const maxChars = Math.floor(width / 8)
-      return name.length > maxChars ? name.substring(0, maxChars - 2) + '...' : name
-    }
-    // Abbreviation: first 3 chars
-    return name.substring(0, 3)
-  }
-
-  const displayName = getDisplayName()
-
-  return (
-    <g>
-      <rect
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        fill={color}
-        stroke="#000000"
-        strokeWidth={1}
-      />
-      {displayName && (
-        <text
-          x={x + width / 2}
-          y={y + height / 2}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill="#ffffff"
-          fontSize={showFullName ? 11 : 9}
-          fontWeight="600"
-          style={{
-            textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-            pointerEvents: 'none'
-          }}
-        >
-          {displayName}
-        </text>
-      )}
-    </g>
-  )
-}
-
-// Custom tooltip component
-const CustomTreemapTooltip = ({ active, payload, totalVotes, continentTotals }) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload
-
-    // Skip tooltip for root/continent nodes
-    if (!data.continent || data.depth === 1) return null
-
-    const continentTotal = continentTotals[data.continent] || 0
-    const percentOfContinent = continentTotal > 0
-      ? ((data.votes / continentTotal) * 100).toFixed(1)
-      : 0
-    const percentOfTotal = totalVotes > 0
-      ? ((data.votes / totalVotes) * 100).toFixed(1)
-      : 0
-
-    return (
-      <div className="bg-white p-3 border-2 border-black shadow-lg max-w-[220px]">
-        <p className="font-bold text-base text-black uppercase tracking-wide">{data.name}</p>
-        <div
-          className="text-xs font-semibold mb-1 px-1.5 py-0.5 inline-block text-white"
-          style={{ backgroundColor: continentColors[data.continent] }}
-        >
-          {data.continent}
-        </div>
-        <p className="text-xl font-black text-black my-1">
-          {data.votes.toLocaleString()} votes
-        </p>
-        <p className="text-xs text-black font-medium">
-          {percentOfContinent}% of {data.continent}
-        </p>
-        <p className="text-xs text-black font-medium">
-          {percentOfTotal}% of total
-        </p>
-        {data.distinctFilms > 0 && (
-          <p className="text-xs text-black font-medium mt-1 pt-1 border-t border-gray-200">
-            {data.distinctFilms} distinct films
-          </p>
-        )}
-      </div>
-    )
-  }
-  return null
+  'Europe': 'rgba(59, 130, 246, 0.15)',
+  'Asia': 'rgba(16, 185, 129, 0.15)',
+  'North America': 'rgba(139, 92, 246, 0.15)',
+  'South America': 'rgba(245, 158, 11, 0.15)',
+  'Africa': 'rgba(239, 68, 68, 0.15)',
+  'Oceania': 'rgba(236, 72, 153, 0.15)',
 }
 
 export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'all' }) {
   const [countriesData, setCountriesData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [hoveredNode, setHoveredNode] = useState(null)
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
+  const containerRef = useRef(null)
 
   useEffect(() => {
     fetch('/data/countries.json')
@@ -147,10 +41,10 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
       })
   }, [])
 
-  // Transform data into hierarchical treemap format
-  const { treemapData, totalVotes, continentTotals, continentPercentages } = useMemo(() => {
+  // Transform data into hierarchical format and compute circle packing
+  const { packedData, totalVotes, continentTotals, continentPercentages, continentData } = useMemo(() => {
     if (!countriesData) {
-      return { treemapData: [], totalVotes: 0, continentTotals: {}, continentPercentages: {} }
+      return { packedData: null, totalVotes: 0, continentTotals: {}, continentPercentages: {}, continentData: [] }
     }
 
     // Group countries by continent with their vote counts
@@ -186,7 +80,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
         }
         continentGroups[continent].children.push({
           name: countryName,
-          size: votes,
+          value: votes,
           votes: votes,
           continent: continent,
           distinctFilms: distinctFilms
@@ -214,25 +108,62 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
         : 0
     })
 
+    // Create hierarchical data structure for D3
+    const hierarchyData = {
+      name: 'root',
+      children: sortedContinents
+    }
+
+    // Create the pack layout
+    const width = 900
+    const height = 500
+    const padding = 3
+
+    const root = hierarchy(hierarchyData)
+      .sum(d => d.value || 0)
+      .sort((a, b) => b.value - a.value)
+
+    const packLayout = pack()
+      .size([width, height])
+      .padding(padding)
+
+    const packed = packLayout(root)
+
     return {
-      treemapData: sortedContinents,
+      packedData: packed,
       totalVotes: grandTotal,
       continentTotals: totals,
-      continentPercentages: percentages
+      continentPercentages: percentages,
+      continentData: sortedContinents
     }
   }, [countriesData, selectedPoll, rankRange])
+
+  const handleMouseMove = (e, node) => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect()
+      setTooltipPos({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      })
+    }
+    setHoveredNode(node)
+  }
+
+  const handleMouseLeave = () => {
+    setHoveredNode(null)
+  }
 
   if (loading) {
     return (
       <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-black h-[500px] flex items-center justify-center">
         <div className="text-center text-black font-medium">
-          Loading treemap data...
+          Loading visualization...
         </div>
       </div>
     )
   }
 
-  if (!countriesData || treemapData.length === 0) {
+  if (!countriesData || !packedData) {
     return (
       <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-black h-[500px] flex items-center justify-center">
         <div className="text-center text-black font-medium">
@@ -242,22 +173,25 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     )
   }
 
+  // Get all nodes from the packed layout
+  const allNodes = packedData.descendants()
+  const continentNodes = allNodes.filter(d => d.depth === 1)
+  const countryNodes = allNodes.filter(d => d.depth === 2)
+
   return (
     <div>
       {/* Continental Distribution Bar - Dynamic */}
       <div className="mb-6">
         <div className="text-sm font-bold text-black mb-2 uppercase tracking-wide">Continental Distribution</div>
         <div className="flex h-8 border-2 border-black overflow-hidden">
-          {treemapData.map((continent) => {
+          {continentData.map((continent) => {
             const percentage = parseFloat(continentPercentages[continent.name])
-            if (percentage < 0.5) return null // Don't show tiny segments
+            if (percentage < 0.5) return null
 
-            // Determine label based on available space
             let label = ''
             if (percentage >= 8) {
               label = `${continent.name} ${percentage}%`
             } else if (percentage >= 4) {
-              // Abbreviate continent names for smaller segments
               const abbrev = {
                 'Europe': 'EU',
                 'Asia': 'AS',
@@ -289,32 +223,148 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
         </div>
       </div>
 
-      {/* Treemap Visualization */}
-      <div className="border-2 border-black">
-        <ResponsiveContainer width="100%" height={500}>
-          <Treemap
-            data={treemapData}
-            dataKey="size"
-            aspectRatio={4/3}
-            stroke="#000000"
-            strokeWidth={1}
-            content={<CustomTreemapContent />}
-          >
-            <Tooltip
-              content={
-                <CustomTreemapTooltip
-                  totalVotes={totalVotes}
-                  continentTotals={continentTotals}
+      {/* Circle Packing Visualization */}
+      <div
+        ref={containerRef}
+        className="border-2 border-black bg-gray-50 relative"
+        style={{ height: '500px' }}
+      >
+        <svg
+          width="100%"
+          height="100%"
+          viewBox="0 0 900 500"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          {/* Continent circles (background) */}
+          {continentNodes.map((node, i) => (
+            <g key={`continent-${i}`}>
+              <circle
+                cx={node.x}
+                cy={node.y}
+                r={node.r}
+                fill={continentColorsLight[node.data.name]}
+                stroke={continentColors[node.data.name]}
+                strokeWidth={2}
+                strokeDasharray="4 2"
+              />
+              {/* Continent label at top of circle */}
+              {node.r > 40 && (
+                <text
+                  x={node.x}
+                  y={node.y - node.r + 16}
+                  textAnchor="middle"
+                  fill={continentColors[node.data.name]}
+                  fontSize="11"
+                  fontWeight="700"
+                  style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}
+                >
+                  {node.data.name}
+                </text>
+              )}
+            </g>
+          ))}
+
+          {/* Country circles */}
+          {countryNodes.map((node, i) => {
+            const isHovered = hoveredNode && hoveredNode.data.name === node.data.name
+            const color = continentColors[node.data.continent]
+
+            // Determine if we should show label
+            const showLabel = node.r > 18
+            const showAbbrev = node.r > 10 && node.r <= 18
+
+            let displayName = ''
+            if (showLabel) {
+              const maxChars = Math.floor(node.r / 4)
+              displayName = node.data.name.length > maxChars
+                ? node.data.name.substring(0, maxChars - 1) + '…'
+                : node.data.name
+            } else if (showAbbrev) {
+              displayName = node.data.name.substring(0, 2)
+            }
+
+            return (
+              <g
+                key={`country-${i}`}
+                onMouseMove={(e) => handleMouseMove(e, node)}
+                onMouseLeave={handleMouseLeave}
+                style={{ cursor: 'pointer' }}
+              >
+                <circle
+                  cx={node.x}
+                  cy={node.y}
+                  r={node.r}
+                  fill={color}
+                  stroke={isHovered ? '#000000' : '#ffffff'}
+                  strokeWidth={isHovered ? 3 : 1.5}
+                  style={{
+                    transition: 'stroke-width 0.15s ease',
+                    filter: isHovered ? 'brightness(1.1)' : 'none'
+                  }}
                 />
-              }
-            />
-          </Treemap>
-        </ResponsiveContainer>
+                {displayName && (
+                  <text
+                    x={node.x}
+                    y={node.y}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill="#ffffff"
+                    fontSize={showLabel ? Math.min(11, node.r / 3) : 8}
+                    fontWeight="600"
+                    style={{
+                      pointerEvents: 'none',
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                    }}
+                  >
+                    {displayName}
+                  </text>
+                )}
+              </g>
+            )
+          })}
+        </svg>
+
+        {/* Custom Tooltip */}
+        {hoveredNode && hoveredNode.depth === 2 && (
+          <div
+            className="absolute pointer-events-none bg-white p-3 border-2 border-black shadow-lg z-10"
+            style={{
+              left: tooltipPos.x + 15,
+              top: tooltipPos.y - 10,
+              maxWidth: '220px',
+              transform: tooltipPos.x > 600 ? 'translateX(-100%)' : 'none'
+            }}
+          >
+            <p className="font-bold text-base text-black uppercase tracking-wide">
+              {hoveredNode.data.name}
+            </p>
+            <div
+              className="text-xs font-semibold mb-1 px-1.5 py-0.5 inline-block text-white"
+              style={{ backgroundColor: continentColors[hoveredNode.data.continent] }}
+            >
+              {hoveredNode.data.continent}
+            </div>
+            <p className="text-xl font-black text-black my-1">
+              {hoveredNode.data.votes.toLocaleString()} votes
+            </p>
+            <p className="text-xs text-black font-medium">
+              {((hoveredNode.data.votes / continentTotals[hoveredNode.data.continent]) * 100).toFixed(1)}% of {hoveredNode.data.continent}
+            </p>
+            <p className="text-xs text-black font-medium">
+              {((hoveredNode.data.votes / totalVotes) * 100).toFixed(1)}% of total
+            </p>
+            {hoveredNode.data.distinctFilms > 0 && (
+              <p className="text-xs text-black font-medium mt-1 pt-1 border-t border-gray-200">
+                {hoveredNode.data.distinctFilms} distinct films
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Statistics Summary */}
       <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 text-center">
-        {treemapData.map((continent) => (
+        {continentData.map((continent) => (
           <div
             key={continent.name}
             className="p-2 border-2 border-black"
