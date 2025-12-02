@@ -28,37 +28,41 @@ const BASE_HEIGHT = 500
 // Initial zoom to fill the space better
 const INITIAL_ZOOM = 1.15
 
+// Maximum zoom level
+const MAX_ZOOM = 4
+
+// Zoom increment factor (smaller = finer control)
+const ZOOM_FACTOR = 1.25
+
 // Calculate pan limits based on content bounds and zoom level
-// Allows panning until the last circle is almost off the visible area
-//
-// How the transform works:
-//   translate(CENTER) scale(zoom) translate(-CENTER + pan)
-//
-// For SVG point (x, y), screen position is:
-//   screenX = CENTER + zoom * (x - CENTER + pan.x)
-//
-// Visible SVG region when panning:
-//   visibleLeft  = CENTER - halfViewport - pan.x
-//   visibleRight = CENTER + halfViewport - pan.x
-//
-// Pan limits allow content edge to reach opposite viewport edge:
-// - minX: rightmost content (maxX) can reach left viewport edge (when content is shifted left)
-// - maxX: leftmost content (minX) can reach right viewport edge (when content is shifted right)
+// At higher zoom levels, we need more generous limits to allow proper navigation
 const getPanLimits = (contentBounds, zoomLevel) => {
   if (!contentBounds) {
-    return { minX: 0, maxX: 0, minY: 0, maxY: 0 }
+    return { minX: -Infinity, maxX: Infinity, minY: -Infinity, maxY: Infinity }
   }
 
   const centerX = BASE_WIDTH / 2
   const centerY = BASE_HEIGHT / 2
-  const halfViewportW = BASE_WIDTH / (2 * zoomLevel)
-  const halfViewportH = BASE_HEIGHT / (2 * zoomLevel)
+
+  // Calculate the content center and extent
+  const contentCenterX = (contentBounds.minX + contentBounds.maxX) / 2
+  const contentCenterY = (contentBounds.minY + contentBounds.maxY) / 2
+  const contentHalfW = (contentBounds.maxX - contentBounds.minX) / 2
+  const contentHalfH = (contentBounds.maxY - contentBounds.minY) / 2
+
+  // At zoom level 1, the viewport shows the full BASE dimensions
+  // At higher zoom, the viewport shows less, so we need to allow more pan range
+  // The pan value represents offset in SVG coordinates, which get multiplied by zoom for screen
+
+  // Allow panning so any part of content can be centered in the viewport
+  // Plus extra margin so content can go almost completely off screen
+  const margin = 50  // Extra margin beyond content bounds
 
   return {
-    minX: centerX - halfViewportW - contentBounds.maxX,  // rightmost content at left edge
-    maxX: centerX + halfViewportW - contentBounds.minX,  // leftmost content at right edge
-    minY: centerY - halfViewportH - contentBounds.maxY,  // bottommost content at top edge
-    maxY: centerY + halfViewportH - contentBounds.minY   // topmost content at bottom edge
+    minX: centerX - contentCenterX - contentHalfW - margin,
+    maxX: centerX - contentCenterX + contentHalfW + margin,
+    minY: centerY - contentCenterY - contentHalfH - margin,
+    maxY: centerY - contentCenterY + contentHalfH + margin
   }
 }
 
@@ -103,7 +107,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
   // Zoom controls with smooth transitions
   const handleZoomIn = useCallback(() => {
     setZoom(z => {
-      const newZoom = Math.min(z * 1.4, 8)
+      const newZoom = Math.min(z * ZOOM_FACTOR, MAX_ZOOM)
       // Clamp pan for new zoom level
       setPan(p => clampPan(p, newZoom, contentBoundsRef.current))
       return newZoom
@@ -112,7 +116,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
 
   const handleZoomOut = useCallback(() => {
     setZoom(z => {
-      const newZoom = Math.max(z / 1.4, 1)
+      const newZoom = Math.max(z / ZOOM_FACTOR, 1)
       // Clamp pan for new zoom level
       setPan(p => clampPan(p, newZoom, contentBoundsRef.current))
       return newZoom
@@ -127,7 +131,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
   // Double-click to zoom in centered on click location
   const handleDoubleClick = useCallback((e) => {
     e.preventDefault()
-    if (zoom >= 8) return
+    if (zoom >= MAX_ZOOM) return
 
     const rect = containerRef.current?.getBoundingClientRect()
     if (!rect) return
@@ -140,7 +144,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     const svgClickX = clickX * scaleX
     const svgClickY = clickY * scaleY
 
-    const newZoom = Math.min(zoom * 1.5, 8)
+    const newZoom = Math.min(zoom * ZOOM_FACTOR * 1.2, MAX_ZOOM)  // Slightly larger jump for double-click
 
     // Calculate new pan to center on clicked point
     // The clicked SVG point is at: CENTER + svgClick/zoom - pan
@@ -161,8 +165,8 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     const rect = containerRef.current?.getBoundingClientRect()
     if (!rect) return
 
-    const delta = e.deltaY > 0 ? 0.9 : 1.1 // Zoom out or in
-    const newZoom = Math.max(1, Math.min(8, zoom * delta))
+    const delta = e.deltaY > 0 ? (1 / ZOOM_FACTOR) : ZOOM_FACTOR // Zoom out or in
+    const newZoom = Math.max(1, Math.min(MAX_ZOOM, zoom * delta))
 
     if (newZoom === zoom) return
 
@@ -424,7 +428,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
         <div className="absolute top-2 right-2 z-10 flex flex-col gap-1">
           <button
             onClick={handleZoomIn}
-            disabled={zoom >= 8}
+            disabled={zoom >= MAX_ZOOM}
             className="w-8 h-8 bg-white border-2 border-black text-black font-bold hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             title="Zoom in"
           >
