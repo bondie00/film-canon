@@ -285,21 +285,25 @@ export default function WorldMapChoropleth({ countriesData, selectedPoll, rankRa
         </ComposableMap>
       </div>
 
-      {/* Custom Tooltip - same style as bar chart */}
+      {/* Custom Tooltip - same style as bar chart with smooth transitions */}
       {tooltipData && (() => {
         const mapRect = mapRef.current?.getBoundingClientRect()
         const mapMidY = mapRect ? mapRect.top + mapRect.height / 2 : window.innerHeight / 2
         const isBottomHalf = mousePos.y > mapMidY
+        const isRightHalf = mousePos.x > window.innerWidth / 2
+
+        // Use transform for smooth positioning - tooltip follows cursor with offset
+        const translateX = isRightHalf ? 'calc(-100% - 10px)' : '10px'
+        const translateY = isBottomHalf ? 'calc(-100% - 10px)' : '10px'
+
         return (
           <div
             className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]"
             style={{
-              ...(mousePos.x < window.innerWidth / 2
-                ? { left: mousePos.x }
-                : { right: window.innerWidth - mousePos.x }),
-              ...(isBottomHalf
-                ? { bottom: window.innerHeight - mousePos.y }
-                : { top: mousePos.y })
+              left: mousePos.x,
+              top: mousePos.y,
+              transform: `translate(${translateX}, ${translateY})`,
+              transition: 'transform 0.15s ease-out, left 0.08s ease-out, top 0.08s ease-out'
             }}
           >
           <p className="font-bold text-base text-black uppercase tracking-wide">{tooltipData.name}</p>
