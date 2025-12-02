@@ -398,10 +398,10 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
           : tooltipData.countries[0].name
 
         // Estimate tooltip height based on content
-        const baseHeight = 120 // Single country tooltip
-        const extraPerCountry = 45 // Additional height per country in combined entities
+        const baseHeight = 130 // Single country tooltip
+        const extraPerCountry = 55 // Additional height per country in combined entities
         const tooltipHeight = hasMultipleCountries
-          ? baseHeight + (tooltipData.countries.length * extraPerCountry)
+          ? baseHeight + 20 + (tooltipData.countries.length * extraPerCountry) // +20 for divider/spacing
           : baseHeight
         const tooltipWidth = 180
         const offset = 10
