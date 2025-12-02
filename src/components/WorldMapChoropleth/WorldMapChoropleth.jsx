@@ -444,60 +444,41 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
       {/* Expanded Country Panel */}
       {selectedCountryData && (
-        <div className="absolute inset-0 z-20 flex items-end pointer-events-none">
+        <div className="absolute inset-0 z-20 flex items-center justify-center p-4 pointer-events-none">
           {/* Semi-transparent overlay to dim the map */}
           <div
             className="absolute inset-0 bg-black bg-opacity-20 pointer-events-auto"
             onClick={handleCloseExpanded}
           />
 
-          {/* Expanded panel - takes up bottom half of map */}
-          <div className="relative w-full h-[60%] bg-white border-t-4 border-black pointer-events-auto flex flex-col">
-            {/* Header with close button */}
-            <div className="flex items-start justify-between p-4 border-b-2 border-gray-300 flex-shrink-0">
-              <div>
-                <h3 className="font-black text-xl text-black uppercase tracking-wide">
-                  {selectedCountryData.countries.length > 1
-                    ? selectedCountryData.countries.map(c => c.name).join(' + ')
-                    : selectedCountryData.countries[0].name}
-                </h3>
-                <p className="text-sm text-black font-medium">{selectedCountryData.continent}</p>
-                <div className="flex gap-4 mt-2">
-                  <span className="text-lg font-black text-black">
-                    {selectedCountryData.totalVotes.toLocaleString()} votes
-                  </span>
-                  {selectedPoll !== 'all' && (
-                    <span className="text-sm text-black font-medium self-end">
-                      #{selectedCountryData.rank} of {selectedCountryData.totalCountries} countries
-                    </span>
-                  )}
-                  <span className="text-sm text-black font-medium self-end">
-                    {selectedCountryData.totalDistinctFilms.toLocaleString()} films
-                  </span>
-                </div>
-              </div>
-              <button
-                onClick={handleCloseExpanded}
-                className="w-10 h-10 bg-white border-2 border-black text-black font-black text-xl hover:bg-black hover:text-white transition-colors flex items-center justify-center flex-shrink-0"
-                title="Close"
-              >
-                ×
-              </button>
-            </div>
+          {/* Expanded panel - centered with margin, showing map around edges */}
+          <div className="relative w-[calc(100%-32px)] h-[calc(100%-32px)] max-w-full max-h-full bg-white border-4 border-black pointer-events-auto flex flex-col shadow-xl">
+            {/* Close button */}
+            <button
+              onClick={handleCloseExpanded}
+              className="absolute -top-3 -right-3 w-8 h-8 bg-white border-2 border-black text-black font-black text-lg hover:bg-black hover:text-white transition-colors flex items-center justify-center z-10"
+              title="Close"
+            >
+              ×
+            </button>
 
-            {/* Film lists - horizontal layout for multiple countries */}
+            {/* Film lists - horizontal layout for countries */}
             <div className={`flex-1 overflow-hidden flex ${selectedCountryData.countries.length > 1 ? 'divide-x-2 divide-gray-300' : ''}`}>
               {selectedCountryData.countries.map((country) => (
                 <div key={country.name} className="flex-1 flex flex-col min-w-0">
-                  {/* Country sub-header for combined entities */}
-                  {selectedCountryData.countries.length > 1 && (
-                    <div className="px-4 py-2 bg-gray-50 border-b border-gray-200 flex-shrink-0">
-                      <h4 className="font-bold text-sm text-black uppercase tracking-wide">{country.name}</h4>
-                      <p className="text-xs text-black">
-                        {country.votes.toLocaleString()} votes · {country.films.length} films
-                      </p>
+                  {/* Country header */}
+                  <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
+                    <h4 className="font-black text-lg text-black uppercase tracking-wide">{country.name}</h4>
+                    <p className="text-xs text-black font-medium">{selectedCountryData.continent}</p>
+                    <div className="flex gap-3 mt-1">
+                      <span className="text-base font-black text-black">
+                        {country.votes.toLocaleString()} votes
+                      </span>
+                      <span className="text-sm text-black font-medium self-end">
+                        {country.films.length} films
+                      </span>
                     </div>
-                  )}
+                  </div>
 
                   {/* Scrollable film list */}
                   <div className="flex-1 overflow-y-auto">
@@ -505,7 +486,6 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                     <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
                       {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
                       <span className="flex-1">Title</span>
-                      <span className="w-12 text-right">Year</span>
                       <span className="w-16 text-right">Votes</span>
                     </div>
 
@@ -520,10 +500,9 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                             {film.rank ? `#${film.rank}` : '—'}
                           </span>
                         )}
-                        <span className="flex-1 text-black font-medium truncate" title={film.title}>
-                          {film.title}
+                        <span className="flex-1 text-black font-medium truncate" title={`${film.title} (${film.year})`}>
+                          {film.title} <span className="text-gray-500">({film.year})</span>
                         </span>
-                        <span className="w-12 text-right text-black">{film.year}</span>
                         <span className="w-16 text-right font-bold text-black">{film.votes}</span>
                       </div>
                     ))}
