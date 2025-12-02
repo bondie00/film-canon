@@ -390,27 +390,43 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
       {/* Custom Tooltip - same style as bar chart with smooth transitions */}
       {tooltipData && (() => {
         const mapRect = mapRef.current?.getBoundingClientRect()
-        const mapMidY = mapRect ? mapRect.top + mapRect.height / 2 : window.innerHeight / 2
-        const isBottomHalf = mousePos.y > mapMidY
-        const isRightHalf = mousePos.x > window.innerWidth / 2
-
-        // Use transform for smooth positioning - tooltip follows cursor with offset
-        const translateX = isRightHalf ? 'calc(-100% - 10px)' : '10px'
-        const translateY = isBottomHalf ? 'calc(-100% - 10px)' : '10px'
+        if (!mapRect) return null
 
         const hasMultipleCountries = tooltipData.countries.length > 1
         const displayName = hasMultipleCountries
           ? tooltipData.countries.map(c => c.name).join(' + ')
           : tooltipData.countries[0].name
 
+        // Estimate tooltip height based on content
+        const baseHeight = 120 // Single country tooltip
+        const extraPerCountry = 45 // Additional height per country in combined entities
+        const tooltipHeight = hasMultipleCountries
+          ? baseHeight + (tooltipData.countries.length * extraPerCountry)
+          : baseHeight
+        const tooltipWidth = 180
+        const offset = 10
+
+        // Determine horizontal position
+        const isRightHalf = mousePos.x > window.innerWidth / 2
+        let tooltipX = isRightHalf ? mousePos.x - tooltipWidth - offset : mousePos.x + offset
+
+        // Determine vertical position - prefer below cursor, flip if would go beyond map bottom
+        const mapMidY = mapRect.top + mapRect.height / 2
+        const isBottomHalf = mousePos.y > mapMidY
+        let tooltipY = isBottomHalf ? mousePos.y - tooltipHeight - offset : mousePos.y + offset
+
+        // Clamp to stay within map boundaries
+        const minY = mapRect.top
+        const maxY = mapRect.bottom - tooltipHeight
+        tooltipY = Math.max(minY, Math.min(maxY, tooltipY))
+
         return (
           <div
             className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg w-[180px]"
             style={{
-              left: mousePos.x,
-              top: mousePos.y,
-              transform: `translate(${translateX}, ${translateY})`,
-              transition: 'transform 0.15s ease-out, left 0.08s ease-out, top 0.08s ease-out'
+              left: tooltipX,
+              top: tooltipY,
+              transition: 'left 0.08s ease-out, top 0.08s ease-out'
             }}
           >
           <p className="font-bold text-base text-black uppercase tracking-wide">{displayName}</p>
