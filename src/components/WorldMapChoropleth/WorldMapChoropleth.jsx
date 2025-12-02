@@ -479,9 +479,9 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
             </button>
 
             {/* Film lists - horizontal layout for countries */}
-            <div className={`flex-1 overflow-hidden flex ${selectedCountryData.countries.length > 1 ? 'divide-x-2 divide-gray-300' : ''}`}>
+            <div className={`flex-1 overflow-hidden flex ${selectedCountryData.countries.length > 1 ? 'overflow-x-auto divide-x-2 divide-gray-300' : ''}`}>
               {selectedCountryData.countries.map((country) => (
-                <div key={country.name} className="flex-1 flex flex-col min-w-0">
+                <div key={country.name} className={`flex flex-col ${selectedCountryData.countries.length > 1 ? 'min-w-[400px] flex-shrink-0' : 'flex-1'}`}>
                   {/* Country header */}
                   <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
                     <h4 className="font-black text-lg text-black uppercase tracking-wide">{country.name}</h4>
