@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
 import WorldMapChoropleth from '../components/WorldMapChoropleth'
+import ContinentTreemap from '../components/ContinentTreemap'
 
 export default function CountryOriginMain() {
   // Filter state (not functional yet - Phase 2)
@@ -267,54 +268,11 @@ export default function CountryOriginMain() {
                 </p>
               </div>
 
-              {/* Simple stacked bar for continental overview */}
-              <div className="mb-6">
-                <div className="text-sm font-bold text-black mb-2 uppercase tracking-wide">Continental Distribution</div>
-                <div className="flex h-8 border-2 border-black overflow-hidden">
-                  <div className="bg-blue-500 flex items-center justify-center text-white text-xs font-semibold" style={{width: '45%'}}>
-                    Europe 45%
-                  </div>
-                  <div className="bg-green-500 flex items-center justify-center text-white text-xs font-semibold" style={{width: '28%'}}>
-                    Asia 28%
-                  </div>
-                  <div className="bg-purple-500 flex items-center justify-center text-white text-xs font-semibold" style={{width: '20%'}}>
-                    N. America 20%
-                  </div>
-                  <div className="bg-orange-500 flex items-center justify-center text-white text-xs font-semibold" style={{width: '5%'}}>
-                    L.Am 5%
-                  </div>
-                  <div className="bg-red-500 flex items-center justify-center text-white text-xs font-semibold" style={{width: '1.5%'}}>
-                    AF
-                  </div>
-                  <div className="bg-pink-500 flex items-center justify-center text-white text-xs font-semibold" style={{width: '0.5%'}}>
-                    OC
-                  </div>
-                </div>
-              </div>
-
-              {/* PLACEHOLDER FOR TREEMAP */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[600px] flex items-center justify-center">
-                <div className="text-center text-black max-w-2xl p-6">
-                  <div className="text-6xl mb-4">🗂️</div>
-                  <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Interactive Treemap Visualization</div>
-                  <div className="text-sm space-y-3">
-                    <div>
-                      <strong className="text-black font-bold">Structure:</strong><br/>
-                      Large rectangles = Continents (sized by total votes)<br/>
-                      Nested rectangles = Individual countries
-                    </div>
-                    <div>
-                      <strong className="text-black font-bold">Interactions:</strong><br/>
-                      • Hover: "France: 679 votes (15.9% of Europe, 7.2% of total)"<br/>
-                      • Click country: Navigate to detail page<br/>
-                      • Click continent: Filter view to that continent
-                    </div>
-                  </div>
-                  <div className="mt-6 text-xs text-gray-400 italic">
-                    [Phase 3: Recharts treemap implementation]
-                  </div>
-                </div>
-              </div>
+              {/* Treemap Component */}
+              <ContinentTreemap
+                selectedPoll={selectedPoll}
+                rankRange={rankRange}
+              />
 
               {/* Continent Color Legend */}
               <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
