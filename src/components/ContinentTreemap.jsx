@@ -25,16 +25,19 @@ const continentColorsLight = {
 const BASE_WIDTH = 900
 const BASE_HEIGHT = 500
 
+// Initial zoom to fill the space better
+const INITIAL_ZOOM = 1.15
+
 export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'all' }) {
   const [countriesData, setCountriesData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [hoveredNode, setHoveredNode] = useState(null)
-  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const containerRef = useRef(null)
   const svgRef = useRef(null)
 
-  // Zoom and pan state
-  const [zoom, setZoom] = useState(1)
+  // Zoom and pan state - start slightly zoomed in
+  const [zoom, setZoom] = useState(INITIAL_ZOOM)
   const [pan, setPan] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
@@ -53,18 +56,6 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
       })
   }, [])
 
-  // Convert screen coordinates to SVG coordinates
-  const screenToSVG = useCallback((clientX, clientY) => {
-    if (!containerRef.current) return { x: BASE_WIDTH / 2, y: BASE_HEIGHT / 2 }
-    const rect = containerRef.current.getBoundingClientRect()
-    const scaleX = BASE_WIDTH / rect.width
-    const scaleY = BASE_HEIGHT / rect.height
-    return {
-      x: (clientX - rect.left) * scaleX,
-      y: (clientY - rect.top) * scaleY
-    }
-  }, [])
-
   // Zoom controls with smooth transitions
   const handleZoomIn = useCallback(() => {
     setZoom(z => Math.min(z * 1.4, 8))
@@ -75,7 +66,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
   }, [])
 
   const handleReset = useCallback(() => {
-    setZoom(1)
+    setZoom(INITIAL_ZOOM)
     setPan({ x: 0, y: 0 })
   }, [])
 
@@ -84,37 +75,61 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
     e.preventDefault()
     if (zoom >= 8) return
 
-    const svgPoint = screenToSVG(e.clientX, e.clientY)
-    const newZoom = Math.min(zoom * 1.5, 8)
+    const rect = containerRef.current?.getBoundingClientRect()
+    if (!rect) return
 
-    // Adjust pan to center on the clicked point
-    const zoomRatio = newZoom / zoom
+    // Get click position relative to container center
+    const clickX = e.clientX - rect.left - rect.width / 2
+    const clickY = e.clientY - rect.top - rect.height / 2
+
+    // Scale to SVG coordinates
+    const scaleX = BASE_WIDTH / rect.width
+    const scaleY = BASE_HEIGHT / rect.height
+    const svgClickX = clickX * scaleX
+    const svgClickY = clickY * scaleY
+
+    const newZoom = Math.min(zoom * 1.5, 8)
+    const zoomChange = newZoom / zoom
+
+    // Pan to center on clicked point
     setPan(p => ({
-      x: p.x + (svgPoint.x - BASE_WIDTH / 2 - p.x) * (1 - 1 / zoomRatio),
-      y: p.y + (svgPoint.y - BASE_HEIGHT / 2 - p.y) * (1 - 1 / zoomRatio)
+      x: p.x * zoomChange + svgClickX * (1 - zoomChange) / zoom,
+      y: p.y * zoomChange + svgClickY * (1 - zoomChange) / zoom
     }))
     setZoom(newZoom)
-  }, [zoom, screenToSVG])
+  }, [zoom])
 
   // Scroll wheel zoom
   const handleWheel = useCallback((e) => {
     e.preventDefault()
+
+    const rect = containerRef.current?.getBoundingClientRect()
+    if (!rect) return
 
     const delta = e.deltaY > 0 ? 0.9 : 1.1 // Zoom out or in
     const newZoom = Math.max(1, Math.min(8, zoom * delta))
 
     if (newZoom === zoom) return
 
-    const svgPoint = screenToSVG(e.clientX, e.clientY)
-    const zoomRatio = newZoom / zoom
+    // Get mouse position relative to container center
+    const mouseX = e.clientX - rect.left - rect.width / 2
+    const mouseY = e.clientY - rect.top - rect.height / 2
 
-    // Adjust pan to zoom toward mouse position
+    // Scale to SVG coordinates
+    const scaleX = BASE_WIDTH / rect.width
+    const scaleY = BASE_HEIGHT / rect.height
+    const svgMouseX = mouseX * scaleX
+    const svgMouseY = mouseY * scaleY
+
+    const zoomChange = newZoom / zoom
+
+    // Pan to zoom toward mouse position
     setPan(p => ({
-      x: p.x + (svgPoint.x - BASE_WIDTH / 2 - p.x) * (1 - 1 / zoomRatio),
-      y: p.y + (svgPoint.y - BASE_HEIGHT / 2 - p.y) * (1 - 1 / zoomRatio)
+      x: p.x * zoomChange + svgMouseX * (1 - zoomChange) / zoom,
+      y: p.y * zoomChange + svgMouseY * (1 - zoomChange) / zoom
     }))
     setZoom(newZoom)
-  }, [zoom, screenToSVG])
+  }, [zoom])
 
   // Drag handlers for panning
   const handleMouseDown = useCallback((e) => {
@@ -125,6 +140,9 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
   }, [pan])
 
   const handleMouseMove = useCallback((e) => {
+    // Track mouse position for tooltip
+    setMousePos({ x: e.clientX, y: e.clientY })
+
     if (isDragging) {
       const rect = containerRef.current?.getBoundingClientRect()
       if (!rect) return
@@ -240,13 +258,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
 
   const handleNodeMouseMove = (e, node) => {
     if (isDragging) return // Don't show tooltip while dragging
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect()
-      setTooltipPos({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      })
-    }
+    setMousePos({ x: e.clientX, y: e.clientY })
     setHoveredNode(node)
   }
 
@@ -279,12 +291,8 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
   const continentNodes = allNodes.filter(d => d.depth === 1)
   const countryNodes = allNodes.filter(d => d.depth === 2)
 
-  // Calculate viewBox based on zoom and pan
-  const viewBoxWidth = BASE_WIDTH / zoom
-  const viewBoxHeight = BASE_HEIGHT / zoom
-  const viewBoxX = (BASE_WIDTH - viewBoxWidth) / 2 - pan.x
-  const viewBoxY = (BASE_HEIGHT - viewBoxHeight) / 2 - pan.y
-  const viewBox = `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`
+  // Check if view has been modified from initial state
+  const isModified = zoom !== INITIAL_ZOOM || pan.x !== 0 || pan.y !== 0
 
   return (
     <div>
@@ -351,7 +359,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
           >
             −
           </button>
-          {(zoom !== 1 || pan.x !== 0 || pan.y !== 0) && (
+          {isModified && (
             <button
               onClick={handleReset}
               className="w-8 h-8 bg-white border-2 border-black text-black font-bold hover:bg-gray-100 flex items-center justify-center text-xs"
@@ -396,7 +404,7 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
                 transformOrigin: 'center center'
               }}
             >
-              {/* Continent circles (background) */}
+              {/* Continent circles (background) - no labels */}
               {continentNodes.map((node, i) => (
                 <g key={`continent-${i}`}>
                   <circle
@@ -408,20 +416,6 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
                     strokeWidth={2 / zoom}
                     strokeDasharray={`${4 / zoom} ${2 / zoom}`}
                   />
-                  {/* Continent label at top of circle */}
-                  {node.r > 40 && (
-                    <text
-                      x={node.x}
-                      y={node.y - node.r + 16 / zoom}
-                      textAnchor="middle"
-                      fill={continentColors[node.data.name]}
-                      fontSize={11 / Math.max(zoom * 0.7, 1)}
-                      fontWeight="700"
-                      style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}
-                    >
-                      {node.data.name}
-                    </text>
-                  )}
                 </g>
               ))}
 
@@ -457,8 +451,8 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
                       cy={node.y}
                       r={node.r}
                       fill={color}
-                      stroke={isHovered ? '#000000' : '#ffffff'}
-                      strokeWidth={(isHovered ? 3 : 1.5) / zoom}
+                      stroke="#000000"
+                      strokeWidth={(isHovered ? 2.5 : 1) / zoom}
                       style={{
                         transition: 'stroke-width 0.15s ease',
                         filter: isHovered ? 'brightness(1.1)' : 'none'
@@ -470,12 +464,12 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
                         y={node.y}
                         textAnchor="middle"
                         dominantBaseline="middle"
-                        fill="#ffffff"
+                        fill="#000000"
                         fontSize={Math.min(11, (node.r * zoom) / 3) / zoom}
                         fontWeight="600"
                         style={{
                           pointerEvents: 'none',
-                          textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                          textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff'
                         }}
                       >
                         {displayName}
@@ -487,42 +481,65 @@ export default function ContinentTreemap({ selectedPoll = '2022', rankRange = 'a
             </g>
           </svg>
 
-          {/* Custom Tooltip */}
-          {hoveredNode && hoveredNode.depth === 2 && !isDragging && (
-            <div
-              className="absolute pointer-events-none bg-white p-3 border-2 border-black shadow-lg z-10"
-              style={{
-                left: tooltipPos.x + 15,
-                top: tooltipPos.y - 10,
-                maxWidth: '220px',
-                transform: tooltipPos.x > 600 ? 'translateX(-100%)' : 'none'
-              }}
-            >
-              <p className="font-bold text-base text-black uppercase tracking-wide">
-                {hoveredNode.data.name}
-              </p>
+          {/* Custom Tooltip - using fixed positioning like world map */}
+          {hoveredNode && hoveredNode.depth === 2 && !isDragging && (() => {
+            const containerRect = containerRef.current?.getBoundingClientRect()
+            if (!containerRect) return null
+
+            const tooltipWidth = 180
+            const tooltipHeight = 140
+            const offset = 10
+
+            // Determine horizontal position - flip if in right half
+            const isRightHalf = mousePos.x > window.innerWidth / 2
+            let tooltipX = isRightHalf ? mousePos.x - tooltipWidth - offset : mousePos.x + offset
+
+            // Determine vertical position - flip if in bottom half of container
+            const containerMidY = containerRect.top + containerRect.height / 2
+            const isBottomHalf = mousePos.y > containerMidY
+            let tooltipY = isBottomHalf ? mousePos.y - tooltipHeight - offset : mousePos.y + offset
+
+            // Clamp to stay within container boundaries
+            const minY = containerRect.top
+            const maxY = containerRect.bottom - tooltipHeight
+            tooltipY = Math.max(minY, Math.min(maxY, tooltipY))
+
+            return (
               <div
-                className="text-xs font-semibold mb-1 px-1.5 py-0.5 inline-block text-white"
-                style={{ backgroundColor: continentColors[hoveredNode.data.continent] }}
+                className="fixed pointer-events-none bg-white p-3 border-2 border-black shadow-lg z-50"
+                style={{
+                  left: tooltipX,
+                  top: tooltipY,
+                  width: tooltipWidth,
+                  transition: 'left 0.08s ease-out, top 0.08s ease-out'
+                }}
               >
-                {hoveredNode.data.continent}
-              </div>
-              <p className="text-xl font-black text-black my-1">
-                {hoveredNode.data.votes.toLocaleString()} votes
-              </p>
-              <p className="text-xs text-black font-medium">
-                {((hoveredNode.data.votes / continentTotals[hoveredNode.data.continent]) * 100).toFixed(1)}% of {hoveredNode.data.continent}
-              </p>
-              <p className="text-xs text-black font-medium">
-                {((hoveredNode.data.votes / totalVotes) * 100).toFixed(1)}% of total
-              </p>
-              {hoveredNode.data.distinctFilms > 0 && (
-                <p className="text-xs text-black font-medium mt-1 pt-1 border-t border-gray-200">
-                  {hoveredNode.data.distinctFilms} distinct films
+                <p className="font-bold text-base text-black uppercase tracking-wide">
+                  {hoveredNode.data.name}
                 </p>
-              )}
-            </div>
-          )}
+                <div
+                  className="text-xs font-semibold mb-1 px-1.5 py-0.5 inline-block text-white"
+                  style={{ backgroundColor: continentColors[hoveredNode.data.continent] }}
+                >
+                  {hoveredNode.data.continent}
+                </div>
+                <p className="text-xl font-black text-black my-1">
+                  {hoveredNode.data.votes.toLocaleString()} votes
+                </p>
+                <p className="text-xs text-black font-medium">
+                  {((hoveredNode.data.votes / continentTotals[hoveredNode.data.continent]) * 100).toFixed(1)}% of {hoveredNode.data.continent}
+                </p>
+                <p className="text-xs text-black font-medium">
+                  {((hoveredNode.data.votes / totalVotes) * 100).toFixed(1)}% of total
+                </p>
+                {hoveredNode.data.distinctFilms > 0 && (
+                  <p className="text-xs text-black font-medium mt-1 pt-1 border-t border-gray-200">
+                    {hoveredNode.data.distinctFilms} distinct films
+                  </p>
+                )}
+              </div>
+            )
+          })()}
         </div>
       </div>
 
