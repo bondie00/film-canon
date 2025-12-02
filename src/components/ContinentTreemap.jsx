@@ -28,10 +28,11 @@ const BASE_HEIGHT = 500
 // Initial zoom to fill the space better
 const INITIAL_ZOOM = 1.15
 
-// Calculate max pan for a given zoom level (keeps content visible)
+// Calculate max pan for a given zoom level (allows panning almost off screen)
+// Scales linearly with zoom so behavior feels consistent at all zoom levels
 const getMaxPan = (zoomLevel) => ({
-  x: BASE_WIDTH * (zoomLevel - 1) / (2 * zoomLevel),
-  y: BASE_HEIGHT * (zoomLevel - 1) / (2 * zoomLevel)
+  x: BASE_WIDTH * (zoomLevel - 1) / 2,
+  y: BASE_HEIGHT * (zoomLevel - 1) / 2
 })
 
 // Clamp pan values to stay within boundaries
