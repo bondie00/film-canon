@@ -22,6 +22,7 @@ const COLOR_RANGE = [
   '#059669', // emerald-600
   '#047857', // emerald-700
   '#065f46', // emerald-800
+  '#065741', // emerald-850 (interpolated)
 ]
 
 const NO_DATA_COLOR = '#e5e7eb' // gray-200
