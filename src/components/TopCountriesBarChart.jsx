@@ -422,6 +422,10 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <XAxis
             type="number"
             allowDecimals={false}
+            stroke="#000000"
+            tick={{ fill: '#000000', fontWeight: 600 }}
+            axisLine={{ stroke: '#000000', strokeWidth: 2 }}
+            tickLine={{ stroke: '#000000' }}
             label={{
               value: 'Votes',
               position: 'insideBottom',
@@ -434,6 +438,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             type="category"
             width={95}
             interval={0}
+            stroke="#000000"
+            axisLine={{ stroke: '#000000', strokeWidth: 2 }}
+            tickLine={{ stroke: '#000000' }}
             tick={<CustomYAxisTick />}
           />
           <Tooltip content={<CustomTooltip />} />
