@@ -32,6 +32,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [position, setPosition] = useState({ coordinates: [13, 13], zoom: 1.35 })
   const [hoveredGeo, setHoveredGeo] = useState(null) // Track hovered geography for overlay
+  const [selectedCountry, setSelectedCountry] = useState(null) // ISO code of selected country for expanded view
   const mapRef = useRef(null)
 
   // Zoom controls with smoother increments
@@ -162,6 +163,98 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
     setHoveredGeo(null)
   }, [])
 
+  // Handle country click - open expanded view
+  const handleCountryClick = useCallback((iso) => {
+    if (selectedCountry) return // Already have a country selected
+    const data = dataByISO[iso]
+    if (!data || data.votes === 0) return
+
+    setSelectedCountry(iso)
+    setTooltipData(null)
+    setHoveredGeo(null)
+  }, [selectedCountry, dataByISO])
+
+  // Close expanded view
+  const handleCloseExpanded = useCallback(() => {
+    setSelectedCountry(null)
+  }, [])
+
+  // Get films for a specific country based on current filters
+  const getFilmsForCountry = useCallback((countryName) => {
+    if (!filmsData) return []
+
+    return filmsData
+      .filter(film => film.countries?.includes(countryName))
+      .map(film => {
+        let votes = 0
+        let rank = null
+
+        if (selectedPoll === 'all') {
+          // Sum votes across all polls
+          votes = film.pollHistory?.reduce((sum, poll) => sum + (poll.votes || 0), 0) || 0
+          // No rank for "all polls"
+          rank = null
+        } else {
+          // Find the specific poll
+          const pollEntry = film.pollHistory?.find(p => p.year === parseInt(selectedPoll))
+          votes = pollEntry?.votes || 0
+          rank = pollEntry?.rank || null
+        }
+
+        // Filter by rank range if top100
+        if (rankRange === 'top100') {
+          // For top100, only include films that had rank <= 100 in any poll (for "all") or specific poll
+          if (selectedPoll === 'all') {
+            const hasTop100 = film.pollHistory?.some(p => p.rank && p.rank <= 100)
+            if (!hasTop100) return null
+          } else {
+            if (!rank || rank > 100) return null
+          }
+        }
+
+        if (votes === 0) return null
+
+        return {
+          title: film.FilmTitle,
+          year: film.Year,
+          votes,
+          rank,
+          directors: film.directors
+        }
+      })
+      .filter(Boolean)
+      .sort((a, b) => {
+        // Sort by votes descending, then by rank ascending if available
+        if (b.votes !== a.votes) return b.votes - a.votes
+        if (a.rank && b.rank) return a.rank - b.rank
+        return 0
+      })
+  }, [filmsData, selectedPoll, rankRange])
+
+  // Get selected country data for expanded view
+  const selectedCountryData = useMemo(() => {
+    if (!selectedCountry || !dataByISO[selectedCountry]) return null
+
+    const data = dataByISO[selectedCountry]
+    const rank = countryRankings[selectedCountry]
+
+    // Get films for each country in this ISO group
+    const countriesWithFilms = data.countries.map(country => ({
+      ...country,
+      films: getFilmsForCountry(country.name)
+    }))
+
+    return {
+      iso: selectedCountry,
+      countries: countriesWithFilms,
+      continent: data.continent,
+      totalVotes: data.votes,
+      rank,
+      totalCountries: totalCountriesWithVotes,
+      totalDistinctFilms: data.distinctFilms
+    }
+  }, [selectedCountry, dataByISO, countryRankings, totalCountriesWithVotes, getFilmsForCountry])
+
   if (!countriesData) {
     return (
       <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[455px] flex items-center justify-center">
@@ -230,6 +323,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                     const iso = geo.id
                     const data = dataByISO[iso]
                     const hasData = data && data.votes > 0
+                    const isInteractionDisabled = !!selectedCountry
 
                     return (
                       <Geography
@@ -244,16 +338,21 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                           },
                           hover: {
                             outline: 'none',
-                            cursor: hasData ? 'pointer' : 'default'
+                            cursor: isInteractionDisabled ? 'default' : (hasData ? 'pointer' : 'default')
                           },
                           pressed: {
                             outline: 'none'
                           }
                         }}
                         onMouseEnter={() => {
-                          if (hasData) handleMouseEnter(iso, geo)
+                          if (!isInteractionDisabled && hasData) handleMouseEnter(iso, geo)
                         }}
-                        onMouseLeave={handleMouseLeave}
+                        onMouseLeave={() => {
+                          if (!isInteractionDisabled) handleMouseLeave()
+                        }}
+                        onClick={() => {
+                          if (!isInteractionDisabled && hasData) handleCountryClick(iso)
+                        }}
                       />
                     )
                   })}
@@ -342,6 +441,105 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
         </div>
         )
       })()}
+
+      {/* Expanded Country Panel */}
+      {selectedCountryData && (
+        <div className="absolute inset-0 z-20 flex items-end pointer-events-none">
+          {/* Semi-transparent overlay to dim the map */}
+          <div
+            className="absolute inset-0 bg-black bg-opacity-20 pointer-events-auto"
+            onClick={handleCloseExpanded}
+          />
+
+          {/* Expanded panel - takes up bottom half of map */}
+          <div className="relative w-full h-[60%] bg-white border-t-4 border-black pointer-events-auto flex flex-col">
+            {/* Header with close button */}
+            <div className="flex items-start justify-between p-4 border-b-2 border-gray-300 flex-shrink-0">
+              <div>
+                <h3 className="font-black text-xl text-black uppercase tracking-wide">
+                  {selectedCountryData.countries.length > 1
+                    ? selectedCountryData.countries.map(c => c.name).join(' + ')
+                    : selectedCountryData.countries[0].name}
+                </h3>
+                <p className="text-sm text-black font-medium">{selectedCountryData.continent}</p>
+                <div className="flex gap-4 mt-2">
+                  <span className="text-lg font-black text-black">
+                    {selectedCountryData.totalVotes.toLocaleString()} votes
+                  </span>
+                  {selectedPoll !== 'all' && (
+                    <span className="text-sm text-black font-medium self-end">
+                      #{selectedCountryData.rank} of {selectedCountryData.totalCountries} countries
+                    </span>
+                  )}
+                  <span className="text-sm text-black font-medium self-end">
+                    {selectedCountryData.totalDistinctFilms.toLocaleString()} films
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={handleCloseExpanded}
+                className="w-10 h-10 bg-white border-2 border-black text-black font-black text-xl hover:bg-black hover:text-white transition-colors flex items-center justify-center flex-shrink-0"
+                title="Close"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Film lists - horizontal layout for multiple countries */}
+            <div className={`flex-1 overflow-hidden flex ${selectedCountryData.countries.length > 1 ? 'divide-x-2 divide-gray-300' : ''}`}>
+              {selectedCountryData.countries.map((country) => (
+                <div key={country.name} className="flex-1 flex flex-col min-w-0">
+                  {/* Country sub-header for combined entities */}
+                  {selectedCountryData.countries.length > 1 && (
+                    <div className="px-4 py-2 bg-gray-50 border-b border-gray-200 flex-shrink-0">
+                      <h4 className="font-bold text-sm text-black uppercase tracking-wide">{country.name}</h4>
+                      <p className="text-xs text-black">
+                        {country.votes.toLocaleString()} votes · {country.films.length} films
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Scrollable film list */}
+                  <div className="flex-1 overflow-y-auto">
+                    {/* Table header */}
+                    <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
+                      {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
+                      <span className="flex-1">Title</span>
+                      <span className="w-12 text-right">Year</span>
+                      <span className="w-16 text-right">Votes</span>
+                    </div>
+
+                    {/* Film rows */}
+                    {country.films.map((film, idx) => (
+                      <div
+                        key={`${film.title}-${idx}`}
+                        className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
+                      >
+                        {selectedPoll !== 'all' && (
+                          <span className="w-12 font-bold text-black">
+                            {film.rank ? `#${film.rank}` : '—'}
+                          </span>
+                        )}
+                        <span className="flex-1 text-black font-medium truncate" title={film.title}>
+                          {film.title}
+                        </span>
+                        <span className="w-12 text-right text-black">{film.year}</span>
+                        <span className="w-16 text-right font-bold text-black">{film.votes}</span>
+                      </div>
+                    ))}
+
+                    {country.films.length === 0 && (
+                      <div className="px-4 py-8 text-center text-gray-500 text-sm">
+                        No films found for current filters
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
