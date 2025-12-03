@@ -56,6 +56,56 @@ const OUTER_RING_OUTER = 220
 const ZOOMED_INNER = 60
 const ZOOMED_OUTER = 200
 
+// Minimum slice percentage (visual) - ensures tiny slices are still visible
+const MIN_SLICE_PERCENT = 1.5 // Each slice gets at least 1.5% of the ring
+
+// Adjust values to ensure minimum visibility while preserving relative order
+// Small slices get boosted, large slices get proportionally reduced
+const adjustForMinimumVisibility = (items, getValue, minPercent = MIN_SLICE_PERCENT) => {
+  if (!items.length) return items
+
+  const total = items.reduce((sum, item) => sum + getValue(item), 0)
+  if (total === 0) return items
+
+  // Calculate what each item's percentage would be
+  const withPercentages = items.map(item => ({
+    item,
+    originalValue: getValue(item),
+    originalPercent: (getValue(item) / total) * 100
+  }))
+
+  // Find items below minimum and calculate how much we need to redistribute
+  const minValue = (minPercent / 100) * total
+  let deficit = 0
+  let surplusTotal = 0
+
+  withPercentages.forEach(entry => {
+    if (entry.originalPercent < minPercent) {
+      deficit += minValue - entry.originalValue
+    } else {
+      surplusTotal += entry.originalValue
+    }
+  })
+
+  // Calculate adjusted values
+  return withPercentages.map(entry => {
+    let adjustedValue
+    if (entry.originalPercent < minPercent) {
+      // Boost small slices to minimum
+      adjustedValue = minValue
+    } else {
+      // Reduce large slices proportionally to compensate
+      const reductionRatio = surplusTotal > 0 ? (surplusTotal - deficit) / surplusTotal : 1
+      adjustedValue = entry.originalValue * Math.max(0.5, reductionRatio) // Don't reduce by more than 50%
+    }
+    return {
+      ...entry.item,
+      adjustedValue,
+      originalValue: entry.originalValue
+    }
+  })
+}
+
 export default function ContinentPieChart({ selectedPoll = '2022', rankRange = 'all' }) {
   const [countriesData, setCountriesData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -227,33 +277,53 @@ export default function ContinentPieChart({ selectedPoll = '2022', rankRange = '
     }))
   }, [continentData, pieGenerator])
 
-  // Generate arcs for countries (outer ring)
+  // Generate arcs for countries (outer ring) with minimum size adjustment
   const countryArcs = useMemo(() => {
     if (!countryData.length) return []
+
+    // Adjust country values so tiny slices are still visible
+    const adjustedCountries = adjustForMinimumVisibility(
+      countryData,
+      d => d.votes,
+      MIN_SLICE_PERCENT
+    )
+
+    const countryPie = pie()
+      .value(d => d.adjustedValue)
+      .sort(null)
+      .padAngle(0.015)
 
     const arcGenerator = arc()
       .innerRadius(OUTER_RING_INNER)
       .outerRadius(OUTER_RING_OUTER)
       .cornerRadius(2)
 
-    return pieGenerator(countryData).map((d, i) => ({
+    return countryPie(adjustedCountries).map((d, i) => ({
       ...d,
       path: arcGenerator(d),
       arcGenerator,
       color: getCountryColor(d.data.continent, d.data.colorIndex, d.data.colorTotal),
       centroid: arcGenerator.centroid(d)
     }))
-  }, [countryData, pieGenerator])
+  }, [countryData])
 
-  // Generate zoomed arcs for selected continent
+  // Generate zoomed arcs for selected continent with minimum size adjustment
   const zoomedArcs = useMemo(() => {
     if (!selectedContinent || !continentData.length) return []
 
     const continent = continentData.find(c => c.name === selectedContinent)
     if (!continent) return []
 
+    // Adjust country values within this continent for visibility
+    // Use a slightly higher minimum since we have more space when zoomed
+    const adjustedCountries = adjustForMinimumVisibility(
+      continent.countries.map((c, i) => ({ ...c, colorIndex: i, colorTotal: continent.countries.length })),
+      d => d.votes,
+      2.5 // Higher minimum when zoomed in
+    )
+
     const zoomedPie = pie()
-      .value(d => d.votes)
+      .value(d => d.adjustedValue)
       .sort(null)
       .padAngle(0.02)
 
@@ -262,11 +332,11 @@ export default function ContinentPieChart({ selectedPoll = '2022', rankRange = '
       .outerRadius(ZOOMED_OUTER)
       .cornerRadius(4)
 
-    return zoomedPie(continent.countries).map((d, i) => ({
+    return zoomedPie(adjustedCountries).map((d, i) => ({
       ...d,
       path: arcGenerator(d),
       arcGenerator,
-      color: getCountryColor(selectedContinent, i, continent.countries.length),
+      color: getCountryColor(selectedContinent, d.data.colorIndex, d.data.colorTotal),
       centroid: arcGenerator.centroid(d)
     }))
   }, [selectedContinent, continentData])
