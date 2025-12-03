@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
 import WorldMapChoropleth from '../components/WorldMapChoropleth'
-import ContinentTreemap from '../components/ContinentTreemap'
+import ContinentPieChart from '../components/ContinentPieChart'
 
 export default function CountryOriginMain() {
   // Filter state (not functional yet - Phase 2)
@@ -256,20 +256,20 @@ export default function CountryOriginMain() {
               </div>
             </div>
 
-            {/* VISUALIZATION 4: TREEMAP - CONTINENTAL BREAKDOWN */}
+            {/* VISUALIZATION 4: SUNBURST PIE CHART - CONTINENTAL BREAKDOWN */}
             <div className="bg-white border-4 border-black p-6 mb-8">
               <div className="mb-6 border-b-2 border-gray-300 pb-4">
                 <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
                   Continental & Country Breakdown
                 </h2>
                 <p className="text-black font-medium">
-                  See both continent-level patterns and individual country contributions.
-                  Size represents vote count.
+                  Inner ring shows continents, outer ring shows countries within each.
+                  Click any continent to zoom in and explore its countries.
                 </p>
               </div>
 
-              {/* Treemap Component */}
-              <ContinentTreemap
+              {/* Sunburst Pie Chart Component */}
+              <ContinentPieChart
                 selectedPoll={selectedPoll}
                 rankRange={rankRange}
               />
