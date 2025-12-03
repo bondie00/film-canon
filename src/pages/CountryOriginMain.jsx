@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
 import WorldMapChoropleth from '../components/WorldMapChoropleth'
-import ContinentPieChart from '../components/ContinentPieChart'
+import ContinentBreakdown from '../components/ContinentBreakdown'
 
 export default function CountryOriginMain() {
   // Filter state (not functional yet - Phase 2)
@@ -256,26 +256,25 @@ export default function CountryOriginMain() {
               </div>
             </div>
 
-            {/* VISUALIZATION 4: SUNBURST PIE CHART - CONTINENTAL BREAKDOWN */}
+            {/* VISUALIZATION 4: CONTINENTAL BREAKDOWN */}
             <div className="bg-white border-4 border-black p-6 mb-8">
               <div className="mb-6 border-b-2 border-gray-300 pb-4">
                 <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
                   Continental & Country Breakdown
                 </h2>
                 <p className="text-black font-medium">
-                  Inner ring shows continents, outer ring shows countries within each.
-                  Click any continent to zoom in and explore its countries.
+                  Click any continent to expand and see individual country statistics.
                 </p>
               </div>
 
-              {/* Sunburst Pie Chart Component */}
-              <ContinentPieChart
+              {/* Expandable Continent Cards */}
+              <ContinentBreakdown
                 selectedPoll={selectedPoll}
                 rankRange={rankRange}
               />
 
               {/* Continent Color Legend */}
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-blue-500 border-2 border-black"></div>
                   <span className="text-black font-bold">Europe</span>
