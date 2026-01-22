@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import CountryOriginMain from './pages/CountryOriginMain'
+import CountryDetail from './pages/CountryDetail'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           </a>
         </div>} />
         <Route path="/visualizations/country" element={<CountryOriginMain />} />
+        <Route path="/visualizations/country/:countryName" element={<CountryDetail />} />
       </Routes>
     </Router>
   )

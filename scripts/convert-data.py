@@ -85,19 +85,19 @@ def generate_films_json(df, output_path):
 
     films = []
     for _, row in df.iterrows():
-        # Parse directors array
+        # Parse directors (comma-separated)
         directors = []
-        if pd.notna(row['ARR_DirectorArray']) and str(row['ARR_DirectorArray']).strip():
-            directors = [d.strip() for d in str(row['ARR_DirectorArray']).split(';')]
+        if pd.notna(row['Director']) and str(row['Director']).strip():
+            directors = [d.strip() for d in str(row['Director']).split(',')]
             directors = [d for d in directors if d and d != 'N/A']
 
-        # Parse countries array
+        # Parse countries (comma-separated)
         countries = []
-        if pd.notna(row['ARR_CountryArray']) and str(row['ARR_CountryArray']).strip():
-            countries = [c.strip() for c in str(row['ARR_CountryArray']).split(';')]
+        if pd.notna(row['Country']) and str(row['Country']).strip():
+            countries = [c.strip() for c in str(row['Country']).split(',')]
             countries = [c for c in countries if c]
 
-        # Build poll history
+        # Build poll history for individual polls
         poll_history = []
         for year in POLL_YEARS:
             rank = int(row[f'{year}rank']) if pd.notna(row[f'{year}rank']) else None
@@ -107,6 +107,15 @@ def generate_films_json(df, output_path):
                 'rank': rank,
                 'votes': votes
             })
+
+        # Add "all polls combined" entry (read from ALLrank and ALLvotes columns)
+        all_rank = int(row['ALLrank']) if pd.notna(row['ALLrank']) else None
+        all_votes = int(row['ALLvotes']) if pd.notna(row['ALLvotes']) else 0
+        poll_history.append({
+            'year': 'all',
+            'rank': all_rank,
+            'votes': all_votes
+        })
 
         film = {
             'key': int(row['key']),
@@ -203,8 +212,8 @@ def generate_countries_json(df, output_path):
 
     # Single pass through all films to collect country statistics
     for _, row in df.iterrows():
-        if pd.notna(row['ARR_CountryArray']) and str(row['ARR_CountryArray']).strip():
-            countries = [c.strip() for c in str(row['ARR_CountryArray']).split(';')]
+        if pd.notna(row['Country']) and str(row['Country']).strip():
+            countries = [c.strip() for c in str(row['Country']).split(',')]
             countries = [c for c in countries if c]
 
             film_key = row['key']
@@ -345,10 +354,10 @@ def generate_directors_json(df, output_path):
 
     # Single pass through all films
     for _, row in df.iterrows():
-        directors_str = str(row['ARR_DirectorArray'])
+        directors_str = str(row['Director'])
 
-        if pd.notna(row['ARR_DirectorArray']) and str(row['ARR_DirectorArray']).strip() and str(row['ARR_DirectorArray']) != 'nan':
-            directors = [d.strip() for d in directors_str.split(';')]
+        if pd.notna(row['Director']) and str(row['Director']).strip() and str(row['Director']) != 'nan':
+            directors = [d.strip() for d in directors_str.split(',')]
             directors = [d for d in directors if d and d != 'N/A']
 
             # Film data

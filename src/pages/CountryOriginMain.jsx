@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
@@ -358,36 +359,33 @@ export default function CountryOriginMain() {
               <div className="text-center">
                 <div className="text-sm font-bold text-black mb-3 uppercase tracking-wider">Popular Countries:</div>
                 <div className="flex flex-wrap justify-center gap-3">
-                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
-                    🇺🇸 United States
-                  </a>
-                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
-                    🇫🇷 France
-                  </a>
-                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
-                    🇯🇵 Japan
-                  </a>
-                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
-                    🇮🇹 Italy
-                  </a>
-                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
-                    🇬🇧 United Kingdom
-                  </a>
-                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
-                    🇩🇪 Germany
-                  </a>
-                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
-                    🇮🇳 India
-                  </a>
-                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
-                    🇰🇷 South Korea
-                  </a>
-                  <a href="#" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
-                    🇧🇷 Brazil
-                  </a>
-                  <a href="#" className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-gray-900 font-black text-sm transition-colors uppercase tracking-wider">
-                    View All 117 Countries →
-                  </a>
+                  <Link to="/visualizations/country/United%20States" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                    United States
+                  </Link>
+                  <Link to="/visualizations/country/France" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                    France
+                  </Link>
+                  <Link to="/visualizations/country/Japan" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                    Japan
+                  </Link>
+                  <Link to="/visualizations/country/Italy" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                    Italy
+                  </Link>
+                  <Link to="/visualizations/country/United%20Kingdom" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                    United Kingdom
+                  </Link>
+                  <Link to="/visualizations/country/Germany" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                    Germany
+                  </Link>
+                  <Link to="/visualizations/country/India" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                    India
+                  </Link>
+                  <Link to="/visualizations/country/South%20Korea" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                    South Korea
+                  </Link>
+                  <Link to="/visualizations/country/Brazil" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                    Brazil
+                  </Link>
                 </div>
               </div>
             </div>
