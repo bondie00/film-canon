@@ -14,6 +14,10 @@ const INITIAL_ZOOM = 1
 const MAX_ZOOM = 6
 const ZOOM_FACTOR = 1.3
 
+// Density grid constants
+const DECADE_SIZE = 10 // years per column
+const RANK_BUCKET_SIZE = 50 // ranks per row
+
 export default function FilmRankScatter({ films, selectedPoll, continentColor }) {
   const [hoveredFilm, setHoveredFilm] = useState(null)
   const [hoveredBucket, setHoveredBucket] = useState(null)
@@ -27,10 +31,10 @@ export default function FilmRankScatter({ films, selectedPoll, continentColor })
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const [panStart, setPanStart] = useState({ x: 0, y: 0 })
 
-  // Process films into scatter dots and density band data
-  const { scatterFilms, densityBandFilms, densityBuckets, yDomain, xDomain, maxBucketCount, bandVoteThreshold } = useMemo(() => {
+  // Process films into scatter dots, density band data, and density grid
+  const { scatterFilms, densityBandFilms, densityBuckets, densityGrid, yDomain, xDomain, maxBucketCount, maxCount, bandVoteThreshold } = useMemo(() => {
     if (!films || films.length === 0) {
-      return { scatterFilms: [], densityBandFilms: [], densityBuckets: [], yDomain: [1, 100], xDomain: [1920, 2025], maxBucketCount: 0, bandVoteThreshold: 0 }
+      return { scatterFilms: [], densityBandFilms: [], densityBuckets: [], densityGrid: [], yDomain: [1, 100], xDomain: [1920, 2025], maxBucketCount: 0, maxCount: 0, bandVoteThreshold: 0 }
     }
 
     const pollKey = selectedPoll === 'all' ? 'all' : parseInt(selectedPoll)
@@ -138,7 +142,35 @@ export default function FilmRankScatter({ films, selectedPoll, continentColor })
       isFinite(maxRank) ? Math.min(maxRank + 20, maxRank * 1.1) : 100
     ]
 
-    return { scatterFilms, densityBandFilms, densityBuckets, yDomain, xDomain, maxBucketCount, bandVoteThreshold }
+    // Build simple density grid: decades (columns) × rank buckets (rows)
+    // Each cell colored by film count
+    const densityGridMap = {}
+    let maxCount = 0
+
+    scatterFilms.forEach(film => {
+      if (!film.rank) return
+
+      // Which decade column
+      const decade = Math.floor(film.year / DECADE_SIZE) * DECADE_SIZE
+      // Which rank row (bucket of 50)
+      const rankBucket = Math.floor((film.rank - 1) / RANK_BUCKET_SIZE) * RANK_BUCKET_SIZE + 1
+
+      const key = `${decade}-${rankBucket}`
+      if (!densityGridMap[key]) {
+        densityGridMap[key] = {
+          decade,
+          rankStart: rankBucket,
+          rankEnd: rankBucket + RANK_BUCKET_SIZE - 1,
+          count: 0
+        }
+      }
+      densityGridMap[key].count++
+      maxCount = Math.max(maxCount, densityGridMap[key].count)
+    })
+
+    const densityGrid = Object.values(densityGridMap)
+
+    return { scatterFilms, densityBandFilms, densityBuckets, densityGrid, yDomain, xDomain, maxBucketCount, maxCount, bandVoteThreshold }
   }, [films, selectedPoll])
 
   // SVG dimensions
@@ -186,6 +218,37 @@ export default function FilmRankScatter({ films, selectedPoll, continentColor })
     const g = parseInt(hex.substring(2, 4), 16)
     const b = parseInt(hex.substring(4, 6), 16)
     return `rgba(${r}, ${g}, ${b}, ${intensity})`
+  }
+
+  // Get color intensity for density grid cell based on film count
+  const getDensityCellColor = (count) => {
+    if (count === 0 || maxCount === 0) return 'transparent'
+
+    // Use square root for better spread, then scale to 0.1 - 0.6 opacity
+    const ratio = Math.sqrt(count) / Math.sqrt(maxCount)
+    const intensity = 0.10 + ratio * 0.50
+
+    const hex = continentColor.replace('#', '')
+    const r = parseInt(hex.substring(0, 2), 16)
+    const g = parseInt(hex.substring(2, 4), 16)
+    const b = parseInt(hex.substring(4, 6), 16)
+    return `rgba(${r}, ${g}, ${b}, ${intensity})`
+  }
+
+  // Calculate X position for a decade cell
+  const getCellX = (decade) => xScale(decade)
+
+  // Calculate width for a decade cell
+  const getCellWidth = () => xScale(xDomain[0] + DECADE_SIZE) - xScale(xDomain[0])
+
+  // Calculate Y position for a rank bucket cell
+  const getCellY = (rankStart) => yScale(Math.max(rankStart, yDomain[0]))
+
+  // Calculate height for a rank bucket cell
+  const getCellHeight = (rankStart, rankEnd) => {
+    const clampedStart = Math.max(rankStart, yDomain[0])
+    const clampedEnd = Math.min(rankEnd, yDomain[1])
+    return yScale(clampedEnd) - yScale(clampedStart)
   }
 
   // Generate Y-axis ticks
@@ -517,6 +580,30 @@ export default function FilmRankScatter({ films, selectedPoll, continentColor })
             </text>
           </g>
 
+          {/* Density grid cells (background layer) */}
+          <g className="density-grid">
+            {densityGrid.map(cell => {
+              const x = getCellX(cell.decade)
+              const y = getCellY(cell.rankStart)
+              const width = getCellWidth()
+              const height = getCellHeight(cell.rankStart, cell.rankEnd)
+
+              if (height <= 0 || width <= 0) return null
+
+              return (
+                <rect
+                  key={`${cell.decade}-${cell.rankStart}`}
+                  x={x}
+                  y={y}
+                  width={width + 1}
+                  height={height + 1}
+                  fill={getDensityCellColor(cell.count)}
+                  pointerEvents="none"
+                />
+              )
+            })}
+          </g>
+
           {/* Scatter plot dots */}
           <g className="scatter-dots">
             {scatterFilms.map((film, i) => {
@@ -669,6 +756,7 @@ export default function FilmRankScatter({ films, selectedPoll, continentColor })
             </div>
           )
         })()}
+
         </div>
       </div>
 
