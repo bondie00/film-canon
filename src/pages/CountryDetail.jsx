@@ -8,6 +8,7 @@ import DirectorsTreemap from '../components/country/DirectorsTreemap'
 import DecadeHeatmap from '../components/country/DecadeHeatmap'
 import FilmAgeHistogram from '../components/country/FilmAgeHistogram'
 import PollHistoryChart from '../components/country/PollHistoryChart'
+import VoteStepChart from '../components/country/VoteStepChart'
 
 // Continent color mapping
 const continentColors = {
@@ -360,7 +361,24 @@ export default function CountryDetail() {
                   />
                 </div>
 
-                {/* VISUALIZATION 2: DIRECTORS TREEMAP */}
+                {/* VISUALIZATION 2: VOTE STEP CHART - TOP FILMS BY VOTES */}
+                <div className="bg-white border-4 border-black p-6 mb-8">
+                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
+                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
+                      Top Films by Votes
+                    </h2>
+                    <p className="text-black font-medium">
+                      How do the top films from {decodedCountryName} compare in votes? See the gaps between frontrunners.
+                    </p>
+                  </div>
+                  <VoteStepChart
+                    films={countryFilms}
+                    selectedPoll={selectedPoll}
+                    continentColor={continentColor}
+                  />
+                </div>
+
+                {/* VISUALIZATION 3: DIRECTORS TREEMAP */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
                   <div className="mb-6 border-b-2 border-gray-300 pb-4">
                     <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
@@ -376,7 +394,7 @@ export default function CountryDetail() {
                   />
                 </div>
 
-                {/* VISUALIZATION 3: DECADE HEATMAP */}
+                {/* VISUALIZATION 4: DECADE HEATMAP */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
                   <div className="mb-6 border-b-2 border-gray-300 pb-4">
                     <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
@@ -393,7 +411,7 @@ export default function CountryDetail() {
                   />
                 </div>
 
-                {/* VISUALIZATION 4: FILM AGE HISTOGRAM */}
+                {/* VISUALIZATION 5: FILM AGE HISTOGRAM */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
                   <div className="mb-6 border-b-2 border-gray-300 pb-4">
                     <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
@@ -410,7 +428,7 @@ export default function CountryDetail() {
                   />
                 </div>
 
-                {/* VISUALIZATION 5: ALL FILMS GRID */}
+                {/* VISUALIZATION 6: ALL FILMS GRID */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
                   <div className="mb-6 border-b-2 border-gray-300 pb-4">
                     <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
