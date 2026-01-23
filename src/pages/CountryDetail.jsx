@@ -7,6 +7,7 @@ import FilmRankScatter from '../components/country/FilmRankScatter'
 import DirectorsTreemap from '../components/country/DirectorsTreemap'
 import DecadeHeatmap from '../components/country/DecadeHeatmap'
 import FilmAgeHistogram from '../components/country/FilmAgeHistogram'
+import PollHistoryChart from '../components/country/PollHistoryChart'
 
 // Continent color mapping
 const continentColors = {
@@ -67,7 +68,14 @@ export default function CountryDetail() {
 
       // Apply poll filter
       if (selectedPoll === 'all') {
-        return film.pollHistory.some(p => p.votes > 0)
+        const allPollData = film.pollHistory.find(p => p.year === 'all')
+        if (!allPollData || allPollData.votes === 0) return false
+
+        // Apply rank filter for combined polls
+        if (rankRange === 'top100') {
+          return allPollData.rank && allPollData.rank <= 100
+        }
+        return true
       } else {
         const pollData = film.pollHistory.find(p => p.year.toString() === selectedPoll)
         if (!pollData || pollData.votes === 0) return false
@@ -198,30 +206,8 @@ export default function CountryDetail() {
             <div className="bg-white border-4 border-black p-6 lg:sticky lg:top-8">
               <h2 className="text-3xl font-bold text-black mb-6 uppercase tracking-wider">Filters</h2>
 
-              {/* POLL SELECTION FILTER */}
+              {/* RANK RANGE FILTER - Now first since it's truly global */}
               <div className="mb-6 pb-6 border-b-2 border-gray-300">
-                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
-                  Poll Selection
-                </label>
-                <select
-                  value={selectedPoll}
-                  onChange={(e) => setSelectedPoll(e.target.value)}
-                  className="w-full px-3 py-2 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black"
-                >
-                  <option value="all">All Polls Combined</option>
-                  <option value="2022">2022 (Latest)</option>
-                  <option value="2012">2012</option>
-                  <option value="2002">2002</option>
-                  <option value="1992">1992</option>
-                  <option value="1982">1982</option>
-                  <option value="1972">1972</option>
-                  <option value="1962">1962</option>
-                  <option value="1952">1952</option>
-                </select>
-              </div>
-
-              {/* RANK RANGE FILTER */}
-              <div>
                 <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
                   Film Rank Range
                 </label>
@@ -247,6 +233,30 @@ export default function CountryDetail() {
                     Top 100
                   </button>
                 </div>
+                <p className="text-xs text-gray-500 mt-2">Applies to all visualizations</p>
+              </div>
+
+              {/* FOCUS POLL FILTER */}
+              <div>
+                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
+                  Focus Poll
+                </label>
+                <select
+                  value={selectedPoll}
+                  onChange={(e) => setSelectedPoll(e.target.value)}
+                  className="w-full px-3 py-2 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black"
+                >
+                  <option value="all">All Polls Combined</option>
+                  <option value="2022">2022 (Latest)</option>
+                  <option value="2012">2012</option>
+                  <option value="2002">2002</option>
+                  <option value="1992">1992</option>
+                  <option value="1982">1982</option>
+                  <option value="1972">1972</option>
+                  <option value="1962">1962</option>
+                  <option value="1952">1952</option>
+                </select>
+                <p className="text-xs text-gray-500 mt-2">Highlights hero chart, filters exploration below</p>
               </div>
             </div>
           </div>
@@ -286,6 +296,39 @@ export default function CountryDetail() {
                 <span className="mx-2 text-black">|</span>
                 <span className="font-medium">{getFilterText()}</span>
               </div>
+            </div>
+
+            {/* HERO SECTION: Poll History Chart - Always visible, shows all polls */}
+            <div className="bg-white border-4 border-black p-6 mb-8">
+              <div className="mb-6 border-b-2 border-gray-300 pb-4">
+                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
+                  Canon Presence Over Time
+                </h2>
+                <p className="text-black font-medium">
+                  How has {decodedCountryName}'s representation in the Sight & Sound poll evolved across all eight polls?
+                </p>
+              </div>
+              <PollHistoryChart
+                films={countryFilms}
+                filmsData={filmsData}
+                countryName={decodedCountryName}
+                selectedPoll={selectedPoll}
+                rankRange={rankRange}
+                continentColor={continentColor}
+              />
+            </div>
+
+            {/* EXPLORE SECTION DIVIDER */}
+            <div className="mb-8 border-t-4 border-black pt-6">
+              <h2 className="text-2xl font-black text-black uppercase tracking-wide mb-2">
+                Explore {selectedPoll === 'all' ? 'All Polls' : `${selectedPoll} Poll`}
+              </h2>
+              <p className="text-gray-600 text-sm">
+                {selectedPoll === 'all'
+                  ? 'Detailed breakdowns across all poll years combined'
+                  : `Deep dive into ${decodedCountryName}'s films from the ${selectedPoll} poll`
+                }
+              </p>
             </div>
 
             {/* Check if we have enough data */}
