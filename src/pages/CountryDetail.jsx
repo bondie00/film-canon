@@ -96,9 +96,9 @@ export default function CountryDetail() {
     let totalVotes = 0
     countryFilms.forEach(film => {
       if (selectedPoll === 'all') {
-        film.pollHistory.forEach(p => {
-          totalVotes += p.votes || 0
-        })
+        // Use the pre-computed 'all' entry votes to avoid double-counting
+        const allPollData = film.pollHistory.find(p => p.year === 'all')
+        totalVotes += allPollData?.votes || 0
       } else {
         const pollData = film.pollHistory.find(p => p.year.toString() === selectedPoll)
         if (pollData) {

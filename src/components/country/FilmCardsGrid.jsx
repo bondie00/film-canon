@@ -13,7 +13,9 @@ export default function FilmCardsGrid({ films, selectedPoll, continentColor }) {
         // Sort by votes in selected poll (or total votes if all polls)
         const getVotes = (film) => {
           if (selectedPoll === 'all') {
-            return film.pollHistory.reduce((sum, p) => sum + (p.votes || 0), 0)
+            // Use the pre-computed 'all' entry votes
+            const allPollData = film.pollHistory.find(p => p.year === 'all')
+            return allPollData?.votes || 0
           }
           const pollData = film.pollHistory.find(p => p.year.toString() === selectedPoll)
           return pollData?.votes || 0
@@ -29,11 +31,9 @@ export default function FilmCardsGrid({ films, selectedPoll, continentColor }) {
         // Sort by rank (lower is better)
         const getRank = (film) => {
           if (selectedPoll === 'all') {
-            // Get best rank across all polls
-            const ranks = film.pollHistory
-              .filter(p => p.rank !== null)
-              .map(p => p.rank)
-            return ranks.length > 0 ? Math.min(...ranks) : 9999
+            // Use the pre-computed 'all' entry rank
+            const allPollData = film.pollHistory.find(p => p.year === 'all')
+            return allPollData?.rank || 9999
           }
           const pollData = film.pollHistory.find(p => p.year.toString() === selectedPoll)
           return pollData?.rank || 9999
@@ -52,11 +52,15 @@ export default function FilmCardsGrid({ films, selectedPoll, continentColor }) {
   // Helper to get rank/votes for display
   const getFilmStats = (film) => {
     if (selectedPoll === 'all') {
-      const totalVotes = film.pollHistory.reduce((sum, p) => sum + (p.votes || 0), 0)
-      const ranks = film.pollHistory.filter(p => p.rank !== null).map(p => p.rank)
-      const bestRank = ranks.length > 0 ? Math.min(...ranks) : null
-      const pollAppearances = film.pollHistory.filter(p => p.votes > 0).length
-      return { votes: totalVotes, rank: bestRank, pollAppearances }
+      // Use the pre-computed 'all' entry
+      const allPollData = film.pollHistory.find(p => p.year === 'all')
+      // Count poll appearances (exclude 'all' entry from count)
+      const pollAppearances = film.pollHistory.filter(p => p.year !== 'all' && p.votes > 0).length
+      return {
+        votes: allPollData?.votes || 0,
+        rank: allPollData?.rank || null,
+        pollAppearances
+      }
     }
 
     const pollData = film.pollHistory.find(p => p.year.toString() === selectedPoll)
