@@ -23,18 +23,18 @@ POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
 
 # Country to continent mapping
 CONTINENT_MAP = {
-    # North America
+    # North America (includes Central America and Caribbean)
     'United States': 'North America', 'Canada': 'North America', 'Mexico': 'North America',
     'Cuba': 'North America', 'Dominican Republic': 'North America', 'Greenland': 'North America',
     'Haiti': 'North America', 'Jamaica': 'North America', 'Martinique': 'North America',
+    'Guatemala': 'North America', 'Nicaragua': 'North America', 'Costa Rica': 'North America',
+    'Panama': 'North America', 'El Salvador': 'North America',
 
-    # Latin America
-    'Argentina': 'Latin America', 'Brazil': 'Latin America', 'Chile': 'Latin America',
-    'Colombia': 'Latin America', 'Peru': 'Latin America', 'Bolivia': 'Latin America',
-    'Uruguay': 'Latin America', 'Venezuela': 'Latin America', 'Ecuador': 'Latin America',
-    'Paraguay': 'Latin America', 'Guatemala': 'Latin America', 'Nicaragua': 'Latin America',
-    'Costa Rica': 'Latin America', 'Panama': 'Latin America', 'El Salvador': 'Latin America',
-    'Guyana': 'Latin America',
+    # South America
+    'Argentina': 'South America', 'Brazil': 'South America', 'Chile': 'South America',
+    'Colombia': 'South America', 'Peru': 'South America', 'Bolivia': 'South America',
+    'Uruguay': 'South America', 'Venezuela': 'South America', 'Ecuador': 'South America',
+    'Paraguay': 'South America', 'Guyana': 'South America', 'Curaçao': 'South America',
 
     # Europe
     'United Kingdom': 'Europe', 'France': 'Europe', 'Germany': 'Europe', 'Italy': 'Europe',
@@ -134,7 +134,7 @@ def generate_films_json(df, output_path):
         json.dump(films, f, ensure_ascii=False, indent=2)
 
     file_size = Path(output_path).stat().st_size
-    print(f"✓ Generated {output_path}")
+    print(f"[OK] Generated {output_path}")
     print(f"  Total films: {len(films):,}")
     print(f"  File size: {file_size:,} bytes ({file_size/1024/1024:.1f}M)")
 
@@ -322,7 +322,7 @@ def generate_countries_json(df, output_path):
         json.dump(countries_data, f, ensure_ascii=False, indent=2)
 
     file_size = Path(output_path).stat().st_size
-    print(f"✓ Generated {output_path}")
+    print(f"[OK] Generated {output_path}")
     print(f"  Total countries: {len(countries_data) - 1:,}")  # -1 for _pollMetadata
     print(f"  File size: {file_size:,} bytes ({file_size/1024:.1f}K)")
 
@@ -405,7 +405,7 @@ def generate_directors_json(df, output_path):
         json.dump(final_data, f, ensure_ascii=False, indent=2)
 
     file_size = Path(output_path).stat().st_size
-    print(f"✓ Generated {output_path}")
+    print(f"[OK] Generated {output_path}")
     print(f"  Total directors: {len(final_data):,}")
     print(f"  File size: {file_size:,} bytes ({file_size/1024:.1f}K)")
 
@@ -451,7 +451,7 @@ def generate_polls_json(df, output_path):
         json.dump(polls_data, f, ensure_ascii=False, indent=2)
 
     file_size = Path(output_path).stat().st_size
-    print(f"✓ Generated {output_path}")
+    print(f"[OK] Generated {output_path}")
     print(f"  Total polls: {len(polls_data)}")
     print(f"  File size: {file_size:,} bytes ({file_size/1024:.1f}K)")
 
@@ -479,7 +479,7 @@ def main():
     generate_polls_json(df, output_dir / 'polls.json')
 
     print("\n" + "=" * 60)
-    print("✓ All JSON files generated successfully!")
+    print("[OK] All JSON files generated successfully!")
     print("=" * 60)
     print("\nNext steps:")
     print("  1. Review the generated files in public/data/")
