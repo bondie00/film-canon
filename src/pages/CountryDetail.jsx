@@ -5,8 +5,8 @@ import Footer from '../components/Footer'
 import FilmCardsGrid from '../components/country/FilmCardsGrid'
 import FilmRankScatter from '../components/country/FilmRankScatter'
 import DirectorsTreemap from '../components/country/DirectorsTreemap'
-import DecadeHeatmap from '../components/country/DecadeHeatmap'
-import FilmAgeHistogram from '../components/country/FilmAgeHistogram'
+import DecadeHeatmapRows from '../components/country/DecadeHeatmapRows'
+import DecadeRankHeatmap from '../components/country/DecadeRankHeatmap'
 import PollHistoryChart from '../components/country/PollHistoryChart'
 import VoteStepChart from '../components/country/VoteStepChart'
 
@@ -344,7 +344,48 @@ export default function CountryDetail() {
               </div>
             ) : (
               <>
-                {/* VISUALIZATION 1: SCATTER PLOT - ALL FILMS BY YEAR AND RANK */}
+                {/* VISUALIZATION 1: ROW-NORMALIZED HEATMAP / BAR CHART */}
+                <div className="bg-white border-4 border-black p-6 mb-8">
+                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
+                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
+                      {selectedPoll === 'all'
+                        ? 'Decade Distribution Heatmap'
+                        : `Decade Distribution (${selectedPoll})`
+                      }
+                    </h2>
+                    <p className="text-black font-medium">
+                      {selectedPoll === 'all'
+                        ? `Each poll's row is colored on its own scale, showing which decades that poll valued most for ${decodedCountryName}.`
+                        : `How many films from ${decodedCountryName} came from each decade in the ${selectedPoll} poll?`
+                      }
+                    </p>
+                  </div>
+                  <DecadeHeatmapRows
+                    films={countryFilms}
+                    selectedPoll={selectedPoll}
+                    continentColor={continentColor}
+                  />
+                </div>
+
+                {/* VISUALIZATION 2: DECADE × RANK TIER HEATMAP */}
+                <div className="bg-white border-4 border-black p-6 mb-8">
+                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
+                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
+                      Decades by Rank Tier
+                    </h2>
+                    <p className="text-black font-medium">
+                      Where do {decodedCountryName}'s films rank? See which decades produced elite films vs. the long tail.
+                    </p>
+                  </div>
+                  <DecadeRankHeatmap
+                    films={countryFilms}
+                    selectedPoll={selectedPoll}
+                    rankRange={rankRange}
+                    continentColor={continentColor}
+                  />
+                </div>
+
+                {/* VISUALIZATION 3: SCATTER PLOT - ALL FILMS BY YEAR AND RANK */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
                   <div className="mb-6 border-b-2 border-gray-300 pb-4">
                     <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
@@ -394,41 +435,7 @@ export default function CountryDetail() {
                   />
                 </div>
 
-                {/* VISUALIZATION 4: DECADE HEATMAP */}
-                <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                      Films by Decade and Poll
-                    </h2>
-                    <p className="text-black font-medium">
-                      When were films from {decodedCountryName} produced, and when were they recognized?
-                    </p>
-                  </div>
-                  <DecadeHeatmap
-                    films={countryFilms}
-                    selectedPoll={selectedPoll}
-                    continentColor={continentColor}
-                  />
-                </div>
-
-                {/* VISUALIZATION 5: FILM AGE HISTOGRAM */}
-                <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                      Film Age Distribution
-                    </h2>
-                    <p className="text-black font-medium">
-                      How old were films from {decodedCountryName} when they were voted for?
-                    </p>
-                  </div>
-                  <FilmAgeHistogram
-                    films={countryFilms}
-                    selectedPoll={selectedPoll}
-                    continentColor={continentColor}
-                  />
-                </div>
-
-                {/* VISUALIZATION 6: ALL FILMS GRID */}
+                {/* ALL FILMS GRID */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
                   <div className="mb-6 border-b-2 border-gray-300 pb-4">
                     <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">

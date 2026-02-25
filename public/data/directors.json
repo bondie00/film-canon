@@ -656,7 +656,7 @@
       {
         "key": 232,
         "title": "Alexander Nevsky",
-        "year": "1983",
+        "year": "1938",
         "rank2022": null,
         "votes2022": 0
       }
@@ -2142,7 +2142,7 @@
     "bestRank": 18
   },
   "Kenji Mizoguchi": {
-    "totalFilms": 17,
+    "totalFilms": 18,
     "films": [
       {
         "key": 2951,
@@ -10269,7 +10269,7 @@
     "bestRank": 54
   },
   "Ken Loach": {
-    "totalFilms": 7,
+    "totalFilms": 6,
     "films": [
       {
         "key": 1804,
@@ -10312,17 +10312,10 @@
         "year": "1991",
         "rank2022": null,
         "votes2022": 0
-      },
-      {
-        "key": 923,
-        "title": "Days of Hope",
-        "year": "1975",
-        "rank2022": null,
-        "votes2022": 0
       }
     ],
-    "pollsAppeared": 5,
-    "bestRank": 83
+    "pollsAppeared": 4,
+    "bestRank": 155
   },
   "René Clément": {
     "totalFilms": 2,
@@ -12024,7 +12017,7 @@
       {
         "key": 2127,
         "title": "Magick Lantern Cycle",
-        "year": "2009",
+        "year": "1947",
         "rank2022": null,
         "votes2022": 0
       }
@@ -16294,7 +16287,7 @@
       {
         "key": 831,
         "title": "Concentration",
-        "year": "1986",
+        "year": "1968",
         "rank2022": null,
         "votes2022": 0
       }
@@ -23660,7 +23653,7 @@
     "bestRank": 899
   },
   "James Parrott": {
-    "totalFilms": 3,
+    "totalFilms": 4,
     "films": [
       {
         "key": 1502,
@@ -23682,10 +23675,17 @@
         "year": "1932",
         "rank2022": 1652,
         "votes2022": 1
+      },
+      {
+        "key": 2648,
+        "title": "Perfect Day",
+        "year": "1929",
+        "rank2022": null,
+        "votes2022": 0
       }
     ],
-    "pollsAppeared": 2,
-    "bestRank": 899
+    "pollsAppeared": 3,
+    "bestRank": 217
   },
   "Gillian Armstrong": {
     "totalFilms": 2,
@@ -24444,7 +24444,7 @@
     "bestRank": 218
   },
   "Otar Iosseliani": {
-    "totalFilms": 2,
+    "totalFilms": 4,
     "films": [
       {
         "key": 1206,
@@ -24459,10 +24459,24 @@
         "year": "1992",
         "rank2022": 1652,
         "votes2022": 1
+      },
+      {
+        "key": 310,
+        "title": "And Then There Was Light",
+        "year": "1989",
+        "rank2022": null,
+        "votes2022": 0
+      },
+      {
+        "key": 914,
+        "title": "Once Upon a Time There Was a Singing Blackbird",
+        "year": "1970",
+        "rank2022": null,
+        "votes2022": 0
       }
     ],
-    "pollsAppeared": 2,
-    "bestRank": 218
+    "pollsAppeared": 4,
+    "bestRank": 155
   },
   "Edward F. Cline": {
     "totalFilms": 6,
@@ -25653,34 +25667,6 @@
     ],
     "pollsAppeared": 2,
     "bestRank": 83
-  },
-  "Shimizu Mitsuru": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3032,
-        "title": "Shin Heike Monogatari",
-        "year": "1972",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 2,
-    "bestRank": 77
-  },
-  "Higuchi Masahiro": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3032,
-        "title": "Shin Heike Monogatari",
-        "year": "1972",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 2,
-    "bestRank": 77
   },
   "Georgi Vasilyev": {
     "totalFilms": 1,
@@ -39364,7 +39350,7 @@
         "votes2022": 1
       }
     ],
-    "pollsAppeared": 1,
+    "pollsAppeared": 2,
     "bestRank": 1652
   },
   "Stephanie Spray": {
@@ -47445,20 +47431,6 @@
     "pollsAppeared": 1,
     "bestRank": 899
   },
-  "Kim Ji-seok": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 310,
-        "title": "And There Was Light",
-        "year": "2020",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 899
-  },
   "Sacha Gervasi": {
     "totalFilms": 1,
     "films": [
@@ -48530,20 +48502,6 @@
         "key": 1917,
         "title": "Last Train Home",
         "year": "2009",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 899
-  },
-  "Antonio Mendez Esparza": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 1998,
-        "title": "Life and Nothing More",
-        "year": "2017",
         "rank2022": null,
         "votes2022": 0
       }
@@ -51323,20 +51281,6 @@
     "pollsAppeared": 1,
     "bestRank": 217
   },
-  "Ange Leccia": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 2648,
-        "title": "Perfect Day",
-        "year": "2008",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 217
-  },
   "Robert Drew": {
     "totalFilms": 1,
     "films": [
@@ -51526,27 +51470,13 @@
     "pollsAppeared": 1,
     "bestRank": 155
   },
-  "Paul Tana": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 914,
-        "title": "Day by Day",
-        "year": "1980",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 155
-  },
-  "Lee Hyun-seung": {
+  "Giuseppe Patroni Griffi": {
     "totalFilms": 1,
     "films": [
       {
         "key": 1626,
-        "title": "Il Mare",
-        "year": "2000",
+        "title": "The Sea",
+        "year": "1963",
         "rank2022": null,
         "votes2022": 0
       }
