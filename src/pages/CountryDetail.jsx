@@ -3,12 +3,10 @@ import { useParams, Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import FilmCardsGrid from '../components/country/FilmCardsGrid'
-import FilmRankScatter from '../components/country/FilmRankScatter'
 import DirectorsTreemap from '../components/country/DirectorsTreemap'
 import DecadeHeatmapRows from '../components/country/DecadeHeatmapRows'
 import DecadeRankHeatmap from '../components/country/DecadeRankHeatmap'
 import PollHistoryChart from '../components/country/PollHistoryChart'
-import VoteStepChart from '../components/country/VoteStepChart'
 
 // Continent color mapping
 const continentColors = {
@@ -395,41 +393,7 @@ export default function CountryDetail() {
                   />
                 </div>
 
-                {/* VISUALIZATION 3: SCATTER PLOT - ALL FILMS BY YEAR AND RANK */}
-                <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                      Films by Year and Rank
-                    </h2>
-                    <p className="text-black font-medium">
-                      Every film from {decodedCountryName} plotted by release year and rank. Films with only 1 vote shown in the density band below.
-                    </p>
-                  </div>
-                  <FilmRankScatter
-                    films={countryFilms}
-                    selectedPoll={selectedPoll}
-                    continentColor={continentColor}
-                  />
-                </div>
-
-                {/* VISUALIZATION 2: VOTE STEP CHART - TOP FILMS BY VOTES */}
-                <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                      Top Films by Votes
-                    </h2>
-                    <p className="text-black font-medium">
-                      How do the top films from {decodedCountryName} compare in votes? See the gaps between frontrunners.
-                    </p>
-                  </div>
-                  <VoteStepChart
-                    films={countryFilms}
-                    selectedPoll={selectedPoll}
-                    continentColor={continentColor}
-                  />
-                </div>
-
-                {/* VISUALIZATION 3: DIRECTORS TREEMAP */}
+                {/* VISUALIZATION 2: DIRECTORS TREEMAP */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
                   <div className="mb-6 border-b-2 border-gray-300 pb-4">
                     <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">

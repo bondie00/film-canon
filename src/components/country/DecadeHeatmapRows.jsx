@@ -182,7 +182,7 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
                     style={{
                       height: CELL_HEIGHT,
                       marginBottom: ROW_GAP,
-                      outline: isHighlighted ? '3px solid #D4AF37' : 'none',
+                      outline: isHighlighted ? '3.5px solid #D4AF37' : 'none',
                       outlineOffset: '-1px',
                       zIndex: isHighlighted ? 1 : 0,
                       position: 'relative'

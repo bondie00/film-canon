@@ -212,7 +212,7 @@ export default function DecadeRankHeatmap({ films, selectedPoll, rankRange, cont
           <div className="shrink-0 flex flex-col border-r-2 border-black" style={{ width: LABEL_WIDTH }}>
             {/* Y-axis label */}
             <div
-              className="flex items-center justify-center text-xs font-bold text-black"
+              className="flex items-center justify-center text-xs font-bold uppercase tracking-wide text-gray-500 border-b border-gray-300"
               style={{ height: 24 }}
             >
               Rank Tier
@@ -223,8 +223,8 @@ export default function DecadeRankHeatmap({ films, selectedPoll, rankRange, cont
               {rankTiers.map((tier) => (
                 <div
                   key={tier.label}
-                  className="flex items-center justify-end pr-3 text-xs text-black border-b border-gray-200"
-                  style={{ height: CELL_HEIGHT + ROW_GAP, fontWeight: 600 }}
+                  className="flex items-center justify-end pr-3 font-bold text-sm text-black border-b border-gray-200"
+                  style={{ height: CELL_HEIGHT + ROW_GAP }}
                 >
                   {tier.label}
                 </div>
@@ -304,8 +304,8 @@ export default function DecadeRankHeatmap({ films, selectedPoll, rankRange, cont
               {decades.map((decade) => (
                 <div
                   key={decade}
-                  className="flex-1 flex items-center justify-center text-xs text-black"
-                  style={{ minWidth: 50, fontWeight: 600 }}
+                  className="flex-1 flex items-center justify-center text-xs font-bold tracking-wide text-black"
+                  style={{ minWidth: 50 }}
                 >
                   {decade}s
                 </div>

@@ -213,22 +213,33 @@ export default function PollHistoryChart({
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
           <XAxis
             dataKey="year"
-            tick={{ fontSize: 12, fontWeight: 'bold' }}
+            tick={({ x, y, payload }) => (
+              <text
+                x={x} y={y + 12}
+                textAnchor="middle"
+                fontSize={12}
+                fontWeight={700}
+                fill={payload.value.toString() === selectedPoll ? '#D4AF37' : '#000'}
+                letterSpacing="0.05em"
+              >
+                {payload.value}
+              </text>
+            )}
             tickLine={{ stroke: '#000' }}
             axisLine={{ stroke: '#000', strokeWidth: 2 }}
           />
           <YAxis
             domain={[0, yAxisMax]}
             ticks={yAxisTicks}
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 12, fontWeight: 700, fill: '#000' }}
             tickLine={{ stroke: '#000' }}
             axisLine={{ stroke: '#000', strokeWidth: 2 }}
             tickFormatter={(value) => `${value}%`}
             label={{
-              value: 'Share of Poll',
+              value: 'SHARE OF POLL',
               angle: -90,
               position: 'insideLeft',
-              style: { textAnchor: 'middle', fontWeight: 'bold', fontSize: 12 }
+              style: { textAnchor: 'middle', fontWeight: 700, fontSize: 12, fill: '#6b7280', letterSpacing: '0.05em' }
             }}
           />
           <Tooltip content={<CustomTooltip />} />
@@ -242,7 +253,7 @@ export default function PollHistoryChart({
                 key={`cell-${index}`}
                 fill={getBarFill()}
                 stroke={getBarStroke(entry)}
-                strokeWidth={entry.isHighlighted && selectedPoll !== 'all' ? 3 : 1}
+                strokeWidth={entry.isHighlighted && selectedPoll !== 'all' ? 3.5 : 1}
               />
             ))}
           </Bar>
