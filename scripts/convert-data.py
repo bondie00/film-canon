@@ -79,6 +79,34 @@ CONTINENT_MAP = {
 }
 
 
+def compute_consensus_cutoff(df, year):
+    """Compute the consensus cutoff rank for a poll.
+
+    Walk through rank groups accumulating count until adding the next
+    group would exceed 100 films. Returns (cutoff_rank, film_count).
+    """
+    votes_col = f'{year}votes'
+    rank_col = f'{year}rank'
+
+    films_in_poll = df[(df[votes_col] > 0) & (df[rank_col].notna())].sort_values(rank_col)
+
+    if len(films_in_poll) == 0:
+        return None, 0
+
+    cumulative = 0
+    cutoff_rank = None
+
+    for rank_val in sorted(films_in_poll[rank_col].unique()):
+        count = len(films_in_poll[films_in_poll[rank_col] == rank_val])
+        if cumulative + count <= 100:
+            cumulative += count
+            cutoff_rank = int(rank_val)
+        else:
+            break
+
+    return cutoff_rank, cumulative
+
+
 def generate_films_json(df, output_path):
     """Generate films.json with all film data"""
     print("Generating films.json...")
@@ -143,6 +171,13 @@ def generate_countries_json(df, output_path):
     """Generate countries.json with country statistics (optimized single-pass)"""
     print("\nGenerating countries.json...")
 
+    # Compute consensus cutoff ranks for each poll
+    consensus_cutoffs = {}
+    for year in POLL_YEARS:
+        cutoff_rank, film_count = compute_consensus_cutoff(df, year)
+        consensus_cutoffs[year] = cutoff_rank
+        print(f"  Consensus cutoff for {year}: rank <= {cutoff_rank} ({film_count} films)")
+
     # First, calculate true poll metadata (without co-production inflation)
     poll_metadata = {}
     for year in POLL_YEARS:
@@ -154,20 +189,28 @@ def generate_countries_json(df, output_path):
 
         # Count distinct films
         distinct_films_all = len(films_in_poll)
-        distinct_films_top100 = len(films_in_poll[films_in_poll[rank_col] <= 100])
+
+        # Consensus: use cutoff rank instead of hard-coded 100
+        cutoff = consensus_cutoffs[year]
+        if cutoff is not None:
+            consensus_films = films_in_poll[films_in_poll[rank_col] <= cutoff]
+        else:
+            consensus_films = films_in_poll.iloc[0:0]  # empty
+        distinct_films_consensus = len(consensus_films)
 
         # Sum total votes
         total_votes_all = int(films_in_poll[votes_col].sum())
-        total_votes_top100 = int(films_in_poll[films_in_poll[rank_col] <= 100][votes_col].sum())
+        total_votes_consensus = int(consensus_films[votes_col].sum())
 
         poll_metadata[str(year)] = {
             'all': {
                 'votes': total_votes_all,
                 'films': distinct_films_all
             },
-            'top100': {
-                'votes': total_votes_top100,
-                'films': distinct_films_top100
+            'consensus': {
+                'votes': total_votes_consensus,
+                'films': distinct_films_consensus,
+                'cutoffRank': cutoff
             }
         }
 
@@ -176,17 +219,15 @@ def generate_countries_json(df, output_path):
     all_polls_films_all = len(df[df[[f'{year}votes' for year in POLL_YEARS]].gt(0).any(axis=1)])
     all_polls_votes_all = sum(int(df[f'{year}votes'].sum()) for year in POLL_YEARS)
 
-    # For "top100" - get top 100 films by aggregated vote totals across all polls
-    # Calculate total votes for each film across all polls
+    # For consensus in "all" mode - get top 100 films by aggregated vote totals
     df['total_votes_all_polls'] = df[[f'{year}votes' for year in POLL_YEARS]].fillna(0).sum(axis=1)
 
-    # Get top 100 films by total votes
-    top100_films = df.nlargest(100, 'total_votes_all_polls')
-    all_polls_films_top100 = len(top100_films)
-    all_polls_votes_top100 = int(top100_films['total_votes_all_polls'].sum())
+    consensus_films_combined = df.nlargest(100, 'total_votes_all_polls')
+    all_polls_films_consensus = len(consensus_films_combined)
+    all_polls_votes_consensus = int(consensus_films_combined['total_votes_all_polls'].sum())
 
-    # Store the keys of films in the true top 100 for later use
-    top100_film_keys = set(top100_films['key'].tolist())
+    # Store the keys of films in the consensus set for later use
+    consensus_film_keys = set(consensus_films_combined['key'].tolist())
 
     # Clean up temporary column
     df.drop('total_votes_all_polls', axis=1, inplace=True)
@@ -196,9 +237,9 @@ def generate_countries_json(df, output_path):
             'votes': all_polls_votes_all,
             'films': all_polls_films_all
         },
-        'top100': {
-            'votes': all_polls_votes_top100,
-            'films': all_polls_films_top100
+        'consensus': {
+            'votes': all_polls_votes_consensus,
+            'films': all_polls_films_consensus
         }
     }
 
@@ -206,7 +247,7 @@ def generate_countries_json(df, output_path):
     countries_stats = defaultdict(lambda: {
         'continent': None,
         'total_films': 0,
-        'by_poll': defaultdict(lambda: {'total': 0, 'top100': 0, 'distinct_films': 0, 'distinct_films_top100': 0}),
+        'by_poll': defaultdict(lambda: {'total': 0, 'consensus': 0, 'distinct_films': 0, 'distinct_films_consensus': 0}),
         'by_decade': defaultdict(int)
     })
 
@@ -217,7 +258,7 @@ def generate_countries_json(df, output_path):
             countries = [c for c in countries if c]
 
             film_key = row['key']
-            is_in_top100_combined = film_key in top100_film_keys
+            is_in_consensus_combined = film_key in consensus_film_keys
 
             # Calculate total votes across all polls for this film
             total_votes_for_film = 0
@@ -267,18 +308,19 @@ def generate_countries_json(df, output_path):
                         countries_stats[country]['by_poll'][str(year)]['total'] += votes
                         countries_stats[country]['by_poll'][str(year)]['distinct_films'] += 1
 
-                        if pd.notna(rank) and rank <= 100:
-                            countries_stats[country]['by_poll'][str(year)]['top100'] += votes
-                            countries_stats[country]['by_poll'][str(year)]['distinct_films_top100'] += 1
+                        cutoff = consensus_cutoffs[year]
+                        if cutoff is not None and pd.notna(rank) and rank <= cutoff:
+                            countries_stats[country]['by_poll'][str(year)]['consensus'] += votes
+                            countries_stats[country]['by_poll'][str(year)]['distinct_films_consensus'] += 1
 
                 # Update "all polls combined" statistics
                 if has_votes:
                     countries_stats[country]['by_poll']['all']['total'] += total_votes_for_film
                     countries_stats[country]['by_poll']['all']['distinct_films'] += 1
 
-                    if is_in_top100_combined:
-                        countries_stats[country]['by_poll']['all']['top100'] += total_votes_for_film
-                        countries_stats[country]['by_poll']['all']['distinct_films_top100'] += 1
+                    if is_in_consensus_combined:
+                        countries_stats[country]['by_poll']['all']['consensus'] += total_votes_for_film
+                        countries_stats[country]['by_poll']['all']['distinct_films_consensus'] += 1
 
     # Convert to final format
     countries_data = {
@@ -293,21 +335,21 @@ def generate_countries_json(df, output_path):
         by_poll = {}
         for year in POLL_YEARS:
             year_key = str(year)
-            poll_data = stats['by_poll'].get(year_key, {'total': 0, 'top100': 0, 'distinct_films': 0, 'distinct_films_top100': 0})
+            poll_data = stats['by_poll'].get(year_key, {'total': 0, 'consensus': 0, 'distinct_films': 0, 'distinct_films_consensus': 0})
             by_poll[year_key] = {
                 'total': int(poll_data['total']),
-                'top100': int(poll_data['top100']),
+                'consensus': int(poll_data['consensus']),
                 'distinctFilms': poll_data['distinct_films'],
-                'distinctFilmsTop100': poll_data['distinct_films_top100']
+                'distinctFilmsConsensus': poll_data['distinct_films_consensus']
             }
 
         # Add "all" poll
-        all_poll_data = stats['by_poll'].get('all', {'total': 0, 'top100': 0, 'distinct_films': 0, 'distinct_films_top100': 0})
+        all_poll_data = stats['by_poll'].get('all', {'total': 0, 'consensus': 0, 'distinct_films': 0, 'distinct_films_consensus': 0})
         by_poll['all'] = {
             'total': int(all_poll_data['total']),
-            'top100': int(all_poll_data['top100']),
+            'consensus': int(all_poll_data['consensus']),
             'distinctFilms': all_poll_data['distinct_films'],
-            'distinctFilmsTop100': all_poll_data['distinct_films_top100']
+            'distinctFilmsConsensus': all_poll_data['distinct_films_consensus']
         }
 
         countries_data[country] = {

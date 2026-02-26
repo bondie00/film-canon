@@ -59,6 +59,20 @@ export default function CountryDetail() {
     return countriesData[decodedCountryName]
   }, [countriesData, decodedCountryName])
 
+  // All films for this country (rank-filtered but not poll-filtered — used by static hero visualizations)
+  const allCountryFilms = useMemo(() => {
+    if (!filmsData || !decodedCountryName) return []
+    return filmsData.filter(film => {
+      if (!film.countries.includes(decodedCountryName)) return false
+      const allPollData = film.pollHistory.find(p => p.year === 'all')
+      if (!allPollData || allPollData.votes === 0) return false
+      if (rankRange === 'consensus') {
+        return allPollData.rank && allPollData.rank <= 100
+      }
+      return true
+    })
+  }, [filmsData, decodedCountryName, rankRange])
+
   // Filter films for this country
   const countryFilms = useMemo(() => {
     if (!filmsData || !decodedCountryName) return []
@@ -72,8 +86,8 @@ export default function CountryDetail() {
         const allPollData = film.pollHistory.find(p => p.year === 'all')
         if (!allPollData || allPollData.votes === 0) return false
 
-        // Apply rank filter for combined polls
-        if (rankRange === 'top100') {
+        // Apply rank filter for combined polls (top 100 by total votes)
+        if (rankRange === 'consensus') {
           return allPollData.rank && allPollData.rank <= 100
         }
         return true
@@ -81,14 +95,15 @@ export default function CountryDetail() {
         const pollData = film.pollHistory.find(p => p.year.toString() === selectedPoll)
         if (!pollData || pollData.votes === 0) return false
 
-        // Apply rank filter
-        if (rankRange === 'top100') {
-          return pollData.rank && pollData.rank <= 100
+        // Apply consensus rank filter using per-poll cutoff
+        if (rankRange === 'consensus') {
+          const cutoffRank = countriesData?._pollMetadata?.[selectedPoll]?.consensus?.cutoffRank
+          return pollData.rank && cutoffRank && pollData.rank <= cutoffRank
         }
         return true
       }
     })
-  }, [filmsData, decodedCountryName, selectedPoll, rankRange])
+  }, [filmsData, countriesData, decodedCountryName, selectedPoll, rankRange])
 
   // Calculate metrics
   const metrics = useMemo(() => {
@@ -122,7 +137,7 @@ export default function CountryDetail() {
 
     const rankText = rankRange === 'all'
       ? 'All Films'
-      : 'Top 100'
+      : 'Consensus'
 
     return `${pollText} • ${rankText}`
   }
@@ -207,40 +222,10 @@ export default function CountryDetail() {
             <div className="bg-white border-4 border-black p-6 lg:sticky lg:top-8">
               <h2 className="text-3xl font-bold text-black mb-6 uppercase tracking-wider">Filters</h2>
 
-              {/* RANK RANGE FILTER - Now first since it's truly global */}
+              {/* POLL SELECTION FILTER */}
               <div className="mb-6 pb-6 border-b-2 border-gray-300">
                 <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
-                  Film Rank Range
-                </label>
-                <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
-                  <button
-                    onClick={() => setRankRange('all')}
-                    className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all ${
-                      rankRange === 'all'
-                        ? 'bg-black text-white border-2 border-black'
-                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                    }`}
-                  >
-                    All Films
-                  </button>
-                  <button
-                    onClick={() => setRankRange('top100')}
-                    className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all ${
-                      rankRange === 'top100'
-                        ? 'bg-black text-white border-2 border-black'
-                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                    }`}
-                  >
-                    Top 100
-                  </button>
-                </div>
-                <p className="text-xs text-gray-500 mt-2">Applies to all visualizations</p>
-              </div>
-
-              {/* FOCUS POLL FILTER */}
-              <div>
-                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
-                  Focus Poll
+                  Poll Selection
                 </label>
                 <select
                   value={selectedPoll}
@@ -257,7 +242,38 @@ export default function CountryDetail() {
                   <option value="1962">1962</option>
                   <option value="1952">1952</option>
                 </select>
-                <p className="text-xs text-gray-500 mt-2">Highlights hero chart, filters exploration below</p>
+              </div>
+
+              {/* RANK RANGE FILTER */}
+              <div>
+                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
+                  Film Rank Range
+                </label>
+                <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
+                  <button
+                    onClick={() => setRankRange('all')}
+                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
+                      rankRange === 'all'
+                        ? 'bg-black text-white border-2 border-black'
+                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
+                    }`}
+                  >
+                    All Films
+                  </button>
+                  <button
+                    onClick={() => setRankRange('consensus')}
+                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
+                      rankRange === 'consensus'
+                        ? 'bg-black text-white border-2 border-black'
+                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
+                    }`}
+                  >
+                    Consensus
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  {rankRange === 'consensus' ? 'Films voted for by 2+ critics' : ''}
+                </p>
               </div>
             </div>
           </div>
@@ -299,7 +315,7 @@ export default function CountryDetail() {
               </div>
             </div>
 
-            {/* HERO SECTION: Poll History Chart - Always visible, shows all polls */}
+            {/* HERO SECTION: Overview charts - static, not affected by poll filter */}
             <div className="bg-white border-4 border-black p-6 mb-8">
               <div className="mb-6 border-b-2 border-gray-300 pb-4">
                 <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
@@ -315,6 +331,23 @@ export default function CountryDetail() {
                 countryName={decodedCountryName}
                 selectedPoll={selectedPoll}
                 rankRange={rankRange}
+                continentColor={continentColor}
+                countriesData={countriesData}
+              />
+            </div>
+
+            <div className="bg-white border-4 border-black p-6 mb-8">
+              <div className="mb-6 border-b-2 border-gray-300 pb-4">
+                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
+                  Decade Distribution Heatmap
+                </h2>
+                <p className="text-black font-medium">
+                  Each poll's row is colored on its own scale, showing which decades that poll valued most for {decodedCountryName}.
+                </p>
+              </div>
+              <DecadeHeatmapRows
+                films={allCountryFilms}
+                selectedPoll={selectedPoll}
                 continentColor={continentColor}
               />
             </div>
@@ -344,30 +377,7 @@ export default function CountryDetail() {
               </div>
             ) : (
               <>
-                {/* VISUALIZATION 1: ROW-NORMALIZED HEATMAP / BAR CHART */}
-                <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                      {selectedPoll === 'all'
-                        ? 'Decade Distribution Heatmap'
-                        : `Decade Distribution (${selectedPoll})`
-                      }
-                    </h2>
-                    <p className="text-black font-medium">
-                      {selectedPoll === 'all'
-                        ? `Each poll's row is colored on its own scale, showing which decades that poll valued most for ${decodedCountryName}.`
-                        : `How many films from ${decodedCountryName} came from each decade in the ${selectedPoll} poll?`
-                      }
-                    </p>
-                  </div>
-                  <DecadeHeatmapRows
-                    films={countryFilms}
-                    selectedPoll={selectedPoll}
-                    continentColor={continentColor}
-                  />
-                </div>
-
-                {/* VISUALIZATION 2: DECADE × RANK TIER HEATMAP */}
+                {/* VISUALIZATION 1: DECADE × RANK TIER HEATMAP */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
                   <div className="mb-6 border-b-2 border-gray-300 pb-4">
                     <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">

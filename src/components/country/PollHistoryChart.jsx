@@ -7,8 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Cell,
-  Legend
+  Cell
 } from 'recharts'
 
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
@@ -19,7 +18,8 @@ export default function PollHistoryChart({
   countryName,
   selectedPoll,
   rankRange,
-  continentColor
+  continentColor,
+  countriesData
 }) {
   // Calculate percentage share per poll for this country
   const chartData = useMemo(() => {
@@ -27,12 +27,14 @@ export default function PollHistoryChart({
 
     return POLL_YEARS.map(pollYear => {
       // Count ALL films in this poll (applying rank filter)
+      const cutoffRank = countriesData?._pollMetadata?.[pollYear.toString()]?.consensus?.cutoffRank
+
       const allFilmsInPoll = filmsData.filter(film => {
         const pollData = film.pollHistory.find(p => p.year === pollYear)
         if (!pollData || pollData.votes === 0) return false
 
-        if (rankRange === 'top100') {
-          return pollData.rank && pollData.rank <= 100
+        if (rankRange === 'consensus') {
+          return pollData.rank && cutoffRank && pollData.rank <= cutoffRank
         }
         return true
       })
@@ -53,11 +55,18 @@ export default function PollHistoryChart({
         return sum + (pollData?.votes || 0)
       }, 0)
 
-      // Find best rank for this country in this poll
-      const ranks = countryFilmsInPoll
-        .map(film => film.pollHistory.find(p => p.year === pollYear)?.rank)
-        .filter(r => r && r <= 100)
-        .sort((a, b) => a - b)
+      // Find best rank and film title for this country in this poll
+      const rankedFilms = countryFilmsInPoll
+        .map(film => {
+          const pd = film.pollHistory.find(p => p.year === pollYear)
+          return { title: film.FilmTitle, rank: pd?.rank }
+        })
+        .filter(f => {
+          if (!f.rank) return false
+          if (rankRange === 'consensus') return cutoffRank && f.rank <= cutoffRank
+          return f.rank <= 100
+        })
+        .sort((a, b) => a.rank - b.rank)
 
       return {
         year: pollYear,
@@ -66,12 +75,13 @@ export default function PollHistoryChart({
         countryFilms,
         totalFilms,
         countryVotes,
-        bestRank: ranks[0] || null,
-        top10Count: ranks.filter(r => r <= 10).length,
+        bestRank: rankedFilms[0]?.rank || null,
+        bestRankTitle: rankedFilms[0]?.title || null,
+        top10Count: rankedFilms.filter(f => f.rank <= 10).length,
         isHighlighted: selectedPoll === pollYear.toString()
       }
     })
-  }, [filmsData, countryName, rankRange, selectedPoll])
+  }, [filmsData, countryName, rankRange, selectedPoll, countriesData])
 
   // Calculate stats
   const stats = useMemo(() => {
@@ -117,11 +127,12 @@ export default function PollHistoryChart({
     }
   }, [chartData])
 
-  // Custom tooltip
+  // Custom tooltip — changes content based on rankRange
   const CustomTooltip = ({ active, payload }) => {
     if (!active || !payload?.length) return null
 
     const data = payload[0].payload
+    const isConsensus = rankRange === 'consensus'
 
     return (
       <div className="bg-white border-2 border-black p-3 shadow-lg min-w-[180px]">
@@ -129,7 +140,9 @@ export default function PollHistoryChart({
         <div className="space-y-1">
           <div className="flex justify-between">
             <span className="text-gray-600">{countryName}:</span>
-            <span className="font-bold text-black">{data.countryShare.toFixed(1)}%</span>
+            <span className="font-bold text-black">
+              {data.countryShare.toFixed(1)}%{isConsensus ? ' of consensus films' : ''}
+            </span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Films:</span>
@@ -142,7 +155,7 @@ export default function PollHistoryChart({
           {data.bestRank && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-500">Best Rank:</span>
-              <span className="font-medium text-gray-700">#{data.bestRank}</span>
+              <span className="font-medium text-gray-700">#{data.bestRank}{isConsensus && data.bestRankTitle ? ` ${data.bestRankTitle}` : ''}</span>
             </div>
           )}
           {data.top10Count > 0 && (
@@ -167,15 +180,11 @@ export default function PollHistoryChart({
     )
   }
 
-  // Determine bar styling based on highlight
-  const getBarFill = (entry) => {
-    if (selectedPoll === 'all') return continentColor
-    return entry.isHighlighted ? continentColor : '#d1d5db'
-  }
+  // Determine bar styling — always continent color, gold outline on selected poll
+  const getBarFill = () => continentColor
 
   const getBarStroke = (entry) => {
-    if (selectedPoll === 'all') return '#000'
-    return entry.isHighlighted ? '#000' : '#9ca3af'
+    return entry.isHighlighted && selectedPoll !== 'all' ? '#D4AF37' : '#000'
   }
 
   // Calculate Y-axis domain and ticks
@@ -231,31 +240,15 @@ export default function PollHistoryChart({
             {chartData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={getBarFill(entry)}
+                fill={getBarFill()}
                 stroke={getBarStroke(entry)}
-                strokeWidth={entry.isHighlighted ? 2 : 1}
+                strokeWidth={entry.isHighlighted && selectedPoll !== 'all' ? 3 : 1}
               />
             ))}
           </Bar>
         </BarChart>
       </ResponsiveContainer>
 
-      {/* Legend */}
-      {selectedPoll !== 'all' && (
-        <div className="mt-2 flex items-center justify-center gap-6 text-sm">
-          <div className="flex items-center gap-2">
-            <div
-              className="w-4 h-4 border-2 border-black"
-              style={{ backgroundColor: continentColor }}
-            />
-            <span className="font-medium">Focused Poll ({selectedPoll})</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-gray-300 border border-gray-400" />
-            <span className="text-gray-600">Other Polls</span>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

@@ -128,7 +128,7 @@ export default function DecadeRankHeatmap({ films, selectedPoll, rankRange, cont
       }
     })
 
-    // Filter out tiers that have no films (e.g., 100+ when Top 100 filter is active)
+    // Filter out tiers that have no films (e.g., 100+ when Consensus filter is active)
     const rankTiers = allRankTiers.filter(tier => tierTotals[tier.label] > 0)
 
     // Get decades that have data

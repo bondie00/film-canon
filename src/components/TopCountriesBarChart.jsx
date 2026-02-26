@@ -59,9 +59,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         if (rankRange === 'all') {
           filmCount = pollData.total || 0
           distinctFilms = pollData.distinctFilms || 0
-        } else if (rankRange === 'top100') {
-          filmCount = pollData.top100 || 0
-          distinctFilms = pollData.distinctFilmsTop100 || 0
+        } else if (rankRange === 'consensus') {
+          filmCount = pollData.consensus || 0
+          distinctFilms = pollData.distinctFilmsConsensus || 0
         }
       }
 

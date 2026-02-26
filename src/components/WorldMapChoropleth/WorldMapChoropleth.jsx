@@ -76,8 +76,8 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
       const pollData = countryInfo.byPoll?.[selectedPoll]
       if (!pollData) return
 
-      const votes = rankRange === 'all' ? pollData.total : pollData.top100
-      const distinctFilms = rankRange === 'all' ? pollData.distinctFilms : pollData.distinctFilmsTop100
+      const votes = rankRange === 'all' ? pollData.total : pollData.consensus
+      const distinctFilms = rankRange === 'all' ? pollData.distinctFilms : pollData.distinctFilmsConsensus
 
       if (!aggregated[iso]) {
         aggregated[iso] = {
@@ -201,14 +201,15 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
           rank = pollEntry?.rank || null
         }
 
-        // Filter by rank range if top100
-        if (rankRange === 'top100') {
-          // For top100, only include films that had rank <= 100 in any poll (for "all") or specific poll
+        // Filter by consensus rank range
+        if (rankRange === 'consensus') {
           if (selectedPoll === 'all') {
-            const hasTop100 = film.pollHistory?.some(p => p.rank && p.rank <= 100)
-            if (!hasTop100) return null
+            // For "all" combined, check if film is in top 100 by total votes
+            const allPollData = film.pollHistory?.find(p => p.year === 'all')
+            if (!allPollData?.rank || allPollData.rank > 100) return null
           } else {
-            if (!rank || rank > 100) return null
+            const cutoffRank = countriesData?._pollMetadata?.[selectedPoll]?.consensus?.cutoffRank
+            if (!rank || !cutoffRank || rank > cutoffRank) return null
           }
         }
 

@@ -33,7 +33,7 @@ export default function CountryOriginMain() {
 
     // Get true poll totals from metadata (without co-production inflation)
     const pollKey = selectedPoll === 'all' ? 'all' : selectedPoll
-    const rangeKey = rankRange === 'all' ? 'all' : 'top100'
+    const rangeKey = rankRange === 'all' ? 'all' : 'consensus'
 
     const pollMetadata = countriesData._pollMetadata?.[pollKey]?.[rangeKey]
     const trueTotalVotes = pollMetadata?.votes || 0
@@ -52,12 +52,12 @@ export default function CountryOriginMain() {
             sum + (pollData.total || 0), 0)
         } else {
           votes = Object.values(countryInfo.byPoll).reduce((sum, pollData) =>
-            sum + (pollData.top100 || 0), 0)
+            sum + (pollData.consensus || 0), 0)
         }
       } else {
         const pollData = countryInfo.byPoll[selectedPoll]
         if (pollData) {
-          votes = rankRange === 'all' ? pollData.total : pollData.top100
+          votes = rankRange === 'all' ? pollData.total : pollData.consensus
         }
       }
 
@@ -81,7 +81,7 @@ export default function CountryOriginMain() {
 
     const rankText = rankRange === 'all'
       ? 'All Films'
-      : 'Top 100'
+      : 'Consensus'
 
     return `${pollText} • ${rankText}`
   }
@@ -129,7 +129,7 @@ export default function CountryOriginMain() {
                 <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
                   <button
                     onClick={() => setRankRange('all')}
-                    className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all ${
+                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
                       rankRange === 'all'
                         ? 'bg-black text-white border-2 border-black'
                         : 'bg-white text-black border-2 border-gray-300 hover:border-black'
@@ -138,16 +138,19 @@ export default function CountryOriginMain() {
                     All Films
                   </button>
                   <button
-                    onClick={() => setRankRange('top100')}
-                    className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all ${
-                      rankRange === 'top100'
+                    onClick={() => setRankRange('consensus')}
+                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
+                      rankRange === 'consensus'
                         ? 'bg-black text-white border-2 border-black'
                         : 'bg-white text-black border-2 border-gray-300 hover:border-black'
                     }`}
                   >
-                    Top 100
+                    Consensus
                   </button>
                 </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  {rankRange === 'consensus' ? 'Films voted for by 2+ critics' : ''}
+                </p>
               </div>
             </div>
           </div>

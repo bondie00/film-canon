@@ -62,9 +62,9 @@ export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 
         if (rankRange === 'all') {
           votes = pollData.total || 0
           distinctFilms = pollData.distinctFilms || 0
-        } else if (rankRange === 'top100') {
-          votes = pollData.top100 || 0
-          distinctFilms = pollData.distinctFilmsTop100 || 0
+        } else if (rankRange === 'consensus') {
+          votes = pollData.consensus || 0
+          distinctFilms = pollData.distinctFilmsConsensus || 0
         }
       }
 
