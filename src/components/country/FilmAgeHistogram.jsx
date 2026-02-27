@@ -105,7 +105,7 @@ export default function FilmAgeHistogram({ films, selectedPoll, continentColor }
 
   if (!hasData) {
     return (
-      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[350px] flex items-center justify-center">
+      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[21.875rem] flex items-center justify-center">
         <div className="text-center text-gray-500">
           <div className="text-4xl mb-4">📊</div>
           <div className="font-bold mb-2">Not Enough Data</div>
@@ -160,7 +160,8 @@ export default function FilmAgeHistogram({ films, selectedPoll, continentColor }
       </div>
 
       {/* Histogram */}
-      <ResponsiveContainer width="100%" height={300}>
+      <div className="h-[18.75rem]">
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={chartData}
           margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
@@ -199,6 +200,7 @@ export default function FilmAgeHistogram({ films, selectedPoll, continentColor }
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+      </div>
 
       {/* Reference Note */}
       <div className="mt-4 text-center text-sm text-gray-600">

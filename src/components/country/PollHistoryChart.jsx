@@ -171,7 +171,7 @@ export default function PollHistoryChart({
 
   if (!chartData.length || !stats) {
     return (
-      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[300px] flex items-center justify-center">
+      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[18.75rem] flex items-center justify-center">
         <div className="text-center text-gray-500">
           <div className="text-4xl mb-4">📊</div>
           <div className="font-bold mb-2">No Data Available</div>
@@ -205,7 +205,8 @@ export default function PollHistoryChart({
   return (
     <div>
       {/* Bar Chart with auto-scaled Y-axis */}
-      <ResponsiveContainer width="100%" height={320}>
+      <div className="h-[20rem]">
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={chartData}
           margin={{ top: 30, right: 30, left: 20, bottom: 20 }}
@@ -259,6 +260,7 @@ export default function PollHistoryChart({
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+      </div>
 
     </div>
   )

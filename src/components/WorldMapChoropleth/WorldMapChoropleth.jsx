@@ -258,7 +258,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
   if (!countriesData) {
     return (
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[455px] flex items-center justify-center">
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[28.44rem] flex items-center justify-center">
         <div className="text-black font-bold">Loading map data...</div>
       </div>
     )
@@ -287,7 +287,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
       {/* Map Container */}
       <div
         ref={mapRef}
-        className="border-2 border-black h-[455px] overflow-hidden select-none"
+        className="border-2 border-black h-[28.44rem] overflow-hidden select-none"
         style={{ userSelect: 'none', backgroundColor: '#ffffff' }}
         onWheel={handleWheel}
         onMouseMove={handleMouseMove}

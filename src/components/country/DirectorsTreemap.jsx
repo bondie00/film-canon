@@ -90,7 +90,7 @@ export default function DirectorsTreemap({ films, continentColor }) {
 
   if (!packedData || topDirectors.length === 0) {
     return (
-      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[400px] flex items-center justify-center">
+      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[25rem] flex items-center justify-center">
         <div className="text-center text-gray-500">
           <div className="text-4xl mb-4">🎬</div>
           <div className="font-bold mb-2">Not Enough Data</div>
@@ -111,7 +111,7 @@ export default function DirectorsTreemap({ films, continentColor }) {
       <div
         ref={containerRef}
         className="border-2 border-black bg-gray-50 relative"
-        style={{ height: '400px' }}
+        style={{ height: '25rem' }}
         onMouseLeave={handleNodeMouseLeave}
       >
         <svg

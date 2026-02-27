@@ -96,7 +96,7 @@ export default function FilmRankLineChart({ films, continentColor }) {
 
   if (!hasData) {
     return (
-      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[400px] flex items-center justify-center">
+      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[25rem] flex items-center justify-center">
         <div className="text-center text-gray-500">
           <div className="text-4xl mb-4">📊</div>
           <div className="font-bold mb-2">Not Enough Data</div>
@@ -110,7 +110,8 @@ export default function FilmRankLineChart({ films, continentColor }) {
 
   return (
     <div>
-      <ResponsiveContainer width="100%" height={400}>
+      <div className="h-[25rem]">
+      <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={chartData}
           margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
@@ -172,6 +173,7 @@ export default function FilmRankLineChart({ films, continentColor }) {
           ))}
         </LineChart>
       </ResponsiveContainer>
+      </div>
 
       {/* Film Legend with Full Names */}
       <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm border-t-2 border-gray-200 pt-4">

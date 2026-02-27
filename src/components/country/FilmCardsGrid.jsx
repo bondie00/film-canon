@@ -112,7 +112,7 @@ export default function FilmCardsGrid({ films, selectedPoll, continentColor }) {
       </div>
 
       {/* Films Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 max-h-[800px] overflow-y-auto pr-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 max-h-[50rem] overflow-y-auto pr-2">
         {displayedFilms.map((film) => {
           const stats = getFilmStats(film)
 

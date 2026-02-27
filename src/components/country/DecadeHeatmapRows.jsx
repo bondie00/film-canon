@@ -98,7 +98,7 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
 
   if (!hasData) {
     return (
-      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[400px] flex items-center justify-center">
+      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[25rem] flex items-center justify-center">
         <div className="text-center text-gray-500">
           <div className="text-4xl mb-4">📅</div>
           <div className="font-bold mb-2">Not Enough Data</div>

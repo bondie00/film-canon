@@ -217,7 +217,7 @@ export default function CountryOriginMain() {
               </div>
 
               {/* PLACEHOLDER FOR HEATMAP */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[500px] flex items-center justify-center">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[31.25rem] flex items-center justify-center">
                 <div className="text-center text-black max-w-2xl p-6">
                   <div className="text-6xl mb-4">🔥</div>
                   <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Interactive Heatmap</div>

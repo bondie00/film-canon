@@ -400,7 +400,7 @@ export default function FilmRankScatter({ films, selectedPoll, continentColor })
 
   if (!films || films.length === 0) {
     return (
-      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[500px] flex items-center justify-center">
+      <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-[31.25rem] flex items-center justify-center">
         <div className="text-center text-gray-500">
           <div className="text-4xl mb-4">📊</div>
           <div className="font-bold mb-2">No Films to Display</div>
