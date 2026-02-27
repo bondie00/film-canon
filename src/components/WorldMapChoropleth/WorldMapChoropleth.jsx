@@ -90,11 +90,14 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
       aggregated[iso].votes += votes || 0
       aggregated[iso].distinctFilms += distinctFilms || 0
-      aggregated[iso].countries.push({
-        name: countryName,
-        votes: votes || 0,
-        distinctFilms: distinctFilms || 0
-      })
+      // Only include countries that have votes for current filters
+      if ((votes || 0) > 0) {
+        aggregated[iso].countries.push({
+          name: countryName,
+          votes: votes,
+          distinctFilms: distinctFilms || 0
+        })
+      }
     })
 
     return aggregated

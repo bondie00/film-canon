@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 
 // Continent color mapping - matching the page's color scheme
@@ -11,9 +11,11 @@ const continentColors = {
   'Oceania': '#ec4899',       // pink-500
 }
 
-export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange = 'all' }) {
+export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange = 'all', filmsData }) {
   // Country selection state - will be set to top 10 dynamically
   const [selectedCountries, setSelectedCountries] = useState([])
+  const [selectedCountry, setSelectedCountry] = useState(null) // Country name for expanded view
+  const chartContainerRef = useRef(null)
 
   // Dropdown and pending selection state
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -96,14 +98,28 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     return sorted
   }, [countriesData, selectedPoll, rankRange])
 
-  // Set initial top 10 countries when data loads or filters change
+  const defaultCount = rankRange === 'consensus' ? 5 : 10
+
+  // Explicitly track whether user is in "Top N" mode
+  const [isTopNMode, setIsTopNMode] = useState(true)
+
+  // Set initial top N only on first data load
+  const [hasInitialized, setHasInitialized] = useState(false)
   useEffect(() => {
-    if (transformedData.length > 0 && selectedCountries.length === 0) {
-      // Only set initial top 10 if no countries are currently selected
-      const top10 = transformedData.slice(0, 10).map(c => c.name)
-      setSelectedCountries(top10)
+    if (transformedData.length > 0 && !hasInitialized) {
+      const topN = transformedData.slice(0, defaultCount).map(c => c.name)
+      setSelectedCountries(topN)
+      setHasInitialized(true)
     }
   }, [transformedData])
+
+  // When defaultCount or data changes, re-apply Top N if in that mode
+  useEffect(() => {
+    if (hasInitialized && transformedData.length > 0 && isTopNMode) {
+      const topN = transformedData.filter(c => c.filmCount > 0).slice(0, defaultCount).map(c => c.name)
+      setSelectedCountries(topN)
+    }
+  }, [defaultCount, transformedData, isTopNMode])
 
   // Group countries by continent
   const countriesByContinent = useMemo(() => {
@@ -185,13 +201,100 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     return Math.max(150, Math.min(1100, calculated))
   }, [filteredData.length])
 
-  const handleResetToTop10 = () => {
-    // Reset to top 10 from current transformed data
-    const top10 = transformedData.slice(0, 10).map(c => c.name)
-    setSelectedCountries(top10)
+  // Get films for a specific country based on current filters
+  const getFilmsForCountry = useCallback((countryName) => {
+    if (!filmsData) return []
+
+    return filmsData
+      .filter(film => film.countries?.includes(countryName))
+      .map(film => {
+        let votes = 0
+        let rank = null
+
+        if (selectedPoll === 'all') {
+          votes = film.pollHistory?.reduce((sum, poll) => sum + (poll.votes || 0), 0) || 0
+          rank = null
+        } else {
+          const pollEntry = film.pollHistory?.find(p => p.year === parseInt(selectedPoll))
+          votes = pollEntry?.votes || 0
+          rank = pollEntry?.rank || null
+        }
+
+        // Filter by consensus rank range
+        if (rankRange === 'consensus') {
+          if (selectedPoll === 'all') {
+            const allPollData = film.pollHistory?.find(p => p.year === 'all')
+            if (!allPollData?.rank || allPollData.rank > 100) return null
+          } else {
+            const cutoffRank = countriesData?._pollMetadata?.[selectedPoll]?.consensus?.cutoffRank
+            if (!rank || !cutoffRank || rank > cutoffRank) return null
+          }
+        }
+
+        if (votes === 0) return null
+
+        return {
+          title: film.FilmTitle,
+          year: film.Year,
+          votes,
+          rank,
+          directors: film.directors
+        }
+      })
+      .filter(Boolean)
+      .sort((a, b) => {
+        if (b.votes !== a.votes) return b.votes - a.votes
+        if (a.rank && b.rank) return a.rank - b.rank
+        return 0
+      })
+  }, [filmsData, selectedPoll, rankRange, countriesData])
+
+  // Get selected country data for expanded view
+  const selectedCountryData = useMemo(() => {
+    if (!selectedCountry) return null
+
+    const countryInfo = filteredData.find(c => c.name === selectedCountry)
+      || transformedData.find(c => c.name === selectedCountry)
+    if (!countryInfo) return null
+
+    return {
+      name: countryInfo.name,
+      continent: countryInfo.continent,
+      filmCount: countryInfo.filmCount,
+      distinctFilms: countryInfo.distinctFilms,
+      rank: countryInfo.rank,
+      totalCountries: countryInfo.totalCountries,
+      films: getFilmsForCountry(countryInfo.name)
+    }
+  }, [selectedCountry, filteredData, transformedData, getFilmsForCountry])
+
+  // Handle bar click - open expanded view (fires from BarChart onClick with chart state)
+  const handleBarClick = useCallback((state) => {
+    if (selectedCountry) return // Already have a country selected
+    // BarChart onClick provides activeLabel (the Y-axis value = country name)
+    const countryName = state?.activeLabel
+    if (!countryName) return
+    setSelectedCountry(countryName)
+  }, [selectedCountry])
+
+  // Close expanded view
+  const handleCloseExpanded = useCallback(() => {
+    setSelectedCountry(null)
+  }, [])
+
+  // Close expanded view when filters change
+  useEffect(() => {
+    setSelectedCountry(null)
+  }, [selectedPoll, rankRange, selectedCountries])
+
+  const handleResetToTopN = () => {
+    setIsTopNMode(true)
+    const topN = transformedData.filter(c => c.filmCount > 0).slice(0, defaultCount).map(c => c.name)
+    setSelectedCountries(topN)
   }
 
   const handleSelectContinent = (continentName) => {
+    setIsTopNMode(false)
     // Get all countries from the selected continent that have votes
     const continentCountries = transformedData
       .filter(country => country.continent === continentName && country.filmCount > 0)
@@ -201,6 +304,34 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       setSelectedCountries(continentCountries)
     }
   }
+
+  // Detect which quick filter button matches the currently visible bars
+  const activeButton = useMemo(() => {
+    if (!filteredData.length) return null
+
+    const visibleNames = filteredData.map(c => c.name)
+
+    // Check if visible bars match Top N (top N countries that have films)
+    const topN = transformedData.filter(c => c.filmCount > 0).slice(0, defaultCount).map(c => c.name)
+    if (topN.length === visibleNames.length && topN.every(c => visibleNames.includes(c))) {
+      return 'topN'
+    }
+
+    // Check if visible bars match a continent's active countries
+    for (const continent of Object.keys(continentColors)) {
+      const continentCountries = transformedData
+        .filter(c => c.continent === continent && c.filmCount > 0)
+        .map(c => c.name)
+      if (continentCountries.length > 0 &&
+          continentCountries.length === visibleNames.length &&
+          continentCountries.every(c => visibleNames.includes(c))) {
+        return continent
+      }
+    }
+
+    return null
+  }, [filteredData, transformedData, defaultCount])
+
 
   // Calculate which continents have countries with votes
   const activeContinents = useMemo(() => {
@@ -237,6 +368,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
   const handleApplySelection = () => {
     if (pendingSelection.length > 0 && pendingSelection.length <= 40) {
+      setIsTopNMode(false)
       setSelectedCountries(pendingSelection)
       handleCloseDropdown()
     }
@@ -365,15 +497,20 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         <div className="flex flex-wrap gap-2">
           <div className="bg-white border-2 border-black p-1 flex-shrink-0">
             <button
-              onClick={handleResetToTop10}
-              className="py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all bg-white text-black border-2 border-black hover:bg-black hover:text-white"
+              onClick={handleResetToTopN}
+              className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 border-black ${
+                activeButton === 'topN'
+                  ? 'bg-black text-white'
+                  : 'bg-white text-black hover:bg-black hover:text-white'
+              }`}
             >
-              Top 10
+              Top {defaultCount}
             </button>
           </div>
 
           {Object.entries(continentColors).map(([continent, color]) => {
             const isActive = activeContinents.has(continent)
+            const isPressed = activeButton === continent
             return (
               <div
                 key={continent}
@@ -385,19 +522,24 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                   onClick={() => isActive && handleSelectContinent(continent)}
                   disabled={!isActive}
                   className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 ${
-                    isActive
-                      ? 'bg-white text-black border-black hover:text-white'
-                      : 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
+                    !isActive
+                      ? 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
+                      : isPressed
+                        ? 'text-white'
+                        : 'bg-white text-black hover:text-white'
                   }`}
-                  style={isActive ? { borderColor: color } : {}}
+                  style={isActive ? {
+                    borderColor: color,
+                    ...(isPressed ? { backgroundColor: color } : {})
+                  } : {}}
                   onMouseEnter={(e) => {
-                    if (isActive) {
+                    if (isActive && !isPressed) {
                       e.currentTarget.style.backgroundColor = color
                       e.currentTarget.style.borderColor = color
                     }
                   }}
                   onMouseLeave={(e) => {
-                    if (isActive) {
+                    if (isActive && !isPressed) {
                       e.currentTarget.style.backgroundColor = 'white'
                       e.currentTarget.style.borderColor = color
                     }
@@ -411,56 +553,140 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         </div>
       </div>
 
-      {/* BAR CHART */}
-      <ResponsiveContainer width="100%" height={chartHeight}>
-        <BarChart
-          data={filteredData}
-          layout="vertical"
-          margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="#d1d5db" />
-          <XAxis
-            type="number"
-            allowDecimals={false}
-            stroke="#000000"
-            tick={{ fill: '#000000', fontSize: 12 }}
-            axisLine={{ stroke: '#000000', strokeWidth: 2 }}
-            tickLine={{ stroke: '#000000' }}
-            label={{
-              value: 'Votes',
-              position: 'insideBottom',
-              offset: -5,
-              style: { fontWeight: 'bold', fill: '#000000' }
-            }}
-          />
-          <YAxis
-            dataKey="name"
-            type="category"
-            width={95}
-            interval={0}
-            stroke="#000000"
-            axisLine={{ stroke: '#000000', strokeWidth: 2 }}
-            tickLine={{ stroke: '#000000' }}
-            tick={<CustomYAxisTick />}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Bar
-            dataKey="filmCount"
-            radius={[0, 0, 0, 0]}
-            cursor="pointer"
-            onClick={(data) => console.log('Navigate to:', data.name)}
-          >
-            {filteredData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={continentColors[entry.continent]}
+      {/* BAR CHART with expanded panel overlay */}
+      <div ref={chartContainerRef} className="relative">
+        {/* Suppress focus outline on all chart elements when clicked */}
+        <style>{`.bar-chart-container *:focus,
+          .bar-chart-container *:focus-visible,
+          .bar-chart-container * { outline: none; }`}</style>
+        <div className="bar-chart-container">
+          <ResponsiveContainer width="100%" height={chartHeight}>
+            <BarChart
+              data={filteredData}
+              layout="vertical"
+              margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+              onClick={handleBarClick}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#d1d5db" />
+              <XAxis
+                type="number"
+                allowDecimals={false}
                 stroke="#000000"
-                strokeWidth={1}
+                tick={{ fill: '#000000', fontSize: 12 }}
+                axisLine={{ stroke: '#000000', strokeWidth: 2 }}
+                tickLine={{ stroke: '#000000' }}
+                label={{
+                  value: 'Votes',
+                  position: 'insideBottom',
+                  offset: -5,
+                  style: { fontWeight: 'bold', fill: '#000000' }
+                }}
               />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+              <YAxis
+                dataKey="name"
+                type="category"
+                width={95}
+                interval={0}
+                stroke="#000000"
+                axisLine={{ stroke: '#000000', strokeWidth: 2 }}
+                tickLine={{ stroke: '#000000' }}
+                tick={<CustomYAxisTick />}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="filmCount"
+                radius={[0, 0, 0, 0]}
+                cursor={selectedCountry ? 'default' : 'pointer'}
+              >
+                {filteredData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={continentColors[entry.continent]}
+                    stroke="#000000"
+                    strokeWidth={1}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Expanded Country Panel - overlays the chart area */}
+        {selectedCountryData && (
+          <div className="absolute inset-0 z-20 flex items-center justify-center p-4 pointer-events-none">
+            {/* Semi-transparent overlay to dim the chart */}
+            <div
+              className="absolute inset-0 bg-black bg-opacity-20 pointer-events-auto"
+              onClick={handleCloseExpanded}
+            />
+
+            {/* Expanded panel - centered, matching chart dimensions */}
+            <div className="relative w-[calc(100%-32px)] h-[calc(100%-32px)] max-w-full max-h-full bg-white border-4 border-black pointer-events-auto flex flex-col shadow-xl">
+              {/* Close button */}
+              <button
+                onClick={handleCloseExpanded}
+                className="absolute -top-3 -right-3 w-8 h-8 bg-white border-2 border-black text-black font-black text-lg hover:bg-black hover:text-white transition-colors flex items-center justify-center z-10"
+                title="Close"
+              >
+                ×
+              </button>
+
+              {/* Country header */}
+              <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
+                <h4 className="font-black text-lg text-black uppercase tracking-wide">{selectedCountryData.name}</h4>
+                <p className="text-xs text-black font-medium">{selectedCountryData.continent}</p>
+                <div className="flex gap-3 mt-1">
+                  <span className="text-base font-black text-black">
+                    {selectedCountryData.filmCount.toLocaleString()} votes
+                  </span>
+                  <span className="text-sm text-black font-medium self-end">
+                    {selectedCountryData.films.length} films
+                  </span>
+                  {selectedCountryData.rank && (
+                    <span className="text-sm text-black font-medium self-end">
+                      #{selectedCountryData.rank} of {selectedCountryData.totalCountries}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Scrollable film list */}
+              <div className="flex-1 overflow-y-auto">
+                {/* Table header */}
+                <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
+                  {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
+                  <span className="flex-1">Title</span>
+                  <span className="w-16 text-right">Votes</span>
+                </div>
+
+                {/* Film rows */}
+                {selectedCountryData.films.map((film, idx) => (
+                  <div
+                    key={`${film.title}-${idx}`}
+                    className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
+                  >
+                    {selectedPoll !== 'all' && (
+                      <span className="w-12 font-bold text-black">
+                        {film.rank ? `#${film.rank}` : '—'}
+                      </span>
+                    )}
+                    <span className="flex-1 text-black font-medium truncate" title={`${film.title} (${film.year})`}>
+                      {film.title} <span className="text-gray-500">({film.year})</span>
+                    </span>
+                    <span className="w-16 text-right font-bold text-black">{film.votes}</span>
+                  </div>
+                ))}
+
+                {selectedCountryData.films.length === 0 && (
+                  <div className="px-4 py-8 text-center text-gray-500 text-sm">
+                    No films found for current filters
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* ADD COUNTRY DROPDOWN - Just below chart */}
       <div className="border-t-2 border-black bg-white p-4 mt-4 relative">

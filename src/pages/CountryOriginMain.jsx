@@ -203,6 +203,7 @@ export default function CountryOriginMain() {
             <TopCountriesBarChart
               selectedPoll={selectedPoll}
               rankRange={rankRange}
+              filmsData={filmsData}
             />
 
             {/* VISUALIZATION 3: DECADE HEATMAP */}
