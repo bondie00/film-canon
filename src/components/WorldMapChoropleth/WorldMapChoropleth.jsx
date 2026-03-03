@@ -11,6 +11,55 @@ import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
 // Natural Earth 110m world topology - lower resolution for performance
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
 
+// Split overseas territories so they don't get colored as their parent country.
+// French Guiana is part of France's MultiPolygon but sits in South America.
+function getPolygonAvgLon(polygon) {
+  const ring = polygon[0]
+  if (!ring || ring.length === 0) return 0
+  return ring.reduce((sum, coord) => sum + coord[0], 0) / ring.length
+}
+
+function splitOverseasTerritories(geographies) {
+  const result = []
+  for (const geo of geographies) {
+    // Only split France (ISO 250) - its MultiPolygon includes French Guiana
+    if (geo.id !== "250" || geo.geometry?.type !== "MultiPolygon") {
+      result.push(geo)
+      continue
+    }
+
+    const mainPolygons = []
+    const overseasPolygons = []
+
+    for (const polygon of geo.geometry.coordinates) {
+      // French Guiana is ~longitude -53; metropolitan France & Corsica are > -10
+      if (getPolygonAvgLon(polygon) < -10) {
+        overseasPolygons.push(polygon)
+      } else {
+        mainPolygons.push(polygon)
+      }
+    }
+
+    if (mainPolygons.length > 0) {
+      result.push({
+        ...geo,
+        geometry: { ...geo.geometry, coordinates: mainPolygons },
+        rsmKey: geo.rsmKey + "-main"
+      })
+    }
+    if (overseasPolygons.length > 0) {
+      // Use a fake ID so it won't match any country data → gets NO_DATA_COLOR
+      result.push({
+        ...geo,
+        id: "250-overseas",
+        geometry: { ...geo.geometry, coordinates: overseasPolygons },
+        rsmKey: geo.rsmKey + "-overseas"
+      })
+    }
+  }
+  return result
+}
+
 // Color palette for the choropleth - emerald shades to match Asia bar chart color (#10b981)
 const COLOR_RANGE = [
   '#ecfdf5', // emerald-50
@@ -320,10 +369,12 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
             maxZoom={8}
           >
             <Geographies geography={GEO_URL}>
-              {({ geographies }) => (
+              {({ geographies }) => {
+                const processed = splitOverseasTerritories(geographies)
+                return (
                 <>
                   {/* Base layer: all countries */}
-                  {geographies.map((geo) => {
+                  {processed.map((geo) => {
                     const iso = geo.id
                     const data = dataByISO[iso]
                     const hasData = data && data.votes > 0
@@ -385,7 +436,8 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                     />
                   )}
                 </>
-              )}
+                )
+              }}
             </Geographies>
           </ZoomableGroup>
         </ComposableMap>
