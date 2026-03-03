@@ -291,6 +291,13 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
     const data = dataByISO[selectedCountry]
     const rank = countryRankings[selectedCountry]
 
+    // Calculate continent rank
+    const continentISOs = Object.entries(dataByISO)
+      .filter(([, d]) => d.continent === data.continent && d.votes > 0)
+      .sort((a, b) => b[1].votes - a[1].votes)
+    const continentRank = continentISOs.findIndex(([iso]) => iso === selectedCountry) + 1
+    const continentTotal = continentISOs.length
+
     // Get films for each country in this ISO group
     const countriesWithFilms = data.countries.map(country => ({
       ...country,
@@ -304,6 +311,8 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
       totalVotes: data.votes,
       rank,
       totalCountries: totalCountriesWithVotes,
+      continentRank,
+      continentTotal,
       totalDistinctFilms: data.distinctFilms
     }
   }, [selectedCountry, dataByISO, countryRankings, totalCountriesWithVotes, getFilmsForCountry])
@@ -523,8 +532,8 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
             onClick={handleCloseExpanded}
           />
 
-          {/* Expanded panel - centered with margin, showing map around edges */}
-          <div className="relative w-[calc(100%-32px)] h-[calc(100%-32px)] max-w-full max-h-full bg-white border-4 border-black pointer-events-auto flex flex-col shadow-xl">
+          {/* Expanded panel - centered, height matches bar chart panel */}
+          <div className="relative w-[calc(100%-32px)] h-[calc(28.44rem-32px)] max-w-full bg-white border-4 border-black pointer-events-auto flex flex-col shadow-xl">
             {/* Close button */}
             <button
               onClick={handleCloseExpanded}
@@ -534,60 +543,131 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
               ×
             </button>
 
-            {/* Film lists - horizontal layout for countries */}
-            <div className={`flex-1 overflow-hidden flex ${selectedCountryData.countries.length > 1 ? 'overflow-x-auto divide-x-2 divide-gray-300' : ''}`}>
-              {selectedCountryData.countries.map((country) => (
-                <div key={country.name} className={`flex flex-col ${selectedCountryData.countries.length > 1 ? 'w-[400px] flex-shrink-0' : 'flex-1'}`}>
-                  {/* Country header */}
-                  <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
-                    <h4 className="font-black text-lg text-black uppercase tracking-wide">{country.name}</h4>
-                    <p className="text-xs text-black font-medium">{selectedCountryData.continent}</p>
-                    <div className="flex gap-3 mt-1">
-                      <span className="text-base font-black text-black">
-                        {country.votes.toLocaleString()} votes
-                      </span>
-                      <span className="text-sm text-black font-medium self-end">
-                        {country.films.length} films
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Scrollable film list */}
-                  <div className="flex-1 overflow-y-auto">
-                    {/* Table header */}
-                    <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
-                      {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
-                      <span className="flex-1">Title</span>
-                      <span className="w-16 text-right">Votes</span>
-                    </div>
-
-                    {/* Film rows */}
-                    {country.films.map((film, idx) => (
-                      <div
-                        key={`${film.title}-${idx}`}
-                        className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
-                      >
-                        {selectedPoll !== 'all' && (
-                          <span className="w-12 font-bold text-black">
-                            {film.rank ? `#${film.rank}` : '—'}
-                          </span>
-                        )}
-                        <span className="flex-1 text-black font-medium truncate" title={`${film.title} (${film.year})`}>
-                          {film.title} <span className="text-gray-500">({film.year})</span>
+            {selectedCountryData.countries.length > 1 ? (
+              /* Multi-country: horizontal scrollable layout */
+              <div className="flex-1 overflow-hidden flex overflow-x-auto divide-x-2 divide-gray-300">
+                {selectedCountryData.countries.map((country) => (
+                  <div key={country.name} className="flex flex-col w-[400px] flex-shrink-0">
+                    {/* Country header */}
+                    <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
+                      <h4 className="font-black text-lg text-black uppercase tracking-wide">{country.name}</h4>
+                      <div className="flex gap-3 mt-1">
+                        <span className="text-base font-black text-black">
+                          {country.votes.toLocaleString()} votes
                         </span>
-                        <span className="w-16 text-right font-bold text-black">{film.votes}</span>
+                        <span className="text-sm text-black font-medium self-end">
+                          {country.films.length.toLocaleString()} films
+                        </span>
                       </div>
-                    ))}
+                      {selectedCountryData.continentRank > 0 && (
+                        <p className="text-xs text-black font-medium mt-1">
+                          #{selectedCountryData.continentRank} of {selectedCountryData.continentTotal} {selectedCountryData.continentTotal === 1 ? 'country' : 'countries'} in {selectedCountryData.continent}
+                        </p>
+                      )}
+                      {selectedCountryData.rank && (
+                        <p className="text-xs text-black font-medium">
+                          #{selectedCountryData.rank} of {selectedCountryData.totalCountries} {selectedCountryData.totalCountries === 1 ? 'country' : 'countries'} globally
+                        </p>
+                      )}
+                    </div>
 
-                    {country.films.length === 0 && (
-                      <div className="px-4 py-8 text-center text-gray-500 text-sm">
-                        No films found for current filters
+                    {/* Scrollable film list */}
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden pb-3">
+                      {/* Table header */}
+                      <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
+                        {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
+                        <span className="flex-1">Title</span>
+                        <span className="w-16 text-right">Votes</span>
                       </div>
-                    )}
+
+                      {/* Film rows */}
+                      {country.films.map((film, idx) => (
+                        <div
+                          key={`${film.title}-${idx}`}
+                          className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
+                        >
+                          {selectedPoll !== 'all' && (
+                            <span className="w-12 flex-shrink-0 font-bold text-black">
+                              {film.rank ? `#${film.rank}` : '—'}
+                            </span>
+                          )}
+                          <span className="flex-1 min-w-0 text-black font-medium truncate" title={`${film.title} (${film.year}) — ${film.directors?.join(', ') || 'Unknown'}`}>
+                            {film.title} <span className="text-gray-500">({film.year})</span>{film.directors?.length > 0 && <span className="text-gray-400"> — {film.directors.join(', ')}</span>}
+                          </span>
+                          <span className="w-16 flex-shrink-0 text-right font-bold text-black">{film.votes.toLocaleString()}</span>
+                        </div>
+                      ))}
+
+                      {country.films.length === 0 && (
+                        <div className="px-4 py-8 text-center text-gray-500 text-sm">
+                          No films found for current filters
+                        </div>
+                      )}
+                    </div>
                   </div>
+                ))}
+              </div>
+            ) : (
+              /* Single country: flat layout matching bar chart structure */
+              <>
+                {/* Country header */}
+                <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
+                  <h4 className="font-black text-lg text-black uppercase tracking-wide">{selectedCountryData.countries[0].name}</h4>
+                  <div className="flex gap-3 mt-1">
+                    <span className="text-base font-black text-black">
+                      {selectedCountryData.countries[0].votes.toLocaleString()} votes
+                    </span>
+                    <span className="text-sm text-black font-medium self-end">
+                      {selectedCountryData.countries[0].films.length.toLocaleString()} films
+                    </span>
+                  </div>
+                  {selectedCountryData.continentRank > 0 && (
+                    <p className="text-xs text-black font-medium mt-1">
+                      #{selectedCountryData.continentRank} of {selectedCountryData.continentTotal} {selectedCountryData.continentTotal === 1 ? 'country' : 'countries'} in {selectedCountryData.continent}
+                    </p>
+                  )}
+                  {selectedCountryData.rank && (
+                    <p className="text-xs text-black font-medium">
+                      #{selectedCountryData.rank} of {selectedCountryData.totalCountries} {selectedCountryData.totalCountries === 1 ? 'country' : 'countries'} globally
+                    </p>
+                  )}
                 </div>
-              ))}
-            </div>
+
+                {/* Scrollable film list */}
+                <div className="flex-1 overflow-y-auto overflow-x-hidden pb-3">
+                  {/* Table header */}
+                  <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
+                    {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
+                    <span className="flex-1">Title</span>
+                    <span className="w-16 text-right">Votes</span>
+                  </div>
+
+                  {/* Film rows */}
+                  {selectedCountryData.countries[0].films.map((film, idx) => (
+                    <div
+                      key={`${film.title}-${idx}`}
+                      className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
+                    >
+                      {selectedPoll !== 'all' && (
+                        <span className="w-12 flex-shrink-0 font-bold text-black">
+                          {film.rank ? `#${film.rank}` : '—'}
+                        </span>
+                      )}
+                      <span className="flex-1 min-w-0 text-black font-medium truncate" title={`${film.title} (${film.year}) — ${film.directors?.join(', ') || 'Unknown'}`}>
+                        {film.title} <span className="text-gray-500">({film.year})</span>{film.directors?.length > 0 && <span className="text-gray-400"> — {film.directors.join(', ')}</span>}
+                      </span>
+                      <span className="w-16 flex-shrink-0 text-right font-bold text-black">{film.votes.toLocaleString()}</span>
+                    </div>
+                  ))}
+
+                  {selectedCountryData.countries[0].films.length === 0 && (
+                    <div className="px-4 py-8 text-center text-gray-500 text-sm">
+                      No films found for current filters
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

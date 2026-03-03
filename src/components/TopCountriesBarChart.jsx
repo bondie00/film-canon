@@ -16,6 +16,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const [selectedCountries, setSelectedCountries] = useState([])
   const [selectedCountry, setSelectedCountry] = useState(null) // Country name for expanded view
   const chartContainerRef = useRef(null)
+  const expandedPanelRef = useRef(null)
 
   // Dropdown and pending selection state
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -257,6 +258,13 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       || transformedData.find(c => c.name === selectedCountry)
     if (!countryInfo) return null
 
+    // Calculate continent rank
+    const continentCountries = transformedData
+      .filter(c => c.continent === countryInfo.continent && c.filmCount > 0)
+      .sort((a, b) => b.filmCount - a.filmCount)
+    const continentRank = continentCountries.findIndex(c => c.name === countryInfo.name) + 1
+    const continentTotal = continentCountries.length
+
     return {
       name: countryInfo.name,
       continent: countryInfo.continent,
@@ -264,9 +272,23 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       distinctFilms: countryInfo.distinctFilms,
       rank: countryInfo.rank,
       totalCountries: countryInfo.totalCountries,
+      continentRank,
+      continentTotal,
       films: getFilmsForCountry(countryInfo.name)
     }
   }, [selectedCountry, filteredData, transformedData, getFilmsForCountry])
+
+  // Dynamic min-height for expanded panel container
+  // Sizes to fit film list content, caps at 28rem (448px) for longer lists
+  const expandedMinHeight = useMemo(() => {
+    if (!selectedCountryData) return 0
+    const filmCount = selectedCountryData.films.length
+    // header (~100px) + table header (~33px) + panel border (8px) + container padding (32px) + breathing room = 230px base
+    // Each film row ~42px (text-sm + py-2 + border)
+    // Floor of 280px so even 1 film has comfortable space
+    const needed = 230 + (filmCount * 42)
+    return Math.max(280, Math.min(needed, 448))
+  }, [selectedCountryData])
 
   // Handle bar click - open expanded view (fires from BarChart onClick with chart state)
   const handleBarClick = useCallback((state) => {
@@ -281,6 +303,13 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const handleCloseExpanded = useCallback(() => {
     setSelectedCountry(null)
   }, [])
+
+  // Scroll expanded panel into view when it opens
+  useEffect(() => {
+    if (selectedCountryData && expandedPanelRef.current) {
+      expandedPanelRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  }, [selectedCountryData])
 
   // Close expanded view when filters change
   useEffect(() => {
@@ -554,7 +583,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       </div>
 
       {/* BAR CHART with expanded panel overlay */}
-      <div ref={chartContainerRef} className="relative">
+      <div ref={chartContainerRef} className="relative" style={selectedCountryData ? { minHeight: `${expandedMinHeight}px` } : undefined}>
         {/* Suppress focus outline on all chart elements when clicked */}
         <style>{`.bar-chart-container *:focus,
           .bar-chart-container *:focus-visible,
@@ -620,8 +649,8 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
               onClick={handleCloseExpanded}
             />
 
-            {/* Expanded panel - centered, matching chart dimensions */}
-            <div className="relative w-[calc(100%-32px)] h-[calc(100%-32px)] max-w-full max-h-full bg-white border-4 border-black pointer-events-auto flex flex-col shadow-xl">
+            {/* Expanded panel - centered within chart, max height matches world map panel */}
+            <div ref={expandedPanelRef} className="relative w-[calc(100%-32px)] max-h-[calc(28.44rem-32px)] max-w-full bg-white border-4 border-black pointer-events-auto flex flex-col shadow-xl">
               {/* Close button */}
               <button
                 onClick={handleCloseExpanded}
@@ -634,24 +663,28 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
               {/* Country header */}
               <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
                 <h4 className="font-black text-lg text-black uppercase tracking-wide">{selectedCountryData.name}</h4>
-                <p className="text-xs text-black font-medium">{selectedCountryData.continent}</p>
                 <div className="flex gap-3 mt-1">
                   <span className="text-base font-black text-black">
                     {selectedCountryData.filmCount.toLocaleString()} votes
                   </span>
                   <span className="text-sm text-black font-medium self-end">
-                    {selectedCountryData.films.length} films
+                    {selectedCountryData.films.length.toLocaleString()} films
                   </span>
-                  {selectedCountryData.rank && (
-                    <span className="text-sm text-black font-medium self-end">
-                      #{selectedCountryData.rank} of {selectedCountryData.totalCountries}
-                    </span>
-                  )}
                 </div>
+                {selectedCountryData.continentRank > 0 && (
+                  <p className="text-xs text-black font-medium mt-1">
+                    #{selectedCountryData.continentRank} of {selectedCountryData.continentTotal} {selectedCountryData.continentTotal === 1 ? 'country' : 'countries'} in {selectedCountryData.continent}
+                  </p>
+                )}
+                {selectedCountryData.rank && (
+                  <p className="text-xs text-black font-medium">
+                    #{selectedCountryData.rank} of {selectedCountryData.totalCountries} {selectedCountryData.totalCountries === 1 ? 'country' : 'countries'} globally
+                  </p>
+                )}
               </div>
 
               {/* Scrollable film list */}
-              <div className="flex-1 overflow-y-auto">
+              <div className="flex-1 overflow-y-auto overflow-x-hidden pb-3">
                 {/* Table header */}
                 <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
                   {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
@@ -666,14 +699,14 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                     className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
                   >
                     {selectedPoll !== 'all' && (
-                      <span className="w-12 font-bold text-black">
+                      <span className="w-12 flex-shrink-0 font-bold text-black">
                         {film.rank ? `#${film.rank}` : '—'}
                       </span>
                     )}
-                    <span className="flex-1 text-black font-medium truncate" title={`${film.title} (${film.year})`}>
-                      {film.title} <span className="text-gray-500">({film.year})</span>
+                    <span className="flex-1 min-w-0 text-black font-medium truncate" title={`${film.title} (${film.year}) — ${film.directors?.join(', ') || 'Unknown'}`}>
+                      {film.title} <span className="text-gray-500">({film.year})</span>{film.directors?.length > 0 && <span className="text-gray-400"> — {film.directors.join(', ')}</span>}
                     </span>
-                    <span className="w-16 text-right font-bold text-black">{film.votes}</span>
+                    <span className="w-16 flex-shrink-0 text-right font-bold text-black">{film.votes.toLocaleString()}</span>
                   </div>
                 ))}
 
