@@ -5,6 +5,7 @@ import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
 import WorldMapChoropleth from '../components/WorldMapChoropleth'
 import ContinentBreakdown from '../components/ContinentBreakdown'
+import ContinentShareChart from '../components/ContinentShareChart'
 
 export default function CountryOriginMain() {
   // Filter state (not functional yet - Phase 2)
@@ -206,62 +207,7 @@ export default function CountryOriginMain() {
               filmsData={filmsData}
             />
 
-            {/* VISUALIZATION 3: DECADE HEATMAP */}
-            <div className="bg-white border-4 border-black p-6 mb-8">
-              <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                  Films by Decade and Country
-                </h2>
-                <p className="text-black font-medium">
-                  When were films produced that appear in the canon? See which decades shaped each nation's contribution.
-                </p>
-              </div>
-
-              {/* PLACEHOLDER FOR HEATMAP */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-black h-[31.25rem] flex items-center justify-center">
-                <div className="text-center text-black max-w-2xl p-6">
-                  <div className="text-6xl mb-4">🔥</div>
-                  <div className="font-black text-xl mb-3 text-black uppercase tracking-wide">Interactive Heatmap</div>
-                  <div className="text-sm space-y-2">
-                    <p>• Y-axis: Top 20-30 countries</p>
-                    <p>• X-axis: Decades (1910s, 1920s... 2020s)</p>
-                    <p>• Cell color intensity = number of films</p>
-                    <p>• Hover: "France, 1960s: 68 films (New Wave era)"</p>
-                    <p>• Reveals patterns like France's 1960s dominance</p>
-                  </div>
-                  <div className="mt-6 text-xs text-gray-400 italic">
-                    [Phase 3: Custom/D3 implementation]
-                  </div>
-                </div>
-              </div>
-
-              {/* Heatmap Legend */}
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm border-t-2 border-gray-300 pt-4">
-                <span className="text-black font-bold uppercase tracking-wide">Films per decade:</span>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-100 border-2 border-black"></div>
-                  <span className="text-black font-medium">1-5</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-300 border-2 border-black"></div>
-                  <span className="text-black font-medium">5-15</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-500 border-2 border-black"></div>
-                  <span className="text-black font-medium">15-30</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-700 border-2 border-black"></div>
-                  <span className="text-black font-medium">30-50</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-4 bg-blue-900 border-2 border-black"></div>
-                  <span className="text-black font-medium">50+</span>
-                </div>
-              </div>
-            </div>
-
-            {/* VISUALIZATION 4: CONTINENTAL BREAKDOWN */}
+            {/* VISUALIZATION 3: CONTINENTAL BREAKDOWN */}
             <div className="bg-white border-4 border-black p-6 mb-8">
               <div className="mb-6 border-b-2 border-gray-300 pb-4">
                 <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
@@ -307,32 +253,21 @@ export default function CountryOriginMain() {
               </div>
             </div>
 
-            {/* KEY INSIGHTS SECTION */}
-            <div className="bg-white border-4 border-black p-8 mb-8">
-              <h2 className="text-3xl font-black text-black mb-4 flex items-center uppercase tracking-wide border-b-2 border-gray-300 pb-4">
-                <span className="text-3xl mr-3">💡</span>
-                Key Geographic Insights
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="font-black text-black mb-2 uppercase tracking-wide text-lg">Domination Patterns</h3>
-                  <ul className="space-y-2 text-black text-sm font-medium">
-                    <li>• USA represents 1,780 votes (37% of total votes in the dataset)</li>
-                    <li>• Europe remains the most represented continent at 45%</li>
-                    <li>• France leads Europe with 679 votes</li>
-                    <li>• Japan is the most represented Asian country with 247 votes</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="font-black text-black mb-2 uppercase tracking-wide text-lg">Temporal Patterns</h3>
-                  <ul className="space-y-2 text-black text-sm font-medium">
-                    <li>• France's 1960s dominance reflects the New Wave movement</li>
-                    <li>• Japan's golden age (1950s) heavily represented with Kurosawa/Ozu</li>
-                    <li>• Recent decades show growth from East Asian cinema (Korea, China)</li>
-                    <li>• African and Oceanian representation remains minimal but growing</li>
-                  </ul>
-                </div>
+            {/* VISUALIZATION 5: CONTINENTAL SHARE OVER TIME */}
+            <div className="bg-white border-4 border-black p-6 mb-8">
+              <div className="mb-6 border-b-2 border-gray-300 pb-4">
+                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
+                  Growing Diversity
+                </h2>
+                <p className="text-black font-medium">
+                  More countries are being represented even as the Big 5 continue to dominate
+                </p>
               </div>
+              <ContinentShareChart
+                countriesData={countriesData}
+                selectedPoll={selectedPoll}
+                rankRange={rankRange}
+              />
             </div>
 
             {/* NAVIGATION: EXPLORE SPECIFIC COUNTRIES */}
