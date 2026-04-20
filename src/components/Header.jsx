@@ -22,9 +22,9 @@ export default function Header() {
             >
               Visualizations
             </Link>
-            <a href="#" className="text-gray-700 hover:text-gray-900 font-medium">
-              Database
-            </a>
+            <Link to="/search" className="text-gray-700 hover:text-gray-900 font-medium">
+              Search
+            </Link>
             <a href="#" className="text-gray-700 hover:text-gray-900 font-medium">
               About
             </a>
