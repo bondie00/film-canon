@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import CountryOriginMain from './pages/CountryOriginMain'
 import CountryDetail from './pages/CountryDetail'
 import SearchPage from './pages/SearchPage'
+import ExplorePage from './pages/ExplorePage'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/visualizations/country" element={<CountryOriginMain />} />
         <Route path="/visualizations/country/:countryName" element={<CountryDetail />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/explore" element={<ExplorePage />} />
       </Routes>
     </Router>
   )
