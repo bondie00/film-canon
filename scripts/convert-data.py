@@ -111,6 +111,16 @@ def generate_films_json(df, output_path):
     """Generate films.json with all film data"""
     print("Generating films.json...")
 
+    # Backfill rank for voted-but-unranked films. The source data has a few
+    # films with votes but a blank rank (e.g. two 1-vote films in the 1952 poll)
+    # that should sit at the tied last place alongside every other vote-floor
+    # film. Use each poll's max ranked position as that floor.
+    floor_rank = {}
+    for year in POLL_YEARS:
+        rank_col, votes_col = f'{year}rank', f'{year}votes'
+        ranked = df[(df[votes_col] > 0) & (df[rank_col].notna())]
+        floor_rank[year] = int(ranked[rank_col].max()) if len(ranked) else None
+
     films = []
     for _, row in df.iterrows():
         # Parse directors (comma-separated)
@@ -125,11 +135,29 @@ def generate_films_json(df, output_path):
             countries = [c.strip() for c in str(row['Country']).split(',')]
             countries = [c for c in countries if c]
 
+        # Parse genres from MUBI (comma-separated) → array
+        genres = []
+        if 'mubi_genres' in row and pd.notna(row['mubi_genres']) and str(row['mubi_genres']).strip():
+            genres = [g.strip() for g in str(row['mubi_genres']).split(',')]
+            genres = [g for g in genres if g]
+
+        # MUBI image URLs → string or None
+        image_url = None
+        if 'mubi_image_url' in row and pd.notna(row['mubi_image_url']) and str(row['mubi_image_url']).strip():
+            image_url = str(row['mubi_image_url']).strip()
+
+        still_url = None
+        if 'mubi_still_url' in row and pd.notna(row['mubi_still_url']) and str(row['mubi_still_url']).strip():
+            still_url = str(row['mubi_still_url']).strip()
+
         # Build poll history for individual polls
         poll_history = []
         for year in POLL_YEARS:
             rank = int(row[f'{year}rank']) if pd.notna(row[f'{year}rank']) else None
             votes = int(row[f'{year}votes']) if pd.notna(row[f'{year}votes']) else 0
+            # Voted but unranked → place at the poll's tied last rank.
+            if rank is None and votes > 0 and floor_rank[year] is not None:
+                rank = floor_rank[year]
             poll_history.append({
                 'year': year,
                 'rank': rank,
@@ -153,6 +181,9 @@ def generate_films_json(df, output_path):
             'Year': str(row['Year']) if pd.notna(row['Year']) else None,
             'directors': directors,
             'countries': countries,
+            'genres': genres,
+            'imageUrl': image_url,
+            'stillUrl': still_url,
             'pollHistory': poll_history
         }
         films.append(film)

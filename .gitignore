@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Large raw data + transient pipeline artifacts (regenerable, not source of truth)
+data/full_mubi_data.csv
+data/archived/
+data/review.html
+data/review_decisions.json
+data/tmdb_review.json
+.claude/settings.local.json

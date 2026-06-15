@@ -2,10 +2,10 @@ import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { landscapeImage } from '../utils/filmImages'
 
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
-const HERO_COUNT = 25
-const GRID_COUNT = 75
+const GRID_RANK_MAX = 100   // films ranked 1–100 get square cards; the rest fall to the long tail
 const LONG_TAIL_PAGE = 100
 
 export default function ExplorePage() {
@@ -37,16 +37,21 @@ export default function ExplorePage() {
       })
       .filter(Boolean)
       .sort((a, b) => {
-        if (a.currentRank !== b.currentRank) return a.currentRank - b.currentRank
+        // Null ranks (voted but unranked) sort to the very bottom.
+        const ra = a.currentRank ?? Infinity
+        const rb = b.currentRank ?? Infinity
+        if (ra !== rb) return ra - rb
         return b.currentVotes - a.currentVotes
       })
   }, [films, activePoll])
 
-  const heroFilms = rankedFilms.slice(0, HERO_COUNT)
-  const gridFilms = rankedFilms.slice(HERO_COUNT, HERO_COUNT + GRID_COUNT)
-  const tailStart = HERO_COUNT + GRID_COUNT
-  const longTailFilms = rankedFilms.slice(tailStart, tailStart + longTailVisible)
-  const longTailTotal = Math.max(0, rankedFilms.length - tailStart)
+  // Split by rank VALUE, not list position — so tied films never straddle the
+  // boundary. Small early polls (e.g. 1962, max rank 77) get no long tail at all.
+  const inGrid = (f) => f.currentRank != null && f.currentRank <= GRID_RANK_MAX
+  const gridFilms = rankedFilms.filter(inGrid)
+  const tailFilms = rankedFilms.filter(f => !inGrid(f))
+  const longTailFilms = tailFilms.slice(0, longTailVisible)
+  const longTailTotal = tailFilms.length
   const longTailRemaining = Math.max(0, longTailTotal - longTailVisible)
 
   if (loading) {
@@ -82,30 +87,16 @@ export default function ExplorePage() {
         />
 
         <LayoutGroup>
-          <section className="mt-10">
-            <SectionHeading
-              eyebrow={`Ranks 1–${Math.min(HERO_COUNT, heroFilms.length)}`}
-              title="The Top of the Canon"
-            />
-            <div className="space-y-3">
-              <AnimatePresence mode="popLayout">
-                {heroFilms.map(film => (
-                  <HeroCard key={film.key} film={film} />
-                ))}
-              </AnimatePresence>
-            </div>
-          </section>
-
           {gridFilms.length > 0 && (
-            <section className="mt-12">
+            <section className="mt-10">
               <SectionHeading
-                eyebrow={`Ranks ${HERO_COUNT + 1}–${Math.min(HERO_COUNT + GRID_COUNT, rankedFilms.length)}`}
-                title="The Canon's Body"
+                eyebrow={`Ranks 1–${GRID_RANK_MAX} · ${gridFilms.length} films`}
+                title="The Canon"
               />
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 <AnimatePresence mode="popLayout">
                   {gridFilms.map(film => (
-                    <GridTile key={film.key} film={film} />
+                    <GridTile key={film.key} film={film} activePoll={activePoll} />
                   ))}
                 </AnimatePresence>
               </div>
@@ -116,7 +107,7 @@ export default function ExplorePage() {
         {longTailFilms.length > 0 && (
           <section className="mt-12">
             <SectionHeading
-              eyebrow={`Ranks ${tailStart + 1}–${tailStart + longTailFilms.length} of ${rankedFilms.length}`}
+              eyebrow={`Beyond rank ${GRID_RANK_MAX} · showing ${longTailFilms.length.toLocaleString()} of ${longTailTotal.toLocaleString()}`}
               title="The Long Tail"
             />
             <div className="divide-y divide-gray-200 border-2 border-black bg-white">
@@ -180,36 +171,41 @@ function SectionHeading({ eyebrow, title }) {
   )
 }
 
-const SPRING = { type: 'spring', stiffness: 220, damping: 28 }
+const SPRING = { type: 'spring', stiffness: 90, damping: 22 }
 
-function HeroCard({ film }) {
+function PollRankStrip({ film, activePoll }) {
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -12 }}
-      transition={SPRING}
-      className="bg-white border-2 border-black p-4 flex items-center gap-4"
-    >
-      <div className="flex-shrink-0 w-14 text-center">
-        <div className="text-4xl font-black leading-none">{film.currentRank}</div>
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="text-xl font-bold truncate">{film.FilmTitle}</div>
-        <div className="text-sm text-gray-600 truncate">
-          {film.directors.join(', ')} · {film.Year}
-        </div>
-      </div>
-      <div className="flex-shrink-0 text-right">
-        <div className="text-2xl font-black leading-none">{film.currentVotes}</div>
-        <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">votes</div>
-      </div>
-    </motion.div>
+    <div className="flex border-b-2 border-black divide-x divide-gray-200 flex-shrink-0">
+      {POLL_YEARS.map(year => {
+        const poll = film.pollHistory.find(p => p.year === year)
+        const appeared = poll && poll.votes > 0
+        const isActive = year === activePoll
+        const tip = appeared
+          ? `${year}: rank #${poll.rank} · ${poll.votes} ${poll.votes === 1 ? 'vote' : 'votes'}`
+          : `${year}: no votes`
+        return (
+          <div
+            key={year}
+            title={tip}
+            className={`flex-1 py-1 text-center text-[9px] leading-none font-bold tabular-nums tracking-tighter ${
+              isActive
+                ? 'bg-black text-white'
+                : appeared
+                  ? 'bg-white text-black'
+                  : 'bg-gray-50 text-gray-300'
+            }`}
+          >
+            {appeared ? poll.rank : '·'}
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
-function GridTile({ film }) {
+function GridTile({ film, activePoll }) {
+  const img = landscapeImage(film, { backdropSize: 'w780', posterSize: 'w342' })
+
   return (
     <motion.div
       layout
@@ -217,15 +213,48 @@ function GridTile({ film }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.96 }}
       transition={SPRING}
-      className="bg-white border-2 border-black p-3"
+      className="bg-white border-2 border-black flex flex-col aspect-square overflow-hidden"
     >
-      <div className="flex items-baseline justify-between mb-1">
-        <span className="text-sm font-black">#{film.currentRank}</span>
-        <span className="text-xs font-bold text-gray-500">{film.currentVotes} {film.currentVotes === 1 ? 'vote' : 'votes'}</span>
+      {/* 16:9 image band — uncropped backdrop (poster fallback is blurred-cover so it fills without distortion) */}
+      <div className="relative w-full aspect-video bg-black flex-shrink-0 overflow-hidden">
+        {img.url ? (
+          img.kind === 'backdrop' ? (
+            <img
+              src={img.url}
+              alt={film.FilmTitle}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            // Poster in a wide slot: blurred fill behind a contained poster, so nothing is cropped or stretched.
+            <>
+              <img src={img.url} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover scale-110 blur-lg opacity-60" />
+              <img src={img.url} alt={film.FilmTitle} loading="lazy" className="absolute inset-0 w-full h-full object-contain" />
+            </>
+          )
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center px-2 text-center text-white/70 text-xs font-bold uppercase tracking-wide">
+            {film.FilmTitle}
+          </div>
+        )}
+        {/* Rank badge */}
+        <span className="absolute top-0 left-0 bg-black text-white text-sm font-black px-2 py-1">
+          #{film.currentRank}
+        </span>
       </div>
-      <div className="font-bold text-sm leading-tight line-clamp-2 mb-1 min-h-[2.5rem]">{film.FilmTitle}</div>
-      <div className="text-xs text-gray-600 truncate">
-        {film.Year} · {film.directors[0]}
+
+      {/* Rank across all eight polls (1952 → 2022); active poll highlighted */}
+      <PollRankStrip film={film} activePoll={activePoll} />
+
+      {/* Metadata fills the remainder so the tile reads as a square */}
+      <div className="flex flex-col flex-1 min-h-0 p-3">
+        <div className="font-bold text-sm leading-tight line-clamp-2">{film.FilmTitle}</div>
+        <div className="text-xs text-gray-600 truncate mt-1">
+          {film.Year} · {film.directors[0]}
+        </div>
+        <div className="mt-auto pt-1 text-xs font-bold text-gray-500">
+          {film.currentVotes} {film.currentVotes === 1 ? 'vote' : 'votes'}
+        </div>
       </div>
     </motion.div>
   )
@@ -234,7 +263,7 @@ function GridTile({ film }) {
 function LongTailRow({ film }) {
   return (
     <div className="flex items-center gap-4 px-4 py-2 hover:bg-gray-50 text-sm">
-      <div className="w-14 font-bold text-gray-500 flex-shrink-0">#{film.currentRank}</div>
+      <div className="w-14 font-bold text-gray-500 flex-shrink-0">{film.currentRank != null ? `#${film.currentRank}` : 'NR'}</div>
       <div className="flex-1 min-w-0 truncate">
         <span className="font-bold">{film.FilmTitle}</span>
         <span className="text-gray-500"> ({film.Year}) · {film.directors[0]}</span>
