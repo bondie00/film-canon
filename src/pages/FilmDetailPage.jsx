@@ -75,7 +75,7 @@ export default function FilmDetailPage() {
     )
   }
 
-  const backdrop = backdropUrl(film, 'w1280')
+  const backdrop = backdropUrl(film, { mubiWidth: 1280, tmdbSize: 'w1280' })
   const poster = posterUrl(film, 'w342')
   const runtime = formatRuntime(film.runtime)
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import Header from '../components/Header'
@@ -7,6 +7,7 @@ import { landscapeImage } from '../utils/filmImages'
 
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
 const GRID_RANK_MAX = 100   // films ranked 1–100 get square cards; everything below hands off to the database
+const MOVE_RANK_MAX = 50    // only the top 50 slide to their new slot on a poll change; ranks 51–100 crossfade instead (keeps the layout reflow cheap)
 
 // Voter counts per poll aren't in films.json — they're historical facts from the
 // Sight & Sound record (see CLAUDE.md). Used for the "votes per voter" ballot-length stat.
@@ -25,6 +26,18 @@ export default function ExplorePage() {
   const [films, setFilms] = useState(null)
   const [loading, setLoading] = useState(true)
   const [activePoll, setActivePoll] = useState(2022)
+  // Animate the reflow only when the user lands on a poll and pauses; snap when
+  // they're clicking through quickly (avoids overlapping animations).
+  const [animateReflow, setAnimateReflow] = useState(true)
+  const lastPollChangeRef = useRef(0)
+
+  const handlePollChange = (year) => {
+    if (year === activePoll) return
+    const now = performance.now()
+    setAnimateReflow(now - lastPollChangeRef.current >= RAPID_MS)
+    lastPollChangeRef.current = now
+    setActivePoll(year)
+  }
 
   useEffect(() => {
     fetch('/data/films.json')
@@ -53,8 +66,7 @@ export default function ExplorePage() {
       })
   }, [films, activePoll])
 
-  // Split by rank VALUE, not list position — so tied films never straddle the
-  // boundary. Small early polls (e.g. 1962, max rank 77) put every film in the grid.
+  // Split by rank VALUE, not list position — so tied films never straddle the boundary.
   const inGrid = (f) => f.currentRank != null && f.currentRank <= GRID_RANK_MAX
   const gridFilms = rankedFilms.filter(inGrid)
   const beyondCount = rankedFilms.length - gridFilms.length
@@ -126,7 +138,7 @@ export default function ExplorePage() {
 
         <PollTimeline
           activePoll={activePoll}
-          onChange={setActivePoll}
+          onChange={handlePollChange}
           totalCount={rankedFilms.length}
         />
 
@@ -141,9 +153,21 @@ export default function ExplorePage() {
               />
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 <AnimatePresence mode="popLayout">
-                  {gridFilms.map(film => (
-                    <GridTile key={film.key} film={film} activePoll={activePoll} />
-                  ))}
+                  {gridFilms.map(film => {
+                    const isMover = film.currentRank <= MOVE_RANK_MAX
+                    // Movers keep a stable key so Framer slides them. Non-movers
+                    // key on their rank too, so a position change remounts them
+                    // → AnimatePresence crossfades (fade out, fade in at new spot).
+                    return (
+                      <GridTile
+                        key={isMover ? film.key : `${film.key}@${film.currentRank}`}
+                        film={film}
+                        activePoll={activePoll}
+                        animateMove={isMover}
+                        transition={animateReflow ? MOVE : SNAP}
+                      />
+                    )
+                  })}
                 </AnimatePresence>
               </div>
             </section>
@@ -167,7 +191,7 @@ export default function ExplorePage() {
             <div className="border-2 border-black bg-white p-6 md:flex md:items-center md:justify-between gap-6">
               <div className="mb-4 md:mb-0">
                 <div className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">
-                  Beyond the top 100
+                  Beyond the top {GRID_RANK_MAX}
                 </div>
                 <p className="text-lg font-bold text-black leading-tight">
                   {beyondCount.toLocaleString()} more films received votes in {activePoll}.
@@ -231,7 +255,17 @@ function SectionHeading({ eyebrow, title }) {
   )
 }
 
-const SPRING = { type: 'spring', stiffness: 90, damping: 22 }
+// Position-only tween — cheaper than a spring FLIP when ~100 tiles reflow at
+// once on a poll change. Duration is set long enough to comfortably watch the
+// tiles travel to their new ranks.
+const MOVE = { type: 'tween', duration: 0.7, ease: 'easeInOut' }
+// Instant transition used when the user is rapidly stepping through polls, so
+// animations don't pile up on top of each other and choke the main thread.
+const SNAP = { duration: 0 }
+// Poll changes closer together than this are treated as "rapid" → snap instead
+// of animate. Slightly longer than MOVE so a change only animates once the
+// previous slide has finished.
+const RAPID_MS = 800
 
 function PollRankStrip({ film, activePoll }) {
   return (
@@ -263,16 +297,30 @@ function PollRankStrip({ film, activePoll }) {
   )
 }
 
-function GridTile({ film, activePoll }) {
-  const img = landscapeImage(film, { backdropSize: 'w780', posterSize: 'w342' })
+function GridTile({ film, activePoll, animateMove, transition }) {
+  // Tiles display at ~300px wide, so request the small MUBI still (w320) and a
+  // small TMDB backdrop — far cheaper to composite while all tiles reflow at once.
+  const img = landscapeImage(film, { mubiWidth: 320, tmdbBackdropSize: 'w300', posterSize: 'w342' })
+
+  // Movers slide (layout FLIP) and get promoted to their own compositor layer.
+  // Non-movers skip layout entirely — they just crossfade via opacity — so the
+  // per-frame reflow cost is paid on the top 50 tiles only.
+  const moverProps = animateMove
+    ? {
+        layout: 'position',
+        // Only re-measure on poll change, not on every render (e.g. hover).
+        layoutDependency: activePoll,
+        style: { willChange: 'transform', backfaceVisibility: 'hidden' },
+      }
+    : {}
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.96 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.96 }}
-      transition={SPRING}
+      {...moverProps}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={transition}
       className="bg-white border-2 border-black flex flex-col aspect-square overflow-hidden hover:shadow-lg transition-shadow"
     >
       <Link to={`/film/${film.key}`} className="flex flex-col h-full min-h-0">
@@ -284,6 +332,7 @@ function GridTile({ film, activePoll }) {
               src={img.url}
               alt={film.FilmTitle}
               loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover"
             />
           ) : (
