@@ -335,6 +335,8 @@ function VitalStatsStrip({ stats, activePoll }) {
       label: 'Median film year',
       value: medianYear != null ? medianYear : '—',
       sub: medianAge != null ? `${medianAge} yrs old in ${activePoll}` : null,
+      href: `/visualizations/decades?poll=${activePoll}`,
+      cue: 'See decades →',
     },
   ]
 

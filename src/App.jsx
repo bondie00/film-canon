@@ -4,6 +4,7 @@ import CountryDetail from './pages/CountryDetail'
 import SearchPage from './pages/SearchPage'
 import ExplorePage from './pages/ExplorePage'
 import CanonEvolution from './pages/CanonEvolution'
+import DecadesPage from './pages/DecadesPage'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/visualizations/country" element={<CountryOriginMain />} />
         <Route path="/visualizations/country/:countryName" element={<CountryDetail />} />
         <Route path="/visualizations/evolution" element={<CanonEvolution />} />
+        <Route path="/visualizations/decades" element={<DecadesPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/explore" element={<ExplorePage />} />
       </Routes>

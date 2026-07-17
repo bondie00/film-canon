@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 const VIZ_LINKS = [
   { to: '/visualizations/country', label: 'By Country' },
+  { to: '/visualizations/decades', label: 'By Decade & Age' },
   { to: '/visualizations/evolution', label: 'Canon Evolution' },
-  { to: null, label: 'By Decade & Age', soon: true },
   { to: null, label: 'By Director', soon: true },
 ]
 
