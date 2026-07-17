@@ -7329,7 +7329,7 @@
     "bestRank": 1652
   },
   "Carl Th. Dreyer": {
-    "totalFilms": 4,
+    "totalFilms": 7,
     "films": [
       {
         "key": 4048,
@@ -7339,11 +7339,32 @@
         "votes2022": 71
       },
       {
+        "key": 2549,
+        "title": "Ordet",
+        "year": "1955",
+        "rank2022": 48,
+        "votes2022": 48
+      },
+      {
+        "key": 1357,
+        "title": "Gertrud",
+        "year": "1964",
+        "rank2022": 136,
+        "votes2022": 21
+      },
+      {
         "key": 4613,
         "title": "Vampyr",
         "year": "1932",
         "rank2022": 146,
         "votes2022": 20
+      },
+      {
+        "key": 917,
+        "title": "Day of Wrath",
+        "year": "1943",
+        "rank2022": 553,
+        "votes2022": 5
       },
       {
         "key": 4044,
@@ -7362,34 +7383,6 @@
     ],
     "pollsAppeared": 8,
     "bestRank": 6
-  },
-  "Carl Theodor Dreyer": {
-    "totalFilms": 3,
-    "films": [
-      {
-        "key": 2549,
-        "title": "Ordet",
-        "year": "1955",
-        "rank2022": 48,
-        "votes2022": 48
-      },
-      {
-        "key": 1357,
-        "title": "Gertrud",
-        "year": "1964",
-        "rank2022": 136,
-        "votes2022": 21
-      },
-      {
-        "key": 917,
-        "title": "Day of Wrath",
-        "year": "1943",
-        "rank2022": 553,
-        "votes2022": 5
-      }
-    ],
-    "pollsAppeared": 8,
-    "bestRank": 24
   },
   "Carlos Adriano": {
     "totalFilms": 1,
