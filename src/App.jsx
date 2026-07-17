@@ -3,6 +3,7 @@ import CountryOriginMain from './pages/CountryOriginMain'
 import CountryDetail from './pages/CountryDetail'
 import SearchPage from './pages/SearchPage'
 import ExplorePage from './pages/ExplorePage'
+import FilmDetailPage from './pages/FilmDetailPage'
 import CanonEvolution from './pages/CanonEvolution'
 import DecadesPage from './pages/DecadesPage'
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/visualizations/decades" element={<DecadesPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/film/:key" element={<FilmDetailPage />} />
       </Routes>
     </Router>
   )

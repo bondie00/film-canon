@@ -273,8 +273,9 @@ function GridTile({ film, activePoll }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.96 }}
       transition={SPRING}
-      className="bg-white border-2 border-black flex flex-col aspect-square overflow-hidden"
+      className="bg-white border-2 border-black flex flex-col aspect-square overflow-hidden hover:shadow-lg transition-shadow"
     >
+      <Link to={`/film/${film.key}`} className="flex flex-col h-full min-h-0">
       {/* 16:9 image band — uncropped backdrop (poster fallback is blurred-cover so it fills without distortion) */}
       <div className="relative w-full aspect-video bg-black flex-shrink-0 overflow-hidden">
         {img.url ? (
@@ -316,6 +317,7 @@ function GridTile({ film, activePoll }) {
           {film.currentVotes} {film.currentVotes === 1 ? 'vote' : 'votes'}
         </div>
       </div>
+      </Link>
     </motion.div>
   )
 }

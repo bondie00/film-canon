@@ -21,6 +21,49 @@ from pathlib import Path
 # Poll years constant
 POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
 
+# Source workbook (flattened-to-values export; mubi imagery/genre columns were
+# dropped from this file, so they're re-derived from the MUBI CSV by mubi_id).
+EXCEL_PATH = 'data/sight and sound data new.xlsx'
+MUBI_CSV_PATH = 'data/full_mubi_data.csv'
+
+# MUBI CSV columns we join in by mubi_id (id). genres/0..6 collapse to one list;
+# artworks/0/image_url is the poster, still_url the backdrop, duration the
+# runtime (minutes), short_synopsis the blurb.
+_MUBI_GENRE_COLS = [f'genres/{i}' for i in range(7)]
+_MUBI_USE_COLS = ['id', 'artworks/0/image_url', 'still_url', 'duration',
+                  'short_synopsis'] + _MUBI_GENRE_COLS
+
+
+def build_mubi_lookup(csv_path):
+    """Load the MUBI CSV → dict keyed by mubi id with image/genre/runtime/synopsis."""
+    mubi = pd.read_csv(csv_path, usecols=_MUBI_USE_COLS, low_memory=False)
+    # MUBI CSV has one row per locale — keep the first row per id.
+    mubi = mubi.drop_duplicates(subset='id', keep='first')
+
+    lookup = {}
+    for _, row in mubi.iterrows():
+        if pd.isna(row['id']):
+            continue
+        genres = [str(row[c]).strip() for c in _MUBI_GENRE_COLS
+                  if pd.notna(row[c]) and str(row[c]).strip()]
+        runtime = None
+        if pd.notna(row['duration']):
+            try:
+                runtime = int(row['duration'])
+            except (ValueError, TypeError):
+                runtime = None
+        synopsis = str(row['short_synopsis']).strip() if pd.notna(row['short_synopsis']) else None
+        image_url = str(row['artworks/0/image_url']).strip() if pd.notna(row['artworks/0/image_url']) else None
+        still_url = str(row['still_url']).strip() if pd.notna(row['still_url']) else None
+        lookup[int(row['id'])] = {
+            'imageUrl': image_url or None,
+            'stillUrl': still_url or None,
+            'genres': genres,
+            'runtime': runtime,
+            'synopsis': synopsis or None,
+        }
+    return lookup
+
 # Country to continent mapping
 CONTINENT_MAP = {
     # North America (includes Central America and Caribbean)
@@ -107,7 +150,7 @@ def compute_consensus_cutoff(df, year):
     return cutoff_rank, cumulative
 
 
-def generate_films_json(df, output_path):
+def generate_films_json(df, output_path, mubi_lookup):
     """Generate films.json with all film data"""
     print("Generating films.json...")
 
@@ -129,26 +172,32 @@ def generate_films_json(df, output_path):
             directors = [d.strip() for d in str(row['Director']).split(',')]
             directors = [d for d in directors if d and d != 'N/A']
 
-        # Parse countries (comma-separated)
+        # Parse countries (comma-separated). countries[] stays sourced from the
+        # primary Country column so country aggregations are unaffected.
         countries = []
         if pd.notna(row['Country']) and str(row['Country']).strip():
             countries = [c.strip() for c in str(row['Country']).split(',')]
             countries = [c for c in countries if c]
 
-        # Parse genres from MUBI (comma-separated) → array
-        genres = []
-        if 'mubi_genres' in row and pd.notna(row['mubi_genres']) and str(row['mubi_genres']).strip():
-            genres = [g.strip() for g in str(row['mubi_genres']).split(',')]
-            genres = [g for g in genres if g]
+        # Co-production countries (fuller production list; may include primary).
+        co_production_countries = []
+        if pd.notna(row.get('CoProductionCountries')) and str(row['CoProductionCountries']).strip():
+            co_production_countries = [c.strip() for c in str(row['CoProductionCountries']).split(',')]
+            co_production_countries = [c for c in co_production_countries if c]
 
-        # MUBI image URLs → string or None
-        image_url = None
-        if 'mubi_image_url' in row and pd.notna(row['mubi_image_url']) and str(row['mubi_image_url']).strip():
-            image_url = str(row['mubi_image_url']).strip()
+        # MUBI-derived fields, joined by mubi_id from the MUBI CSV.
+        mubi_id = int(row['mubi_id']) if pd.notna(row.get('mubi_id')) else None
+        mubi = mubi_lookup.get(mubi_id, {}) if mubi_id is not None else {}
 
-        still_url = None
-        if 'mubi_still_url' in row and pd.notna(row['mubi_still_url']) and str(row['mubi_still_url']).strip():
-            still_url = str(row['mubi_still_url']).strip()
+        genres = mubi.get('genres') or []
+        # Fall back to the sheet's own Genre column if MUBI had none.
+        if not genres and pd.notna(row.get('Genre')) and str(row['Genre']).strip():
+            genres = [g.strip() for g in str(row['Genre']).split(',') if g.strip()]
+
+        image_url = mubi.get('imageUrl')
+        still_url = mubi.get('stillUrl')
+        runtime = mubi.get('runtime')
+        synopsis = mubi.get('synopsis')
 
         # Build poll history for individual polls
         poll_history = []
@@ -181,7 +230,10 @@ def generate_films_json(df, output_path):
             'Year': str(row['Year']) if pd.notna(row['Year']) else None,
             'directors': directors,
             'countries': countries,
+            'coProductionCountries': co_production_countries,
             'genres': genres,
+            'runtime': runtime,
+            'synopsis': synopsis,
             'imageUrl': image_url,
             'stillUrl': still_url,
             'pollHistory': poll_history
@@ -536,17 +588,21 @@ def main():
     print("=" * 60)
 
     # Read Excel file
-    excel_path = 'data/sight and sound.xlsx'
-    print(f"\nReading {excel_path}...")
-    df = pd.read_excel(excel_path, sheet_name='main data')
+    print(f"\nReading {EXCEL_PATH}...")
+    df = pd.read_excel(EXCEL_PATH, sheet_name='main data')
     print(f"Loaded {len(df):,} films from Excel")
+
+    # Load MUBI CSV (imagery, genres, runtime, synopsis) keyed by mubi_id.
+    print(f"Reading MUBI data from {MUBI_CSV_PATH}...")
+    mubi_lookup = build_mubi_lookup(MUBI_CSV_PATH)
+    print(f"  {len(mubi_lookup):,} MUBI records loaded (deduped by id)")
 
     # Ensure output directory exists
     output_dir = Path('public/data')
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Generate all JSON files
-    generate_films_json(df, output_dir / 'films.json')
+    generate_films_json(df, output_dir / 'films.json', mubi_lookup)
     generate_countries_json(df, output_dir / 'countries.json')
     generate_directors_json(df, output_dir / 'directors.json')
     generate_polls_json(df, output_dir / 'polls.json')
