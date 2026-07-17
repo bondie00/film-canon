@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import FilmCard from '../components/search/FilmCard'
@@ -23,8 +24,13 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Poll selector (auto-apply)
-  const [activePoll, setActivePoll] = useState('all')
+  // Poll selector (auto-apply) — honor a ?poll= deep link (e.g. from /explore's handoff)
+  const [searchParams] = useSearchParams()
+  const [activePoll, setActivePoll] = useState(() => {
+    const p = searchParams.get('poll')
+    const valid = ['1952', '1962', '1972', '1982', '1992', '2002', '2012', '2022']
+    return p && valid.includes(p) ? p : 'all'
+  })
 
   // Single filter state — all auto-apply
   const [filters, setFilters] = useState({ ...DEFAULT_FILTERS })

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
@@ -8,8 +8,13 @@ import ContinentBreakdown from '../components/ContinentBreakdown'
 import ContinentShareChart from '../components/ContinentShareChart'
 
 export default function CountryOriginMain() {
-  // Filter state (not functional yet - Phase 2)
-  const [selectedPoll, setSelectedPoll] = useState('2022')
+  // Honor a ?poll= deep link (e.g. from /explore's stat cells); default to latest poll.
+  const [searchParams] = useSearchParams()
+  const [selectedPoll, setSelectedPoll] = useState(() => {
+    const p = searchParams.get('poll')
+    const valid = ['all', '1952', '1962', '1972', '1982', '1992', '2002', '2012', '2022']
+    return p && valid.includes(p) ? p : '2022'
+  })
   const [rankRange, setRankRange] = useState('all')
   const [countriesData, setCountriesData] = useState(null)
   const [filmsData, setFilmsData] = useState(null)

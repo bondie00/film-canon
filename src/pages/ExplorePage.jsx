@@ -1,18 +1,30 @@
 import { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { landscapeImage } from '../utils/filmImages'
 
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
-const GRID_RANK_MAX = 100   // films ranked 1–100 get square cards; the rest fall to the long tail
-const LONG_TAIL_PAGE = 100
+const GRID_RANK_MAX = 100   // films ranked 1–100 get square cards; everything below hands off to the database
+
+// Voter counts per poll aren't in films.json — they're historical facts from the
+// Sight & Sound record (see CLAUDE.md). Used for the "votes per voter" ballot-length stat.
+const POLL_VOTERS = {
+  1952: 47,
+  1962: 45,
+  1972: 81,
+  1982: 122,
+  1992: 130,
+  2002: 145,
+  2012: 846,
+  2022: 1635,
+}
 
 export default function ExplorePage() {
   const [films, setFilms] = useState(null)
   const [loading, setLoading] = useState(true)
   const [activePoll, setActivePoll] = useState(2022)
-  const [longTailVisible, setLongTailVisible] = useState(LONG_TAIL_PAGE)
 
   useEffect(() => {
     fetch('/data/films.json')
@@ -22,10 +34,6 @@ export default function ExplorePage() {
         setLoading(false)
       })
   }, [])
-
-  useEffect(() => {
-    setLongTailVisible(LONG_TAIL_PAGE)
-  }, [activePoll])
 
   const rankedFilms = useMemo(() => {
     if (!films) return []
@@ -46,13 +54,49 @@ export default function ExplorePage() {
   }, [films, activePoll])
 
   // Split by rank VALUE, not list position — so tied films never straddle the
-  // boundary. Small early polls (e.g. 1962, max rank 77) get no long tail at all.
+  // boundary. Small early polls (e.g. 1962, max rank 77) put every film in the grid.
   const inGrid = (f) => f.currentRank != null && f.currentRank <= GRID_RANK_MAX
   const gridFilms = rankedFilms.filter(inGrid)
-  const tailFilms = rankedFilms.filter(f => !inGrid(f))
-  const longTailFilms = tailFilms.slice(0, longTailVisible)
-  const longTailTotal = tailFilms.length
-  const longTailRemaining = Math.max(0, longTailTotal - longTailVisible)
+  const beyondCount = rankedFilms.length - gridFilms.length
+
+  // Headline numbers for the active poll — recomputed as the poll changes.
+  const vitalStats = useMemo(() => {
+    if (!rankedFilms.length) return null
+    const voters = POLL_VOTERS[activePoll] ?? null
+
+    // Distinct countries among films that received votes this poll
+    const countrySet = new Set()
+    rankedFilms.forEach(f => {
+      f.countries?.forEach(c => {
+        const name = c && c.trim()
+        if (name) countrySet.add(name)
+      })
+    })
+
+    // Median production year (Year may be a range like "1960-1964" → parseInt takes the start)
+    const years = rankedFilms
+      .map(f => parseInt(f.Year, 10))
+      .filter(y => !Number.isNaN(y))
+      .sort((a, b) => a - b)
+    let medianYear = null
+    if (years.length) {
+      const mid = Math.floor(years.length / 2)
+      medianYear = years.length % 2
+        ? years[mid]
+        : Math.round((years[mid - 1] + years[mid]) / 2)
+    }
+
+    return {
+      voters,
+      filmsWithVotes: rankedFilms.length,
+      countries: countrySet.size,
+      medianYear,
+      medianAge: medianYear != null ? activePoll - medianYear : null,
+    }
+  }, [rankedFilms, activePoll])
+
+  // Is there a prior poll to compare against? (1952 is the first, so no.)
+  const hasPriorPoll = POLL_YEARS.indexOf(activePoll) > 0
 
   if (loading) {
     return (
@@ -86,6 +130,8 @@ export default function ExplorePage() {
           totalCount={rankedFilms.length}
         />
 
+        {vitalStats && <VitalStatsStrip stats={vitalStats} activePoll={activePoll} />}
+
         <LayoutGroup>
           {gridFilms.length > 0 && (
             <section className="mt-10">
@@ -104,25 +150,39 @@ export default function ExplorePage() {
           )}
         </LayoutGroup>
 
-        {longTailFilms.length > 0 && (
+        {hasPriorPoll && (
+          <Link
+            to={`/visualizations/evolution?poll=${activePoll}`}
+            className="mt-8 flex items-center justify-between gap-4 border-2 border-black bg-white px-5 py-4 hover:bg-gray-50 transition-colors"
+          >
+            <span className="text-sm font-bold text-black">
+              How the canon shifted into {activePoll} — biggest climbers &amp; fallers
+            </span>
+            <span className="text-sm font-bold uppercase tracking-wide whitespace-nowrap">See Canon Evolution →</span>
+          </Link>
+        )}
+
+        {beyondCount > 0 && (
           <section className="mt-12">
-            <SectionHeading
-              eyebrow={`Beyond rank ${GRID_RANK_MAX} · showing ${longTailFilms.length.toLocaleString()} of ${longTailTotal.toLocaleString()}`}
-              title="The Long Tail"
-            />
-            <div className="divide-y divide-gray-200 border-2 border-black bg-white">
-              {longTailFilms.map(film => (
-                <LongTailRow key={film.key} film={film} />
-              ))}
-            </div>
-            {longTailRemaining > 0 && (
-              <button
-                onClick={() => setLongTailVisible(v => v + LONG_TAIL_PAGE)}
-                className="mt-4 w-full py-3 bg-white border-2 border-black font-bold uppercase tracking-wide text-sm hover:bg-black hover:text-white transition-colors"
+            <div className="border-2 border-black bg-white p-6 md:flex md:items-center md:justify-between gap-6">
+              <div className="mb-4 md:mb-0">
+                <div className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">
+                  Beyond the top 100
+                </div>
+                <p className="text-lg font-bold text-black leading-tight">
+                  {beyondCount.toLocaleString()} more films received votes in {activePoll}.
+                </p>
+                <p className="text-sm text-gray-600 mt-1 max-w-xl">
+                  The full record — every film, filterable by country, director, and year — lives in the database.
+                </p>
+              </div>
+              <Link
+                to={`/search?poll=${activePoll}`}
+                className="inline-block flex-shrink-0 px-6 py-3 bg-black text-white font-bold uppercase tracking-wide text-sm hover:bg-gray-800 transition-colors whitespace-nowrap"
               >
-                Show {Math.min(LONG_TAIL_PAGE, longTailRemaining)} more · {longTailRemaining.toLocaleString()} remaining
-              </button>
-            )}
+                Explore the full record →
+              </Link>
+            </div>
           </section>
         )}
       </div>
@@ -260,15 +320,49 @@ function GridTile({ film, activePoll }) {
   )
 }
 
-function LongTailRow({ film }) {
+function VitalStatsStrip({ stats, activePoll }) {
+  const { filmsWithVotes, voters, countries, medianYear, medianAge } = stats
+  const cells = [
+    { label: 'Voters', value: voters != null ? voters.toLocaleString() : '—' },
+    { label: 'Films with votes', value: filmsWithVotes.toLocaleString() },
+    {
+      label: 'Countries represented',
+      value: countries.toLocaleString(),
+      href: `/visualizations/country?poll=${activePoll}`,
+      cue: 'See the map →',
+    },
+    {
+      label: 'Median film year',
+      value: medianYear != null ? medianYear : '—',
+      sub: medianAge != null ? `${medianAge} yrs old in ${activePoll}` : null,
+    },
+  ]
+
   return (
-    <div className="flex items-center gap-4 px-4 py-2 hover:bg-gray-50 text-sm">
-      <div className="w-14 font-bold text-gray-500 flex-shrink-0">{film.currentRank != null ? `#${film.currentRank}` : 'NR'}</div>
-      <div className="flex-1 min-w-0 truncate">
-        <span className="font-bold">{film.FilmTitle}</span>
-        <span className="text-gray-500"> ({film.Year}) · {film.directors[0]}</span>
+    <div className="mt-4 border-2 border-black bg-white">
+      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gray-200">
+        {cells.map(cell => {
+          const inner = (
+            <>
+              <div className="text-3xl font-black tabular-nums leading-none">{cell.value}</div>
+              {cell.sub && (
+                <div className="mt-1 text-[11px] font-medium text-gray-500 tabular-nums">{cell.sub}</div>
+              )}
+              <div className="mt-1 text-xs font-bold uppercase tracking-widest text-gray-500">{cell.label}</div>
+              {cell.cue && (
+                <div className="mt-2 text-[11px] font-bold uppercase tracking-wide text-black">{cell.cue}</div>
+              )}
+            </>
+          )
+          return cell.href ? (
+            <Link key={cell.label} to={cell.href} className="block p-4 group hover:bg-gray-50 transition-colors">
+              {inner}
+            </Link>
+          ) : (
+            <div key={cell.label} className="p-4">{inner}</div>
+          )
+        })}
       </div>
-      <div className="text-gray-500 font-medium flex-shrink-0">{film.currentVotes} {film.currentVotes === 1 ? 'vote' : 'votes'}</div>
     </div>
   )
 }
