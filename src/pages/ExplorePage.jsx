@@ -356,13 +356,18 @@ function GridTile({ film, activePoll, animateMove, transition }) {
       {/* Rank across all eight polls (1952 → 2022); active poll highlighted */}
       <PollRankStrip film={film} activePoll={activePoll} />
 
-      {/* Metadata fills the remainder so the tile reads as a square */}
-      <div className="flex flex-col flex-1 min-h-0 p-3">
+      {/* Metadata fills the remainder of the tile, stacked tightly from the top */}
+      <div className="flex flex-col flex-1 min-h-0 p-2.5">
         <div className="font-bold text-sm leading-tight line-clamp-2">{film.FilmTitle}</div>
-        <div className="text-xs text-gray-600 truncate mt-1">
+        <div className="text-xs text-gray-600 truncate mt-0.5">
           {film.Year} · {film.directors[0]}
         </div>
-        <div className="mt-auto pt-1 text-xs font-bold text-gray-500">
+        {(film.countries?.[0] || film.Country) && (
+          <div className="text-xs text-gray-600 truncate">
+            {film.countries?.[0] || film.Country}
+          </div>
+        )}
+        <div className="mt-1 text-xs font-bold text-gray-500">
           {film.currentVotes} {film.currentVotes === 1 ? 'vote' : 'votes'}
         </div>
       </div>
@@ -374,8 +379,8 @@ function GridTile({ film, activePoll, animateMove, transition }) {
 function VitalStatsStrip({ stats, activePoll }) {
   const { filmsWithVotes, voters, countries, medianYear, medianAge } = stats
   const cells = [
-    { label: 'Voters', value: voters != null ? voters.toLocaleString() : '—' },
     { label: 'Films with votes', value: filmsWithVotes.toLocaleString() },
+    { label: 'Voters', value: voters != null ? voters.toLocaleString() : '—' },
     {
       label: 'Countries represented',
       value: countries.toLocaleString(),
@@ -385,7 +390,7 @@ function VitalStatsStrip({ stats, activePoll }) {
     {
       label: 'Median film year',
       value: medianYear != null ? medianYear : '—',
-      sub: medianAge != null ? `${medianAge} yrs old in ${activePoll}` : null,
+      note: medianAge != null ? `${medianAge} yrs old in ${activePoll}` : null,
       href: `/visualizations/decades?poll=${activePoll}`,
       cue: 'See decades →',
     },
@@ -398,10 +403,10 @@ function VitalStatsStrip({ stats, activePoll }) {
           const inner = (
             <>
               <div className="text-3xl font-black tabular-nums leading-none">{cell.value}</div>
-              {cell.sub && (
-                <div className="mt-1 text-[11px] font-medium text-gray-500 tabular-nums">{cell.sub}</div>
-              )}
               <div className="mt-1 text-xs font-bold uppercase tracking-widest text-gray-500">{cell.label}</div>
+              {cell.note && (
+                <div className="text-[11px] font-medium text-gray-500 tabular-nums">{cell.note}</div>
+              )}
               {cell.cue && (
                 <div className="mt-2 text-[11px] font-bold uppercase tracking-wide text-black">{cell.cue}</div>
               )}

@@ -323,11 +323,11 @@ function VotersSection({ film, filmVoters }) {
     return POLL_YEARS.filter(y => (filmVoters[String(y)] || []).length > 0).reverse()
   }, [filmVoters])
 
-  // Default-open the most recent poll that has voters.
-  const [openPoll, setOpenPoll] = useState(null)
+  // Default to the most recent poll that has voters.
+  const [selectedPoll, setSelectedPoll] = useState(null)
   useEffect(() => {
-    if (pollsWithVoters.length && openPoll === null) setOpenPoll(pollsWithVoters[0])
-  }, [pollsWithVoters, openPoll])
+    if (pollsWithVoters.length && selectedPoll === null) setSelectedPoll(pollsWithVoters[0])
+  }, [pollsWithVoters, selectedPoll])
 
   if (filmVoters === null) {
     return <p className="text-sm text-gray-500">Loading voters…</p>
@@ -336,71 +336,76 @@ function VotersSection({ film, filmVoters }) {
     return <p className="text-sm text-gray-500">No individual voter records for this film.</p>
   }
 
+  const list = filmVoters[String(selectedPoll)] || []
+  const voteCount = film.pollHistory.find(p => p.year === selectedPoll)?.votes ?? 0
+  const partial = voteCount > list.length
+
   return (
-    <div className="space-y-2">
-      {pollsWithVoters.map(year => {
-        const list = filmVoters[String(year)] || []
-        const poll = film.pollHistory.find(p => p.year === year)
-        const voteCount = poll?.votes ?? 0
-        const partial = voteCount > list.length
-        const isOpen = openPoll === year
-        return (
-          <div key={year} className="border-2 border-black bg-white">
+    <div>
+      {/* Poll selector — mirrors the Explore page's button row */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {pollsWithVoters.map(year => {
+          const active = year === selectedPoll
+          return (
             <button
-              onClick={() => setOpenPoll(isOpen ? -1 : year)}
-              className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-50"
+              key={year}
+              onClick={() => setSelectedPoll(year)}
+              className={`px-4 py-2 font-black text-lg border-2 border-black transition-colors ${
+                active
+                  ? 'bg-black text-white'
+                  : 'bg-white text-black hover:bg-black hover:text-white'
+              }`}
             >
-              <span className="font-black uppercase tracking-tight">
-                {year}
-                <span className="ml-3 text-sm font-bold text-gray-500 normal-case tracking-normal">
-                  {list.length} {list.length === 1 ? 'voter' : 'voters'}
-                  {partial && ` of ${voteCount} votes`}
-                </span>
-              </span>
-              <span className="text-xs text-gray-400">{isOpen ? '▼' : '▶'}</span>
+              {year}
             </button>
-            {isOpen && (
-              <div className="px-4 pb-4 pt-1 border-t border-gray-200">
-                {partial && (
-                  <p className="text-xs text-gray-500 italic mb-3">
-                    Named ballots for this early poll are incompletely recorded, so fewer names appear than the published vote total.
-                  </p>
-                )}
-                <VotersByCountry voters={list} />
-              </div>
-            )}
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
+
+      <div className="text-sm font-bold text-gray-500 mb-3">
+        {list.length} {list.length === 1 ? 'voter' : 'voters'} in the{' '}
+        <span className="text-black">{selectedPoll}</span> poll
+        {partial && ` of ${voteCount} votes`}
+      </div>
+
+      {partial && (
+        <p className="text-xs text-gray-500 italic mb-3">
+          Named ballots for this early poll are incompletely recorded, so fewer names appear than the published vote total.
+        </p>
+      )}
+
+      <VotersList voters={list} />
     </div>
   )
 }
 
-function VotersByCountry({ voters }) {
-  const groups = useMemo(() => {
-    const byCountry = new Map()
+function VotersList({ voters }) {
+  const sorted = useMemo(() => {
+    // Cluster by the first country listed (multiples are slash/comma-separated).
+    const firstCountry = (c) => (c || 'Unknown').split(/[/,]/)[0].trim() || 'Unknown'
+    const freq = new Map()
     voters.forEach(v => {
-      const c = v.c || 'Unknown'
-      if (!byCountry.has(c)) byCountry.set(c, [])
-      byCountry.get(c).push(v.n)
+      const fc = firstCountry(v.c)
+      freq.set(fc, (freq.get(fc) || 0) + 1)
     })
-    return Array.from(byCountry.entries())
-      .map(([country, names]) => ({ country, names: names.sort() }))
-      .sort((a, b) => b.names.length - a.names.length || a.country.localeCompare(b.country))
+    // Order: first country by descending frequency, then A–Z by country, then name.
+    return [...voters]
+      .map(v => ({ ...v, fc: firstCountry(v.c) }))
+      .sort((a, b) =>
+        (freq.get(b.fc) - freq.get(a.fc)) ||
+        a.fc.localeCompare(b.fc) ||
+        a.n.localeCompare(b.n)
+      )
   }, [voters])
 
   return (
-    <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
-      {groups.map(({ country, names }) => (
-        <div key={country}>
-          <div className="text-xs font-bold uppercase tracking-widest text-gray-500 border-b border-gray-200 pb-1 mb-1.5">
-            {country} <span className="text-gray-400">({names.length})</span>
-          </div>
-          <ul className="text-sm text-gray-800 space-y-0.5">
-            {names.map((n, i) => <li key={`${n}-${i}`}>{n}</li>)}
-          </ul>
-        </div>
+    <ul className="columns-2 sm:columns-3 lg:columns-4 gap-x-8 text-sm text-gray-800">
+      {sorted.map((v, i) => (
+        <li key={`${v.n}-${i}`} className="break-inside-avoid mb-1 leading-tight">
+          <span>{v.n}</span>{' '}
+          <span className="text-xs text-gray-400">{v.c}</span>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
