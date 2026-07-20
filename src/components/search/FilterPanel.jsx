@@ -33,6 +33,7 @@ export default function FilterPanel({
   titleOptions,
   directorOptions,
   filmsForCountryCounts,
+  showPoll = true,
 }) {
   const [expandedContinents, setExpandedContinents] = useState({})
   const [countrySearch, setCountrySearch] = useState('')
@@ -180,23 +181,26 @@ export default function FilterPanel({
         )}
       </div>
 
-      {/* Poll Selector */}
-      <div className="mb-3 pb-3 border-b border-gray-200">
-        <label className="block text-xs font-semibold text-black mb-1.5 uppercase tracking-wide">
-          Poll
-        </label>
-        <select
-          value={activePoll}
-          onChange={(e) => onPollChange(e.target.value)}
-          className="w-full px-2 py-1.5 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black"
-        >
-          {POLL_OPTIONS.map(opt => (
-            <option key={opt.value} value={opt.value}>
-              {getPollLabel(opt.value)}
-            </option>
-          ))}
-        </select>
-      </div>
+      {/* Poll Selector — hidden on the unified /explore page, where the prominent
+          poll timeline drives poll selection instead. */}
+      {showPoll && (
+        <div className="mb-3 pb-3 border-b border-gray-200">
+          <label className="block text-xs font-semibold text-black mb-1.5 uppercase tracking-wide">
+            Poll
+          </label>
+          <select
+            value={activePoll}
+            onChange={(e) => onPollChange(e.target.value)}
+            className="w-full px-2 py-1.5 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black"
+          >
+            {POLL_OPTIONS.map(opt => (
+              <option key={opt.value} value={opt.value}>
+                {getPollLabel(opt.value)}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Title Search */}
       <div className="mb-3 pb-3 border-b border-gray-200">

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import GlobalSearch from './search/GlobalSearch'
 
 const VIZ_LINKS = [
   { to: '/visualizations/country', label: 'By Country' },
@@ -33,6 +34,12 @@ export default function Header() {
               </h1>
             </Link>
           </div>
+
+          {/* Global search — persistent across pages (lg+ to avoid crowding the bar) */}
+          <div className="hidden lg:block flex-1 max-w-xs mx-8">
+            <GlobalSearch variant="nav" />
+          </div>
+
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-700 hover:text-gray-900 font-medium">
               Home
@@ -78,9 +85,6 @@ export default function Header() {
               )}
             </div>
 
-            <Link to="/search" className="text-gray-700 hover:text-gray-900 font-medium">
-              Database
-            </Link>
             <a href="#" className="text-gray-700 hover:text-gray-900 font-medium">
               About
             </a>

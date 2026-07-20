@@ -124,7 +124,7 @@ export default function FilmDetailPage() {
                       {film.directors.map((d, i) => (
                         <span key={d}>
                           {i > 0 && ', '}
-                          <Link to={`/search?director=${encodeURIComponent(d)}`} className="underline decoration-white/30 hover:decoration-white">
+                          <Link to={`/explore?view=list&poll=all&director=${encodeURIComponent(d)}`} className="underline decoration-white/30 hover:decoration-white">
                             {d}
                           </Link>
                         </span>
