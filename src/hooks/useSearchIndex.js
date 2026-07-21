@@ -9,7 +9,7 @@ import { loadFilms, loadCountries } from '../utils/filmsData'
 //   film     -> /film/:key                              (exists)
 //   country  -> /visualizations/country/:name           (exists)
 //   poll     -> /explore?poll=YYYY                       (exists)
-//   director -> /explore?view=list&poll=all&director=…   (interim, until a director page exists)
+//   director -> /explore?poll=all&director=…             (interim, until a director page exists)
 
 const POLL_YEARS = [2022, 2012, 2002, 1992, 1982, 1972, 1962, 1952]
 

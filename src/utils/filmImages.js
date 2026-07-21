@@ -1,10 +1,15 @@
 // Image-URL helpers with a MUBI → TMDB → none fallback chain.
 //
 // films.json carries up to four image sources per film:
-//   imageUrl         MUBI poster   (~41% coverage)
+//   imageUrl         MUBI artwork — 16:9 LANDSCAPE key art, not a poster (~41%)
 //   stillUrl         MUBI backdrop (~98% coverage)
-//   tmdbPosterPath   TMDB poster path, e.g. "/abc.jpg"   (fills ~2,700 poster gaps)
+//   tmdbPosterPath   TMDB poster path, e.g. "/abc.jpg" — true 2:3 portrait (~96%)
 //   tmdbBackdropPath TMDB backdrop path                  (fills ~25 backdrop gaps)
+//
+// NOTE: imageUrl is landscape artwork despite the "image" name — it is a
+// backdrop-shaped source, NOT a portrait poster. Poster slots must use
+// tmdbPosterPath; feeding imageUrl into a 2:3 frame crops it into a "wide shot
+// jammed into a poster" (see posterUrl).
 //
 // TMDB paths are size-agnostic — choose the size at render time by prefixing
 // https://image.tmdb.org/t/p/<size>. MUBI stills come as ".../image-w1280.jpg";
@@ -38,9 +43,14 @@ export function backdropUrl(film, { mubiWidth = 1280, tmdbSize = 'w780' } = {}) 
   return tmdb(film.tmdbBackdropPath, tmdbSize) || null
 }
 
-/** Vertical poster. MUBI poster → TMDB poster → null. */
+/**
+ * Vertical 2:3 poster. Uses ONLY the TMDB poster (true portrait, ~96% coverage).
+ * MUBI's imageUrl is 16:9 landscape artwork, so it is deliberately excluded — a
+ * poster gap should fall back to a blurred backdrop + title card, not a cropped
+ * wide shot.
+ */
 export function posterUrl(film, size = 'w342') {
-  return film.imageUrl || tmdb(film.tmdbPosterPath, size) || null
+  return tmdb(film.tmdbPosterPath, size) || null
 }
 
 /**

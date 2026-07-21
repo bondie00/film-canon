@@ -3,13 +3,13 @@ import { useSearchParams } from 'react-router-dom'
 
 // Single source of truth for the unified films surface (/explore).
 //
-// All query state lives in the URL so Gallery and List are two views of the
-// SAME filtered/sorted result set — switching view flips ?view= and keeps every
-// other param. The old Database page (/search) is now just ?view=list.
+// All query state lives in the URL. The surface is a single paginated poster
+// gallery; the rank-depth slider (top) narrows from the full record down to the
+// core canon. The old Database "list" view has been retired.
 //
 // URL params:
 //   poll       'all' | '1952'..'2022'            (default '2022')
-//   view       'gallery' | 'list'                (default 'gallery')
+//   top        rank cutoff (e.g. 1000|500|250|100|50|10) or absent = all films
 //   sort       'votes' | 'title-az' | 'year-newest' | 'year-oldest'  (default 'votes')
 //   page       1-based page number               (default 1)
 //   title      repeated — selected film titles
@@ -23,7 +23,6 @@ import { useSearchParams } from 'react-router-dom'
 
 export const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
 const VALID_POLLS = ['all', ...POLL_YEARS.map(String)]
-const VALID_VIEWS = ['gallery', 'list']
 const VALID_SORTS = ['votes', 'title-az', 'year-newest', 'year-oldest']
 
 export function useFilmQuery() {
@@ -59,11 +58,11 @@ export function useFilmQuery() {
   // ---- Parse + validate URL state ----
   const rawPoll = searchParams.get('poll')
   const poll = VALID_POLLS.includes(rawPoll) ? rawPoll : '2022'
-  const rawView = searchParams.get('view')
-  const view = VALID_VIEWS.includes(rawView) ? rawView : 'gallery'
   const rawSort = searchParams.get('sort')
   const sortBy = VALID_SORTS.includes(rawSort) ? rawSort : 'votes'
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10) || 1)
+  const rawTop = searchParams.get('top')
+  const topRank = rawTop && /^\d+$/.test(rawTop) ? parseInt(rawTop, 10) : null
   const selectedTitles = searchParams.getAll('title')
   const selectedDirectors = searchParams.getAll('director')
   const selectedCountries = searchParams.getAll('country')
@@ -118,15 +117,18 @@ export function useFilmQuery() {
     [pollKey]
   )
 
-  // Step 1 — films that received votes in the active poll.
+  // Step 1 — poll membership + the rank-depth cutoff. topRank is null by default
+  // (every film that received a vote in the active poll); when set, keeps only
+  // films ranked at or above the cutoff. 'all' uses the aggregate rank entry.
   const pollFiltered = useMemo(() => {
     if (!films) return []
-    if (poll === 'all') return films
     return films.filter(f => {
       const p = f.pollHistory.find(x => x.year === pollKey)
-      return p && p.votes > 0
+      if (!p || !(p.votes > 0)) return false
+      if (topRank != null && (p.rank == null || p.rank > topRank)) return false
+      return true
     })
-  }, [films, poll, pollKey])
+  }, [films, pollKey, topRank])
 
   // Step 2 — everything EXCEPT the country filter (drives the sidebar's country counts).
   const beforeCountry = useMemo(() => {
@@ -228,7 +230,7 @@ export function useFilmQuery() {
   }, [setParam])
 
   const clearFilters = useCallback(() => {
-    setParam({ title: [], director: [], country: [], yearStart: '', yearEnd: '', sort: '' })
+    setParam({ title: [], director: [], country: [], yearStart: '', yearEnd: '', sort: '', top: '' })
   }, [setParam])
 
   return {
@@ -238,7 +240,7 @@ export function useFilmQuery() {
     countriesData,
     // parsed state
     poll,
-    view,
+    topRank,
     sortBy,
     page,
     filters,

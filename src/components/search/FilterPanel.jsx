@@ -22,6 +22,11 @@ const POLL_OPTIONS = [
   { value: '1952', label: '1952' },
 ]
 
+// Rank-depth slider stops. Left (null) = the full record; each step right
+// tightens toward the core canon. A rank cutoff works in every poll (single
+// polls and the 'all' aggregate both carry a rank on each film).
+const RANK_STOPS = [null, 1000, 500, 250, 100, 50, 10]
+
 export default function FilterPanel({
   filters,
   onFilterChange,
@@ -34,7 +39,11 @@ export default function FilterPanel({
   directorOptions,
   filmsForCountryCounts,
   showPoll = true,
+  topRank = null,
+  onTopRankChange,
 }) {
+  // Snap the current cutoff to its slider index (0 = All).
+  const rankIdx = Math.max(0, RANK_STOPS.indexOf(topRank))
   const [expandedContinents, setExpandedContinents] = useState({})
   const [countrySearch, setCountrySearch] = useState('')
   const [countryDropdownOpen, setCountryDropdownOpen] = useState(false)
@@ -164,7 +173,7 @@ export default function FilterPanel({
   // Check if any filters are active
   const hasActiveFilters = filters.selectedTitles.length > 0 || filters.selectedDirectors.length > 0 ||
     filters.selectedCountries.length > 0 || filters.yearStart || filters.yearEnd ||
-    filters.sortBy !== 'votes'
+    filters.sortBy !== 'votes' || topRank != null
 
   return (
     <div className="bg-white border-4 border-black p-4 lg:sticky lg:top-8">
@@ -201,6 +210,32 @@ export default function FilterPanel({
           </select>
         </div>
       )}
+
+      {/* Rank depth — narrows from the full record down to the core canon */}
+      <div className="mb-3 pb-3 border-b border-gray-200">
+        <div className="flex items-baseline justify-between mb-1.5">
+          <label className="text-xs font-semibold text-black uppercase tracking-wide">
+            Show
+          </label>
+          <span className="text-xs font-bold text-black tabular-nums">
+            {topRank == null ? 'All films' : `Top ${topRank.toLocaleString()}`}
+          </span>
+        </div>
+        <input
+          type="range"
+          min={0}
+          max={RANK_STOPS.length - 1}
+          step={1}
+          value={rankIdx}
+          onChange={(e) => onTopRankChange(RANK_STOPS[Number(e.target.value)])}
+          aria-label="Rank depth"
+          className="w-full accent-black cursor-pointer"
+        />
+        <div className="flex justify-between text-[10px] font-bold uppercase tracking-wide text-gray-400 mt-0.5">
+          <span>All</span>
+          <span>Top 10</span>
+        </div>
+      </div>
 
       {/* Title Search */}
       <div className="mb-3 pb-3 border-b border-gray-200">

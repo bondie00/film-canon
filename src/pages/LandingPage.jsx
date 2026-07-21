@@ -56,8 +56,17 @@ export default function LandingPage() {
             films that ever received a vote, from 1952 to 2022. Search them, map them, watch the canon change.
           </p>
 
-          <div className="mt-8">
+          {/* Two co-equal ways in: search the canon, or jump straight to Explore. */}
+          <div className="mt-8 flex flex-col sm:flex-row sm:items-stretch gap-3">
             <GlobalSearch variant="hero" />
+            <span className="self-center text-sm font-bold uppercase tracking-widest text-gray-400">or</span>
+            <Link
+              to="/explore"
+              className="flex items-center justify-center gap-2 border-2 border-black bg-black px-8 py-4 text-lg font-black uppercase tracking-wide text-white hover:bg-white hover:text-black transition-colors whitespace-nowrap"
+            >
+              Explore the polls
+              <span aria-hidden="true">→</span>
+            </Link>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-sm">
