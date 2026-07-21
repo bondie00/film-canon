@@ -21,6 +21,7 @@ export default function FilmDetailPage() {
   const { key } = useParams()
   const [films, setFilms] = useState(null)
   const [voters, setVoters] = useState(null)
+  const [voterSlugs, setVoterSlugs] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -33,6 +34,12 @@ export default function FilmDetailPage() {
       .then(r => r.json())
       .then(data => { if (alive) setVoters(data) })
       .catch(() => { if (alive) setVoters({}) })
+    // Maps each ballot's raw spelling to the voter page(s) it belongs to. Built
+    // alongside voters.json so the slug rules live in one place.
+    fetch('/data/voter-slugs.json')
+      .then(r => r.json())
+      .then(data => { if (alive) setVoterSlugs(data) })
+      .catch(() => { if (alive) setVoterSlugs({}) })
     return () => { alive = false }
   }, [])
 
@@ -202,7 +209,7 @@ export default function FilmDetailPage() {
         {/* Voters */}
         <section>
           <SectionHeading title="Who voted for it" />
-          <VotersSection film={film} filmVoters={filmVoters} />
+          <VotersSection film={film} filmVoters={filmVoters} voterSlugs={voterSlugs} />
         </section>
       </div>
 
@@ -338,7 +345,7 @@ function PollTrendChart({ film }) {
   )
 }
 
-function VotersSection({ film, filmVoters }) {
+function VotersSection({ film, filmVoters, voterSlugs }) {
   // Which polls have voter data, most recent first.
   const pollsWithVoters = useMemo(() => {
     if (!filmVoters) return []
@@ -396,12 +403,12 @@ function VotersSection({ film, filmVoters }) {
         </p>
       )}
 
-      <VotersList voters={list} />
+      <VotersList voters={list} voterSlugs={voterSlugs} />
     </div>
   )
 }
 
-function VotersList({ voters }) {
+function VotersList({ voters, voterSlugs }) {
   const sorted = useMemo(() => {
     // Cluster by the first country listed (multiples are slash/comma-separated).
     const firstCountry = (c) => (c || 'Unknown').split(/[/,]/)[0].trim() || 'Unknown'
@@ -422,12 +429,31 @@ function VotersList({ voters }) {
 
   return (
     <ul className="columns-2 sm:columns-3 lg:columns-4 gap-x-8 text-sm text-gray-800">
-      {sorted.map((v, i) => (
-        <li key={`${v.n}-${i}`} className="break-inside-avoid mb-1 leading-tight">
-          <span>{v.n}</span>{' '}
-          <span className="text-xs text-gray-400">{v.c}</span>
-        </li>
-      ))}
+      {sorted.map((v, i) => {
+        // A joint ballot resolves to more than one person, so each name links
+        // separately; anyone without a page renders as plain text.
+        const people = voterSlugs?.[v.n] || []
+        return (
+          <li key={`${v.n}-${i}`} className="break-inside-avoid mb-1 leading-tight">
+            {people.length > 0 ? (
+              people.map((p, j) => (
+                <span key={p.slug}>
+                  {j > 0 && <span className="text-gray-300"> &amp; </span>}
+                  <Link
+                    to={`/voter/${p.slug}`}
+                    className="hover:text-black hover:underline decoration-gray-400"
+                  >
+                    {p.name}
+                  </Link>
+                </span>
+              ))
+            ) : (
+              <span>{v.n}</span>
+            )}{' '}
+            <span className="text-xs text-gray-400">{v.c}</span>
+          </li>
+        )
+      })}
     </ul>
   )
 }

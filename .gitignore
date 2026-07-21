@@ -31,3 +31,4 @@ data/review_decisions.json
 data/tmdb_review.json
 .claude/settings.local.json
 ~$*.xlsx
+__pycache__/

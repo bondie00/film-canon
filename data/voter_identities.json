@@ -1,0 +1,37 @@
+{
+  "_comment": [
+    "Hand-curated voter identity rules, applied by scripts/build_voter_ballots.py.",
+    "Most cross-poll name variants were corrected in the workbook itself; this file",
+    "holds only the cases that CANNOT be fixed at source because both spellings are",
+    "legitimate. Derived from data/voter_name_review.csv.",
+    "",
+    "aliases: variant name -> the name the voter should be listed under. Matching is",
+    "on the normalized form (case, accents and punctuation are already ignored), so",
+    "only genuine differences need an entry.",
+    "",
+    "joint: a ballot submitted by more than one person. The ballot is listed on each",
+    "person's page, flagged as joint. Collectives that act as a single identity",
+    "(Ferronian Brigade, T A P E Collective) are deliberately NOT split - they are",
+    "organisations, not two named individuals.",
+    "",
+    "distinct: pairs of similar names CONFIRMED to be different people. Nothing in",
+    "the build reads this - it is a record so a future name audit does not re-raise",
+    "them, because merging any of these would attribute one person's ballot to",
+    "another. Reviewed by hand against data/voter_name_review.csv."
+  ],
+
+  "aliases": {
+    "Luc Sante": "Lucy Sante"
+  },
+
+  "joint": {
+    "Dan and Edna Fainaru": ["Dan Fainaru", "Edna Fainaru"],
+    "Neil Jillett/Anthony Clarke": ["Neil Jillett", "Anthony Clarke"]
+  },
+
+  "distinct": [
+    ["Linda Williams", "Linda Ruth Williams"],
+    ["Deane Williams", "Evan Williams"],
+    ["James Rodrigues", "João Carlos Rodrigues"]
+  ]
+}
