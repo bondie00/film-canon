@@ -5,12 +5,14 @@ import { useSearchIndex } from '../../hooks/useSearchIndex'
 const GROUP_LABELS = {
   film: 'Films',
   director: 'Directors',
+  voter: 'Voters',
   country: 'Countries',
   poll: 'Polls',
 }
 
 // Turn the grouped search result into a flat, ordered list of navigable rows.
-// Order = Films, Directors, Countries, Polls. Each row carries its destination.
+// Order = Films, Directors, Voters, Countries, Polls — the two kinds of people
+// sit together. Each row carries its destination.
 function flatten(results) {
   if (!results) return []
   const rows = []
@@ -19,6 +21,9 @@ function flatten(results) {
   )
   results.directors.forEach(d =>
     rows.push({ type: 'director', label: d, sub: 'Director', to: `/director/${encodeURIComponent(d)}` })
+  )
+  results.voters?.forEach(v =>
+    rows.push({ type: 'voter', label: v.name, sub: 'Voter', to: `/voter/${v.slug}` })
   )
   results.countries.forEach(c =>
     rows.push({ type: 'country', label: c, sub: 'Country', to: `/visualizations/country/${encodeURIComponent(c)}` })

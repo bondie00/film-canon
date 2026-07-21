@@ -13,3 +13,11 @@ export function loadCountries() {
   if (!countriesPromise) countriesPromise = fetch('/data/countries.json').then(r => r.json())
   return countriesPromise
 }
+
+// Raw ballot spelling -> the voter page(s) it belongs to. ~170KB, and enough to
+// search voters by name without touching the 3MB voters.json.
+let voterSlugsPromise = null
+export function loadVoterSlugs() {
+  if (!voterSlugsPromise) voterSlugsPromise = fetch('/data/voter-slugs.json').then(r => r.json())
+  return voterSlugsPromise
+}

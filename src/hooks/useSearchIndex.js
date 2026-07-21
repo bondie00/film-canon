@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react'
-import { loadFilms, loadCountries } from '../utils/filmsData'
+import { loadFilms, loadCountries, loadVoterSlugs } from '../utils/filmsData'
 
 // Lazy client-side search index for the global search bar. The heavy films.json
 // isn't fetched until the user first focuses a search box (activate()), then the
@@ -10,6 +10,7 @@ import { loadFilms, loadCountries } from '../utils/filmsData'
 //   country  -> /visualizations/country/:name           (exists)
 //   poll     -> /explore?poll=YYYY                       (exists)
 //   director -> /director/:name                         (exists)
+//   voter    -> /voter/:slug                            (exists)
 
 const POLL_YEARS = [2022, 2012, 2002, 1992, 1982, 1972, 1962, 1952]
 
@@ -17,7 +18,9 @@ let indexCache = null
 
 async function buildIndex() {
   if (indexCache) return indexCache
-  const [films, countries] = await Promise.all([loadFilms(), loadCountries()])
+  const [films, countries, voterSlugs] = await Promise.all([
+    loadFilms(), loadCountries(), loadVoterSlugs(),
+  ])
 
   const directorSet = new Set()
   const filmEntries = films.map(f => {
@@ -33,15 +36,35 @@ async function buildIndex() {
 
   const countryList = Object.keys(countries).filter(c => !c.startsWith('_'))
 
+  // One entry per voter, keyed by slug so a joint ballot ("Dan and Edna
+  // Fainaru") contributes to both people rather than becoming its own result.
+  // Every raw spelling is kept as a searchable alias, so looking up a name as it
+  // was recorded in an older poll still finds the person's page.
+  const bySlug = new Map()
+  Object.entries(voterSlugs).forEach(([raw, people]) => {
+    people.forEach(p => {
+      let entry = bySlug.get(p.slug)
+      if (!entry) {
+        entry = { name: p.name, slug: p.slug, aliases: new Set([p.name.toLowerCase()]) }
+        bySlug.set(p.slug, entry)
+      }
+      entry.aliases.add(raw.toLowerCase())
+    })
+  })
+  const voterList = Array.from(bySlug.values())
+    .map(v => ({ name: v.name, slug: v.slug, aliases: Array.from(v.aliases) }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
   indexCache = {
     films: filmEntries,
     directors: Array.from(directorSet).sort(),
     countries: countryList.sort(),
+    voters: voterList,
   }
   return indexCache
 }
 
-const EMPTY = { films: [], directors: [], countries: [], polls: [] }
+const EMPTY = { films: [], directors: [], countries: [], polls: [], voters: [] }
 
 export function useSearchIndex() {
   const [ready, setReady] = useState(!!indexCache)
@@ -82,9 +105,20 @@ export function useSearchIndex() {
 
     const polls = POLL_YEARS.map(String).filter(y => y.includes(query))
 
+    // Voters match on their own name or any spelling their ballots were filed
+    // under; a name that starts with the query outranks one that merely contains it.
+    const voters = idx.voters
+      .filter(v => v.aliases.some(a => a.includes(query)))
+      .sort((a, b) => {
+        const as = a.name.toLowerCase().startsWith(query)
+        const bs = b.name.toLowerCase().startsWith(query)
+        return (bs - as) || a.name.length - b.name.length
+      })
+
     return {
       films: films.slice(0, 6),
       directors: rankName(idx.directors).slice(0, 4),
+      voters: voters.slice(0, 4),
       countries: rankName(idx.countries).slice(0, 4),
       polls: polls.slice(0, 4),
     }
