@@ -18,7 +18,7 @@ function flatten(results) {
     rows.push({ type: 'film', label: f.title, sub: [f.year, f.director].filter(Boolean).join(' · '), to: `/film/${f.key}` })
   )
   results.directors.forEach(d =>
-    rows.push({ type: 'director', label: d, sub: 'Director', to: `/explore?poll=all&director=${encodeURIComponent(d)}` })
+    rows.push({ type: 'director', label: d, sub: 'Director', to: `/director/${encodeURIComponent(d)}` })
   )
   results.countries.forEach(c =>
     rows.push({ type: 'country', label: c, sub: 'Country', to: `/visualizations/country/${encodeURIComponent(c)}` })

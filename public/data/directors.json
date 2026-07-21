@@ -2359,7 +2359,7 @@
     "bestRank": 1652
   },
   "Alfred Hitchcock": {
-    "totalFilms": 26,
+    "totalFilms": 28,
     "films": [
       {
         "key": 4627,
@@ -2434,27 +2434,6 @@
     ],
     "pollsAppeared": 8,
     "bestRank": 1
-  },
-  "Alfred Hitckcock": {
-    "totalFilms": 2,
-    "films": [
-      {
-        "key": 1304,
-        "title": "Frenzy",
-        "year": "1972",
-        "rank2022": 1105,
-        "votes2022": 2
-      },
-      {
-        "key": 1276,
-        "title": "Foreign Correspondent",
-        "year": "1940",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 2,
-    "bestRank": 899
   },
   "Alfred Machin": {
     "totalFilms": 1,
@@ -17395,7 +17374,7 @@
     "bestRank": 130
   },
   "Jean-Luc Godard": {
-    "totalFilms": 43,
+    "totalFilms": 42,
     "films": [
       {
         "key": 617,
@@ -17433,13 +17412,6 @@
         "votes2022": 18
       },
       {
-        "key": 2892,
-        "title": "Rome, Open City",
-        "year": "1945",
-        "rank2022": 265,
-        "votes2022": 11
-      },
-      {
         "key": 17,
         "title": "2 or 3 Things I Know About Her",
         "year": "1967",
@@ -17466,9 +17438,16 @@
         "year": "2014",
         "rank2022": 553,
         "votes2022": 5
+      },
+      {
+        "key": 2467,
+        "title": "Nouvelle vague",
+        "year": "1990",
+        "rank2022": 846,
+        "votes2022": 3
       }
     ],
-    "pollsAppeared": 8,
+    "pollsAppeared": 7,
     "bestRank": 12
   },
   "Jean-Henri Roger": {
@@ -33474,7 +33453,7 @@
     "bestRank": 1652
   },
   "Pier Paolo Pasolini": {
-    "totalFilms": 16,
+    "totalFilms": 15,
     "films": [
       {
         "key": 3696,
@@ -33482,13 +33461,6 @@
         "year": "1964",
         "rank2022": 157,
         "votes2022": 18
-      },
-      {
-        "key": 2892,
-        "title": "Rome, Open City",
-        "year": "1945",
-        "rank2022": 265,
-        "votes2022": 11
       },
       {
         "key": 2932,
@@ -33545,9 +33517,16 @@
         "year": "1961",
         "rank2022": 1652,
         "votes2022": 1
+      },
+      {
+        "key": 345,
+        "title": "Arabian Nights",
+        "year": "1974",
+        "rank2022": 1652,
+        "votes2022": 1
       }
     ],
-    "pollsAppeared": 7,
+    "pollsAppeared": 6,
     "bestRank": 32
   },
   "Steno": {
@@ -42203,15 +42182,8 @@
     "bestRank": 26
   },
   "Ugo Gregoretti": {
-    "totalFilms": 2,
+    "totalFilms": 1,
     "films": [
-      {
-        "key": 2892,
-        "title": "Rome, Open City",
-        "year": "1945",
-        "rank2022": 265,
-        "votes2022": 11
-      },
       {
         "key": 2875,
         "title": "Ro.Go.Pa.G.",
@@ -42220,8 +42192,8 @@
         "votes2022": 2
       }
     ],
-    "pollsAppeared": 6,
-    "bestRank": 55
+    "pollsAppeared": 1,
+    "bestRank": 1105
   },
   "Robin Campillo": {
     "totalFilms": 1,

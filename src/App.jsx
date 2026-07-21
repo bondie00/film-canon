@@ -5,6 +5,7 @@ import CountryOriginMain from './pages/CountryOriginMain'
 import CountryDetail from './pages/CountryDetail'
 import ExplorePage from './pages/ExplorePage'
 import FilmDetailPage from './pages/FilmDetailPage'
+import DirectorDetailPage from './pages/DirectorDetailPage'
 import CanonEvolution from './pages/CanonEvolution'
 import DecadesPage from './pages/DecadesPage'
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/search" element={<SearchRedirect />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/film/:key" element={<FilmDetailPage />} />
+        <Route path="/director/:name" element={<DirectorDetailPage />} />
       </Routes>
     </Router>
   )

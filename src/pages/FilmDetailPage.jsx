@@ -6,8 +6,7 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { backdropUrl, posterUrl } from '../utils/filmImages'
-
-const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
+import { POLL_YEARS, POLL_VOTERS, voteShare } from '../utils/polls'
 
 function formatRuntime(mins) {
   if (!mins) return null
@@ -124,7 +123,7 @@ export default function FilmDetailPage() {
                       {film.directors.map((d, i) => (
                         <span key={d}>
                           {i > 0 && ', '}
-                          <Link to={`/explore?poll=all&director=${encodeURIComponent(d)}`} className="underline decoration-white/30 hover:decoration-white">
+                          <Link to={`/director/${encodeURIComponent(d)}`} className="underline decoration-white/30 hover:decoration-white">
                             {d}
                           </Link>
                         </span>
@@ -197,7 +196,7 @@ export default function FilmDetailPage() {
         <section>
           <SectionHeading title="Votes across the polls" />
           <VotesStrip film={film} />
-          <VotesLineChart film={film} />
+          <PollTrendChart film={film} />
         </section>
 
         {/* Voters */}
@@ -243,20 +242,31 @@ function VotesStrip({ film }) {
   )
 }
 
-function VotesLineChart({ film }) {
+/**
+ * The film's rank across the eight polls.
+ *
+ * Rank only, deliberately. Vote counts aren't comparable between polls — the
+ * electorate grew from 47 critics to 1,635 — so a rising vote line reads as
+ * growing support when it can mean the opposite. The counts stay available in
+ * the tooltip, alongside each poll's share of voters, which is the like-for-like
+ * measure if you want to weigh them.
+ */
+function PollTrendChart({ film }) {
   const chartData = useMemo(() => POLL_YEARS.map(year => {
     const poll = film.pollHistory.find(p => p.year === year)
+    const votes = poll && poll.votes > 0 ? poll.votes : null
     return {
       year: `'${year.toString().slice(2)}`,
       yearNum: year,
-      votes: poll && poll.votes > 0 ? poll.votes : null,
+      votes,
       rank: poll && poll.votes > 0 ? poll.rank : null,
+      share: voteShare(year, votes),
     }
   }), [film.pollHistory])
 
   const hasHistory = chartData.some(d => d.rank !== null)
 
-  // Reversed rank axis (#1 at top); scale to the film's own rank range.
+  // Reversed axis (#1 at top), scaled to the film's own rank range.
   const yDomain = useMemo(() => {
     const ranks = chartData.filter(d => d.rank !== null).map(d => d.rank)
     if (!ranks.length) return [1, 100]
@@ -274,14 +284,25 @@ function VotesLineChart({ film }) {
     return (
       <div className="bg-black text-white text-xs px-3 py-2 border border-white/20">
         <div className="font-bold">{d.yearNum} poll</div>
-        <div>{d.rank ? `rank #${d.rank}` : 'unranked'}{d.votes ? ` · ${d.votes} ${d.votes === 1 ? 'vote' : 'votes'}` : ''}</div>
+        <div>
+          {d.rank ? `rank #${d.rank}` : 'unranked'}
+          {d.votes ? ` · ${d.votes} ${d.votes === 1 ? 'vote' : 'votes'}` : ''}
+        </div>
+        {d.share != null && (
+          <div className="text-white/60">
+            {d.share.toFixed(d.share < 1 ? 2 : 1)}% of {POLL_VOTERS[d.yearNum].toLocaleString()} voters
+          </div>
+        )}
       </div>
     )
   }
 
   return (
     <div>
-      <div className="text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2">Rank by poll</div>
+      <div className="text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2">
+        Rank by poll
+      </div>
+
       <ResponsiveContainer width="100%" height={200}>
         <LineChart data={chartData} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
           <XAxis
@@ -309,6 +330,7 @@ function VotesLineChart({ film }) {
             connectNulls
             dot={<Dot r={3} fill="#000" stroke="#fff" strokeWidth={1.5} />}
             activeDot={{ r: 5, fill: '#000', stroke: '#fff', strokeWidth: 2 }}
+            isAnimationActive={false}
           />
         </LineChart>
       </ResponsiveContainer>
