@@ -1,8 +1,7 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import GridTile, { withCurrent } from '../components/search/GridTile'
 
 /**
  * One critic's ballots, poll by poll.
@@ -16,33 +15,26 @@ import GridTile, { withCurrent } from '../components/search/GridTile'
 export default function VoterDetailPage() {
   const { slug } = useParams()
   const [voters, setVoters] = useState(null)
-  const [films, setFilms] = useState(null)
   const [error, setError] = useState(false)
 
+  // Ballots carry their own title/year/director, so this page never loads
+  // films.json.
   useEffect(() => {
     let alive = true
-    Promise.all([
-      fetch('/data/voters.json').then(r => r.json()),
-      fetch('/data/films.json').then(r => r.json()),
-    ])
-      .then(([v, f]) => { if (alive) { setVoters(v); setFilms(f) } })
+    fetch('/data/voters.json')
+      .then(r => r.json())
+      .then(v => { if (alive) setVoters(v) })
       .catch(() => { if (alive) setError(true) })
     return () => { alive = false }
   }, [])
 
   const voter = voters ? voters[slug] : null
-  const filmsByKey = useMemo(() => {
-    if (!films) return null
-    const m = new Map()
-    films.forEach(f => m.set(f.key, f))
-    return m
-  }, [films])
 
   if (error) {
     return <Shell><Message title="Couldn't load the ballots" body="Please try again." /></Shell>
   }
 
-  if (!voters || !films) {
+  if (!voters) {
     return (
       <Shell>
         <div className="text-center py-20">
@@ -124,19 +116,22 @@ export default function VoterDetailPage() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-            {ballot.films.map(pick => {
-              const film = filmsByKey.get(pick.key)
-              if (!film) return null
-              return (
-                <GridTile
-                  key={pick.key}
-                  film={withCurrent(film, String(ballot.poll))}
-                  activePoll={String(ballot.poll)}
-                />
-              )
-            })}
-          </div>
+          <ol className="border-2 border-black bg-white divide-y divide-gray-200">
+            {ballot.films.map(pick => (
+              <li key={pick.key}>
+                <Link
+                  to={`/film/${pick.key}`}
+                  className="block px-4 py-2.5 hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-bold text-black">{pick.title}</span>
+                  <span className="text-gray-600">
+                    {' '}
+                    ({[pick.director, pick.year].filter(Boolean).join(', ')})
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ol>
         </section>
       ))}
     </Shell>

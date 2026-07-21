@@ -131,7 +131,15 @@ def main():
                 film = films_by_key.get(key)
                 if not film:
                     continue
-                entry = {"key": key, "title": film["FilmTitle"], "year": film_year(film)}
+                # Title, year and director are carried here so the voter page
+                # renders from voters.json alone and never has to pull the 8.5 MB
+                # films.json just to name a director.
+                entry = {
+                    "key": key,
+                    "title": film["FilmTitle"],
+                    "year": film_year(film),
+                    "director": ", ".join(film.get("directors") or []) or None,
+                }
                 if entry not in picks:
                     picks.append(entry)
 
