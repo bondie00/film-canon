@@ -200,7 +200,7 @@ export default function DirectorDetailPage() {
                 {stats.countries.map(c => (
                   <Link
                     key={c}
-                    to={`/visualizations/country/${encodeURIComponent(c)}`}
+                    to={`/countries/${encodeURIComponent(c)}`}
                     className="underline decoration-gray-300 hover:decoration-black hover:text-black"
                   >
                     {c}

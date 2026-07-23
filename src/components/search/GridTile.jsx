@@ -50,8 +50,11 @@ function PollRankStrip({ film, activePoll }) {
  * The square poster tile used by the /explore gallery and the director page.
  * `film` must already carry currentRank/currentVotes (see withCurrent).
  * animateMove/transition drive Explore's poll-change reflow; both are optional.
+ * square (default true) locks the tile to a 1:1 box for uniform galleries; pass
+ * square={false} in tight grids (e.g. the country popovers) so the tile grows to
+ * fit its title instead of clipping the second line.
  */
-export default function GridTile({ film, activePoll, animateMove = false, transition }) {
+export default function GridTile({ film, activePoll, animateMove = false, transition, square = true }) {
   // Tiles display at ~300px wide, so request the small MUBI still (w320) and a
   // small TMDB backdrop — far cheaper to composite while all tiles reflow at once.
   const img = landscapeImage(film, { mubiWidth: 320, tmdbBackdropSize: 'w300', posterSize: 'w342' })
@@ -71,7 +74,7 @@ export default function GridTile({ film, activePoll, animateMove = false, transi
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={transition}
-      className="bg-white border-2 border-black flex flex-col aspect-square overflow-hidden hover:shadow-lg transition-shadow"
+      className={`bg-white border-2 border-black flex flex-col overflow-hidden hover:shadow-lg transition-shadow ${square ? 'aspect-square' : ''}`}
     >
       <Link to={`/film/${film.key}`} className="flex flex-col h-full min-h-0">
         {/* 16:9 image band — uncropped backdrop (poster fallback is blurred-cover so it fills without distortion) */}

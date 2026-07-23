@@ -6,12 +6,15 @@ import {
 
 const POLL_YEARS = ['1952', '1962', '1972', '1982', '1992', '2002', '2012', '2022']
 
-export default function ContinentShareChart({ countriesData, selectedPoll, rankRange }) {
+export default function ContinentShareChart({ countriesData, selectedPoll, rankRange, metric = 'films' }) {
+  const unit = metric === 'votes' ? 'votes' : 'films'
   const chartData = useMemo(() => {
     if (!countriesData) return []
 
     const isConsensus = rankRange === 'consensus'
-    const filmsKey = isConsensus ? 'distinctFilmsConsensus' : 'distinctFilms'
+    const valueKey = metric === 'votes'
+      ? (isConsensus ? 'consensus' : 'total')
+      : (isConsensus ? 'distinctFilmsConsensus' : 'distinctFilms')
 
     return POLL_YEARS.map(year => {
       // Collect per-country film counts for this poll year
@@ -23,7 +26,7 @@ export default function ContinentShareChart({ countriesData, selectedPoll, rankR
         if (name.startsWith('_')) return
         const pollData = info.byPoll?.[year]
         if (!pollData) return
-        const films = pollData[filmsKey] || 0
+        const films = pollData[valueKey] || 0
         if (films > 0) {
           totalFilms += films
           countryCount++
@@ -53,7 +56,7 @@ export default function ContinentShareChart({ countriesData, selectedPoll, rankR
         isHighlighted: selectedPoll === year,
       }
     })
-  }, [countriesData, rankRange, selectedPoll])
+  }, [countriesData, rankRange, selectedPoll, metric])
 
   if (!chartData.length) return null
 
@@ -80,7 +83,7 @@ export default function ContinentShareChart({ countriesData, selectedPoll, rankR
             <div className="flex justify-between text-sm mb-1">
               <span className="text-gray-600">Top 5 share</span>
               <span className="font-bold text-black">
-                {data.top5Pct.toFixed(1)}% <span className="font-medium text-gray-500">({data.top5Films} films)</span>
+                {data.top5Pct.toFixed(1)}% <span className="font-medium text-gray-500">({data.top5Films.toLocaleString()} {unit})</span>
               </span>
             </div>
             <div className="pl-2 space-y-0.5">
@@ -94,12 +97,12 @@ export default function ContinentShareChart({ countriesData, selectedPoll, rankR
             <div className="flex justify-between text-sm mt-1">
               <span className="text-gray-600">Rest of world</span>
               <span className="font-bold" style={{ color: '#10b981' }}>
-                {data.restPct.toFixed(1)}% <span className="font-medium text-gray-500">({data.restFilms} films)</span>
+                {data.restPct.toFixed(1)}% <span className="font-medium text-gray-500">({data.restFilms.toLocaleString()} {unit})</span>
               </span>
             </div>
           </div>
           <div className="border-t border-gray-200 pt-2 text-sm flex justify-between">
-            <span className="text-gray-500">Total {isConsensus ? 'consensus ' : ''}films</span>
+            <span className="text-gray-500">Total {isConsensus ? 'consensus ' : ''}{unit}</span>
             <span className="font-bold text-black">{data.totalFilms.toLocaleString()}</span>
           </div>
         </div>

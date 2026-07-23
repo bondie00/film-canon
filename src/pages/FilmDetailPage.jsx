@@ -171,7 +171,7 @@ export default function FilmDetailPage() {
               {(film.countries || []).map(c => (
                 <Link
                   key={c}
-                  to={`/visualizations/country/${encodeURIComponent(c)}`}
+                  to={`/countries/${encodeURIComponent(c)}`}
                   className="text-sm font-bold border-2 border-black px-3 py-1 bg-white hover:bg-black hover:text-white transition-colors"
                 >
                   {c}
@@ -187,7 +187,7 @@ export default function FilmDetailPage() {
                   {extraCoProd.map(c => (
                     <Link
                       key={c}
-                      to={`/visualizations/country/${encodeURIComponent(c)}`}
+                      to={`/countries/${encodeURIComponent(c)}`}
                       className="text-xs font-medium border border-gray-300 px-2 py-1 bg-white text-gray-600 hover:border-black hover:text-black transition-colors"
                     >
                       {c}

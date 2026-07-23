@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import GlobalSearch from './search/GlobalSearch'
 
 const VIZ_LINKS = [
-  { to: '/visualizations/country', label: 'By Country' },
   { to: '/visualizations/decades', label: 'By Decade & Age' },
   { to: '/visualizations/evolution', label: 'Canon Evolution' },
   { to: null, label: 'By Director', soon: true },
@@ -46,6 +45,9 @@ export default function Header() {
             </Link>
             <Link to="/explore" className="text-gray-700 hover:text-gray-900 font-medium">
               Explore
+            </Link>
+            <Link to="/countries" className="text-gray-700 hover:text-gray-900 font-medium">
+              Countries
             </Link>
 
             {/* Visualizations dropdown */}

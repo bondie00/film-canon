@@ -716,43 +716,62 @@ xl: 1280px  // Full layout
 - **Different visualization strategies needed for consensus vs. diversity**
 - Compare mode should show changes/differences clearly
 
-### Metrics: Poll Appearances vs. Distinct Films
+### Metrics: Distinct Films (primary) vs. Votes (secondary)
 
-**PRIMARY METRIC: Poll Appearances**
+**PRIMARY METRIC: Distinct Films**
 
-For the Country Origin visualizations, we use **poll appearances** as the primary metric, not distinct film counts.
+For the Country Origin visualizations, the primary metric is the **distinct film count** — the
+number of unique films a country contributed. Votes are kept only as a **secondary** detail
+(tooltips, expanded panels, lighter parentheticals). This mirrors the film-page decision to chart
+rank instead of votes: it's about a metric that reads consistently and isn't distorted across eras.
 
-**Why Poll Appearances:**
-- Captures canonical weight and persistence across time
-- Shows which countries have sustained critical consensus
-- Works perfectly with filter logic (single poll = that poll's rankings, all polls = accumulated weight)
-- More analytically rich: reveals which countries "punch above their weight" with repeated appearances
+**Why distinct films, not votes:**
+- **Cross-poll comparability.** Vote counts aren't comparable across polls — the electorate grew
+  ~35× (47 voters / ~545 votes in 1952 → 1,635 voters / 16,283 votes in 2022). Any votes-based
+  "All Polls Combined" total is dominated by the huge recent polls. Film counts are far more
+  era-neutral.
+- **Interpretability.** "France: 453 films in 2022" needs no context; "2,374 votes" requires
+  knowing the electorate size to mean anything.
+- **Consistency.** One metric language across the whole country section (map, bar chart, continent
+  breakdown, share-over-time) and with the rank-over-votes film pages.
 
-**Language Guidelines:**
+**Why NOT "poll appearances"** (an earlier idea, rejected): summing per-poll film counts across all
+polls re-imports the exact recency bias we're avoiding — most film-poll events live in the giant
+2012/2022 polls, so persistent-in-recent-polls countries get inflated. Distinct films counts a
+1952-only film once, same as a 2022 film — genuinely era-neutral.
 
-When **"All Polls Combined"** is selected:
-- Use "poll appearances" or "times ranked" in labels
-- Info banner: "Showing 117 countries across 3,817 poll appearances"
-- Bar chart axis: "Times Ranked" or "Poll Appearances"
-- Tooltips: "French films have been ranked 890 times across all polls"
+**"All Polls Combined" uses deduplicated unique films.** Read from `byPoll['all'].distinctFilms`
+(e.g. France = 587), NOT a sum of per-poll counts. A film that recurred across polls counts once.
 
-When **single poll** is selected (e.g., "2022 Poll"):
-- Use "films" in labels (clearer for single poll context)
-- Info banner: "Showing 117 countries across 3,817 films (2022 Poll)"
-- Bar chart axis: "Number of Films"
-- Tooltips: "France: 85 films in 2022 poll"
+**The Consensus toggle owns "canonical weight."** Distinct films measures breadth and treats a
+215-vote masterpiece the same as a 1-vote obscurity. The weight/consensus dimension is handled by
+the Consensus rank-range toggle (and per-film votes remain visible in drill-down lists), so the
+headline metric doesn't need to encode it.
 
-**Key Distinction:**
-- **Poll appearances** = how many times films appear across poll(s) - measures canonical persistence
-- **Distinct films** = unique film count - measures breadth of contribution
+**Metric toggle.** The Films by Country page has a **Metric** control in the filter sidebar
+(under Poll and Rank Range) that switches every visualization — map, bar chart, continent
+breakdown, share-over-time — between **Films** (default) and **Votes**. It's a single page-level
+control (state in `CountryOriginMain`, passed as a `metric` prop to each component); keep all viz on
+one metric rather than per-card toggles. Films is the default because it's era-neutral and intuitive;
+Votes is the opt-in "canonical weight" view. Whichever is active drives sizing/color/sorting and the
+bold label; the other shows as the secondary line in tooltips and panels. When **Votes + All Polls
+Combined** is selected, the cross-poll recency distortion returns (2012/2022 dominate) — the sidebar
+copy flags that votes are best read within a single poll.
 
-**Example:**
-- France might have 350 unique films but 890 poll appearances
-- This tells us French films appear an average of 2.5 times per film
-- Shows deep canonical persistence vs. one-time appearances
+**Data fields** (per country, per poll, in `countries.json` `byPoll[poll]`):
+- `distinctFilms` / `distinctFilmsConsensus` — the **Films** metric (drives bar length, map color, sorting, shares)
+- `total` / `consensus` — vote sums, the **Votes** metric
 
-**Optional Enhancement (Future):**
-In detailed views, show both metrics: "890 poll appearances (from 350 unique films)"
+**Weight vs. breadth — the switch's real effect on ordering.** Countries whose canon is a few
+intensely-loved masterpieces fall under films; broad, deep filmographies climb. Concrete examples
+(All Polls / 2022):
+- **Italy ⇄ UK** swap in the top 5: Italy has higher votes but fewer distinct films (top-heavy —
+  8½, Bicycle Thieves, Battle of Algiers); the UK is flatter and broader, so it climbs.
+- **Belgium** falls #7 → #23 (2022): 215 of its 332 votes come from a single film (Jeanne Dielman).
+- **Sweden** (Bergman), **Denmark** (Dreyer/von Trier), **Senegal** (Sembène/Mambéty) all drop —
+  concentrated canons.
+- **Consensus mode compresses hard**: counts become tiny (US 39, France 23, then mostly 1-film
+  ties), so sub-top-5 ordering is near-arbitrary. Expect many tied 1-film bars.
 
 ---
 

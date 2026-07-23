@@ -10,7 +10,7 @@ const POLL_YEARS = [2022, 2012, 2002, 1992, 1982, 1972, 1962, 1952]
 const SHELF_MAX = 12 // top ~10, a little slack for ties at rank 10
 
 const VIZ_CARDS = [
-  { to: '/visualizations/country', title: 'By Country', blurb: 'Where the canon comes from — a world map of 117 countries.' },
+  { to: '/countries', title: 'Countries', blurb: 'Where the canon comes from — a world map of 117 countries.' },
   { to: '/visualizations/decades', title: 'Decades & Age', blurb: 'Which eras the critics keep returning to.' },
   { to: '/visualizations/evolution', title: 'Canon Evolution', blurb: 'How films climbed and fell across seven decades of polls.' },
 ]

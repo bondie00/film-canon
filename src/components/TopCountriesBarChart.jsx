@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
+import GridTile, { withCurrent } from './search/GridTile'
 
 // Continent color mapping - matching the page's color scheme
 const continentColors = {
@@ -11,7 +12,7 @@ const continentColors = {
   'Oceania': '#ec4899',       // pink-500
 }
 
-export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange = 'all', filmsData }) {
+export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange = 'all', filmsData, metric = 'films' }) {
   // Country selection state - will be set to top 10 dynamically
   const [selectedCountries, setSelectedCountries] = useState([])
   const [selectedCountry, setSelectedCountry] = useState(null) // Country name for expanded view
@@ -53,30 +54,34 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       // Skip metadata keys
       if (countryName.startsWith('_')) return
 
-      let filmCount = 0
-      let distinctFilms = 0
+      // filmCount holds whichever metric is active (it drives bar length,
+      // sorting, ranking, and Top N); films and votes are both retained so the
+      // tooltip and expanded panel can show the other as a secondary detail.
+      let films = 0
+      let votes = 0
 
       // Get data for selected poll (including 'all')
       const pollData = countryInfo.byPoll[selectedPoll]
       if (pollData) {
         if (rankRange === 'all') {
-          filmCount = pollData.total || 0
-          distinctFilms = pollData.distinctFilms || 0
+          films = pollData.distinctFilms || 0
+          votes = pollData.total || 0
         } else if (rankRange === 'consensus') {
-          filmCount = pollData.consensus || 0
-          distinctFilms = pollData.distinctFilmsConsensus || 0
+          films = pollData.distinctFilmsConsensus || 0
+          votes = pollData.consensus || 0
         }
       }
 
       data.push({
         name: countryName,
-        filmCount,
-        continent: countryInfo.continent,
-        distinctFilms
+        filmCount: metric === 'votes' ? votes : films,
+        films,
+        votes,
+        continent: countryInfo.continent
       })
     })
 
-    // Sort by filmCount descending and assign ranks
+    // Sort by the active metric descending and assign ranks
     const sorted = data.sort((a, b) => b.filmCount - a.filmCount)
 
     // Count countries with votes and assign ranks
@@ -97,7 +102,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     })
 
     return sorted
-  }, [countriesData, selectedPoll, rankRange])
+  }, [countriesData, selectedPoll, rankRange, metric])
 
   const defaultCount = rankRange === 'consensus' ? 5 : 10
 
@@ -202,7 +207,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     return Math.max(150, Math.min(1100, calculated))
   }, [filteredData.length])
 
-  // Get films for a specific country based on current filters
+  // Get films for a specific country under the current filters, as full film
+  // objects sorted by the active poll's votes, so the panel can render them as
+  // GridTiles (with the 8-poll ranking strip and a link to each film page).
   const getFilmsForCountry = useCallback((countryName) => {
     if (!filmsData) return []
 
@@ -213,7 +220,8 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         let rank = null
 
         if (selectedPoll === 'all') {
-          votes = film.pollHistory?.reduce((sum, poll) => sum + (poll.votes || 0), 0) || 0
+          const allPollData = film.pollHistory?.find(p => p.year === 'all')
+          votes = allPollData?.votes || 0
           rank = null
         } else {
           const pollEntry = film.pollHistory?.find(p => p.year === parseInt(selectedPoll))
@@ -234,20 +242,15 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
         if (votes === 0) return null
 
-        return {
-          title: film.FilmTitle,
-          year: film.Year,
-          votes,
-          rank,
-          directors: film.directors
-        }
+        return { film, sortVotes: votes, sortRank: rank }
       })
       .filter(Boolean)
       .sort((a, b) => {
-        if (b.votes !== a.votes) return b.votes - a.votes
-        if (a.rank && b.rank) return a.rank - b.rank
+        if (b.sortVotes !== a.sortVotes) return b.sortVotes - a.sortVotes
+        if (a.sortRank && b.sortRank) return a.sortRank - b.sortRank
         return 0
       })
+      .map(x => x.film)
   }, [filmsData, selectedPoll, rankRange, countriesData])
 
   // Get selected country data for expanded view
@@ -269,7 +272,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       name: countryInfo.name,
       continent: countryInfo.continent,
       filmCount: countryInfo.filmCount,
-      distinctFilms: countryInfo.distinctFilms,
+      votes: countryInfo.votes,
       rank: countryInfo.rank,
       totalCountries: countryInfo.totalCountries,
       continentRank,
@@ -472,18 +475,20 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           <p className="font-bold text-base text-black uppercase tracking-wide">{data.name}</p>
           <p className="text-xs text-black font-medium mb-1">{data.continent}</p>
           <p className="text-xl font-black text-black my-1">
-            {data.filmCount.toLocaleString()} votes
+            {metric === 'votes'
+              ? `${data.votes.toLocaleString()} votes`
+              : `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`}
           </p>
           {data.rank && (
             <p className="text-xs text-black font-medium mt-0.5">
               #{data.rank} out of {data.totalCountries} countries
             </p>
           )}
-          {data.distinctFilms > 0 && (
-            <p className="text-xs text-black font-medium mt-0.5">
-              {data.distinctFilms} distinct films
-            </p>
-          )}
+          <p className="text-xs text-black font-medium mt-0.5">
+            {metric === 'votes'
+              ? `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`
+              : `${data.votes.toLocaleString()} votes`}
+          </p>
         </div>
       )
     }
@@ -515,7 +520,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       <div className="mb-6 border-b-2 border-gray-300 pb-4">
         <div className="mb-4">
           <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-            Countries by Votes
+            Countries by {metric === 'votes' ? 'Votes' : 'Films'}
           </h2>
           <p className="text-black font-medium">
             Customize displayed countries using the search bar below
@@ -605,7 +610,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                 axisLine={{ stroke: '#000000', strokeWidth: 2 }}
                 tickLine={{ stroke: '#000000' }}
                 label={{
-                  value: 'Votes',
+                  value: metric === 'votes' ? 'Votes' : 'Films',
                   position: 'insideBottom',
                   offset: -5,
                   style: { fontWeight: 'bold', fill: '#000000' }
@@ -665,10 +670,14 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                 <h4 className="font-black text-lg text-black uppercase tracking-wide">{selectedCountryData.name}</h4>
                 <div className="flex gap-3 mt-1">
                   <span className="text-base font-black text-black">
-                    {selectedCountryData.filmCount.toLocaleString()} votes
+                    {metric === 'votes'
+                      ? `${selectedCountryData.votes.toLocaleString()} votes`
+                      : `${selectedCountryData.films.length.toLocaleString()} ${selectedCountryData.films.length === 1 ? 'film' : 'films'}`}
                   </span>
                   <span className="text-sm text-black font-medium self-end">
-                    {selectedCountryData.films.length.toLocaleString()} films
+                    {metric === 'votes'
+                      ? `${selectedCountryData.films.length.toLocaleString()} ${selectedCountryData.films.length === 1 ? 'film' : 'films'}`
+                      : `${selectedCountryData.votes.toLocaleString()} votes`}
                   </span>
                 </div>
                 {selectedCountryData.continentRank > 0 && (
@@ -683,32 +692,13 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                 )}
               </div>
 
-              {/* Scrollable film list */}
-              <div className="flex-1 overflow-y-auto overflow-x-hidden pb-3">
-                {/* Table header */}
-                <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
-                  {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
-                  <span className="flex-1">Title</span>
-                  <span className="w-16 text-right">Votes</span>
+              {/* Scrollable poster grid — wraps onto new rows, panel scrolls vertically */}
+              <div className="flex-1 overflow-y-auto overflow-x-hidden p-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {selectedCountryData.films.map((film) => (
+                    <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} />
+                  ))}
                 </div>
-
-                {/* Film rows */}
-                {selectedCountryData.films.map((film, idx) => (
-                  <div
-                    key={`${film.title}-${idx}`}
-                    className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
-                  >
-                    {selectedPoll !== 'all' && (
-                      <span className="w-12 flex-shrink-0 font-bold text-black">
-                        {film.rank ? `#${film.rank}` : '—'}
-                      </span>
-                    )}
-                    <span className="flex-1 min-w-0 text-black font-medium truncate" title={`${film.title} (${film.year}) — ${film.directors?.join(', ') || 'Unknown'}`}>
-                      {film.title} <span className="text-gray-500">({film.year})</span>{film.directors?.length > 0 && <span className="text-gray-400"> — {film.directors.join(', ')}</span>}
-                    </span>
-                    <span className="w-16 flex-shrink-0 text-right font-bold text-black">{film.votes.toLocaleString()}</span>
-                  </div>
-                ))}
 
                 {selectedCountryData.films.length === 0 && (
                   <div className="px-4 py-8 text-center text-gray-500 text-sm">

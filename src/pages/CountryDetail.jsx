@@ -8,6 +8,8 @@ import DecadeHeatmapRows from '../components/country/DecadeHeatmapRows'
 import DecadeRankHeatmap from '../components/country/DecadeRankHeatmap'
 import PollHistoryChart from '../components/country/PollHistoryChart'
 
+const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
+
 // Continent color mapping
 const continentColors = {
   'Europe': '#3b82f6',
@@ -70,6 +72,38 @@ export default function CountryDetail() {
       return true
     })
   }, [filmsData, decodedCountryName, rankRange])
+
+  // How many of this country's films the poll would show under the current
+  // filters — drives the poll selector's grey-out. Mirrors the countryFilms
+  // logic per poll, so switching to Consensus disables any poll where the
+  // country has no films inside that poll's consensus cutoff.
+  const pollCounts = useMemo(() => {
+    const counts = { all: 0 }
+    POLL_YEARS.forEach(y => { counts[y] = 0 })
+    if (!filmsData || !decodedCountryName) return counts
+    filmsData.forEach(film => {
+      if (!film.countries.includes(decodedCountryName)) return
+
+      const allPollData = film.pollHistory.find(p => p.year === 'all')
+      if (allPollData && allPollData.votes > 0) {
+        if (rankRange !== 'consensus' || (allPollData.rank && allPollData.rank <= 100)) {
+          counts.all += 1
+        }
+      }
+
+      POLL_YEARS.forEach(y => {
+        const pd = film.pollHistory.find(p => p.year === y)
+        if (!pd || pd.votes === 0) return
+        if (rankRange === 'consensus') {
+          const cutoffRank = countriesData?._pollMetadata?.[y]?.consensus?.cutoffRank
+          if (pd.rank && cutoffRank && pd.rank <= cutoffRank) counts[y] += 1
+        } else {
+          counts[y] += 1
+        }
+      })
+    })
+    return counts
+  }, [filmsData, countriesData, decodedCountryName, rankRange])
 
   // Filter films for this country
   const countryFilms = useMemo(() => {
@@ -169,7 +203,7 @@ export default function CountryDetail() {
             <h1 className="text-3xl font-black text-black mb-4 uppercase">Error Loading Data</h1>
             <p className="text-black mb-6">{error}</p>
             <Link
-              to="/visualizations/country"
+              to="/countries"
               className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
             >
               ← Back to Countries
@@ -194,7 +228,7 @@ export default function CountryDetail() {
               "{decodedCountryName}" was not found in our database.
             </p>
             <Link
-              to="/visualizations/country"
+              to="/countries"
               className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
             >
               ← Back to Countries
@@ -225,21 +259,34 @@ export default function CountryDetail() {
                 <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
                   Poll Selection
                 </label>
-                <select
-                  value={selectedPoll}
-                  onChange={(e) => setSelectedPoll(e.target.value)}
-                  className="w-full px-3 py-2 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black"
-                >
-                  <option value="all">All Polls Combined</option>
-                  <option value="2022">2022 (Latest)</option>
-                  <option value="2012">2012</option>
-                  <option value="2002">2002</option>
-                  <option value="1992">1992</option>
-                  <option value="1982">1982</option>
-                  <option value="1972">1972</option>
-                  <option value="1962">1962</option>
-                  <option value="1952">1952</option>
-                </select>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {['all', ...POLL_YEARS].map(opt => {
+                    const value = String(opt)
+                    const active = value === String(selectedPoll)
+                    const count = pollCounts[opt] ?? 0
+                    const empty = count === 0
+                    return (
+                      <button
+                        key={value}
+                        type="button"
+                        disabled={empty}
+                        onClick={() => setSelectedPoll(value)}
+                        title={empty
+                          ? `${decodedCountryName} has no films in the ${value} poll`
+                          : `${count} ${count === 1 ? 'film' : 'films'}`}
+                        className={`py-2 text-sm font-black border-2 transition-colors ${
+                          empty
+                            ? 'border-gray-200 bg-gray-50 text-gray-300 cursor-not-allowed'
+                            : active
+                              ? 'border-black bg-black text-white'
+                              : 'border-black bg-white text-black hover:bg-black hover:text-white'
+                        }`}
+                      >
+                        {opt === 'all' ? 'All' : opt}
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
 
               {/* RANK RANGE FILTER */}
@@ -281,9 +328,7 @@ export default function CountryDetail() {
 
             {/* BREADCRUMB */}
             <div className="text-sm text-black mb-2 uppercase tracking-wide">
-              <Link to="/visualizations" className="hover:underline font-bold">Visualizations</Link>
-              <span> / </span>
-              <Link to="/visualizations/country" className="hover:underline font-bold">Films by Country</Link>
+              <Link to="/countries" className="hover:underline font-bold">Countries</Link>
               <span> / </span>
               <span className="font-bold">{decodedCountryName}</span>
             </div>
@@ -306,7 +351,10 @@ export default function CountryDetail() {
                   {countryInfo.continent}
                 </span>
                 <span className="font-bold uppercase tracking-wide">
-                  {metrics.films.toLocaleString()} films • {metrics.votes.toLocaleString()} votes
+                  {metrics.films.toLocaleString()} films
+                </span>
+                <span className="text-gray-500 font-medium normal-case ml-2">
+                  ({metrics.votes.toLocaleString()} votes)
                 </span>
                 <span className="mx-2 text-black">|</span>
                 <span className="font-medium">{getFilterText()}</span>
@@ -431,7 +479,7 @@ export default function CountryDetail() {
             {/* BACK NAVIGATION */}
             <div className="text-center">
               <Link
-                to="/visualizations/country"
+                to="/countries"
                 className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
               >
                 ← Back to All Countries

@@ -325,7 +325,7 @@ function VitalStatsStrip({ stats, activePoll }) {
     {
       label: 'Countries represented',
       value: countries.toLocaleString(),
-      href: `/visualizations/country?poll=${activePoll}`,
+      href: `/countries?poll=${activePoll}`,
       cue: 'See the map →',
     },
     {

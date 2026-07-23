@@ -7,7 +7,7 @@ import { loadFilms, loadCountries, loadVoterSlugs } from '../utils/filmsData'
 //
 // Result entity types and where they navigate:
 //   film     -> /film/:key                              (exists)
-//   country  -> /visualizations/country/:name           (exists)
+//   country  -> /countries/:name                         (exists)
 //   poll     -> /explore?poll=YYYY                       (exists)
 //   director -> /director/:name                         (exists)
 //   voter    -> /voter/:slug                            (exists)

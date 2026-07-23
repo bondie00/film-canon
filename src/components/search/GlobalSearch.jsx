@@ -26,7 +26,7 @@ function flatten(results) {
     rows.push({ type: 'voter', label: v.name, sub: 'Voter', to: `/voter/${v.slug}` })
   )
   results.countries.forEach(c =>
-    rows.push({ type: 'country', label: c, sub: 'Country', to: `/visualizations/country/${encodeURIComponent(c)}` })
+    rows.push({ type: 'country', label: c, sub: 'Country', to: `/countries/${encodeURIComponent(c)}` })
   )
   results.polls.forEach(p =>
     rows.push({ type: 'poll', label: `${p} poll`, sub: 'Poll year', to: `/explore?poll=${p}` })

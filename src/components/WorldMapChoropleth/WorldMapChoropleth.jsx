@@ -7,6 +7,7 @@ import {
 } from 'react-simple-maps'
 import { scaleQuantile } from 'd3-scale'
 import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
+import GridTile, { withCurrent } from '../search/GridTile'
 
 // Natural Earth 110m world topology - lower resolution for performance
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
@@ -76,7 +77,9 @@ const COLOR_RANGE = [
 const NO_DATA_COLOR = '#e5e7eb' // gray-200
 const BORDER_COLOR = '#022c22' // emerald-950 - subtle dark border to separate countries
 
-export default function WorldMapChoropleth({ countriesData, filmsData, selectedPoll, rankRange }) {
+export default function WorldMapChoropleth({ countriesData, filmsData, selectedPoll, rankRange, metric = 'films' }) {
+  // The quantity that drives color, ranking and visibility for a given ISO row.
+  const metricVal = (d) => (metric === 'votes' ? d.votes : d.distinctFilms)
   const [tooltipData, setTooltipData] = useState(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [position, setPosition] = useState({ coordinates: [13, 13], zoom: 1.35 })
@@ -139,8 +142,8 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
       aggregated[iso].votes += votes || 0
       aggregated[iso].distinctFilms += distinctFilms || 0
-      // Only include countries that have votes for current filters
-      if ((votes || 0) > 0) {
+      // Only include countries that have films for current filters
+      if ((distinctFilms || 0) > 0) {
         aggregated[iso].countries.push({
           name: countryName,
           votes: votes,
@@ -155,7 +158,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
   // Calculate color scale using quantile (equal number of countries per color bucket)
   const colorScale = useMemo(() => {
     const values = Object.values(dataByISO)
-      .map(d => d.votes)
+      .map(metricVal)
       .filter(v => v > 0)
       .sort((a, b) => a - b)
 
@@ -166,34 +169,34 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
     return scaleQuantile()
       .domain(values)
       .range(COLOR_RANGE)
-  }, [dataByISO])
+  }, [dataByISO, metric])
 
   // Calculate country rankings for tooltip
   const countryRankings = useMemo(() => {
     const sorted = Object.entries(dataByISO)
-      .filter(([, data]) => data.votes > 0)
-      .sort((a, b) => b[1].votes - a[1].votes)
+      .filter(([, data]) => metricVal(data) > 0)
+      .sort((a, b) => metricVal(b[1]) - metricVal(a[1]))
 
     const rankings = {}
     sorted.forEach(([iso], index) => {
       rankings[iso] = index + 1
     })
     return rankings
-  }, [dataByISO])
+  }, [dataByISO, metric])
 
   const totalCountriesWithVotes = Object.keys(countryRankings).length
 
   // Get country fill color
   const getFillColor = useCallback((iso) => {
     const data = dataByISO[iso]
-    if (!data || data.votes === 0) return NO_DATA_COLOR
-    return colorScale(data.votes)
-  }, [dataByISO, colorScale])
+    if (!data || metricVal(data) === 0) return NO_DATA_COLOR
+    return colorScale(metricVal(data))
+  }, [dataByISO, colorScale, metric])
 
   // Handle mouse enter on country
   const handleMouseEnter = useCallback((iso, geo) => {
     const data = dataByISO[iso]
-    if (!data || data.votes === 0) return
+    if (!data || metricVal(data) === 0) return
 
     setHoveredGeo(geo) // Store the geography for overlay rendering
 
@@ -207,7 +210,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
       totalCountries: totalCountriesWithVotes,
       totalDistinctFilms: data.distinctFilms
     })
-  }, [dataByISO, countryRankings, totalCountriesWithVotes])
+  }, [dataByISO, countryRankings, totalCountriesWithVotes, metric])
 
   // Handle mouse leave
   const handleMouseLeave = useCallback(() => {
@@ -219,12 +222,12 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
   const handleCountryClick = useCallback((iso) => {
     if (selectedCountry) return // Already have a country selected
     const data = dataByISO[iso]
-    if (!data || data.votes === 0) return
+    if (!data || metricVal(data) === 0) return
 
     setSelectedCountry(iso)
     setTooltipData(null)
     setHoveredGeo(null)
-  }, [selectedCountry, dataByISO])
+  }, [selectedCountry, dataByISO, metric])
 
   // Close expanded view
   const handleCloseExpanded = useCallback(() => {
@@ -242,9 +245,8 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
         let rank = null
 
         if (selectedPoll === 'all') {
-          // Sum votes across all polls
-          votes = film.pollHistory?.reduce((sum, poll) => sum + (poll.votes || 0), 0) || 0
-          // No rank for "all polls"
+          const allPollData = film.pollHistory?.find(p => p.year === 'all')
+          votes = allPollData?.votes || 0
           rank = null
         } else {
           // Find the specific poll
@@ -267,22 +269,17 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
         if (votes === 0) return null
 
-        return {
-          title: film.FilmTitle,
-          year: film.Year,
-          votes,
-          rank,
-          directors: film.directors
-        }
+        return { film, sortVotes: votes, sortRank: rank }
       })
       .filter(Boolean)
       .sort((a, b) => {
         // Sort by votes descending, then by rank ascending if available
-        if (b.votes !== a.votes) return b.votes - a.votes
-        if (a.rank && b.rank) return a.rank - b.rank
+        if (b.sortVotes !== a.sortVotes) return b.sortVotes - a.sortVotes
+        if (a.sortRank && b.sortRank) return a.sortRank - b.sortRank
         return 0
       })
-  }, [filmsData, selectedPoll, rankRange])
+      .map(x => x.film)
+  }, [filmsData, selectedPoll, rankRange, countriesData])
 
   // Get selected country data for expanded view
   const selectedCountryData = useMemo(() => {
@@ -293,8 +290,8 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
     // Calculate continent rank
     const continentISOs = Object.entries(dataByISO)
-      .filter(([, d]) => d.continent === data.continent && d.votes > 0)
-      .sort((a, b) => b[1].votes - a[1].votes)
+      .filter(([, d]) => d.continent === data.continent && metricVal(d) > 0)
+      .sort((a, b) => metricVal(b[1]) - metricVal(a[1]))
     const continentRank = continentISOs.findIndex(([iso]) => iso === selectedCountry) + 1
     const continentTotal = continentISOs.length
 
@@ -315,7 +312,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
       continentTotal,
       totalDistinctFilms: data.distinctFilms
     }
-  }, [selectedCountry, dataByISO, countryRankings, totalCountriesWithVotes, getFilmsForCountry])
+  }, [selectedCountry, dataByISO, countryRankings, totalCountriesWithVotes, getFilmsForCountry, metric])
 
   if (!countriesData) {
     return (
@@ -386,7 +383,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                   {processed.map((geo) => {
                     const iso = geo.id
                     const data = dataByISO[iso]
-                    const hasData = data && data.votes > 0
+                    const hasData = data && metricVal(data) > 0
                     const isInteractionDisabled = !!selectedCountry
 
                     return (
@@ -497,13 +494,17 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
           <p className="font-bold text-base text-black uppercase tracking-wide">{displayName}</p>
           <p className="text-xs text-black font-medium mb-1">{tooltipData.continent}</p>
           <p className="text-xl font-black text-black my-1">
-            {tooltipData.totalVotes.toLocaleString()} votes
+            {metric === 'votes'
+              ? `${tooltipData.totalVotes.toLocaleString()} votes`
+              : `${tooltipData.totalDistinctFilms.toLocaleString()} ${tooltipData.totalDistinctFilms === 1 ? 'film' : 'films'}`}
           </p>
           <p className="text-xs text-black font-medium mt-0.5">
             #{tooltipData.rank} out of {tooltipData.totalCountries} countries
           </p>
           <p className="text-xs text-black font-medium mt-0.5">
-            {tooltipData.totalDistinctFilms.toLocaleString()} distinct films
+            {metric === 'votes'
+              ? `${tooltipData.totalDistinctFilms.toLocaleString()} ${tooltipData.totalDistinctFilms === 1 ? 'film' : 'films'}`
+              : `${tooltipData.totalVotes.toLocaleString()} votes`}
           </p>
 
           {/* Individual country breakdown for combined entities */}
@@ -513,7 +514,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                 <div key={country.name} className={idx > 0 ? 'mt-1.5 pt-1.5 border-t border-gray-200' : ''}>
                   <p className="font-semibold text-xs text-black uppercase tracking-wide">{country.name}</p>
                   <p className="text-xs text-black">
-                    {country.votes.toLocaleString()} votes · {country.distinctFilms.toLocaleString()} films
+                    {country.distinctFilms.toLocaleString()} films · {country.votes.toLocaleString()} votes
                   </p>
                 </div>
               ))}
@@ -553,10 +554,14 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                       <h4 className="font-black text-lg text-black uppercase tracking-wide">{country.name}</h4>
                       <div className="flex gap-3 mt-1">
                         <span className="text-base font-black text-black">
-                          {country.votes.toLocaleString()} votes
+                          {metric === 'votes'
+                            ? `${country.votes.toLocaleString()} votes`
+                            : `${country.films.length.toLocaleString()} ${country.films.length === 1 ? 'film' : 'films'}`}
                         </span>
                         <span className="text-sm text-black font-medium self-end">
-                          {country.films.length.toLocaleString()} films
+                          {metric === 'votes'
+                            ? `${country.films.length.toLocaleString()} ${country.films.length === 1 ? 'film' : 'films'}`
+                            : `${country.votes.toLocaleString()} votes`}
                         </span>
                       </div>
                       {selectedCountryData.continentRank > 0 && (
@@ -571,32 +576,13 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                       )}
                     </div>
 
-                    {/* Scrollable film list */}
-                    <div className="flex-1 overflow-y-auto overflow-x-hidden pb-3">
-                      {/* Table header */}
-                      <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
-                        {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
-                        <span className="flex-1">Title</span>
-                        <span className="w-16 text-right">Votes</span>
+                    {/* Scrollable poster grid */}
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden p-3">
+                      <div className="grid grid-cols-2 gap-2">
+                        {country.films.map((film) => (
+                          <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} />
+                        ))}
                       </div>
-
-                      {/* Film rows */}
-                      {country.films.map((film, idx) => (
-                        <div
-                          key={`${film.title}-${idx}`}
-                          className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
-                        >
-                          {selectedPoll !== 'all' && (
-                            <span className="w-12 flex-shrink-0 font-bold text-black">
-                              {film.rank ? `#${film.rank}` : '—'}
-                            </span>
-                          )}
-                          <span className="flex-1 min-w-0 text-black font-medium truncate" title={`${film.title} (${film.year}) — ${film.directors?.join(', ') || 'Unknown'}`}>
-                            {film.title} <span className="text-gray-500">({film.year})</span>{film.directors?.length > 0 && <span className="text-gray-400"> — {film.directors.join(', ')}</span>}
-                          </span>
-                          <span className="w-16 flex-shrink-0 text-right font-bold text-black">{film.votes.toLocaleString()}</span>
-                        </div>
-                      ))}
 
                       {country.films.length === 0 && (
                         <div className="px-4 py-8 text-center text-gray-500 text-sm">
@@ -615,10 +601,14 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                   <h4 className="font-black text-lg text-black uppercase tracking-wide">{selectedCountryData.countries[0].name}</h4>
                   <div className="flex gap-3 mt-1">
                     <span className="text-base font-black text-black">
-                      {selectedCountryData.countries[0].votes.toLocaleString()} votes
+                      {metric === 'votes'
+                        ? `${selectedCountryData.countries[0].votes.toLocaleString()} votes`
+                        : `${selectedCountryData.countries[0].films.length.toLocaleString()} ${selectedCountryData.countries[0].films.length === 1 ? 'film' : 'films'}`}
                     </span>
                     <span className="text-sm text-black font-medium self-end">
-                      {selectedCountryData.countries[0].films.length.toLocaleString()} films
+                      {metric === 'votes'
+                        ? `${selectedCountryData.countries[0].films.length.toLocaleString()} ${selectedCountryData.countries[0].films.length === 1 ? 'film' : 'films'}`
+                        : `${selectedCountryData.countries[0].votes.toLocaleString()} votes`}
                     </span>
                   </div>
                   {selectedCountryData.continentRank > 0 && (
@@ -633,32 +623,13 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                   )}
                 </div>
 
-                {/* Scrollable film list */}
-                <div className="flex-1 overflow-y-auto overflow-x-hidden pb-3">
-                  {/* Table header */}
-                  <div className="sticky top-0 bg-gray-100 border-b border-gray-300 px-4 py-2 flex gap-2 text-xs font-bold text-black uppercase tracking-wide">
-                    {selectedPoll !== 'all' && <span className="w-12">Rank</span>}
-                    <span className="flex-1">Title</span>
-                    <span className="w-16 text-right">Votes</span>
+                {/* Scrollable poster grid */}
+                <div className="flex-1 overflow-y-auto overflow-x-hidden p-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {selectedCountryData.countries[0].films.map((film) => (
+                      <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} />
+                    ))}
                   </div>
-
-                  {/* Film rows */}
-                  {selectedCountryData.countries[0].films.map((film, idx) => (
-                    <div
-                      key={`${film.title}-${idx}`}
-                      className={`px-4 py-2 flex gap-2 text-sm border-b border-gray-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
-                    >
-                      {selectedPoll !== 'all' && (
-                        <span className="w-12 flex-shrink-0 font-bold text-black">
-                          {film.rank ? `#${film.rank}` : '—'}
-                        </span>
-                      )}
-                      <span className="flex-1 min-w-0 text-black font-medium truncate" title={`${film.title} (${film.year}) — ${film.directors?.join(', ') || 'Unknown'}`}>
-                        {film.title} <span className="text-gray-500">({film.year})</span>{film.directors?.length > 0 && <span className="text-gray-400"> — {film.directors.join(', ')}</span>}
-                      </span>
-                      <span className="w-16 flex-shrink-0 text-right font-bold text-black">{film.votes.toLocaleString()}</span>
-                    </div>
-                  ))}
 
                   {selectedCountryData.countries[0].films.length === 0 && (
                     <div className="px-4 py-8 text-center text-gray-500 text-sm">

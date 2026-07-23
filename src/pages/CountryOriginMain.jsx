@@ -16,6 +16,9 @@ export default function CountryOriginMain() {
     return p && valid.includes(p) ? p : '2022'
   })
   const [rankRange, setRankRange] = useState('all')
+  // Which quantity drives sizing/color/sorting: 'films' (breadth, era-neutral,
+  // default) or 'votes' (canonical weight). See CLAUDE.md metrics section.
+  const [metric, setMetric] = useState('films')
   const [countriesData, setCountriesData] = useState(null)
   const [filmsData, setFilmsData] = useState(null)
 
@@ -110,21 +113,26 @@ export default function CountryOriginMain() {
                 <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
                   Poll Selection
                 </label>
-                <select
-                  value={selectedPoll}
-                  onChange={(e) => setSelectedPoll(e.target.value)}
-                  className="w-full px-3 py-2 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black"
-                >
-                  <option value="all">All Polls Combined</option>
-                  <option value="2022">2022 (Latest)</option>
-                  <option value="2012">2012</option>
-                  <option value="2002">2002</option>
-                  <option value="1992">1992</option>
-                  <option value="1982">1982</option>
-                  <option value="1972">1972</option>
-                  <option value="1962">1962</option>
-                  <option value="1952">1952</option>
-                </select>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {['all', 1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022].map(opt => {
+                    const value = String(opt)
+                    const active = value === String(selectedPoll)
+                    return (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setSelectedPoll(value)}
+                        className={`py-2 text-sm font-black border-2 transition-colors ${
+                          active
+                            ? 'border-black bg-black text-white'
+                            : 'border-black bg-white text-black hover:bg-black hover:text-white'
+                        }`}
+                      >
+                        {opt === 'all' ? 'All' : opt}
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
 
               {/* RANK RANGE FILTER */}
@@ -158,27 +166,56 @@ export default function CountryOriginMain() {
                   {rankRange === 'consensus' ? 'Films voted for by 2+ critics' : ''}
                 </p>
               </div>
+
+              {/* METRIC FILTER */}
+              <div className="mt-6 pt-6 border-t-2 border-gray-300">
+                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
+                  Metric
+                </label>
+                <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
+                  <button
+                    onClick={() => setMetric('films')}
+                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
+                      metric === 'films'
+                        ? 'bg-black text-white border-2 border-black'
+                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
+                    }`}
+                  >
+                    Films
+                  </button>
+                  <button
+                    onClick={() => setMetric('votes')}
+                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
+                      metric === 'votes'
+                        ? 'bg-black text-white border-2 border-black'
+                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
+                    }`}
+                  >
+                    Votes
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* MAIN CONTENT AREA - VISUALIZATIONS */}
           <div className="col-span-12 lg:col-span-9">
 
-            {/* BREADCRUMB */}
-            <div className="text-sm text-black mb-2 uppercase tracking-wide">
-              <a href="/visualizations" className="hover:underline font-bold">Visualizations</a>
-              <span> / </span>
-              <span className="font-bold">Films by Country of Origin</span>
-            </div>
-
             {/* PAGE TITLE */}
-            <h1 className="text-6xl font-black text-black mb-6 uppercase tracking-tight border-b-4 border-black pb-4">Films by Country of Origin</h1>
+            <h1 className="text-6xl font-black text-black mb-6 uppercase tracking-tight border-b-4 border-black pb-4">Countries</h1>
 
             {/* INFO BANNER */}
             <div className="bg-white border-2 border-black px-4 py-3 mb-8">
               <div className="text-sm text-black">
                 <span className="font-bold uppercase tracking-wide">
-                  {metrics.countries} countries • {metrics.votes.toLocaleString()} votes • {metrics.films.toLocaleString()} films
+                  {metrics.countries} countries • {metric === 'votes'
+                    ? `${metrics.votes.toLocaleString()} votes`
+                    : `${metrics.films.toLocaleString()} films`}
+                </span>
+                <span className="text-gray-500 font-medium ml-2">
+                  ({metric === 'votes'
+                    ? `${metrics.films.toLocaleString()} films`
+                    : `${metrics.votes.toLocaleString()} votes`})
                 </span>
                 <span className="mx-2 text-black">|</span>
                 <span className="font-medium">{getFilterText()}</span>
@@ -192,7 +229,7 @@ export default function CountryOriginMain() {
                   Global Distribution
                 </h2>
                 <p className="text-black font-medium">
-                  Darker colors indicate more films. Click any country to see detailed analysis.
+                  Darker colors indicate more {metric === 'votes' ? 'votes' : 'films'}. Click any country to see detailed analysis.
                 </p>
               </div>
 
@@ -202,6 +239,7 @@ export default function CountryOriginMain() {
                 filmsData={filmsData}
                 selectedPoll={selectedPoll}
                 rankRange={rankRange}
+                metric={metric}
               />
             </div>
 
@@ -210,6 +248,7 @@ export default function CountryOriginMain() {
               selectedPoll={selectedPoll}
               rankRange={rankRange}
               filmsData={filmsData}
+              metric={metric}
             />
 
             {/* VISUALIZATION 3: CONTINENTAL BREAKDOWN */}
@@ -227,6 +266,7 @@ export default function CountryOriginMain() {
               <ContinentBreakdown
                 selectedPoll={selectedPoll}
                 rankRange={rankRange}
+                metric={metric}
               />
 
               {/* Continent Color Legend */}
@@ -272,6 +312,7 @@ export default function CountryOriginMain() {
                 countriesData={countriesData}
                 selectedPoll={selectedPoll}
                 rankRange={rankRange}
+                metric={metric}
               />
             </div>
 
@@ -303,31 +344,31 @@ export default function CountryOriginMain() {
               <div className="text-center">
                 <div className="text-sm font-bold text-black mb-3 uppercase tracking-wider">Popular Countries:</div>
                 <div className="flex flex-wrap justify-center gap-3">
-                  <Link to="/visualizations/country/United%20States" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                  <Link to="/countries/United%20States" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     United States
                   </Link>
-                  <Link to="/visualizations/country/France" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                  <Link to="/countries/France" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     France
                   </Link>
-                  <Link to="/visualizations/country/Japan" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                  <Link to="/countries/Japan" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     Japan
                   </Link>
-                  <Link to="/visualizations/country/Italy" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                  <Link to="/countries/Italy" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     Italy
                   </Link>
-                  <Link to="/visualizations/country/United%20Kingdom" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                  <Link to="/countries/United%20Kingdom" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     United Kingdom
                   </Link>
-                  <Link to="/visualizations/country/Germany" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                  <Link to="/countries/Germany" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     Germany
                   </Link>
-                  <Link to="/visualizations/country/India" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                  <Link to="/countries/India" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     India
                   </Link>
-                  <Link to="/visualizations/country/South%20Korea" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                  <Link to="/countries/South%20Korea" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     South Korea
                   </Link>
-                  <Link to="/visualizations/country/Brazil" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                  <Link to="/countries/Brazil" className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-black hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
                     Brazil
                   </Link>
                 </div>

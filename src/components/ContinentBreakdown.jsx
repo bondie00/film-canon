@@ -12,19 +12,21 @@ const continentColors = {
 
 // Calculate bar width with minimum visibility
 // Uses log scale to compress the range while maintaining a minimum
-const getBarWidth = (votes, maxVotes) => {
-  if (votes === 0 || maxVotes === 0) return 8 // minimum width
+const getBarWidth = (films, maxFilms) => {
+  if (films === 0 || maxFilms === 0) return 8 // minimum width
 
-  // Log scale to compress the huge range (1 to 1780)
-  const logVotes = Math.log10(votes + 1)
-  const logMax = Math.log10(maxVotes + 1)
-  const percentage = (logVotes / logMax) * 100
+  // Log scale to compress the wide range of per-country film counts
+  const logFilms = Math.log10(films + 1)
+  const logMax = Math.log10(maxFilms + 1)
+  const percentage = (logFilms / logMax) * 100
 
   // Ensure minimum 8% width, maximum 100%
   return Math.max(8, Math.min(100, percentage))
 }
 
-export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 'all' }) {
+export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 'all', metric = 'films' }) {
+  const useVotes = metric === 'votes'
+  const unit = useVotes ? 'votes' : 'films'
   const [countriesData, setCountriesData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [expandedContinent, setExpandedContinent] = useState(null)
@@ -42,10 +44,12 @@ export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 
       })
   }, [])
 
-  // Process data into continent groups
-  const { continentData, totalVotes } = useMemo(() => {
+  // Process data into continent groups. The active metric (films or votes)
+  // drives sizing, sorting and shares; the other rides along as a secondary
+  // per-country detail. `primary` on each row/continent is the active metric.
+  const { continentData } = useMemo(() => {
     if (!countriesData) {
-      return { continentData: [], totalVotes: 0 }
+      return { continentData: [] }
     }
 
     const continentGroups = {}
@@ -55,54 +59,55 @@ export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 
       if (countryName.startsWith('_')) return
 
       let votes = 0
-      let distinctFilms = 0
+      let films = 0
 
       const pollData = countryInfo.byPoll[selectedPoll]
       if (pollData) {
         if (rankRange === 'all') {
           votes = pollData.total || 0
-          distinctFilms = pollData.distinctFilms || 0
+          films = pollData.distinctFilms || 0
         } else if (rankRange === 'consensus') {
           votes = pollData.consensus || 0
-          distinctFilms = pollData.distinctFilmsConsensus || 0
+          films = pollData.distinctFilmsConsensus || 0
         }
       }
 
-      if (votes > 0) {
+      const primary = useVotes ? votes : films
+      if (primary > 0) {
         const continent = countryInfo.continent
         if (!continentGroups[continent]) {
           continentGroups[continent] = {
             name: continent,
             countries: [],
-            totalVotes: 0,
+            total: 0,
             color: continentColors[continent]
           }
         }
         continentGroups[continent].countries.push({
           name: countryName,
           votes: votes,
-          distinctFilms: distinctFilms
+          films: films,
+          primary
         })
-        continentGroups[continent].totalVotes += votes
-        grandTotal += votes
+        continentGroups[continent].total += primary
+        grandTotal += primary
       }
     })
 
-    // Sort continents by total votes, and countries within each
+    // Sort continents by the active metric total, and countries within each
     const sortedContinents = Object.values(continentGroups)
-      .sort((a, b) => b.totalVotes - a.totalVotes)
+      .sort((a, b) => b.total - a.total)
       .map(continent => ({
         ...continent,
-        countries: continent.countries.sort((a, b) => b.votes - a.votes),
-        percentage: grandTotal > 0 ? (continent.totalVotes / grandTotal) * 100 : 0,
-        maxCountryVotes: Math.max(...continent.countries.map(c => c.votes))
+        countries: continent.countries.sort((a, b) => b.primary - a.primary),
+        percentage: grandTotal > 0 ? (continent.total / grandTotal) * 100 : 0,
+        maxCountryPrimary: Math.max(...continent.countries.map(c => c.primary))
       }))
 
     return {
-      continentData: sortedContinents,
-      totalVotes: grandTotal
+      continentData: sortedContinents
     }
-  }, [countriesData, selectedPoll, rankRange])
+  }, [countriesData, selectedPoll, rankRange, useVotes])
 
   const handleCardClick = (continentName) => {
     setExpandedContinent(expandedContinent === continentName ? null : continentName)
@@ -167,7 +172,7 @@ export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 
                 {continent.percentage.toFixed(1)}%
               </div>
               <div className="text-xs text-black font-medium">
-                {continent.totalVotes.toLocaleString()} votes
+                {continent.total.toLocaleString()} {unit}
               </div>
               <div className="text-xs text-gray-600">
                 {continent.countries.length} {continent.countries.length === 1 ? 'country' : 'countries'}
@@ -198,7 +203,7 @@ export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 
                   {continent.name}
                 </span>
                 <span className="text-sm text-gray-600 font-medium">
-                  {continent.countries.length} countries • {continent.totalVotes.toLocaleString()} votes • {continent.percentage.toFixed(1)}% of total
+                  {continent.countries.length} countries • {continent.total.toLocaleString()} {unit} • {continent.percentage.toFixed(1)}% of total
                 </span>
               </div>
               <button
@@ -216,15 +221,17 @@ export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 
                   <tr className="border-b-2 border-gray-200 bg-gray-50">
                     <th className="px-4 py-2 text-left text-xs font-bold uppercase tracking-wide text-gray-600 w-12">#</th>
                     <th className="px-4 py-2 text-left text-xs font-bold uppercase tracking-wide text-gray-600">Country</th>
-                    <th className="px-4 py-2 text-right text-xs font-bold uppercase tracking-wide text-gray-600 w-24">Votes</th>
+                    <th className="px-4 py-2 text-right text-xs font-bold uppercase tracking-wide text-gray-600 w-24">{useVotes ? 'Votes' : 'Films'}</th>
                     <th className="px-4 py-2 text-right text-xs font-bold uppercase tracking-wide text-gray-600 w-24">% of {continent.name.split(' ')[0]}</th>
                     <th className="px-4 py-2 text-left text-xs font-bold uppercase tracking-wide text-gray-600 w-48">Share</th>
                   </tr>
                 </thead>
                 <tbody>
                   {continent.countries.map((country, index) => {
-                    const percentOfContinent = (country.votes / continent.totalVotes) * 100
-                    const barWidth = getBarWidth(country.votes, continent.maxCountryVotes)
+                    const percentOfContinent = (country.primary / continent.total) * 100
+                    const barWidth = getBarWidth(country.primary, continent.maxCountryPrimary)
+                    const secondary = useVotes ? country.films : country.votes
+                    const secondaryUnit = useVotes ? 'film' : 'vote'
 
                     return (
                       <tr
@@ -236,14 +243,14 @@ export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 
                         </td>
                         <td className="px-4 py-2">
                           <span className="font-semibold text-black">{country.name}</span>
-                          {country.distinctFilms > 0 && (
+                          {secondary > 0 && (
                             <span className="text-xs text-gray-500 ml-2">
-                              ({country.distinctFilms} {country.distinctFilms === 1 ? 'film' : 'films'})
+                              ({secondary.toLocaleString()} {secondary === 1 ? secondaryUnit : secondaryUnit + 's'})
                             </span>
                           )}
                         </td>
                         <td className="px-4 py-2 text-right font-bold text-black">
-                          {country.votes.toLocaleString()}
+                          {country.primary.toLocaleString()}
                         </td>
                         <td className="px-4 py-2 text-right text-sm font-medium text-gray-600">
                           {percentOfContinent.toFixed(1)}%
@@ -268,9 +275,9 @@ export default function ContinentBreakdown({ selectedPoll = '2022', rankRange = 
 
             {/* Footer summary */}
             <div className="px-4 py-3 bg-gray-50 border-t-2 border-gray-200 text-sm text-gray-600">
-              <span className="font-semibold">Total:</span> {continent.totalVotes.toLocaleString()} votes across {continent.countries.length} countries
+              <span className="font-semibold">Total:</span> {continent.total.toLocaleString()} {unit} across {continent.countries.length} countries
               <span className="mx-2">•</span>
-              <span className="font-semibold">Top country:</span> {continent.countries[0]?.name} ({((continent.countries[0]?.votes / continent.totalVotes) * 100).toFixed(1)}%)
+              <span className="font-semibold">Top country:</span> {continent.countries[0]?.name} ({((continent.countries[0]?.primary / continent.total) * 100).toFixed(1)}%)
             </div>
           </div>
         )
