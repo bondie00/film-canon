@@ -1,6 +1,37 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import GridTile, { withCurrent } from './search/GridTile'
+
+// Cap posters shown in the expanded panel; the rest live on the Explore page.
+const PANEL_FILM_CAP = 30
+
+// Country name as a link to its detail page, with an arrow icon signalling it's clickable.
+function CountryTitleLink({ name }) {
+  return (
+    <Link
+      to={`/countries/${encodeURIComponent(name)}`}
+      className="group inline-flex items-center gap-1.5 hover:underline decoration-2 underline-offset-2"
+    >
+      <span>{name}</span>
+      <svg className="w-4 h-4 shrink-0 opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M7 17L17 7M17 7H8M17 7v9" />
+      </svg>
+    </Link>
+  )
+}
+
+// Build an Explore-page link carrying the current filters (poll, country, rank depth).
+function buildExploreUrl(countryNames, poll, rankRange, countriesData) {
+  const params = new URLSearchParams()
+  if (poll) params.set('poll', poll)
+  countryNames.forEach(n => params.append('country', n))
+  if (rankRange === 'consensus') {
+    const top = poll === 'all' ? 100 : countriesData?._pollMetadata?.[poll]?.consensus?.cutoffRank
+    if (top) params.set('top', String(top))
+  }
+  return `/explore?${params.toString()}`
+}
 
 // Continent color mapping - matching the page's color scheme
 const continentColors = {
@@ -84,22 +115,28 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     // Sort by the active metric descending and assign ranks
     const sorted = data.sort((a, b) => b.filmCount - a.filmCount)
 
-    // Count countries with votes and assign ranks
-    const countriesWithVotes = sorted.filter(c => c.filmCount > 0)
+    const countriesWithVotes = sorted.filter(c => c.films > 0)
     const totalCountriesWithVotes = countriesWithVotes.length
 
-    // Assign rank only to countries with votes
-    let currentRank = 1
-    sorted.forEach(country => {
-      if (country.filmCount > 0) {
-        country.rank = currentRank
-        country.totalCountries = totalCountriesWithVotes
-        currentRank++
-      } else {
-        country.rank = null
-        country.totalCountries = totalCountriesWithVotes
-      }
-    })
+    // Competition ranks (ties share a rank: 1, 2, 2, 4, ...) computed for BOTH metrics, so the
+    // expanded panel can show rank-by-films and rank-by-votes regardless of the active metric.
+    const assignRank = (valueKey, rankField) => {
+      const order = [...countriesWithVotes].sort((a, b) => b[valueKey] - a[valueKey])
+      let prevVal = null
+      let prevRank = 0
+      order.forEach((c, i) => {
+        if (c[valueKey] === prevVal) {
+          c[rankField] = prevRank
+        } else {
+          c[rankField] = i + 1
+          prevRank = i + 1
+          prevVal = c[valueKey]
+        }
+      })
+    }
+    assignRank('films', 'filmsRank')
+    assignRank('votes', 'votesRank')
+    sorted.forEach(c => { c.totalCountries = totalCountriesWithVotes })
 
     return sorted
   }, [countriesData, selectedPoll, rankRange, metric])
@@ -108,6 +145,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
   // Explicitly track whether user is in "Top N" mode
   const [isTopNMode, setIsTopNMode] = useState(true)
+
+  // Whether the chart draws one bar per country (default) or one bar per continent.
+  const [viewMode, setViewMode] = useState('countries') // 'countries' | 'continents'
 
   // Set initial top N only on first data load
   const [hasInitialized, setHasInitialized] = useState(false)
@@ -162,6 +202,32 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       .sort((a, b) => b.filmCount - a.filmCount)
   }, [transformedData, selectedCountries])
 
+  // Continent-level aggregation for the "Continents" view: one bar per continent summing the
+  // active metric, plus each continent's share of the whole canon (shown as a direct bar label).
+  // `name`/`continent` are both the continent so the Y-axis, color Cell and drill-in all work
+  // through the same code paths as countries.
+  const continentData = useMemo(() => {
+    const agg = {}
+    let grandTotal = 0
+    transformedData.forEach(c => {
+      if (c.filmCount <= 0) return
+      if (!agg[c.continent]) {
+        agg[c.continent] = { name: c.continent, continent: c.continent, filmCount: 0, films: 0, votes: 0, countryCount: 0, isContinent: true }
+      }
+      agg[c.continent].filmCount += c.filmCount
+      agg[c.continent].films += c.films
+      agg[c.continent].votes += c.votes
+      agg[c.continent].countryCount += 1
+      grandTotal += c.filmCount
+    })
+    return Object.values(agg)
+      .map(d => ({ ...d, pct: grandTotal > 0 ? (d.filmCount / grandTotal) * 100 : 0 }))
+      .sort((a, b) => b.filmCount - a.filmCount)
+  }, [transformedData])
+
+  // The dataset the bar chart currently renders.
+  const chartData = viewMode === 'continents' ? continentData : filteredData
+
   // Filter continents by search query
   const filteredContinents = useMemo(() => {
     if (!searchQuery.trim()) {
@@ -202,10 +268,10 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   // Minimum: 150px to give single bars breathing room and space for tooltips
   // Maximum: 1100px to prevent excessive page length
   const chartHeight = useMemo(() => {
-    const barHeight = filteredData.length <= 10 ? 40 : 30
-    const calculated = filteredData.length * barHeight
+    const barHeight = chartData.length <= 10 ? 40 : 30
+    const calculated = chartData.length * barHeight
     return Math.max(150, Math.min(1100, calculated))
-  }, [filteredData.length])
+  }, [chartData.length])
 
   // Get films for a specific country under the current filters, as full film
   // objects sorted by the active poll's votes, so the panel can render them as
@@ -261,22 +327,14 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       || transformedData.find(c => c.name === selectedCountry)
     if (!countryInfo) return null
 
-    // Calculate continent rank
-    const continentCountries = transformedData
-      .filter(c => c.continent === countryInfo.continent && c.filmCount > 0)
-      .sort((a, b) => b.filmCount - a.filmCount)
-    const continentRank = continentCountries.findIndex(c => c.name === countryInfo.name) + 1
-    const continentTotal = continentCountries.length
-
     return {
       name: countryInfo.name,
       continent: countryInfo.continent,
       filmCount: countryInfo.filmCount,
       votes: countryInfo.votes,
-      rank: countryInfo.rank,
+      filmsRank: countryInfo.filmsRank,
+      votesRank: countryInfo.votesRank,
       totalCountries: countryInfo.totalCountries,
-      continentRank,
-      continentTotal,
       films: getFilmsForCountry(countryInfo.name)
     }
   }, [selectedCountry, filteredData, transformedData, getFilmsForCountry])
@@ -293,14 +351,22 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     return Math.max(280, Math.min(needed, 448))
   }, [selectedCountryData])
 
-  // Handle bar click - open expanded view (fires from BarChart onClick with chart state)
+  // Handle bar click. BarChart onClick provides activeLabel (the Y-axis value).
+  // - Continents view: drill into that continent's countries (and return to the countries view).
+  // - Countries view: open the expanded country panel.
   const handleBarClick = useCallback((state) => {
+    const label = state?.activeLabel
+    if (!label) return
+    if (viewMode === 'continents') {
+      setViewMode('countries')
+      setIsTopNMode(false)
+      const names = transformedData.filter(c => c.continent === label && c.filmCount > 0).map(c => c.name)
+      if (names.length) setSelectedCountries(names)
+      return
+    }
     if (selectedCountry) return // Already have a country selected
-    // BarChart onClick provides activeLabel (the Y-axis value = country name)
-    const countryName = state?.activeLabel
-    if (!countryName) return
-    setSelectedCountry(countryName)
-  }, [selectedCountry])
+    setSelectedCountry(label)
+  }, [viewMode, selectedCountry, transformedData])
 
   // Close expanded view
   const handleCloseExpanded = useCallback(() => {
@@ -320,12 +386,14 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   }, [selectedPoll, rankRange, selectedCountries])
 
   const handleResetToTopN = () => {
+    setViewMode('countries')
     setIsTopNMode(true)
     const topN = transformedData.filter(c => c.filmCount > 0).slice(0, defaultCount).map(c => c.name)
     setSelectedCountries(topN)
   }
 
   const handleSelectContinent = (continentName) => {
+    setViewMode('countries')
     setIsTopNMode(false)
     // Get all countries from the selected continent that have votes
     const continentCountries = transformedData
@@ -470,6 +538,30 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload
+
+      // Continent bar: show the metric total, share of the canon, and how many countries.
+      if (data.isContinent) {
+        return (
+          <div className="bg-white p-2.5 border-2 border-black shadow-lg max-w-[200px]">
+            <p className="font-bold text-base text-black uppercase tracking-wide">{data.name}</p>
+            <p className="text-xl font-black text-black my-1">
+              {metric === 'votes'
+                ? `${data.votes.toLocaleString()} votes`
+                : `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`}
+              <span className="text-sm font-bold text-black"> · {data.pct.toFixed(1)}%</span>
+            </p>
+            <p className="text-xs text-black font-medium mt-0.5">
+              {metric === 'votes'
+                ? `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`
+                : `${data.votes.toLocaleString()} votes`}
+            </p>
+            <p className="text-xs text-black font-medium mt-0.5">
+              {data.countryCount} {data.countryCount === 1 ? 'country' : 'countries'} represented
+            </p>
+          </div>
+        )
+      }
+
       return (
         <div className="bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]">
           <p className="font-bold text-base text-black uppercase tracking-wide">{data.name}</p>
@@ -479,11 +571,6 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
               ? `${data.votes.toLocaleString()} votes`
               : `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`}
           </p>
-          {data.rank && (
-            <p className="text-xs text-black font-medium mt-0.5">
-              #{data.rank} out of {data.totalCountries} countries
-            </p>
-          )}
           <p className="text-xs text-black font-medium mt-0.5">
             {metric === 'votes'
               ? `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`
@@ -520,10 +607,12 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       <div className="mb-6 border-b-2 border-gray-300 pb-4">
         <div className="mb-4">
           <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-            Countries by {metric === 'votes' ? 'Votes' : 'Films'}
+            {viewMode === 'continents' ? 'Continents' : 'Countries'} by {metric === 'votes' ? 'Votes' : 'Films'}
           </h2>
           <p className="text-black font-medium">
-            Customize displayed countries using the search bar below
+            {viewMode === 'continents'
+              ? 'Each continent’s share of the canon. Click a continent to see its countries.'
+              : 'Customize displayed countries using the search bar below'}
           </p>
         </div>
 
@@ -533,7 +622,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             <button
               onClick={handleResetToTopN}
               className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 border-black ${
-                activeButton === 'topN'
+                viewMode === 'countries' && activeButton === 'topN'
                   ? 'bg-black text-white'
                   : 'bg-white text-black hover:bg-black hover:text-white'
               }`}
@@ -544,7 +633,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
           {Object.entries(continentColors).map(([continent, color]) => {
             const isActive = activeContinents.has(continent)
-            const isPressed = activeButton === continent
+            const isPressed = viewMode === 'countries' && activeButton === continent
             return (
               <div
                 key={continent}
@@ -585,6 +674,22 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
             )
           })}
         </div>
+
+        {/* Continents view toggle - its own row: switches the bars from countries to continents */}
+        <div className="flex mt-2">
+          <div className="bg-white border-2 border-black p-1 flex-shrink-0">
+            <button
+              onClick={() => { setSelectedCountry(null); setViewMode('continents') }}
+              className={`py-2 px-3 text-sm font-bold uppercase tracking-wide transition-all border-2 border-black ${
+                viewMode === 'continents'
+                  ? 'bg-black text-white'
+                  : 'bg-white text-black hover:bg-black hover:text-white'
+              }`}
+            >
+              Continents
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* BAR CHART with expanded panel overlay */}
@@ -596,7 +701,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         <div className="bar-chart-container">
           <ResponsiveContainer width="100%" height={chartHeight}>
             <BarChart
-              data={filteredData}
+              data={chartData}
               layout="vertical"
               margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
               onClick={handleBarClick}
@@ -630,9 +735,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
               <Bar
                 dataKey="filmCount"
                 radius={[0, 0, 0, 0]}
-                cursor={selectedCountry ? 'default' : 'pointer'}
+                cursor={viewMode === 'continents' || !selectedCountry ? 'pointer' : 'default'}
               >
-                {filteredData.map((entry, index) => (
+                {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={continentColors[entry.continent]}
@@ -667,7 +772,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
               {/* Country header */}
               <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
-                <h4 className="font-black text-lg text-black uppercase tracking-wide">{selectedCountryData.name}</h4>
+                <h4 className="font-black text-lg text-black uppercase tracking-wide"><CountryTitleLink name={selectedCountryData.name} /></h4>
                 <div className="flex gap-3 mt-1">
                   <span className="text-base font-black text-black">
                     {metric === 'votes'
@@ -680,14 +785,14 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                       : `${selectedCountryData.votes.toLocaleString()} votes`}
                   </span>
                 </div>
-                {selectedCountryData.continentRank > 0 && (
+                {selectedCountryData.filmsRank && (
                   <p className="text-xs text-black font-medium mt-1">
-                    #{selectedCountryData.continentRank} of {selectedCountryData.continentTotal} {selectedCountryData.continentTotal === 1 ? 'country' : 'countries'} in {selectedCountryData.continent}
+                    #{selectedCountryData.filmsRank} of {selectedCountryData.totalCountries} countries by films
                   </p>
                 )}
-                {selectedCountryData.rank && (
+                {selectedCountryData.votesRank && (
                   <p className="text-xs text-black font-medium">
-                    #{selectedCountryData.rank} of {selectedCountryData.totalCountries} {selectedCountryData.totalCountries === 1 ? 'country' : 'countries'} globally
+                    #{selectedCountryData.votesRank} of {selectedCountryData.totalCountries} countries by votes
                   </p>
                 )}
               </div>
@@ -695,10 +800,21 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
               {/* Scrollable poster grid — wraps onto new rows, panel scrolls vertically */}
               <div className="flex-1 overflow-y-auto overflow-x-hidden p-3">
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {selectedCountryData.films.map((film) => (
+                  {selectedCountryData.films.slice(0, PANEL_FILM_CAP).map((film) => (
                     <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} />
                   ))}
                 </div>
+
+                {selectedCountryData.films.length > 0 && (
+                  <Link
+                    to={buildExploreUrl([selectedCountryData.name], selectedPoll, rankRange, countriesData)}
+                    className="mt-3 block w-full text-center px-4 py-2 bg-black text-white border-2 border-black font-bold text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors"
+                  >
+                    {selectedCountryData.films.length > PANEL_FILM_CAP
+                      ? `View all ${selectedCountryData.films.length.toLocaleString()} films in Explore →`
+                      : 'Open in Explore →'}
+                  </Link>
+                )}
 
                 {selectedCountryData.films.length === 0 && (
                   <div className="px-4 py-8 text-center text-gray-500 text-sm">
@@ -711,7 +827,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         )}
       </div>
 
-      {/* ADD COUNTRY DROPDOWN - Just below chart */}
+      {/* ADD COUNTRY DROPDOWN - Just below chart. Hidden in the continents view, where there's no
+          per-country selection to customize (all continents are always shown). */}
+      {viewMode === 'countries' && (
       <div className="border-t-2 border-black bg-white p-4 mt-4 relative">
         {/* Dropdown trigger */}
         <div
@@ -720,7 +838,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         >
           <span>Search and add countries...</span>
           <span className="text-xs text-black font-bold">
-            {selectedCountries.length}/40 selected
+            {selectedCountries.length} selected
           </span>
         </div>
 
@@ -747,9 +865,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
                 />
                 <div className="mt-2 flex justify-between items-center">
                   <div className="text-xs text-black font-bold uppercase tracking-wide">
-                    <span>{pendingSelection.length}/40 countries selected</span>
+                    <span>{pendingSelection.length} {pendingSelection.length === 1 ? 'country' : 'countries'} selected</span>
                     {pendingSelection.length >= 40 && (
-                      <span className="text-red-600 font-black ml-2">Maximum reached</span>
+                      <span className="text-red-600 font-black ml-2">Maximum of 40 reached</span>
                     )}
                   </div>
                   <button
@@ -883,6 +1001,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
           </>
         )}
       </div>
+      )}
     </div>
   )
 }
