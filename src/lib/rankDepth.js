@@ -189,9 +189,16 @@ export function filmPassesDepth(film, pollKey, cutoffRank) {
   return entry.rank != null && entry.rank <= cutoffRank
 }
 
-/** Short label for banners and filter summaries. Always the achieved count. */
-export function describeDepth(target, filmCount) {
-  return target == null
-    ? `All films (${filmCount.toLocaleString()})`
-    : `Top ${filmCount.toLocaleString()} films`
+/**
+ * Short label for banners and filter summaries. Always the achieved count, never
+ * the target. At full depth the count is dropped — the banner already opens with
+ * it — and a cutoff instead carries its vote floor, which is the one number the
+ * banner doesn't otherwise show and the reason the cutoff sits where it does.
+ */
+export function describeDepth(target, filmCount, minVotes = null) {
+  if (target == null) return 'All films'
+  const floor = minVotes != null
+    ? ` (${minVotes.toLocaleString()}+ ${minVotes === 1 ? 'vote' : 'votes'})`
+    : ''
+  return `Top ${filmCount.toLocaleString()} films${floor}`
 }

@@ -58,7 +58,7 @@ export default function CountryOriginMain() {
     () => (filmsData ? buildRankIndex(filmsData, selectedPoll) : EMPTY_RANK_INDEX),
     [filmsData, selectedPoll]
   )
-  const { cutoffRank, filmCount: depthFilmCount } = useMemo(
+  const { cutoffRank, filmCount: depthFilmCount, minVotes: depthMinVotes } = useMemo(
     () => resolveTarget(rankIndex, topTarget),
     [rankIndex, topTarget]
   )
@@ -83,7 +83,7 @@ export default function CountryOriginMain() {
       ? 'All Polls Combined'
       : `${selectedPoll} Poll`
 
-    return `${pollText} • ${describeDepth(topTarget, depthFilmCount)}`
+    return `${pollText} • ${describeDepth(topTarget, depthFilmCount, depthMinVotes)}`
   }
 
 
@@ -192,13 +192,8 @@ export default function CountryOriginMain() {
 
             {/* VISUALIZATION 1: WORLD MAP */}
             <div className="bg-white border-4 border-black p-6 mb-8">
-              <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                  Global Distribution
-                </h2>
-                <p className="text-black font-medium">
-                  Darker colors indicate more {metric === 'votes' ? 'votes' : 'films'}. Click any country to see detailed analysis.
-                </p>
+              <div className="mb-4 border-b-2 border-gray-300 pb-3">
+                <h2 className="text-3xl font-black text-black uppercase tracking-wide">Global Distribution</h2>
               </div>
 
               {/* World Map Choropleth */}
@@ -228,6 +223,7 @@ export default function CountryOriginMain() {
               filmsData={filmsData}
               selectedPoll={selectedPoll}
               cutoffRank={cutoffRank}
+              topTarget={topTarget}
               metric={metric}
             />
 

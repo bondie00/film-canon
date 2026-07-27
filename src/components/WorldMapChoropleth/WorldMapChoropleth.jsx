@@ -8,6 +8,7 @@ import {
 } from 'react-simple-maps'
 import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
 import { pollKeyOf, pollEntryOf } from '../../lib/rankDepth'
+import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
 import GridTile, { withCurrent } from '../search/GridTile'
 
 // Natural Earth 110m world topology - lower resolution for performance
@@ -549,7 +550,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
         const tooltipHeight = hasMultipleCountries
           ? baseHeight + 20 + (tooltipData.countries.length * extraPerCountry) // +20 for divider/spacing
           : baseHeight
-        const tooltipWidth = 180
+        const tooltipWidth = TOOLTIP_WIDTH
         const offset = 10
 
         // Determine horizontal position
@@ -568,21 +569,22 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
         return (
           <div
-            className="fixed z-50 pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg w-[180px]"
+            className={`fixed z-50 pointer-events-none ${TOOLTIP_BOX}`}
             style={{
               left: tooltipX,
               top: tooltipY,
+              width: TOOLTIP_WIDTH,
               transition: 'left 0.08s ease-out, top 0.08s ease-out'
             }}
           >
-          <p className="font-bold text-base text-black uppercase tracking-wide">{displayName}</p>
-          <p className="text-xs text-black font-medium mb-1">{tooltipData.continent}</p>
-          <p className="text-xl font-black text-black my-1">
+          <p className={TOOLTIP_TITLE}>{displayName}</p>
+          <p className={TOOLTIP_SUBTITLE}>{tooltipData.continent}</p>
+          <p className={TOOLTIP_VALUE}>
             {metric === 'votes'
               ? `${tooltipData.totalVotes.toLocaleString()} votes`
               : `${tooltipData.totalDistinctFilms.toLocaleString()} ${tooltipData.totalDistinctFilms === 1 ? 'film' : 'films'}`}
           </p>
-          <p className="text-xs text-black font-medium mt-0.5">
+          <p className={TOOLTIP_DETAIL}>
             {metric === 'votes'
               ? `${tooltipData.totalDistinctFilms.toLocaleString()} ${tooltipData.totalDistinctFilms === 1 ? 'film' : 'films'}`
               : `${tooltipData.totalVotes.toLocaleString()} votes`}
@@ -593,8 +595,9 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
             <div className="mt-2 pt-2 border-t border-gray-300">
               {tooltipData.countries.map((country, idx) => (
                 <div key={country.name} className={idx > 0 ? 'mt-1.5 pt-1.5 border-t border-gray-200' : ''}>
+                  {/* Nested list, so the name sits a step below TOOLTIP_TITLE */}
                   <p className="font-semibold text-xs text-black uppercase tracking-wide">{country.name}</p>
-                  <p className="text-xs text-black">
+                  <p className={TOOLTIP_DETAIL}>
                     {country.distinctFilms.toLocaleString()} films · {country.votes.toLocaleString()} votes
                   </p>
                 </div>

@@ -160,7 +160,7 @@ export default function CountryDetail() {
       ? 'All Polls Combined'
       : `${selectedPoll} Poll`
 
-    return `${pollText} • ${describeDepth(topTarget, activeDepth.filmCount)}`
+    return `${pollText} • ${describeDepth(topTarget, activeDepth.filmCount, activeDepth.minVotes)}`
   }
 
   // Loading state

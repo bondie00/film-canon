@@ -1,36 +1,8 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
-import { Link } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
-import GridTile, { withCurrent } from './search/GridTile'
-import { pollKeyOf, pollEntryOf } from '../lib/rankDepth'
-
-// Cap posters shown in the expanded panel; the rest live on the Explore page.
-const PANEL_FILM_CAP = 30
-
-// Country name as a link to its detail page, with an arrow icon signalling it's clickable.
-function CountryTitleLink({ name }) {
-  return (
-    <Link
-      to={`/countries/${encodeURIComponent(name)}`}
-      className="group inline-flex items-center gap-1.5 hover:underline decoration-2 underline-offset-2"
-    >
-      <span>{name}</span>
-      <svg className="w-4 h-4 shrink-0 opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M7 17L17 7M17 7H8M17 7v9" />
-      </svg>
-    </Link>
-  )
-}
-
-// Build an Explore-page link carrying the current filters. Both pages read the same
-// params with the same meaning, so the rank depth transfers as-is.
-function buildExploreUrl(countryNames, poll, topTarget) {
-  const params = new URLSearchParams()
-  if (poll) params.set('poll', poll)
-  countryNames.forEach(n => params.append('country', n))
-  if (topTarget != null) params.set('top', String(topTarget))
-  return `/explore?${params.toString()}`
-}
+import CountryPanel from './country/CountryPanel'
+import { filmsForCountry, assignCompetitionRanks } from '../lib/countryFilms'
+import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../utils/tooltip'
 
 // Continent color mapping - matching the page's color scheme
 const continentColors = {
@@ -86,28 +58,7 @@ export default function TopCountriesBarChart({ countriesData, selectedPoll = '20
     // Sort by the active metric descending and assign ranks
     const sorted = data.sort((a, b) => b.filmCount - a.filmCount)
 
-    const countriesWithVotes = sorted.filter(c => c.films > 0)
-    const totalCountriesWithVotes = countriesWithVotes.length
-
-    // Competition ranks (ties share a rank: 1, 2, 2, 4, ...) computed for BOTH metrics, so the
-    // expanded panel can show rank-by-films and rank-by-votes regardless of the active metric.
-    const assignRank = (valueKey, rankField) => {
-      const order = [...countriesWithVotes].sort((a, b) => b[valueKey] - a[valueKey])
-      let prevVal = null
-      let prevRank = 0
-      order.forEach((c, i) => {
-        if (c[valueKey] === prevVal) {
-          c[rankField] = prevRank
-        } else {
-          c[rankField] = i + 1
-          prevRank = i + 1
-          prevVal = c[valueKey]
-        }
-      })
-    }
-    assignRank('films', 'filmsRank')
-    assignRank('votes', 'votesRank')
-    sorted.forEach(c => { c.totalCountries = totalCountriesWithVotes })
+    assignCompetitionRanks(sorted)
 
     return sorted
   }, [countriesData, selectedPoll, metric])
@@ -247,33 +198,10 @@ export default function TopCountriesBarChart({ countriesData, selectedPoll = '20
   // Get films for a specific country under the current filters, as full film
   // objects sorted by the active poll's votes, so the panel can render them as
   // GridTiles (with the 8-poll ranking strip and a link to each film page).
-  const getFilmsForCountry = useCallback((countryName) => {
-    if (!filmsData) return []
-
-    const pollKey = pollKeyOf(selectedPoll)
-
-    return filmsData
-      .filter(film => film.countries?.includes(countryName))
-      .map(film => {
-        const entry = pollEntryOf(film, pollKey)
-        const votes = entry?.votes || 0
-        const rank = entry?.rank ?? null
-
-        if (votes === 0) return null
-        // Same rank-depth cutoff the aggregates were built with, so the panel's
-        // film list always matches the country's headline count.
-        if (cutoffRank != null && (rank == null || rank > cutoffRank)) return null
-
-        return { film, sortVotes: votes, sortRank: rank }
-      })
-      .filter(Boolean)
-      .sort((a, b) => {
-        if (b.sortVotes !== a.sortVotes) return b.sortVotes - a.sortVotes
-        if (a.sortRank && b.sortRank) return a.sortRank - b.sortRank
-        return 0
-      })
-      .map(x => x.film)
-  }, [filmsData, selectedPoll, cutoffRank])
+  const getFilmsForCountry = useCallback(
+    (countryName) => filmsForCountry(filmsData, countryName, selectedPoll, cutoffRank),
+    [filmsData, selectedPoll, cutoffRank]
+  )
 
   // Get selected country data for expanded view
   const selectedCountryData = useMemo(() => {
@@ -506,20 +434,20 @@ export default function TopCountriesBarChart({ countriesData, selectedPoll = '20
       // Continent bar: show the metric total, share of the canon, and how many countries.
       if (data.isContinent) {
         return (
-          <div className="bg-white p-2.5 border-2 border-black shadow-lg max-w-[200px]">
-            <p className="font-bold text-base text-black uppercase tracking-wide">{data.name}</p>
-            <p className="text-xl font-black text-black my-1">
+          <div className={TOOLTIP_BOX} style={{ width: TOOLTIP_WIDTH }}>
+            <p className={TOOLTIP_TITLE}>{data.name}</p>
+            <p className={TOOLTIP_VALUE}>
               {metric === 'votes'
                 ? `${data.votes.toLocaleString()} votes`
                 : `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`}
               <span className="text-sm font-bold text-black"> · {data.pct.toFixed(1)}%</span>
             </p>
-            <p className="text-xs text-black font-medium mt-0.5">
+            <p className={TOOLTIP_DETAIL}>
               {metric === 'votes'
                 ? `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`
                 : `${data.votes.toLocaleString()} votes`}
             </p>
-            <p className="text-xs text-black font-medium mt-0.5">
+            <p className={TOOLTIP_DETAIL}>
               {data.countryCount} {data.countryCount === 1 ? 'country' : 'countries'} represented
             </p>
           </div>
@@ -527,15 +455,15 @@ export default function TopCountriesBarChart({ countriesData, selectedPoll = '20
       }
 
       return (
-        <div className="bg-white p-2.5 border-2 border-black shadow-lg max-w-[180px]">
-          <p className="font-bold text-base text-black uppercase tracking-wide">{data.name}</p>
-          <p className="text-xs text-black font-medium mb-1">{data.continent}</p>
-          <p className="text-xl font-black text-black my-1">
+        <div className={TOOLTIP_BOX} style={{ width: TOOLTIP_WIDTH }}>
+          <p className={TOOLTIP_TITLE}>{data.name}</p>
+          <p className={TOOLTIP_SUBTITLE}>{data.continent}</p>
+          <p className={TOOLTIP_VALUE}>
             {metric === 'votes'
               ? `${data.votes.toLocaleString()} votes`
               : `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`}
           </p>
-          <p className="text-xs text-black font-medium mt-0.5">
+          <p className={TOOLTIP_DETAIL}>
             {metric === 'votes'
               ? `${data.films.toLocaleString()} ${data.films === 1 ? 'film' : 'films'}`
               : `${data.votes.toLocaleString()} votes`}
@@ -559,17 +487,8 @@ export default function TopCountriesBarChart({ countriesData, selectedPoll = '20
 
   return (
     <div className="bg-white border-4 border-black p-6 mb-8">
-      <div className="mb-6 border-b-2 border-gray-300 pb-4">
-        <div className="mb-4">
-          <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-            {viewMode === 'continents' ? 'Continents' : 'Countries'} by {metric === 'votes' ? 'Votes' : 'Films'}
-          </h2>
-          <p className="text-black font-medium">
-            {viewMode === 'continents'
-              ? 'Each continent’s share of the canon. Click a continent to see its countries.'
-              : 'Customize displayed countries using the search bar below'}
-          </p>
-        </div>
+      <div className="mb-4 border-b-2 border-gray-300 pb-3">
+        <h2 className="text-3xl font-black text-black mb-4 uppercase tracking-wide">Countries Ranked</h2>
 
         {/* Quick Filter Buttons */}
         <div className="flex flex-wrap gap-2">
@@ -707,78 +626,18 @@ export default function TopCountriesBarChart({ countriesData, selectedPoll = '20
 
         {/* Expanded Country Panel - overlays the chart area */}
         {selectedCountryData && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center p-4 pointer-events-none">
-            {/* Semi-transparent overlay to dim the chart */}
-            <div
-              className="absolute inset-0 bg-black bg-opacity-20 pointer-events-auto"
-              onClick={handleCloseExpanded}
-            />
-
-            {/* Expanded panel - centered within chart, max height matches world map panel */}
-            <div ref={expandedPanelRef} className="relative w-[calc(100%-32px)] max-h-[calc(28.44rem-32px)] max-w-full bg-white border-4 border-black pointer-events-auto flex flex-col shadow-xl">
-              {/* Close button */}
-              <button
-                onClick={handleCloseExpanded}
-                className="absolute -top-3 -right-3 w-8 h-8 bg-white border-2 border-black text-black font-black text-lg hover:bg-black hover:text-white transition-colors flex items-center justify-center z-10"
-                title="Close"
-              >
-                ×
-              </button>
-
-              {/* Country header */}
-              <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
-                <h4 className="font-black text-lg text-black uppercase tracking-wide"><CountryTitleLink name={selectedCountryData.name} /></h4>
-                <div className="flex gap-3 mt-1">
-                  <span className="text-base font-black text-black">
-                    {metric === 'votes'
-                      ? `${selectedCountryData.votes.toLocaleString()} votes`
-                      : `${selectedCountryData.films.length.toLocaleString()} ${selectedCountryData.films.length === 1 ? 'film' : 'films'}`}
-                  </span>
-                  <span className="text-sm text-black font-medium self-end">
-                    {metric === 'votes'
-                      ? `${selectedCountryData.films.length.toLocaleString()} ${selectedCountryData.films.length === 1 ? 'film' : 'films'}`
-                      : `${selectedCountryData.votes.toLocaleString()} votes`}
-                  </span>
-                </div>
-                {selectedCountryData.filmsRank && (
-                  <p className="text-xs text-black font-medium mt-1">
-                    #{selectedCountryData.filmsRank} of {selectedCountryData.totalCountries} countries by films
-                  </p>
-                )}
-                {selectedCountryData.votesRank && (
-                  <p className="text-xs text-black font-medium">
-                    #{selectedCountryData.votesRank} of {selectedCountryData.totalCountries} countries by votes
-                  </p>
-                )}
-              </div>
-
-              {/* Scrollable poster grid — wraps onto new rows, panel scrolls vertically */}
-              <div className="flex-1 overflow-y-auto overflow-x-hidden p-3">
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {selectedCountryData.films.slice(0, PANEL_FILM_CAP).map((film) => (
-                    <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} fade={false} />
-                  ))}
-                </div>
-
-                {selectedCountryData.films.length > 0 && (
-                  <Link
-                    to={buildExploreUrl([selectedCountryData.name], selectedPoll, topTarget)}
-                    className="mt-3 block w-full text-center px-4 py-2 bg-black text-white border-2 border-black font-bold text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors"
-                  >
-                    {selectedCountryData.films.length > PANEL_FILM_CAP
-                      ? `View all ${selectedCountryData.films.length.toLocaleString()} films in Explore →`
-                      : 'Open in Explore →'}
-                  </Link>
-                )}
-
-                {selectedCountryData.films.length === 0 && (
-                  <div className="px-4 py-8 text-center text-gray-500 text-sm">
-                    No films found for current filters
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          <CountryPanel
+            name={selectedCountryData.name}
+            films={selectedCountryData.films}
+            metric={metric}
+            selectedPoll={selectedPoll}
+            topTarget={topTarget}
+            filmsRank={selectedCountryData.filmsRank}
+            votesRank={selectedCountryData.votesRank}
+            totalCountries={selectedCountryData.totalCountries}
+            onClose={handleCloseExpanded}
+            panelRef={expandedPanelRef}
+          />
         )}
       </div>
 
