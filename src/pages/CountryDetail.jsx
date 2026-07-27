@@ -7,6 +7,8 @@ import DirectorsTreemap from '../components/country/DirectorsTreemap'
 import DecadeHeatmapRows from '../components/country/DecadeHeatmapRows'
 import DecadeRankHeatmap from '../components/country/DecadeRankHeatmap'
 import PollHistoryChart from '../components/country/PollHistoryChart'
+import RankDepthFilter from '../components/RankDepthFilter'
+import { buildRankIndex, resolveTarget, describeDepth, EMPTY_RANK_INDEX } from '../lib/rankDepth'
 
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
 
@@ -26,7 +28,9 @@ export default function CountryDetail() {
 
   // Filter state
   const [selectedPoll, setSelectedPoll] = useState('2022')
-  const [rankRange, setRankRange] = useState('all')
+  // Film-count target for the rank-depth filter (null = all films), same units
+  // and same control as the Countries page and /explore.
+  const [topTarget, setTopTarget] = useState(null)
   const [countriesData, setCountriesData] = useState(null)
   const [filmsData, setFilmsData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -59,83 +63,72 @@ export default function CountryDetail() {
     return countriesData[decodedCountryName]
   }, [countriesData, decodedCountryName])
 
+  // The depth target resolves to a different rank in every poll, and this page
+  // reads several polls at once (the poll selector's counts, the 'all' aggregate
+  // behind the hero visualizations), so resolve the cutoff for all of them.
+  const rankIndexes = useMemo(() => {
+    const out = { all: EMPTY_RANK_INDEX }
+    if (!filmsData) return out
+    out.all = buildRankIndex(filmsData, 'all')
+    POLL_YEARS.forEach(y => { out[y] = buildRankIndex(filmsData, String(y)) })
+    return out
+  }, [filmsData])
+
+  const cutoffByPoll = useMemo(() => {
+    const out = {}
+    Object.entries(rankIndexes).forEach(([key, index]) => {
+      out[key] = resolveTarget(index, topTarget).cutoffRank
+    })
+    return out
+  }, [rankIndexes, topTarget])
+
+  const activeIndex = rankIndexes[selectedPoll] || EMPTY_RANK_INDEX
+  const activeDepth = useMemo(() => resolveTarget(activeIndex, topTarget), [activeIndex, topTarget])
+
+  const withinDepth = (entry, pollKey) => {
+    if (!entry || !(entry.votes > 0)) return false
+    const cutoff = cutoffByPoll[pollKey]
+    if (cutoff == null) return true
+    return entry.rank != null && entry.rank <= cutoff
+  }
+
   // All films for this country (rank-filtered but not poll-filtered — used by static hero visualizations)
   const allCountryFilms = useMemo(() => {
     if (!filmsData || !decodedCountryName) return []
     return filmsData.filter(film => {
       if (!film.countries.includes(decodedCountryName)) return false
-      const allPollData = film.pollHistory.find(p => p.year === 'all')
-      if (!allPollData || allPollData.votes === 0) return false
-      if (rankRange === 'consensus') {
-        return allPollData.rank && allPollData.rank <= 100
-      }
-      return true
+      return withinDepth(film.pollHistory.find(p => p.year === 'all'), 'all')
     })
-  }, [filmsData, decodedCountryName, rankRange])
+  }, [filmsData, decodedCountryName, cutoffByPoll])
 
   // How many of this country's films the poll would show under the current
   // filters — drives the poll selector's grey-out. Mirrors the countryFilms
-  // logic per poll, so switching to Consensus disables any poll where the
-  // country has no films inside that poll's consensus cutoff.
+  // logic per poll, so tightening the depth disables any poll where the country
+  // has no films left inside that poll's resolved cutoff.
   const pollCounts = useMemo(() => {
     const counts = { all: 0 }
     POLL_YEARS.forEach(y => { counts[y] = 0 })
     if (!filmsData || !decodedCountryName) return counts
     filmsData.forEach(film => {
       if (!film.countries.includes(decodedCountryName)) return
-
-      const allPollData = film.pollHistory.find(p => p.year === 'all')
-      if (allPollData && allPollData.votes > 0) {
-        if (rankRange !== 'consensus' || (allPollData.rank && allPollData.rank <= 100)) {
-          counts.all += 1
-        }
-      }
-
+      if (withinDepth(film.pollHistory.find(p => p.year === 'all'), 'all')) counts.all += 1
       POLL_YEARS.forEach(y => {
-        const pd = film.pollHistory.find(p => p.year === y)
-        if (!pd || pd.votes === 0) return
-        if (rankRange === 'consensus') {
-          const cutoffRank = countriesData?._pollMetadata?.[y]?.consensus?.cutoffRank
-          if (pd.rank && cutoffRank && pd.rank <= cutoffRank) counts[y] += 1
-        } else {
-          counts[y] += 1
-        }
+        if (withinDepth(film.pollHistory.find(p => p.year === y), y)) counts[y] += 1
       })
     })
     return counts
-  }, [filmsData, countriesData, decodedCountryName, rankRange])
+  }, [filmsData, decodedCountryName, cutoffByPoll])
 
   // Filter films for this country
   const countryFilms = useMemo(() => {
     if (!filmsData || !decodedCountryName) return []
+    const pollKey = selectedPoll === 'all' ? 'all' : parseInt(selectedPoll, 10)
 
     return filmsData.filter(film => {
-      // Film must have this country
       if (!film.countries.includes(decodedCountryName)) return false
-
-      // Apply poll filter
-      if (selectedPoll === 'all') {
-        const allPollData = film.pollHistory.find(p => p.year === 'all')
-        if (!allPollData || allPollData.votes === 0) return false
-
-        // Apply rank filter for combined polls (top 100 by total votes)
-        if (rankRange === 'consensus') {
-          return allPollData.rank && allPollData.rank <= 100
-        }
-        return true
-      } else {
-        const pollData = film.pollHistory.find(p => p.year.toString() === selectedPoll)
-        if (!pollData || pollData.votes === 0) return false
-
-        // Apply consensus rank filter using per-poll cutoff
-        if (rankRange === 'consensus') {
-          const cutoffRank = countriesData?._pollMetadata?.[selectedPoll]?.consensus?.cutoffRank
-          return pollData.rank && cutoffRank && pollData.rank <= cutoffRank
-        }
-        return true
-      }
+      return withinDepth(film.pollHistory.find(p => p.year === pollKey), pollKey)
     })
-  }, [filmsData, countriesData, decodedCountryName, selectedPoll, rankRange])
+  }, [filmsData, decodedCountryName, selectedPoll, cutoffByPoll])
 
   // Calculate metrics
   const metrics = useMemo(() => {
@@ -167,11 +160,7 @@ export default function CountryDetail() {
       ? 'All Polls Combined'
       : `${selectedPoll} Poll`
 
-    const rankText = rankRange === 'all'
-      ? 'All Films'
-      : 'Consensus'
-
-    return `${pollText} • ${rankText}`
+    return `${pollText} • ${describeDepth(topTarget, activeDepth.filmCount)}`
   }
 
   // Loading state
@@ -289,36 +278,13 @@ export default function CountryDetail() {
                 </div>
               </div>
 
-              {/* RANK RANGE FILTER */}
+              {/* RANK DEPTH FILTER — shared with the Countries page and /explore */}
               <div>
-                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
-                  Film Rank Range
-                </label>
-                <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
-                  <button
-                    onClick={() => setRankRange('all')}
-                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
-                      rankRange === 'all'
-                        ? 'bg-black text-white border-2 border-black'
-                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                    }`}
-                  >
-                    All Films
-                  </button>
-                  <button
-                    onClick={() => setRankRange('consensus')}
-                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
-                      rankRange === 'consensus'
-                        ? 'bg-black text-white border-2 border-black'
-                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                    }`}
-                  >
-                    Consensus
-                  </button>
-                </div>
-                <p className="text-xs text-gray-500 mt-2">
-                  {rankRange === 'consensus' ? 'Films voted for by 2+ critics' : ''}
-                </p>
+                <RankDepthFilter
+                  index={activeIndex}
+                  target={topTarget}
+                  onChange={setTopTarget}
+                />
               </div>
             </div>
           </div>
@@ -376,9 +342,9 @@ export default function CountryDetail() {
                 filmsData={filmsData}
                 countryName={decodedCountryName}
                 selectedPoll={selectedPoll}
-                rankRange={rankRange}
+                cutoffByPoll={cutoffByPoll}
+                isDepthLimited={topTarget != null}
                 continentColor={continentColor}
-                countriesData={countriesData}
               />
             </div>
 
@@ -436,7 +402,7 @@ export default function CountryDetail() {
                   <DecadeRankHeatmap
                     films={countryFilms}
                     selectedPoll={selectedPoll}
-                    rankRange={rankRange}
+                    topTarget={topTarget}
                     continentColor={continentColor}
                   />
                 </div>

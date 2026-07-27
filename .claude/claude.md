@@ -235,16 +235,15 @@ tiny: 'text-xs'     // 12px
    - 2012, 2002, 1992, 1982, 1972, 1962, 1952
    - *Future: Compare Two Polls mode, Date Range mode*
 
-2. **Film Rank Range** (segmented control - 2-button toggle):
-   - All Films
-   - Top 100 Only
-   - *Rationale: Binary choice focuses on core use case (elite canon vs. full periphery). Additional tiers (250, 500, 1000) removed as they don't meaningfully differ from Top 100 for most analyses.*
+2. **Rank Depth** (slider) — see the Rank Depth section below. The same control, in
+   the same filter pane, on this page, the individual country pages, and /explore.
 
 **Filter Behavior:**
 - **Auto-applying:** Filters apply immediately on change - no "Apply" button needed
 - **No summary box:** Removed "Currently Showing" display to reduce clutter
 - **Sticky positioning:** Filter sidebar remains visible while scrolling through visualizations
-- **Clean UI:** Segmented control provides cleaner interface than radio buttons for binary choice
+- **URL-driven:** Poll (`?poll=`) and rank depth (`?top=`) live in the URL with the same
+  names and meanings as /explore, so links between the pages carry the filters intact
 
 **Visualizations:**
 1. Quick Stats Bar (4 metrics)
@@ -743,13 +742,13 @@ polls re-imports the exact recency bias we're avoiding — most film-poll events
 **"All Polls Combined" uses deduplicated unique films.** Read from `byPoll['all'].distinctFilms`
 (e.g. France = 587), NOT a sum of per-poll counts. A film that recurred across polls counts once.
 
-**The Consensus toggle owns "canonical weight."** Distinct films measures breadth and treats a
-215-vote masterpiece the same as a 1-vote obscurity. The weight/consensus dimension is handled by
-the Consensus rank-range toggle (and per-film votes remain visible in drill-down lists), so the
-headline metric doesn't need to encode it.
+**The Rank Depth slider owns "canonical weight."** Distinct films measures breadth and treats a
+215-vote masterpiece the same as a 1-vote obscurity. The weight dimension is handled by the Rank
+Depth control (and per-film votes remain visible in drill-down lists), so the headline metric
+doesn't need to encode it.
 
 **Metric toggle.** The Films by Country page has a **Metric** control in the filter sidebar
-(under Poll and Rank Range) that switches every visualization — map, bar chart, continent
+(under Poll and Rank Depth) that switches every visualization — map, bar chart, continent
 breakdown, share-over-time — between **Films** (default) and **Votes**. It's a single page-level
 control (state in `CountryOriginMain`, passed as a `metric` prop to each component); keep all viz on
 one metric rather than per-card toggles. Films is the default because it's era-neutral and intuitive;
@@ -758,9 +757,15 @@ bold label; the other shows as the secondary line in tooltips and panels. When *
 Combined** is selected, the cross-poll recency distortion returns (2012/2022 dominate) — the sidebar
 copy flags that votes are best read within a single poll.
 
-**Data fields** (per country, per poll, in `countries.json` `byPoll[poll]`):
-- `distinctFilms` / `distinctFilmsConsensus` — the **Films** metric (drives bar length, map color, sorting, shares)
-- `total` / `consensus` — vote sums, the **Votes** metric
+**Data fields.** The country pages no longer read `countries.json`'s per-poll buckets — those only
+cover two fixed depths and can't answer an arbitrary cutoff. `useCountryAggregates` recomputes them
+live from `films.json` (which every country page already loads) and hands the visualizations the
+same shape, so they read `byPoll[poll]`:
+- `distinctFilms` — the **Films** metric (drives bar length, map color, sorting, shares)
+- `total` — vote sums, the **Votes** metric
+
+`countries.json` is still the source for `continent` and the country list, and its
+`distinctFilmsConsensus` / `consensus` fields are now unused by the app.
 
 **Weight vs. breadth — the switch's real effect on ordering.** Countries whose canon is a few
 intensely-loved masterpieces fall under films; broad, deep filmographies climb. Concrete examples
@@ -770,8 +775,69 @@ intensely-loved masterpieces fall under films; broad, deep filmographies climb. 
 - **Belgium** falls #7 → #23 (2022): 215 of its 332 votes come from a single film (Jeanne Dielman).
 - **Sweden** (Bergman), **Denmark** (Dreyer/von Trier), **Senegal** (Sembène/Mambéty) all drop —
   concentrated canons.
-- **Consensus mode compresses hard**: counts become tiny (US 39, France 23, then mostly 1-film
-  ties), so sub-top-5 ordering is near-arbitrary. Expect many tied 1-film bars.
+- **Tight rank depths compress hard**: at Top 100 the counts become tiny (US 35, France 20 in 2022,
+  then mostly 1-film ties), so sub-top-5 ordering is near-arbitrary. Expect many tied 1-film bars.
+
+### Rank Depth (the shared cutoff)
+
+One control, one URL param (`?top=`), same meaning on the Countries page, the individual country
+pages, and /explore. Logic lives in `src/lib/rankDepth.js`; the UI is `RankDepthFilter`.
+
+**The value is a film COUNT, not a rank.** "Top 86" means *the 86 highest-ranked films of this
+poll*, resolved to whatever rank that takes there. A plain rank cutoff reads more naturally but
+behaves badly in the small polls: rank ≤ 100 in 1952 is all 199 films that poll recorded, because
+ties stack enormously at the vote floor.
+
+**A poll only has as many reachable depths as it has tie-group boundaries, and the labels must be
+one of them.** Tie groups are indivisible — a rank shared by 68 films is wholly in or wholly out —
+so the reachable depths in 1972 are 9, 11, 17, 23, 24, 31, 53, 86, 154, 363, *with nothing between
+86 and 154*. A stop labelled "Top 100" there would promise a set that does not exist. So
+`RANK_TARGETS` only decides where the stops SIT; every stop is labelled, and stores in the URL, the
+count it actually delivers. The number on the control is always the true one. `cutoffRank` is shown
+beside it (`Top 86 films · to #54`) to explain the jumps.
+
+**Resolution rounds to the nearest boundary and may overshoot.** Always rounding down stranded the
+result far below the target whenever the next block was large (1972's 50 gave 31 — 19 short — when
+53 was three away). Overshoot is never visible as a broken promise because the target is never
+displayed.
+
+**The ladder is deliberately sparse**, and switches units at the bottom. `RANK_TARGETS` is
+`[10, 50, 100, 250, 500]` — intermediate rungs (25, and everything past 500) produced stops nobody
+would pick and collapsed into each other in the small polls anyway. Past 500 the useful deep cut
+isn't "top 1000", it's **2+ votes** — everything above the single-vote tail, where the long tail
+actually begins — so that's a fixed second-to-last rung, followed by All films.
+
+**Stops are pruned per poll.** Targets resolving to the same set are redundant (1982's 250, 500 and
+the 2+ boundary all land on 216), and any target that swallows the whole poll is just All under
+another name. Both are dropped, so 1952 offers 4 rungs and 2022 offers 7:
+
+```
+1952   Top 12 (10+)  Top 54 (3+)   Top 82 (2+)   All 199
+1972   Top 11 (9+)   Top 53 (4+)   Top 86 (3+)   Top 154 (2+)   All 363
+2022   Top 10 (99+)  Top 49 (48+)  Top 100 (31+) Top 243 (13+)  Top 461 (7+)  Top 1651 (2+)  All 3816
+```
+
+**The tightest rung rounds UP**, unlike every other stop. Nearest rounding lands it on 9 films in
+the polls with a tie straddling rank 10 (1952, 1972, 1982), which would contradict the home page's
+"top ten of every poll" shelves — those take `rank <= 10` and so show 12, 11 and 11 films. Rounding
+up agrees with them exactly in all nine polls.
+
+**The gray secondary label is the vote floor, not the rank.** It's what actually causes the cutoff
+to land where it does, and in the small polls it's the entire explanation for the jumps — 1972 goes
+4+ → 3+ → 2+ votes, and the leap from 86 to 154 films stops looking arbitrary once you can see it's
+the boundary between "3 critics picked this" and "2 critics picked this". Rank groups are exactly
+vote groups (every film sharing a rank shares a vote total — verified across all 9 polls), so the
+group's vote count is the true floor of the included set.
+
+**Values survive poll changes.** Never rewritten when the poll switches, so 2022 → 1952 → 2022
+preserves the setting; the handle snaps to the nearest surviving stop meanwhile. The UI offers only
+the stops, but any value is valid — a hand-written `?top=200` resolves and displays correctly.
+
+**This replaced the old "Consensus" toggle**, which was this same algorithm hardcoded to a target of
+100. That exact set is still reachable — it's the 4th stop in every poll (1952: 82 films to #55;
+1972: 86 to #54; 2022: 100 to #95), verified identical to the old `distinctFilmsConsensus` /
+`consensus` buckets per country. Nothing was lost; it stopped being an opaque named mode whose
+cutoff silently ranged from rank 47 to 95 depending on the poll.
 
 ---
 

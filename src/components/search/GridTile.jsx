@@ -53,8 +53,14 @@ function PollRankStrip({ film, activePoll }) {
  * square (default true) locks the tile to a 1:1 box for uniform galleries; pass
  * square={false} in tight grids (e.g. the country popovers) so the tile grows to
  * fit its title instead of clipping the second line.
+ *
+ * fade (default true) crossfades the tile in on mount. That masks the churn when
+ * Explore reflows a 60-tile gallery on a poll change, but it's dead weight in the
+ * small country panels: those remount their tiles on every filter change, and the
+ * fade delays each one by the tween duration even when the image is already cached.
+ * Pass fade={false} there so tiles appear the moment they render.
  */
-export default function GridTile({ film, activePoll, animateMove = false, transition, square = true }) {
+export default function GridTile({ film, activePoll, animateMove = false, transition, square = true, fade = true }) {
   // Tiles display at ~300px wide, so request the small MUBI still (w320) and a
   // small TMDB backdrop — far cheaper to composite while all tiles reflow at once.
   const img = landscapeImage(film, { mubiWidth: 320, tmdbBackdropSize: 'w300', posterSize: 'w342' })
@@ -70,7 +76,7 @@ export default function GridTile({ film, activePoll, animateMove = false, transi
   return (
     <motion.div
       {...moverProps}
-      initial={{ opacity: 0 }}
+      initial={fade ? { opacity: 0 } : false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={transition}

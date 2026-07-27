@@ -20,12 +20,12 @@ const CELL_HEIGHT = 34
 const ROW_GAP = 4
 const LABEL_WIDTH = 140
 
-export default function DecadeCountryHeatmap({ countriesData, filmsData, selectedPoll, rankRange, metric = 'films' }) {
+export default function DecadeCountryHeatmap({ countriesData, filmsData, selectedPoll, cutoffRank = null, metric = 'films' }) {
   const [hoveredCell, setHoveredCell] = useState(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const containerRef = useRef(null)
 
-  const defaultCount = rankRange === 'consensus' ? 5 : 10
+  const defaultCount = 10
 
   // Per-country totals for the active poll/metric (drives selection: Top N, continent groups).
   const transformedData = useMemo(() => {
@@ -34,31 +34,22 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
     Object.entries(countriesData).forEach(([name, info]) => {
       if (name.startsWith('_')) return
       const pd = info.byPoll?.[selectedPoll]
-      let films = 0
-      let votes = 0
-      if (pd) {
-        films = rankRange === 'all' ? (pd.distinctFilms || 0) : (pd.distinctFilmsConsensus || 0)
-        votes = rankRange === 'all' ? (pd.total || 0) : (pd.consensus || 0)
-      }
+      const films = pd?.distinctFilms || 0
+      const votes = pd?.total || 0
       rows.push({ name, filmCount: metric === 'votes' ? votes : films, films, votes, continent: info.continent })
     })
     return rows.sort((a, b) => b.filmCount - a.filmCount)
-  }, [countriesData, selectedPoll, rankRange, metric])
+  }, [countriesData, selectedPoll, metric])
 
   const sel = useCountrySelection(transformedData, defaultCount)
   const rows = sel.selectedData
 
-  const cutoffRank = countriesData?._pollMetadata?.[selectedPoll]?.consensus?.cutoffRank
-
-  // Which films count toward the heatmap (mirrors the bar chart / panel poll + consensus filters).
+  // Which films count toward the heatmap (mirrors the bar chart / panel rank-depth filter).
   const qualifies = (film) => {
     const entry = pollEntryOf(film, selectedPoll)
     if (!entry || !(entry.votes > 0)) return false
-    if (rankRange === 'consensus') {
-      const cap = selectedPoll === 'all' ? 100 : cutoffRank
-      return entry.rank && cap && entry.rank <= cap
-    }
-    return true
+    if (cutoffRank == null) return true
+    return entry.rank != null && entry.rank <= cutoffRank
   }
 
   // country -> decade -> value (film count, or vote sum in votes mode), row-normalized for shading.
@@ -81,7 +72,7 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
     rows.forEach(r => { rMax[r.name] = Math.max(0, ...Object.values(m[r.name])) })
     const cols = DECADES.filter(d => rows.some(r => (m[r.name][d] || 0) > 0))
     return { matrix: m, decades: cols, rowMax: rMax }
-  }, [rows, filmsData, selectedPoll, rankRange, metric, cutoffRank])
+  }, [rows, filmsData, selectedPoll, metric, cutoffRank])
 
   const unit = metric === 'votes' ? 'votes' : 'films'
   const valueLabel = (v) => `${v.toLocaleString()} ${v === 1 && metric !== 'votes' ? 'film' : unit}`

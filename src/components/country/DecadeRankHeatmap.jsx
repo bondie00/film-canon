@@ -39,7 +39,7 @@ const getRankTiers = (maxRank) => {
   }
 }
 
-export default function DecadeRankHeatmap({ films, selectedPoll, rankRange, continentColor }) {
+export default function DecadeRankHeatmap({ films, selectedPoll, topTarget = null, continentColor }) {
   const [hoveredCell, setHoveredCell] = useState(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const containerRef = useRef(null)
@@ -128,7 +128,7 @@ export default function DecadeRankHeatmap({ films, selectedPoll, rankRange, cont
       }
     })
 
-    // Filter out tiers that have no films (e.g., 100+ when Consensus filter is active)
+    // Filter out tiers that have no films (e.g., 100+ when the depth filter is tight)
     const rankTiers = allRankTiers.filter(tier => tierTotals[tier.label] > 0)
 
     // Get decades that have data
@@ -146,7 +146,7 @@ export default function DecadeRankHeatmap({ films, selectedPoll, rankRange, cont
       rankTiers,
       isAdditive: isAllPolls
     }
-  }, [films, selectedPoll, rankRange])
+  }, [films, selectedPoll, topTarget])
 
   // Get color intensity based on value (row-normalized)
   const getColor = (value, tierMax) => {

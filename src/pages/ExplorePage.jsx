@@ -15,7 +15,7 @@ const MOVE_RANK_MAX = 50    // only the top 50 slide to their new slot on a poll
 export default function ExplorePage() {
   const q = useFilmQuery()
   const {
-    loading, error, films, poll, topRank, filters, page,
+    loading, error, films, poll, topRank, rankIndex, filters, page,
     countriesData, filmCounts, titleOptions, directorOptions,
     beforeCountry, sorted, setParam, onFilterChange, clearFilters,
   } = q
@@ -101,6 +101,7 @@ export default function ExplorePage() {
     showPoll: false,
     topRank,
     onTopRankChange: handleTopRankChange,
+    rankIndex,
   }
 
   if (loading) {

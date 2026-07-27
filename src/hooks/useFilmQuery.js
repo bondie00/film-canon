@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { buildRankIndex, resolveTarget, EMPTY_RANK_INDEX } from '../lib/rankDepth'
 
 // Single source of truth for the unified films surface (/explore).
 //
@@ -9,7 +10,8 @@ import { useSearchParams } from 'react-router-dom'
 //
 // URL params:
 //   poll       'all' | '1952'..'2022'            (default '2022')
-//   top        rank cutoff (e.g. 1000|500|250|100|50|10) or absent = all films
+//   top        film-count target (e.g. 100 = "the top ~100 films") or absent = all
+//              films. Resolved per poll to a rank cutoff; see lib/rankDepth.js.
 //   sort       'votes' | 'title-az' | 'year-newest' | 'year-oldest'  (default 'votes')
 //   page       1-based page number               (default 1)
 //   title      repeated — selected film titles
@@ -117,18 +119,32 @@ export function useFilmQuery() {
     [pollKey]
   )
 
+  // Rank histogram for the active poll, shared with the depth control so the
+  // slider's stops and the filtering below can never disagree.
+  const rankIndex = useMemo(
+    () => (films ? buildRankIndex(films, poll) : EMPTY_RANK_INDEX),
+    [films, poll]
+  )
+
+  // topRank is a film-COUNT target, not a rank — "top 100" means the ~100
+  // highest-ranked films of this poll, resolved to whatever rank that takes here.
+  const { cutoffRank, filmCount: depthFilmCount } = useMemo(
+    () => resolveTarget(rankIndex, topRank),
+    [rankIndex, topRank]
+  )
+
   // Step 1 — poll membership + the rank-depth cutoff. topRank is null by default
   // (every film that received a vote in the active poll); when set, keeps only
-  // films ranked at or above the cutoff. 'all' uses the aggregate rank entry.
+  // films inside the resolved cutoff. 'all' uses the aggregate rank entry.
   const pollFiltered = useMemo(() => {
     if (!films) return []
     return films.filter(f => {
       const p = f.pollHistory.find(x => x.year === pollKey)
       if (!p || !(p.votes > 0)) return false
-      if (topRank != null && (p.rank == null || p.rank > topRank)) return false
+      if (cutoffRank != null && (p.rank == null || p.rank > cutoffRank)) return false
       return true
     })
-  }, [films, pollKey, topRank])
+  }, [films, pollKey, cutoffRank])
 
   // Step 2 — everything EXCEPT the country filter (drives the sidebar's country counts).
   const beforeCountry = useMemo(() => {
@@ -241,6 +257,9 @@ export function useFilmQuery() {
     // parsed state
     poll,
     topRank,
+    rankIndex,
+    cutoffRank,
+    depthFilmCount,
     sortBy,
     page,
     filters,

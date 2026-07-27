@@ -17,26 +17,23 @@ export default function PollHistoryChart({
   filmsData,
   countryName,
   selectedPoll,
-  rankRange,
+  cutoffByPoll = {},
+  isDepthLimited = false,
   continentColor,
-  countriesData
 }) {
   // Calculate percentage share per poll for this country
   const chartData = useMemo(() => {
     if (!filmsData || !countryName) return []
 
     return POLL_YEARS.map(pollYear => {
-      // Count ALL films in this poll (applying rank filter)
-      const cutoffRank = countriesData?._pollMetadata?.[pollYear.toString()]?.consensus?.cutoffRank
+      // Count ALL films in this poll, at the depth cutoff resolved for that poll.
+      const cutoffRank = cutoffByPoll[pollYear] ?? null
 
       const allFilmsInPoll = filmsData.filter(film => {
         const pollData = film.pollHistory.find(p => p.year === pollYear)
         if (!pollData || pollData.votes === 0) return false
-
-        if (rankRange === 'consensus') {
-          return pollData.rank && cutoffRank && pollData.rank <= cutoffRank
-        }
-        return true
+        if (cutoffRank == null) return true
+        return pollData.rank != null && pollData.rank <= cutoffRank
       })
 
       // Count films from THIS COUNTRY in this poll
@@ -63,8 +60,7 @@ export default function PollHistoryChart({
         })
         .filter(f => {
           if (!f.rank) return false
-          if (rankRange === 'consensus') return cutoffRank && f.rank <= cutoffRank
-          return f.rank <= 100
+          return cutoffRank != null ? f.rank <= cutoffRank : f.rank <= 100
         })
         .sort((a, b) => a.rank - b.rank)
 
@@ -81,7 +77,7 @@ export default function PollHistoryChart({
         isHighlighted: selectedPoll === pollYear.toString()
       }
     })
-  }, [filmsData, countryName, rankRange, selectedPoll, countriesData])
+  }, [filmsData, countryName, cutoffByPoll, selectedPoll])
 
   // Calculate stats
   const stats = useMemo(() => {
@@ -127,12 +123,11 @@ export default function PollHistoryChart({
     }
   }, [chartData])
 
-  // Custom tooltip — changes content based on rankRange
+  // Custom tooltip — wording shifts when a rank-depth cutoff is active
   const CustomTooltip = ({ active, payload }) => {
     if (!active || !payload?.length) return null
 
     const data = payload[0].payload
-    const isConsensus = rankRange === 'consensus'
 
     return (
       <div className="bg-white border-2 border-black p-3 shadow-lg min-w-[180px]">
@@ -141,7 +136,7 @@ export default function PollHistoryChart({
           <div className="flex justify-between">
             <span className="text-gray-600">{countryName}:</span>
             <span className="font-bold text-black">
-              {data.countryShare.toFixed(1)}%{isConsensus ? ' of consensus films' : ''}
+              {data.countryShare.toFixed(1)}%{isDepthLimited ? ' of films shown' : ''}
             </span>
           </div>
           <div className="flex justify-between text-sm">
@@ -155,7 +150,7 @@ export default function PollHistoryChart({
           {data.bestRank && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-500">Best Rank:</span>
-              <span className="font-medium text-gray-700">#{data.bestRank}{isConsensus && data.bestRankTitle ? ` ${data.bestRankTitle}` : ''}</span>
+              <span className="font-medium text-gray-700">#{data.bestRank}{isDepthLimited && data.bestRankTitle ? ` ${data.bestRankTitle}` : ''}</span>
             </div>
           )}
           {data.top10Count > 0 && (

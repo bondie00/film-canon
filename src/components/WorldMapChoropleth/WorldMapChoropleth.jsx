@@ -7,6 +7,7 @@ import {
   ZoomableGroup
 } from 'react-simple-maps'
 import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
+import { pollKeyOf, pollEntryOf } from '../../lib/rankDepth'
 import GridTile, { withCurrent } from '../search/GridTile'
 
 // Natural Earth 110m world topology - lower resolution for performance
@@ -30,15 +31,13 @@ function CountryTitleLink({ name }) {
   )
 }
 
-// Build an Explore-page link carrying the current filters (poll, country, rank depth).
-function buildExploreUrl(countryNames, poll, rankRange, countriesData) {
+// Build an Explore-page link carrying the current filters. Both pages read the same
+// params with the same meaning, so the rank depth transfers as-is.
+function buildExploreUrl(countryNames, poll, topTarget) {
   const params = new URLSearchParams()
   if (poll) params.set('poll', poll)
   countryNames.forEach(n => params.append('country', n))
-  if (rankRange === 'consensus') {
-    const top = poll === 'all' ? 100 : countriesData?._pollMetadata?.[poll]?.consensus?.cutoffRank
-    if (top) params.set('top', String(top))
-  }
+  if (topTarget != null) params.set('top', String(topTarget))
   return `/explore?${params.toString()}`
 }
 
@@ -50,7 +49,13 @@ function getPolygonAvgLon(polygon) {
   return ring.reduce((sum, coord) => sum + coord[0], 0) / ring.length
 }
 
-function splitOverseasTerritories(geographies) {
+// `path` is the projection's path generator, from the Geographies render prop.
+// It is REQUIRED: react-simple-maps precomputes `svgPath` for every geography
+// (prepareFeatures) and <Geography> renders that string, ignoring `geometry`
+// entirely. Splitting the coordinates without regenerating svgPath left both
+// halves drawing the full original France, with the grey "overseas" copy painted
+// over the coloured mainland — France read as no-data and swallowed its own hover.
+function splitOverseasTerritories(geographies, path) {
   const result = []
   for (const geo of geographies) {
     // Only split France (ISO 250) - its MultiPolygon includes French Guiana
@@ -71,21 +76,23 @@ function splitOverseasTerritories(geographies) {
       }
     }
 
-    if (mainPolygons.length > 0) {
-      result.push({
+    // Rebuild each half as a real feature so `path` regenerates its outline.
+    const half = (coordinates, suffix, id) => {
+      const feature = {
         ...geo,
-        geometry: { ...geo.geometry, coordinates: mainPolygons },
-        rsmKey: geo.rsmKey + "-main"
-      })
+        ...(id ? { id } : {}),
+        geometry: { ...geo.geometry, coordinates },
+        rsmKey: geo.rsmKey + suffix,
+      }
+      return { ...feature, svgPath: path(feature) }
+    }
+
+    if (mainPolygons.length > 0) {
+      result.push(half(mainPolygons, "-main"))
     }
     if (overseasPolygons.length > 0) {
       // Use a fake ID so it won't match any country data → gets NO_DATA_COLOR
-      result.push({
-        ...geo,
-        id: "250-overseas",
-        geometry: { ...geo.geometry, coordinates: overseasPolygons },
-        rsmKey: geo.rsmKey + "-overseas"
-      })
+      result.push(half(overseasPolygons, "-overseas", "250-overseas"))
     }
   }
   return result
@@ -128,7 +135,7 @@ function rawTier(value, thresholds) {
 const NO_DATA_COLOR = '#e5e7eb' // gray-200
 const BORDER_COLOR = '#022c22' // emerald-950 - subtle dark border to separate countries
 
-export default function WorldMapChoropleth({ countriesData, filmsData, selectedPoll, rankRange, metric = 'films' }) {
+export default function WorldMapChoropleth({ countriesData, filmsData, selectedPoll, cutoffRank = null, topTarget = null, metric = 'films' }) {
   // The quantity that drives color, ranking and visibility for a given ISO row.
   const metricVal = (d) => (metric === 'votes' ? d.votes : d.distinctFilms)
   const [tooltipData, setTooltipData] = useState(null)
@@ -179,8 +186,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
       const pollData = countryInfo.byPoll?.[selectedPoll]
       if (!pollData) return
 
-      const votes = rankRange === 'all' ? pollData.total : pollData.consensus
-      const distinctFilms = rankRange === 'all' ? pollData.distinctFilms : pollData.distinctFilmsConsensus
+      const { total: votes, distinctFilms } = pollData
 
       if (!aggregated[iso]) {
         aggregated[iso] = {
@@ -204,7 +210,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
     })
 
     return aggregated
-  }, [countriesData, selectedPoll, rankRange])
+  }, [countriesData, selectedPoll])
 
   // Color scale. Both metrics use the SAME geometric (magnitude) threshold basis so the two maps
   // are directly comparable — toggling films<->votes only changes a country's shade where the
@@ -339,36 +345,19 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
   const getFilmsForCountry = useCallback((countryName) => {
     if (!filmsData) return []
 
+    const pollKey = pollKeyOf(selectedPoll)
+
     return filmsData
       .filter(film => film.countries?.includes(countryName))
       .map(film => {
-        let votes = 0
-        let rank = null
-
-        if (selectedPoll === 'all') {
-          const allPollData = film.pollHistory?.find(p => p.year === 'all')
-          votes = allPollData?.votes || 0
-          rank = null
-        } else {
-          // Find the specific poll
-          const pollEntry = film.pollHistory?.find(p => p.year === parseInt(selectedPoll))
-          votes = pollEntry?.votes || 0
-          rank = pollEntry?.rank || null
-        }
-
-        // Filter by consensus rank range
-        if (rankRange === 'consensus') {
-          if (selectedPoll === 'all') {
-            // For "all" combined, check if film is in top 100 by total votes
-            const allPollData = film.pollHistory?.find(p => p.year === 'all')
-            if (!allPollData?.rank || allPollData.rank > 100) return null
-          } else {
-            const cutoffRank = countriesData?._pollMetadata?.[selectedPoll]?.consensus?.cutoffRank
-            if (!rank || !cutoffRank || rank > cutoffRank) return null
-          }
-        }
+        const entry = pollEntryOf(film, pollKey)
+        const votes = entry?.votes || 0
+        const rank = entry?.rank ?? null
 
         if (votes === 0) return null
+        // Same rank-depth cutoff the aggregates were built with, so the panel's
+        // film list always matches the country's headline count.
+        if (cutoffRank != null && (rank == null || rank > cutoffRank)) return null
 
         return { film, sortVotes: votes, sortRank: rank }
       })
@@ -380,7 +369,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
         return 0
       })
       .map(x => x.film)
-  }, [filmsData, selectedPoll, rankRange, countriesData])
+  }, [filmsData, selectedPoll, cutoffRank])
 
   // Get selected country data for expanded view
   const selectedCountryData = useMemo(() => {
@@ -470,8 +459,8 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
             maxZoom={8}
           >
             <Geographies geography={GEO_URL}>
-              {({ geographies }) => {
-                const processed = splitOverseasTerritories(geographies)
+              {({ geographies, path }) => {
+                const processed = splitOverseasTerritories(geographies, path)
                 return (
                 <>
                   {/* Base layer: all countries */}
@@ -672,13 +661,13 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                     <div className="flex-1 overflow-y-auto overflow-x-hidden p-3">
                       <div className="grid grid-cols-2 gap-2">
                         {country.films.slice(0, PANEL_FILM_CAP).map((film) => (
-                          <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} />
+                          <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} fade={false} />
                         ))}
                       </div>
 
                       {country.films.length > 0 && (
                         <Link
-                          to={buildExploreUrl([country.name], selectedPoll, rankRange, countriesData)}
+                          to={buildExploreUrl([country.name], selectedPoll, topTarget)}
                           className="mt-3 block w-full text-center px-4 py-2 bg-black text-white border-2 border-black font-bold text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors"
                         >
                           {country.films.length > PANEL_FILM_CAP
@@ -730,13 +719,13 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                 <div className="flex-1 overflow-y-auto overflow-x-hidden p-3">
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {selectedCountryData.countries[0].films.slice(0, PANEL_FILM_CAP).map((film) => (
-                      <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} />
+                      <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} fade={false} />
                     ))}
                   </div>
 
                   {selectedCountryData.countries[0].films.length > 0 && (
                     <Link
-                      to={buildExploreUrl([selectedCountryData.countries[0].name], selectedPoll, rankRange, countriesData)}
+                      to={buildExploreUrl([selectedCountryData.countries[0].name], selectedPoll, topTarget)}
                       className="mt-3 block w-full text-center px-4 py-2 bg-black text-white border-2 border-black font-bold text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors"
                     >
                       {selectedCountryData.countries[0].films.length > PANEL_FILM_CAP

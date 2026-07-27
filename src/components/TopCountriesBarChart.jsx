@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import GridTile, { withCurrent } from './search/GridTile'
+import { pollKeyOf, pollEntryOf } from '../lib/rankDepth'
 
 // Cap posters shown in the expanded panel; the rest live on the Explore page.
 const PANEL_FILM_CAP = 30
@@ -21,15 +22,13 @@ function CountryTitleLink({ name }) {
   )
 }
 
-// Build an Explore-page link carrying the current filters (poll, country, rank depth).
-function buildExploreUrl(countryNames, poll, rankRange, countriesData) {
+// Build an Explore-page link carrying the current filters. Both pages read the same
+// params with the same meaning, so the rank depth transfers as-is.
+function buildExploreUrl(countryNames, poll, topTarget) {
   const params = new URLSearchParams()
   if (poll) params.set('poll', poll)
   countryNames.forEach(n => params.append('country', n))
-  if (rankRange === 'consensus') {
-    const top = poll === 'all' ? 100 : countriesData?._pollMetadata?.[poll]?.consensus?.cutoffRank
-    if (top) params.set('top', String(top))
-  }
+  if (topTarget != null) params.set('top', String(topTarget))
   return `/explore?${params.toString()}`
 }
 
@@ -43,7 +42,7 @@ const continentColors = {
   'Oceania': '#ec4899',       // pink-500
 }
 
-export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange = 'all', filmsData, metric = 'films' }) {
+export default function TopCountriesBarChart({ countriesData, selectedPoll = '2022', cutoffRank = null, topTarget = null, filmsData, metric = 'films' }) {
   // Country selection state - will be set to top 10 dynamically
   const [selectedCountries, setSelectedCountries] = useState([])
   const [selectedCountry, setSelectedCountry] = useState(null) // Country name for expanded view
@@ -58,23 +57,6 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   // Accordion state for continents (track which are expanded)
   const [expandedContinents, setExpandedContinents] = useState({})
 
-  // Load countries data from JSON
-  const [countriesData, setCountriesData] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    fetch('/data/countries.json')
-      .then(response => response.json())
-      .then(data => {
-        setCountriesData(data)
-        setLoading(false)
-      })
-      .catch(error => {
-        console.error('Error loading countries data:', error)
-        setLoading(false)
-      })
-  }, [])
-
   // Transform countries data based on current filters
   const transformedData = useMemo(() => {
     if (!countriesData) return []
@@ -88,20 +70,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
       // filmCount holds whichever metric is active (it drives bar length,
       // sorting, ranking, and Top N); films and votes are both retained so the
       // tooltip and expanded panel can show the other as a secondary detail.
-      let films = 0
-      let votes = 0
-
-      // Get data for selected poll (including 'all')
       const pollData = countryInfo.byPoll[selectedPoll]
-      if (pollData) {
-        if (rankRange === 'all') {
-          films = pollData.distinctFilms || 0
-          votes = pollData.total || 0
-        } else if (rankRange === 'consensus') {
-          films = pollData.distinctFilmsConsensus || 0
-          votes = pollData.consensus || 0
-        }
-      }
+      const films = pollData?.distinctFilms || 0
+      const votes = pollData?.total || 0
 
       data.push({
         name: countryName,
@@ -139,9 +110,9 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     sorted.forEach(c => { c.totalCountries = totalCountriesWithVotes })
 
     return sorted
-  }, [countriesData, selectedPoll, rankRange, metric])
+  }, [countriesData, selectedPoll, metric])
 
-  const defaultCount = rankRange === 'consensus' ? 5 : 10
+  const defaultCount = 10
 
   // Explicitly track whether user is in "Top N" mode
   const [isTopNMode, setIsTopNMode] = useState(true)
@@ -279,34 +250,19 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   const getFilmsForCountry = useCallback((countryName) => {
     if (!filmsData) return []
 
+    const pollKey = pollKeyOf(selectedPoll)
+
     return filmsData
       .filter(film => film.countries?.includes(countryName))
       .map(film => {
-        let votes = 0
-        let rank = null
-
-        if (selectedPoll === 'all') {
-          const allPollData = film.pollHistory?.find(p => p.year === 'all')
-          votes = allPollData?.votes || 0
-          rank = null
-        } else {
-          const pollEntry = film.pollHistory?.find(p => p.year === parseInt(selectedPoll))
-          votes = pollEntry?.votes || 0
-          rank = pollEntry?.rank || null
-        }
-
-        // Filter by consensus rank range
-        if (rankRange === 'consensus') {
-          if (selectedPoll === 'all') {
-            const allPollData = film.pollHistory?.find(p => p.year === 'all')
-            if (!allPollData?.rank || allPollData.rank > 100) return null
-          } else {
-            const cutoffRank = countriesData?._pollMetadata?.[selectedPoll]?.consensus?.cutoffRank
-            if (!rank || !cutoffRank || rank > cutoffRank) return null
-          }
-        }
+        const entry = pollEntryOf(film, pollKey)
+        const votes = entry?.votes || 0
+        const rank = entry?.rank ?? null
 
         if (votes === 0) return null
+        // Same rank-depth cutoff the aggregates were built with, so the panel's
+        // film list always matches the country's headline count.
+        if (cutoffRank != null && (rank == null || rank > cutoffRank)) return null
 
         return { film, sortVotes: votes, sortRank: rank }
       })
@@ -317,7 +273,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
         return 0
       })
       .map(x => x.film)
-  }, [filmsData, selectedPoll, rankRange, countriesData])
+  }, [filmsData, selectedPoll, cutoffRank])
 
   // Get selected country data for expanded view
   const selectedCountryData = useMemo(() => {
@@ -380,12 +336,18 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     }
   }, [selectedCountryData])
 
-  // Close expanded view when filters change
+  // Filter changes (poll / rank / metric) leave the panel open — it re-reads the new data and
+  // adapts, matching the world map. Only close if the selected country has dropped out of the
+  // data entirely under the new filters, which would leave an empty panel blocking the chart.
+  // (Explicit changes to *which* countries are charted close the panel from their own handlers.)
   useEffect(() => {
-    setSelectedCountry(null)
-  }, [selectedPoll, rankRange, selectedCountries])
+    if (!selectedCountry) return
+    const country = transformedData.find(c => c.name === selectedCountry)
+    if (!country || country.filmCount <= 0) setSelectedCountry(null)
+  }, [transformedData, selectedCountry])
 
   const handleResetToTopN = () => {
+    setSelectedCountry(null)
     setViewMode('countries')
     setIsTopNMode(true)
     const topN = transformedData.filter(c => c.filmCount > 0).slice(0, defaultCount).map(c => c.name)
@@ -393,6 +355,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
   }
 
   const handleSelectContinent = (continentName) => {
+    setSelectedCountry(null)
     setViewMode('countries')
     setIsTopNMode(false)
     // Get all countries from the selected continent that have votes
@@ -468,6 +431,7 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
 
   const handleApplySelection = () => {
     if (pendingSelection.length > 0 && pendingSelection.length <= 40) {
+      setSelectedCountry(null)
       setIsTopNMode(false)
       setSelectedCountries(pendingSelection)
       handleCloseDropdown()
@@ -582,21 +546,12 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
     return null
   }
 
-  if (loading) {
-    return (
-      <div className="bg-white border-4 border-black p-6 mb-8">
-        <div className="text-center text-black font-medium py-8">
-          Loading country data...
-        </div>
-      </div>
-    )
-  }
-
+  // Aggregates are computed by the page and arrive null until films.json lands.
   if (!countriesData) {
     return (
       <div className="bg-white border-4 border-black p-6 mb-8">
         <div className="text-center text-black font-medium py-8">
-          Error loading country data
+          Loading country data...
         </div>
       </div>
     )
@@ -801,13 +756,13 @@ export default function TopCountriesBarChart({ selectedPoll = '2022', rankRange 
               <div className="flex-1 overflow-y-auto overflow-x-hidden p-3">
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {selectedCountryData.films.slice(0, PANEL_FILM_CAP).map((film) => (
-                    <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} />
+                    <GridTile key={film.key} film={withCurrent(film, selectedPoll)} activePoll={selectedPoll} square={false} fade={false} />
                   ))}
                 </div>
 
                 {selectedCountryData.films.length > 0 && (
                   <Link
-                    to={buildExploreUrl([selectedCountryData.name], selectedPoll, rankRange, countriesData)}
+                    to={buildExploreUrl([selectedCountryData.name], selectedPoll, topTarget)}
                     className="mt-3 block w-full text-center px-4 py-2 bg-black text-white border-2 border-black font-bold text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors"
                   >
                     {selectedCountryData.films.length > PANEL_FILM_CAP

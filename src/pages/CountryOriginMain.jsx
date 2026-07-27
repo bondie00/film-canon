@@ -1,20 +1,37 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
 import WorldMapChoropleth from '../components/WorldMapChoropleth'
 import DecadeCountryHeatmap from '../components/country/DecadeCountryHeatmap'
+import RankDepthFilter from '../components/RankDepthFilter'
+import useCountryAggregates from '../hooks/useCountryAggregates'
+import { buildRankIndex, resolveTarget, describeDepth, EMPTY_RANK_INDEX } from '../lib/rankDepth'
+
+const VALID_POLLS = ['all', '1952', '1962', '1972', '1982', '1992', '2002', '2012', '2022']
 
 export default function CountryOriginMain() {
-  // Honor a ?poll= deep link (e.g. from /explore's stat cells); default to latest poll.
-  const [searchParams] = useSearchParams()
-  const [selectedPoll, setSelectedPoll] = useState(() => {
-    const p = searchParams.get('poll')
-    const valid = ['all', '1952', '1962', '1972', '1982', '1992', '2002', '2012', '2022']
-    return p && valid.includes(p) ? p : '2022'
-  })
-  const [rankRange, setRankRange] = useState('all')
+  // Poll and rank depth both live in the URL, using the same param names as
+  // /explore — that's what makes the handoff between the two pages exact.
+  const [searchParams, setSearchParams] = useSearchParams()
+  const rawPoll = searchParams.get('poll')
+  const selectedPoll = VALID_POLLS.includes(rawPoll) ? rawPoll : '2022'
+  const rawTop = searchParams.get('top')
+  const topTarget = rawTop && /^\d+$/.test(rawTop) ? parseInt(rawTop, 10) : null
+
+  const setParam = useCallback((key, value) => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev)
+      if (value == null) next.delete(key)
+      else next.set(key, String(value))
+      return next
+    }, { replace: true })
+  }, [setSearchParams])
+
+  const setSelectedPoll = useCallback((poll) => setParam('poll', poll), [setParam])
+  const setTopTarget = useCallback((target) => setParam('top', target), [setParam])
+
   // Which quantity drives sizing/color/sorting: 'films' (breadth, era-neutral,
   // default) or 'votes' (canonical weight). See CLAUDE.md metrics section.
   const [metric, setMetric] = useState('films')
@@ -35,51 +52,30 @@ export default function CountryOriginMain() {
       .catch(error => console.error('Error loading data:', error))
   }, [])
 
-  // Calculate dynamic metrics based on current filters
+  // Rank histogram for the active poll — drives the depth control's stops and
+  // resolves the film-count target into the rank cutoff everything else filters on.
+  const rankIndex = useMemo(
+    () => (filmsData ? buildRankIndex(filmsData, selectedPoll) : EMPTY_RANK_INDEX),
+    [filmsData, selectedPoll]
+  )
+  const { cutoffRank, filmCount: depthFilmCount } = useMemo(
+    () => resolveTarget(rankIndex, topTarget),
+    [rankIndex, topTarget]
+  )
+
+  // Per-country totals at this cutoff, in the shape the visualizations already read.
+  const aggregates = useCountryAggregates(filmsData, countriesData, selectedPoll, cutoffRank)
+
+  // Banner metrics. Poll-wide totals come from the aggregation (distinct films and
+  // their votes, so co-productions aren't double counted); the country count is the
+  // number of countries left with at least one film at this depth.
   const metrics = useMemo(() => {
-    if (!countriesData) return { countries: 0, votes: 0, films: 0 }
-
-    // Get true poll totals from metadata (without co-production inflation)
-    const pollKey = selectedPoll === 'all' ? 'all' : selectedPoll
-    const rangeKey = rankRange === 'all' ? 'all' : 'consensus'
-
-    const pollMetadata = countriesData._pollMetadata?.[pollKey]?.[rangeKey]
-    const trueTotalVotes = pollMetadata?.votes || 0
-    const trueDistinctFilms = pollMetadata?.films || 0
-
-    // Count countries with votes (still need to iterate for this)
-    let countriesWithVotes = 0
-    Object.entries(countriesData).forEach(([countryName, countryInfo]) => {
-      // Skip metadata key
-      if (countryName.startsWith('_')) return
-
-      let votes = 0
-      if (selectedPoll === 'all') {
-        if (rankRange === 'all') {
-          votes = Object.values(countryInfo.byPoll).reduce((sum, pollData) =>
-            sum + (pollData.total || 0), 0)
-        } else {
-          votes = Object.values(countryInfo.byPoll).reduce((sum, pollData) =>
-            sum + (pollData.consensus || 0), 0)
-        }
-      } else {
-        const pollData = countryInfo.byPoll[selectedPoll]
-        if (pollData) {
-          votes = rankRange === 'all' ? pollData.total : pollData.consensus
-        }
-      }
-
-      if (votes > 0) {
-        countriesWithVotes++
-      }
-    })
-
-    return {
-      countries: countriesWithVotes,
-      votes: trueTotalVotes,
-      films: trueDistinctFilms
-    }
-  }, [countriesData, selectedPoll, rankRange])
+    if (!aggregates) return { countries: 0, votes: 0, films: 0 }
+    const countries = Object.entries(aggregates).filter(
+      ([name, info]) => !name.startsWith('_') && (info.byPoll[selectedPoll]?.distinctFilms || 0) > 0
+    ).length
+    return { countries, votes: aggregates._totals.votes, films: aggregates._totals.films }
+  }, [aggregates, selectedPoll])
 
   // Helper function to generate filter description text
   const getFilterText = () => {
@@ -87,11 +83,7 @@ export default function CountryOriginMain() {
       ? 'All Polls Combined'
       : `${selectedPoll} Poll`
 
-    const rankText = rankRange === 'all'
-      ? 'All Films'
-      : 'Consensus'
-
-    return `${pollText} • ${rankText}`
+    return `${pollText} • ${describeDepth(topTarget, depthFilmCount)}`
   }
 
 
@@ -134,36 +126,13 @@ export default function CountryOriginMain() {
                 </div>
               </div>
 
-              {/* RANK RANGE FILTER */}
+              {/* RANK DEPTH FILTER — shared with /explore and the country pages */}
               <div>
-                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
-                  Film Rank Range
-                </label>
-                <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
-                  <button
-                    onClick={() => setRankRange('all')}
-                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
-                      rankRange === 'all'
-                        ? 'bg-black text-white border-2 border-black'
-                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                    }`}
-                  >
-                    All Films
-                  </button>
-                  <button
-                    onClick={() => setRankRange('consensus')}
-                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
-                      rankRange === 'consensus'
-                        ? 'bg-black text-white border-2 border-black'
-                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                    }`}
-                  >
-                    Consensus
-                  </button>
-                </div>
-                <p className="text-xs text-gray-500 mt-2">
-                  {rankRange === 'consensus' ? 'Films voted for by 2+ critics' : ''}
-                </p>
+                <RankDepthFilter
+                  index={rankIndex}
+                  target={topTarget}
+                  onChange={setTopTarget}
+                />
               </div>
 
               {/* METRIC FILTER */}
@@ -234,28 +203,31 @@ export default function CountryOriginMain() {
 
               {/* World Map Choropleth */}
               <WorldMapChoropleth
-                countriesData={countriesData}
+                countriesData={aggregates}
                 filmsData={filmsData}
                 selectedPoll={selectedPoll}
-                rankRange={rankRange}
+                cutoffRank={cutoffRank}
+                topTarget={topTarget}
                 metric={metric}
               />
             </div>
 
             {/* VISUALIZATION 2: BAR CHART - TOP COUNTRIES */}
             <TopCountriesBarChart
+              countriesData={aggregates}
               selectedPoll={selectedPoll}
-              rankRange={rankRange}
+              cutoffRank={cutoffRank}
+              topTarget={topTarget}
               filmsData={filmsData}
               metric={metric}
             />
 
             {/* VISUALIZATION 3: DECADE HEATMAP - COUNTRIES x DECADES */}
             <DecadeCountryHeatmap
-              countriesData={countriesData}
+              countriesData={aggregates}
               filmsData={filmsData}
               selectedPoll={selectedPoll}
-              rankRange={rankRange}
+              cutoffRank={cutoffRank}
               metric={metric}
             />
 
