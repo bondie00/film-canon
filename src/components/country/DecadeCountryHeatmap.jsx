@@ -3,11 +3,9 @@ import useCountrySelection from '../../hooks/useCountrySelection'
 import { CountryQuickFilters, CountrySearchDropdown } from './CountrySelectionControls'
 import CountryPanel from './CountryPanel'
 import { continentColors, shadeToward } from '../../utils/continents'
-import { filmsForCountry, assignCompetitionRanks } from '../../lib/countryFilms'
+import { ALL_DECADES, decadeColumns } from '../../utils/decades'
+import { filmsForCountry } from '../../lib/countryFilms'
 import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
-
-// Decades shown as columns (filtered to those with data).
-const DECADES = ['1890', '1900', '1910', '1920', '1930', '1940', '1950', '1960', '1970', '1980', '1990', '2000', '2010', '2020']
 
 const decadeOfYear = (y) => {
   const n = parseInt(String(y ?? '').split(/[-–]/)[0], 10)
@@ -50,8 +48,7 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
       const votes = pd?.total || 0
       rows.push({ name, filmCount: metric === 'votes' ? votes : films, films, votes, continent: info.continent })
     })
-    rows.sort((a, b) => b.filmCount - a.filmCount)
-    return assignCompetitionRanks(rows)
+    return rows.sort((a, b) => b.filmCount - a.filmCount)
   }, [countriesData, selectedPoll, metric])
 
   const sel = useCountrySelection(transformedData, defaultCount)
@@ -110,7 +107,7 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
     }
     const rMax = {}
     rows.forEach(r => { rMax[r.name] = Math.max(0, ...Object.values(m[r.name])) })
-    const cols = DECADES.filter(d => rows.some(r => (m[r.name][d] || 0) > 0))
+    const cols = decadeColumns(ALL_DECADES.filter(d => rows.some(r => (m[r.name][d] || 0) > 0)))
     return { matrix: m, decades: cols, rowMax: rMax }
   }, [rows, filmsData, selectedPoll, metric, qualifies, viewMode, continentOf])
 
@@ -125,9 +122,10 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
   // Clicking a country row opens its expanded panel. Continent rows are inert —
   // the quick-filter buttons above are how you get from a continent to its
   // countries, so rows don't double as navigation.
-  // Clicking a CELL scopes the panel to that decade; clicking the row LABEL opens
-  // the country across every decade.
-  const rowsAreClickable = viewMode === 'countries'
+  // Only cells open the panel, and always scoped to their decade. The row labels
+  // are deliberately inert — the panel's own title links through to the country
+  // page, which is a clearer route than making the axis a second kind of target.
+  const cellsAreClickable = viewMode === 'countries'
   const openPanel = useCallback((row, decade) => {
     if (viewMode !== 'countries' || selectedCountry) return
     setHoveredCell(null)
@@ -149,9 +147,9 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
     if (!selectedCell) return null
     const info = transformedData.find(c => c.name === selectedCell.country)
     if (!info) return null
-    const all = filmsForCountry(filmsData, selectedCell.country, selectedPoll, cutoffRank)
-    const decade = selectedCell.decade
-    const filmList = decade ? all.filter(f => decadeOfYear(f.Year) === decade) : all
+    const { decade } = selectedCell
+    const filmList = filmsForCountry(filmsData, selectedCell.country, selectedPoll, cutoffRank)
+      .filter(f => decadeOfYear(f.Year) === decade)
     return { ...info, decade, filmList }
   }, [selectedCell, transformedData, filmsData, selectedPoll, cutoffRank])
 
@@ -216,12 +214,9 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
                 {rows.map((r) => (
                   <div
                     key={r.name}
-                    className={`flex items-center justify-end pr-3 font-bold text-sm text-black border-b border-gray-200 truncate ${
-                      rowsAreClickable ? 'cursor-pointer hover:underline decoration-2 underline-offset-2' : ''
-                    }`}
+                    className="flex items-center justify-end pr-3 font-bold text-sm text-black border-b border-gray-200 truncate"
                     style={{ height: CELL_HEIGHT + ROW_GAP }}
-                    title={rowsAreClickable ? `${r.name} — click for all its films` : r.name}
-                    onClick={() => openPanel(r, null)}
+                    title={r.name}
                   >
                     {r.name}
                   </div>
@@ -249,9 +244,8 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
                           return (
                             <div
                               key={`${r.name}-${decade}`}
-                              className={`flex-1 flex items-center justify-center ${rowsAreClickable && value > 0 ? 'cursor-pointer' : 'cursor-default'} transition-all hover:ring-2 hover:ring-black hover:ring-inset border-t border-b border-gray-400 ${!isLast ? 'border-r border-r-gray-300' : 'border-r border-r-gray-400'} ${idx === 0 ? 'border-l border-l-gray-400' : ''}`}
+                              className={`flex-1 flex items-center justify-center ${cellsAreClickable && value > 0 ? 'cursor-pointer' : 'cursor-default'} transition-all hover:ring-2 hover:ring-black hover:ring-inset border-t border-b border-gray-400 ${!isLast ? 'border-r border-r-gray-300' : 'border-r border-r-gray-400'} ${idx === 0 ? 'border-l border-l-gray-400' : ''}`}
                               style={{ backgroundColor: bg, minWidth: 44 }}
-                              title={rowsAreClickable && value > 0 ? `${r.name}, ${decade}s — click for its films` : undefined}
                               onMouseEnter={(e) => handleCellHover(e, r.name, decade, value, max)}
                               onMouseMove={(e) => handleCellHover(e, r.name, decade, value, max)}
                               onClick={() => value > 0 && openPanel(r, decade)}
@@ -317,13 +311,11 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
               metric={metric}
               selectedPoll={selectedPoll}
               topTarget={topTarget}
-              filmsRank={selectedCountryData.decade ? undefined : selectedCountryData.filmsRank}
-              votesRank={selectedCountryData.decade ? undefined : selectedCountryData.votesRank}
-              totalCountries={selectedCountryData.totalCountries}
-              subtitle={selectedCountryData.decade ? `${selectedCountryData.decade}s` : null}
-              yearRange={selectedCountryData.decade
-                ? { start: Number(selectedCountryData.decade), end: Number(selectedCountryData.decade) + 9 }
-                : null}
+              subtitle={`${selectedCountryData.decade}s`}
+              yearRange={{
+                start: Number(selectedCountryData.decade),
+                end: Number(selectedCountryData.decade) + 9,
+              }}
               onClose={handleCloseExpanded}
               panelRef={expandedPanelRef}
             />

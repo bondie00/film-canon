@@ -1,15 +1,29 @@
-import { useMemo, useState, useRef } from 'react'
+import { useMemo, useState, useRef, useCallback } from 'react'
+import { ALL_DECADES, decadeColumns } from '../../utils/decades'
+import CountryPanel from './CountryPanel'
+import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
 
 // Poll years for rows (reversed so 2022 is at top)
 const POLL_YEARS = ['2022', '2012', '2002', '1992', '1982', '1972', '1962', '1952']
 
-// Generate decades from 1890s to 2020s
-const DECADES = ['1890', '1900', '1910', '1920', '1930', '1940', '1950', '1960', '1970', '1980', '1990', '2000', '2010', '2020']
+const DECADES = ALL_DECADES
 
-export default function DecadeHeatmapRows({ films, selectedPoll, continentColor }) {
+const decadeOfYear = (y) => {
+  const n = parseInt(String(y ?? '').split(/[-–]/)[0], 10)
+  return isNaN(n) ? null : String(Math.floor(n / 10) * 10)
+}
+
+export default function DecadeHeatmapRows({ films, countryName, topTarget = null, cutoffByPoll = {}, metric = 'films', continentColor }) {
+  const unit = metric === 'votes' ? 'votes' : 'films'
+  const one = metric === 'votes' ? 'votes' : 'film'
   const [hoveredCell, setHoveredCell] = useState(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const containerRef = useRef(null)
+  const expandedPanelRef = useRef(null)
+  // { poll, decade } for the expanded panel. Each cell is one poll's films from one
+  // decade — a set that appears nowhere else on the page, since the All Films grid
+  // below only ever lists the poll currently selected.
+  const [selectedCell, setSelectedCell] = useState(null)
 
   // Build decade x poll matrix with row-normalized values
   const { matrix, decades, rowMaxValues, hasData } = useMemo(() => {
@@ -35,14 +49,16 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
       const decade = Math.floor(year / 10) * 10
       const decadeKey = decade.toString()
 
-      // Count appearances in each poll
+      // Count appearances in each poll. Every row applies ITS OWN poll's rank
+      // cutoff, so "Top 100" means that poll's top 100 here exactly as it does
+      // everywhere else on the site.
       film.pollHistory.forEach(poll => {
-        if (poll.votes > 0 && poll.year !== 'all') {
-          const pollKey = poll.year.toString()
-          if (matrix[pollKey] && matrix[pollKey][decadeKey] !== undefined) {
-            matrix[pollKey][decadeKey]++
-          }
-        }
+        if (!(poll.votes > 0) || poll.year === 'all') return
+        const pollKey = poll.year.toString()
+        if (!matrix[pollKey] || matrix[pollKey][decadeKey] === undefined) return
+        const cutoff = cutoffByPoll[pollKey]
+        if (cutoff != null && (poll.rank == null || poll.rank > cutoff)) return
+        matrix[pollKey][decadeKey] += metric === 'votes' ? poll.votes : 1
       })
     })
 
@@ -52,9 +68,9 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
       rowMaxValues[poll] = Math.max(...Object.values(matrix[poll]), 0)
     })
 
-    // Get decades that have data in any poll
-    const decades = DECADES.filter(d =>
-      POLL_YEARS.some(poll => matrix[poll][d] > 0)
+    // Fixed timeline frame; see utils/decades.
+    const decades = decadeColumns(
+      DECADES.filter(d => POLL_YEARS.some(poll => matrix[poll][d] > 0))
     )
 
     return {
@@ -63,7 +79,44 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
       rowMaxValues,
       hasData: decades.length > 0
     }
-  }, [films])
+  }, [films, metric, cutoffByPoll])
+
+  const openPanel = useCallback((poll, decade, value) => {
+    if (value <= 0 || selectedCell) return
+    setHoveredCell(null)
+    setSelectedCell({ poll, decade })
+  }, [selectedCell])
+
+  const closePanel = useCallback(() => setSelectedCell(null), [])
+
+  // Derived from the same inputs as the cell, so the panel's count always matches
+  // the number printed in the cell you clicked.
+  const panelFilms = useMemo(() => {
+    if (!selectedCell || !films) return []
+    const { poll, decade } = selectedCell
+    return films
+      .filter(f => decadeOfYear(f.Year) === decade)
+      .map(f => {
+        const entry = f.pollHistory?.find(x => x.year.toString() === poll)
+        if (!entry || !(entry.votes > 0)) return null
+        const cutoff = cutoffByPoll[poll]
+        if (cutoff != null && (entry.rank == null || entry.rank > cutoff)) return null
+        return { f, votes: entry.votes, rank: entry.rank ?? null }
+      })
+      .filter(Boolean)
+      .sort((a, b) => {
+        if (b.votes !== a.votes) return b.votes - a.votes
+        if (a.rank && b.rank) return a.rank - b.rank
+        return 0
+      })
+      .map(x => x.f)
+  }, [selectedCell, films, cutoffByPoll])
+
+  // Keep the grid tall enough to hold the panel.
+  const panelMinHeight = useMemo(() => {
+    if (!selectedCell) return undefined
+    return `${Math.max(280, Math.min(230 + panelFilms.length * 42, 448))}px`
+  }, [selectedCell, panelFilms])
 
   // Get color intensity based on value, normalized to row max
   const getColor = (value, rowMax) => {
@@ -87,9 +140,7 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
 
   const handleCellHover = (e, poll, decade, value, rowMax) => {
     setMousePos({ x: e.clientX, y: e.clientY })
-    const rowTotal = Object.values(matrix[poll]).reduce((a, b) => a + b, 0)
-    const pct = rowTotal > 0 ? ((value / rowTotal) * 100).toFixed(1) : '0'
-    setHoveredCell({ poll, decade, value, pct, rowMax })
+    setHoveredCell({ poll, decade, value, rowMax })
   }
 
   const handleCellLeave = () => {
@@ -117,7 +168,7 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
 
   // Heatmap view (always shown)
   return (
-    <div>
+    <div className="relative" style={panelMinHeight ? { minHeight: panelMinHeight } : undefined}>
       {/* Chart container */}
       <div
         ref={containerRef}
@@ -137,10 +188,11 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
 
             {/* Y-axis tick labels */}
             <div className="flex-1 flex flex-col">
+              {/* Every poll gets a row, even an empty one: the axis is then identical
+                  on every country page, and an empty row says when a country entered
+                  the canon — which is invisible if absence renders as nothing. */}
               {POLL_YEARS.map((poll) => {
                 const rowTotal = Object.values(matrix[poll]).reduce((a, b) => a + b, 0)
-                if (rowTotal === 0) return null
-                const isHighlighted = selectedPoll !== 'all' && poll === selectedPoll
 
                 return (
                   <div
@@ -148,7 +200,7 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
                     className="flex items-center justify-end pr-3 font-bold text-sm border-b border-gray-200"
                     style={{
                       height: CELL_HEIGHT + ROW_GAP,
-                      color: isHighlighted ? '#D4AF37' : '#000'
+                      color: rowTotal === 0 ? '#9ca3af' : '#000'
                     }}
                   >
                     {poll}
@@ -170,10 +222,6 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
             <div className="flex-1 border-l-0">
               {POLL_YEARS.map((poll) => {
                 const rowMax = rowMaxValues[poll]
-                const rowTotal = Object.values(matrix[poll]).reduce((a, b) => a + b, 0)
-                const isHighlighted = selectedPoll !== 'all' && poll === selectedPoll
-
-                if (rowTotal === 0) return null
 
                 return (
                   <div
@@ -181,11 +229,7 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
                     className="flex items-stretch border-b border-gray-200"
                     style={{
                       height: CELL_HEIGHT,
-                      marginBottom: ROW_GAP,
-                      outline: isHighlighted ? '3.5px solid #D4AF37' : 'none',
-                      outlineOffset: '-1px',
-                      zIndex: isHighlighted ? 1 : 0,
-                      position: 'relative'
+                      marginBottom: ROW_GAP
                     }}
                   >
                     {decades.map((decade, idx) => {
@@ -196,7 +240,7 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
                       return (
                         <div
                           key={`${poll}-${decade}`}
-                          className={`flex-1 flex items-center justify-center cursor-pointer transition-all hover:ring-2 hover:ring-black hover:ring-inset border-t border-b border-gray-400 ${!isLast ? 'border-r border-r-gray-300' : 'border-r border-r-gray-400'} ${idx === 0 ? 'border-l border-l-gray-400' : ''}`}
+                          className={`flex-1 flex items-center justify-center ${value > 0 ? 'cursor-pointer' : 'cursor-default'} transition-all hover:ring-2 hover:ring-black hover:ring-inset border-t border-b border-gray-400 ${!isLast ? 'border-r border-r-gray-300' : 'border-r border-r-gray-400'} ${idx === 0 ? 'border-l border-l-gray-400' : ''}`}
                           style={{
                             backgroundColor: bgColor,
                             minWidth: 50
@@ -204,6 +248,7 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
                           onMouseEnter={(e) => handleCellHover(e, poll, decade, value, rowMax)}
                           onMouseMove={(e) => handleCellHover(e, poll, decade, value, rowMax)}
                           onMouseLeave={handleCellLeave}
+                          onClick={() => openPanel(poll, decade, value)}
                         >
                           {value > 0 && (
                             <span className="text-sm font-bold text-black">
@@ -234,12 +279,12 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
         </div>
 
         {/* Tooltip */}
-        {hoveredCell && hoveredCell.value > 0 && (() => {
+        {!selectedCell && hoveredCell && hoveredCell.value > 0 && (() => {
           const containerRect = containerRef.current?.getBoundingClientRect()
           if (!containerRect) return null
 
-          const tooltipWidth = 200
-          const tooltipHeight = 100
+          const tooltipWidth = TOOLTIP_WIDTH
+          const tooltipHeight = 84
           const offset = 10
 
           const isRightHalf = mousePos.x > window.innerWidth / 2
@@ -251,7 +296,7 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
 
           return (
             <div
-              className="fixed pointer-events-none bg-white p-3 border-2 border-black shadow-lg z-50"
+              className={`fixed pointer-events-none z-50 ${TOOLTIP_BOX}`}
               style={{
                 left: tooltipX,
                 top: tooltipY,
@@ -259,24 +304,38 @@ export default function DecadeHeatmapRows({ films, selectedPoll, continentColor 
                 transition: 'left 0.08s ease-out, top 0.08s ease-out'
               }}
             >
-              <p className="font-bold text-sm text-black tracking-wide">
-                {hoveredCell.decade}s in {hoveredCell.poll}
-              </p>
-              <p className="text-2xl font-black text-black mt-1">
-                {hoveredCell.value} {hoveredCell.value === 1 ? 'film' : 'films'}
-              </p>
-              <p className="text-xs text-gray-600 mt-1">
-                {hoveredCell.pct}% of this poll's films
+              {/* Row identity, then column, then value — the same order the other
+                  heatmaps use, so the three read alike. */}
+              <p className={TOOLTIP_TITLE}>{hoveredCell.poll} Poll</p>
+              <p className={TOOLTIP_SUBTITLE}>{hoveredCell.decade}s</p>
+              <p className={TOOLTIP_VALUE}>
+                {hoveredCell.value} {hoveredCell.value === 1 ? one : unit}
               </p>
               {hoveredCell.value === hoveredCell.rowMax && (
-                <p className="text-xs font-bold mt-1" style={{ color: continentColor }}>
-                  Peak decade for {hoveredCell.poll}
+                <p className={`${TOOLTIP_DETAIL} font-bold`} style={{ color: continentColor }}>
+                  Peak decade
                 </p>
               )}
             </div>
           )
         })()}
       </div>
+
+      {/* Expanded panel. selectedPoll is the CELL's poll, not the page's, so each
+          tile's rank strip highlights the poll you clicked into. */}
+      {selectedCell && (
+        <CountryPanel
+          name={countryName}
+          films={panelFilms}
+          metric={metric}
+          selectedPoll={selectedCell.poll}
+          topTarget={topTarget}
+          subtitle={`${selectedCell.poll} · ${selectedCell.decade}s`}
+          yearRange={{ start: Number(selectedCell.decade), end: Number(selectedCell.decade) + 9 }}
+          onClose={closePanel}
+          panelRef={expandedPanelRef}
+        />
+      )}
     </div>
   )
 }

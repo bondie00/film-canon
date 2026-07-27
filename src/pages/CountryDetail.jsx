@@ -31,6 +31,9 @@ export default function CountryDetail() {
   // Film-count target for the rank-depth filter (null = all films), same units
   // and same control as the Countries page and /explore.
   const [topTarget, setTopTarget] = useState(null)
+  // Which quantity every visualization is drawn in. Same control, same default and
+  // same reach as the Countries page: it governs the whole page, not a section.
+  const [metric, setMetric] = useState('films')
   const [countriesData, setCountriesData] = useState(null)
   const [filmsData, setFilmsData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -92,14 +95,19 @@ export default function CountryDetail() {
     return entry.rank != null && entry.rank <= cutoff
   }
 
-  // All films for this country (rank-filtered but not poll-filtered — used by static hero visualizations)
+  // Every film from this country that placed in any poll. Deliberately NOT depth
+  // filtered here: Decades by Poll draws a row per poll, so each row applies its
+  // own poll's cutoff (via cutoffByPoll) rather than one shared cutoff. Filtering
+  // by the all-polls rank up front would drop films that were elite in a single
+  // poll but middling overall — Last Year at Marienbad was #25 in 1972 yet #122
+  // across all polls, so at Top 100 it vanished from the 1972 row entirely.
   const allCountryFilms = useMemo(() => {
     if (!filmsData || !decodedCountryName) return []
     return filmsData.filter(film => {
       if (!film.countries.includes(decodedCountryName)) return false
-      return withinDepth(film.pollHistory.find(p => p.year === 'all'), 'all')
+      return film.pollHistory.some(p => p.year !== 'all' && p.votes > 0)
     })
-  }, [filmsData, decodedCountryName, cutoffByPoll])
+  }, [filmsData, decodedCountryName])
 
   // How many of this country's films the poll would show under the current
   // filters — drives the poll selector's grey-out. Mirrors the countryFilms
@@ -243,48 +251,34 @@ export default function CountryDetail() {
             <div className="bg-white border-4 border-black p-6 lg:sticky lg:top-8">
               <h2 className="text-3xl font-bold text-black mb-6 uppercase tracking-wider">Filters</h2>
 
-              {/* POLL SELECTION FILTER */}
-              <div className="mb-6 pb-6 border-b-2 border-gray-300">
-                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
-                  Poll Selection
-                </label>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {['all', ...POLL_YEARS].map(opt => {
-                    const value = String(opt)
-                    const active = value === String(selectedPoll)
-                    const count = pollCounts[opt] ?? 0
-                    const empty = count === 0
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        disabled={empty}
-                        onClick={() => setSelectedPoll(value)}
-                        title={empty
-                          ? `${decodedCountryName} has no films in the ${value} poll`
-                          : `${count} ${count === 1 ? 'film' : 'films'}`}
-                        className={`py-2 text-sm font-black border-2 transition-colors ${
-                          empty
-                            ? 'border-gray-200 bg-gray-50 text-gray-300 cursor-not-allowed'
-                            : active
-                              ? 'border-black bg-black text-white'
-                              : 'border-black bg-white text-black hover:bg-black hover:text-white'
-                        }`}
-                      >
-                        {opt === 'all' ? 'All' : opt}
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
+              {/* RANK DEPTH - the only control that governs the whole page. The poll
+                  selector lives down with the section it actually scopes. */}
+              <RankDepthFilter
+                index={activeIndex}
+                target={topTarget}
+                onChange={setTopTarget}
+              />
 
-              {/* RANK DEPTH FILTER — shared with the Countries page and /explore */}
-              <div>
-                <RankDepthFilter
-                  index={activeIndex}
-                  target={topTarget}
-                  onChange={setTopTarget}
-                />
+              {/* METRIC */}
+              <div className="mt-6 pt-6 border-t-2 border-gray-300">
+                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
+                  Metric
+                </label>
+                <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
+                  {['films', 'votes'].map(m => (
+                    <button
+                      key={m}
+                      onClick={() => setMetric(m)}
+                      className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
+                        metric === m
+                          ? 'bg-black text-white border-2 border-black'
+                          : 'bg-white text-black border-2 border-gray-300 hover:border-black'
+                      }`}
+                    >
+                      {m}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -317,64 +311,88 @@ export default function CountryDetail() {
                   {countryInfo.continent}
                 </span>
                 <span className="font-bold uppercase tracking-wide">
-                  {metrics.films.toLocaleString()} films
+                  {metric === 'votes'
+                    ? `${metrics.votes.toLocaleString()} votes`
+                    : `${metrics.films.toLocaleString()} films`}
                 </span>
                 <span className="text-gray-500 font-medium normal-case ml-2">
-                  ({metrics.votes.toLocaleString()} votes)
+                  ({metric === 'votes'
+                    ? `${metrics.films.toLocaleString()} films`
+                    : `${metrics.votes.toLocaleString()} votes`})
                 </span>
                 <span className="mx-2 text-black">|</span>
                 <span className="font-medium">{getFilterText()}</span>
               </div>
             </div>
 
-            {/* HERO SECTION: Overview charts - static, not affected by poll filter */}
+            {/* ZONE 1 - the whole run. The poll selector deliberately doesn't reach
+                these; they're about the arc across all eight polls. */}
+            <div className="mb-6 border-t-4 border-black pt-6">
+              <h2 className="text-2xl font-black text-black uppercase tracking-wide">Over Time</h2>
+            </div>
+
             <div className="bg-white border-4 border-black p-6 mb-8">
-              <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                  Canon Presence Over Time
-                </h2>
-                <p className="text-black font-medium">
-                  How has {decodedCountryName}'s representation in the Sight & Sound poll evolved across all eight polls?
-                </p>
+              <div className="mb-4 border-b-2 border-gray-300 pb-3">
+                <h3 className="text-3xl font-black text-black uppercase tracking-wide">Canon Presence</h3>
               </div>
               <PollHistoryChart
-                films={countryFilms}
                 filmsData={filmsData}
                 countryName={decodedCountryName}
-                selectedPoll={selectedPoll}
                 cutoffByPoll={cutoffByPoll}
-                isDepthLimited={topTarget != null}
+                metric={metric}
+                topTarget={topTarget}
                 continentColor={continentColor}
               />
             </div>
 
             <div className="bg-white border-4 border-black p-6 mb-8">
-              <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                  Decade Distribution Heatmap
-                </h2>
-                <p className="text-black font-medium">
-                  Each poll's row is colored on its own scale, showing which decades that poll valued most for {decodedCountryName}.
-                </p>
+              <div className="mb-4 border-b-2 border-gray-300 pb-3">
+                <h3 className="text-3xl font-black text-black uppercase tracking-wide">Decades by Poll</h3>
               </div>
               <DecadeHeatmapRows
                 films={allCountryFilms}
-                selectedPoll={selectedPoll}
+                countryName={decodedCountryName}
+                topTarget={topTarget}
+                cutoffByPoll={cutoffByPoll}
+                metric={metric}
                 continentColor={continentColor}
               />
             </div>
 
-            {/* EXPLORE SECTION DIVIDER */}
+            {/* ZONE 2 - one poll at a time. The selector sits at the head of the zone
+                rather than in the sidebar, so its scope is self-evident. */}
             <div className="mb-8 border-t-4 border-black pt-6">
-              <h2 className="text-2xl font-black text-black uppercase tracking-wide mb-2">
-                Explore {selectedPoll === 'all' ? 'All Polls' : `${selectedPoll} Poll`}
+              <h2 className="text-2xl font-black text-black uppercase tracking-wide mb-3">
+                {selectedPoll === 'all' ? 'All Polls Combined' : `In the ${selectedPoll} Poll`}
               </h2>
-              <p className="text-gray-600 text-sm">
-                {selectedPoll === 'all'
-                  ? 'Detailed breakdowns across all poll years combined'
-                  : `Deep dive into ${decodedCountryName}'s films from the ${selectedPoll} poll`
-                }
-              </p>
+              <div className="grid grid-cols-5 sm:grid-cols-9 gap-1.5 max-w-2xl">
+                {['all', ...POLL_YEARS].map(opt => {
+                  const value = String(opt)
+                  const active = value === String(selectedPoll)
+                  const count = pollCounts[opt] ?? 0
+                  const empty = count === 0
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      disabled={empty}
+                      onClick={() => setSelectedPoll(value)}
+                      title={empty
+                        ? `${decodedCountryName} has no films in the ${value} poll`
+                        : `${count} ${count === 1 ? 'film' : 'films'}`}
+                      className={`py-2 text-sm font-black border-2 transition-colors ${
+                        empty
+                          ? 'border-gray-200 bg-gray-50 text-gray-300 cursor-not-allowed'
+                          : active
+                            ? 'border-black bg-black text-white'
+                            : 'border-black bg-white text-black hover:bg-black hover:text-white'
+                      }`}
+                    >
+                      {opt === 'all' ? 'All' : opt}
+                    </button>
+                  )
+                })}
+              </div>
             </div>
 
             {/* Check if we have enough data */}
@@ -391,47 +409,35 @@ export default function CountryDetail() {
               <>
                 {/* VISUALIZATION 1: DECADE × RANK TIER HEATMAP */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                      Decades by Rank Tier
-                    </h2>
-                    <p className="text-black font-medium">
-                      Where do {decodedCountryName}'s films rank? See which decades produced elite films vs. the long tail.
-                    </p>
+                  <div className="mb-4 border-b-2 border-gray-300 pb-3">
+                    <h3 className="text-3xl font-black text-black uppercase tracking-wide">Decades by Rank Tier</h3>
                   </div>
                   <DecadeRankHeatmap
                     films={countryFilms}
                     selectedPoll={selectedPoll}
                     topTarget={topTarget}
+                    metric={metric}
                     continentColor={continentColor}
                   />
                 </div>
 
                 {/* VISUALIZATION 2: DIRECTORS TREEMAP */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                      Directors by Film Count
-                    </h2>
-                    <p className="text-black font-medium">
-                      Which directors from {decodedCountryName} are most represented in the canon?
-                    </p>
+                  <div className="mb-4 border-b-2 border-gray-300 pb-3">
+                    <h3 className="text-3xl font-black text-black uppercase tracking-wide">Directors</h3>
                   </div>
                   <DirectorsTreemap
                     films={countryFilms}
+                    selectedPoll={selectedPoll}
+                    metric={metric}
                     continentColor={continentColor}
                   />
                 </div>
 
                 {/* ALL FILMS GRID */}
                 <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-6 border-b-2 border-gray-300 pb-4">
-                    <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
-                      All Films from {decodedCountryName}
-                    </h2>
-                    <p className="text-black font-medium">
-                      Browse all {metrics.films.toLocaleString()} films matching the current filters.
-                    </p>
+                  <div className="mb-4 border-b-2 border-gray-300 pb-3">
+                    <h3 className="text-3xl font-black text-black uppercase tracking-wide">All Films</h3>
                   </div>
                   <FilmCardsGrid
                     films={countryFilms}

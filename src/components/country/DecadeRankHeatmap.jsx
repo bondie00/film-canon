@@ -1,7 +1,9 @@
 import { useMemo, useState, useRef } from 'react'
+import { ALL_DECADES, decadeColumns } from '../../utils/decades'
+import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
 
 // Generate decades from 1890s to 2020s
-const DECADES = ['1890', '1900', '1910', '1920', '1930', '1940', '1950', '1960', '1970', '1980', '1990', '2000', '2010', '2020']
+const DECADES = ALL_DECADES
 
 // All poll years for additive counting
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
@@ -39,7 +41,7 @@ const getRankTiers = (maxRank) => {
   }
 }
 
-export default function DecadeRankHeatmap({ films, selectedPoll, topTarget = null, continentColor }) {
+export default function DecadeRankHeatmap({ films, selectedPoll, topTarget = null, metric = 'films', continentColor }) {
   const [hoveredCell, setHoveredCell] = useState(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const containerRef = useRef(null)
@@ -108,9 +110,10 @@ export default function DecadeRankHeatmap({ films, selectedPoll, topTarget = nul
           const tier = allRankTiers.find(t => pollData.rank >= t.min && pollData.rank <= t.max)
           if (!tier) return
 
-          matrix[decadeKey][tier.label]++
-          tierTotals[tier.label]++
-          decadeTotals[decadeKey] = (decadeTotals[decadeKey] || 0) + 1
+          const value = metric === 'votes' ? pollData.votes : 1
+          matrix[decadeKey][tier.label] += value
+          tierTotals[tier.label] += value
+          decadeTotals[decadeKey] = (decadeTotals[decadeKey] || 0) + value
           tierMaxValues[tier.label] = Math.max(tierMaxValues[tier.label], matrix[decadeKey][tier.label])
         })
       } else {
@@ -121,9 +124,10 @@ export default function DecadeRankHeatmap({ films, selectedPoll, topTarget = nul
         const tier = allRankTiers.find(t => pollData.rank >= t.min && pollData.rank <= t.max)
         if (!tier) return
 
-        matrix[decadeKey][tier.label]++
-        tierTotals[tier.label]++
-        decadeTotals[decadeKey] = (decadeTotals[decadeKey] || 0) + 1
+        const value = metric === 'votes' ? pollData.votes : 1
+        matrix[decadeKey][tier.label] += value
+        tierTotals[tier.label] += value
+        decadeTotals[decadeKey] = (decadeTotals[decadeKey] || 0) + value
         tierMaxValues[tier.label] = Math.max(tierMaxValues[tier.label], matrix[decadeKey][tier.label])
       }
     })
@@ -131,9 +135,9 @@ export default function DecadeRankHeatmap({ films, selectedPoll, topTarget = nul
     // Filter out tiers that have no films (e.g., 100+ when the depth filter is tight)
     const rankTiers = allRankTiers.filter(tier => tierTotals[tier.label] > 0)
 
-    // Get decades that have data
-    const decades = DECADES.filter(d =>
-      rankTiers.some(tier => matrix[d]?.[tier.label] > 0)
+    // Fixed timeline frame; see utils/decades.
+    const decades = decadeColumns(
+      DECADES.filter(d => rankTiers.some(tier => matrix[d]?.[tier.label] > 0))
     )
 
     return {
@@ -146,7 +150,7 @@ export default function DecadeRankHeatmap({ films, selectedPoll, topTarget = nul
       rankTiers,
       isAdditive: isAllPolls
     }
-  }, [films, selectedPoll, topTarget])
+  }, [films, selectedPoll, topTarget, metric])
 
   // Get color intensity based on value (row-normalized)
   const getColor = (value, tierMax) => {
@@ -332,26 +336,29 @@ export default function DecadeRankHeatmap({ films, selectedPoll, topTarget = nul
 
           return (
             <div
-              className="fixed pointer-events-none bg-white p-2.5 border-2 border-black shadow-lg z-50 max-w-[200px]"
+              className={`fixed pointer-events-none z-50 ${TOOLTIP_BOX}`}
               style={{
                 left: tooltipX,
                 top: tooltipY,
+                width: TOOLTIP_WIDTH,
                 transition: 'left 0.08s ease-out, top 0.08s ease-out'
               }}
             >
-              <p className="font-bold text-base text-black tracking-wide">
-                {hoveredCell.decade}s • {hoveredCell.tier}
+              {/* Row identity, then column, then value — matching the other heatmaps. */}
+              <p className={TOOLTIP_TITLE}>Rank {hoveredCell.tier}</p>
+              <p className={TOOLTIP_SUBTITLE}>{hoveredCell.decade}s</p>
+              <p className={TOOLTIP_VALUE}>
+                {hoveredCell.value} {metric === 'votes'
+                  ? 'votes'
+                  : hoveredCell.isAdditive
+                    ? (hoveredCell.value === 1 ? 'appearance' : 'appearances')
+                    : (hoveredCell.value === 1 ? 'film' : 'films')}
               </p>
-              <p className="text-xl font-black text-black my-1">
-                {hoveredCell.value} {hoveredCell.isAdditive
-                  ? (hoveredCell.value === 1 ? 'appearance' : 'appearances')
-                  : (hoveredCell.value === 1 ? 'film' : 'films')}
+              <p className={TOOLTIP_DETAIL}>
+                {hoveredCell.pctOfDecade}% of {hoveredCell.decade}s {metric === 'votes' ? 'votes' : hoveredCell.isAdditive ? 'appearances' : 'films'}
               </p>
-              <p className="text-xs text-black font-medium">
-                {hoveredCell.pctOfDecade}% of {hoveredCell.decade}s {hoveredCell.isAdditive ? 'appearances' : 'films'}
-              </p>
-              <p className="text-xs text-black font-medium">
-                {hoveredCell.pctOfTier}% of rank {hoveredCell.tier} {hoveredCell.isAdditive ? 'appearances' : 'films'}
+              <p className={TOOLTIP_DETAIL}>
+                {hoveredCell.pctOfTier}% of rank {hoveredCell.tier} {metric === 'votes' ? 'votes' : hoveredCell.isAdditive ? 'appearances' : 'films'}
               </p>
             </div>
           )

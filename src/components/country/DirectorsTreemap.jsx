@@ -1,11 +1,14 @@
 import { useMemo, useState, useRef } from 'react'
+import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
 import { hierarchy, pack } from 'd3-hierarchy'
 
 // Base dimensions
 const BASE_WIDTH = 800
 const BASE_HEIGHT = 400
 
-export default function DirectorsTreemap({ films, continentColor }) {
+export default function DirectorsTreemap({ films, selectedPoll, metric = 'films', continentColor }) {
+  const unit = metric === 'votes' ? 'votes' : 'films'
+  const one = metric === 'votes' ? 'votes' : 'film'
   const [hoveredNode, setHoveredNode] = useState(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const containerRef = useRef(null)
@@ -16,12 +19,21 @@ export default function DirectorsTreemap({ films, continentColor }) {
       return { packedData: null, topDirectors: [], totalFilms: 0 }
     }
 
-    // Count films per director
+    // Each director's total for the active metric: one per film, or that film's
+    // votes in the active poll.
+    const pollKey = selectedPoll === 'all' ? 'all' : parseInt(selectedPoll, 10)
+    const valueOf = (film) => {
+      if (metric !== 'votes') return 1
+      return film.pollHistory?.find(p => p.year === pollKey)?.votes || 0
+    }
     const directorCounts = {}
+    let grandTotal = 0
     films.forEach(film => {
+      const value = valueOf(film)
+      grandTotal += value
       film.directors.forEach(director => {
         if (director && director !== '(unknown)') {
-          directorCounts[director] = (directorCounts[director] || 0) + 1
+          directorCounts[director] = (directorCounts[director] || 0) + value
         }
       })
     })
@@ -35,7 +47,7 @@ export default function DirectorsTreemap({ films, continentColor }) {
     const topDirectors = sorted.slice(0, 30)
 
     if (topDirectors.length === 0) {
-      return { packedData: null, topDirectors: [], totalFilms: films.length }
+      return { packedData: null, topDirectors: [], totalFilms: grandTotal }
     }
 
     // Create hierarchy data for D3 circle packing
@@ -61,7 +73,7 @@ export default function DirectorsTreemap({ films, continentColor }) {
     return {
       packedData: packed,
       topDirectors,
-      totalFilms: films.length
+      totalFilms: grandTotal
     }
   }, [films])
 
@@ -217,7 +229,7 @@ export default function DirectorsTreemap({ films, continentColor }) {
           const containerRect = containerRef.current?.getBoundingClientRect()
           if (!containerRect) return null
 
-          const tooltipWidth = 200
+          const tooltipWidth = TOOLTIP_WIDTH
           const tooltipHeight = 100
           const offset = 10
 
@@ -234,7 +246,7 @@ export default function DirectorsTreemap({ films, continentColor }) {
 
           return (
             <div
-              className="fixed pointer-events-none bg-white p-3 border-2 border-black shadow-lg z-50"
+              className={`fixed pointer-events-none z-50 ${TOOLTIP_BOX}`}
               style={{
                 left: tooltipX,
                 top: tooltipY,
@@ -242,14 +254,12 @@ export default function DirectorsTreemap({ films, continentColor }) {
                 transition: 'left 0.08s ease-out, top 0.08s ease-out'
               }}
             >
-              <p className="font-bold text-base text-black">
-                {hoveredNode.data.name}
+              <p className={TOOLTIP_TITLE}>{hoveredNode.data.name}</p>
+              <p className={TOOLTIP_VALUE}>
+                {hoveredNode.data.count} {hoveredNode.data.count === 1 ? one : unit}
               </p>
-              <p className="text-2xl font-black text-black my-1">
-                {hoveredNode.data.count} {hoveredNode.data.count === 1 ? 'film' : 'films'}
-              </p>
-              <p className="text-xs text-gray-600 font-medium">
-                {((hoveredNode.data.count / totalFilms) * 100).toFixed(1)}% of country's films
+              <p className={TOOLTIP_DETAIL}>
+                {((hoveredNode.data.count / totalFilms) * 100).toFixed(1)}% of country's {unit}
               </p>
             </div>
           )
@@ -278,7 +288,7 @@ export default function DirectorsTreemap({ films, continentColor }) {
                   {director.name}
                 </div>
                 <div className="text-xs text-gray-600">
-                  {director.count} {director.count === 1 ? 'film' : 'films'}
+                  {director.count} {director.count === 1 ? one : unit}
                 </div>
               </div>
             </div>
