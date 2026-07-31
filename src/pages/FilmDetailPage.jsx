@@ -6,7 +6,7 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { backdropUrl, posterUrl } from '../utils/filmImages'
-import { POLL_YEARS } from '../utils/polls'
+import { POLL_YEARS, buildPollFloors } from '../utils/polls'
 
 function formatRuntime(mins) {
   if (!mins) return null
@@ -50,24 +50,9 @@ export default function FilmDetailPage() {
 
   const filmVoters = voters && film ? (voters[String(film.key)] || {}) : null
 
-  // Deepest rank recorded in each poll — the floor of the rank chart's axis.
-  // Derived from the data rather than hardcoded, because ties compress ranks far
-  // below the film count: 2022 records 3,816 films but its deepest rank is around
-  // #1,652, since every single-vote film shares one rank at the bottom.
-  const pollFloors = useMemo(() => {
-    if (!films) return {}
-    const floors = {}
-    films.forEach(f => {
-      f.pollHistory.forEach(p => {
-        // pollHistory also carries an 'all' aggregate entry; only real polls count.
-        if (!POLL_YEARS.includes(p.year)) return
-        if (p.votes > 0 && p.rank != null) {
-          floors[p.year] = Math.max(floors[p.year] || 1, p.rank)
-        }
-      })
-    })
-    return floors
-  }, [films])
+  // Deepest rank recorded in each poll — the floor of the rank chart's axis and
+  // its depth band. See buildPollFloors for why it's derived, not hardcoded.
+  const pollFloors = useMemo(() => buildPollFloors(films), [films])
 
   if (loading) {
     return (

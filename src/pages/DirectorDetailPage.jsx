@@ -5,9 +5,11 @@ import Footer from '../components/Footer'
 import GridTile, { withCurrent } from '../components/search/GridTile'
 import DirectorDecadeBars from '../components/director/DirectorDecadeBars'
 import DirectorFilterPanel from '../components/director/DirectorFilterPanel'
-import DirectorRankTrajectory from '../components/director/DirectorRankTrajectory'
+import DirectorPollStrip from '../components/director/DirectorPollStrip'
+import DirectorStandingChart from '../components/director/DirectorStandingChart'
 import { totalVotes } from '../components/director/filmColors'
 import { buildTierCutoffs } from '../components/director/rankTiers'
+import { buildDirectorStandings } from '../components/director/directorStandings'
 
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
 
@@ -108,30 +110,10 @@ export default function DirectorDetailPage() {
     })
   }, [directorFilms, gridPoll, gridSort])
 
-  // Where this director sits among everyone in the canon. Computed from the same
-  // films.json rather than directors.json, which only carries 2022 ranks.
-  const peers = useMemo(() => {
-    if (!films || !directorFilms.length) return null
-    const byDirector = new Map()
-    films.forEach(film => {
-      const v = totalVotes(film)
-      ;(film.directors || []).forEach(d => {
-        const entry = byDirector.get(d) || { films: 0, votes: 0 }
-        entry.films += 1
-        entry.votes += v
-        byDirector.set(d, entry)
-      })
-    })
-    const mine = byDirector.get(canonicalName)
-    if (!mine) return null
-    const all = [...byDirector.values()]
-    // Rank = how many directors sit strictly ahead, +1 (ties share a rank).
-    return {
-      total: byDirector.size,
-      filmsRank: all.filter(e => e.films > mine.films).length + 1,
-      votesRank: all.filter(e => e.votes > mine.votes).length + 1,
-    }
-  }, [films, directorFilms, canonicalName])
+  // Where this director sits among everyone in the canon, poll by poll. Computed
+  // from the same films.json rather than directors.json, which only carries 2022
+  // ranks.
+  const standings = useMemo(() => (films ? buildDirectorStandings(films) : null), [films])
 
   if (loading) {
     return (
@@ -210,7 +192,6 @@ export default function DirectorDetailPage() {
             </>
           )}
         </div>
-        {peers && <PeerContext peers={peers} />}
       </div>
 
       {/* Control rail + content. The rail stays with you down the page, so the
@@ -252,20 +233,28 @@ export default function DirectorDetailPage() {
             )}
           </section>
 
-          <section className="mt-10">
+          {/* The one block on this side of the page that ignores the rail — it
+              ranks the DIRECTOR across all eight polls, so a single poll isn't an
+              input to it. Strip above, chart below, as on the film page: the strip
+              is the per-poll lookup, the chart is the trend and the depth context
+              the strip's cells have no room for. */}
+          {standings && (
+            <section className="mt-10">
+              <SectionHeading
+                title="Among all directors"
+                note="All eight polls, whatever the filter is set to"
+              />
+              <DirectorPollStrip standings={standings} name={canonicalName} />
+              <DirectorStandingChart standings={standings} name={canonicalName} />
+            </section>
+          )}
+
+          <section className="mt-10 mb-4">
             <SectionHeading
               title="Which decade the canon rewards"
               note="One chunk per film — hover for the film"
             />
             <DirectorDecadeBars films={directorFilms} poll={gridPoll} cutoffs={tierCutoffs} />
-          </section>
-
-          <section className="mt-10 mb-4">
-            <SectionHeading
-              title="How the films moved"
-              note="Tick films to plot them — the scale follows your selection"
-            />
-            <DirectorRankTrajectory films={directorFilms} poll={gridPoll} />
           </section>
         </div>
       </div>
@@ -311,16 +300,5 @@ function SortToggle({ sort, onChange, rankLabel }) {
         </button>
       ))}
     </div>
-  )
-}
-
-function PeerContext({ peers }) {
-  return (
-    <p className="mt-2 text-sm text-gray-500">
-      Among the <span className="font-bold text-black">{peers.total.toLocaleString()}</span> directors
-      in the canon, ranks <span className="font-bold text-black">#{peers.filmsRank.toLocaleString()}</span>{' '}
-      by number of films and{' '}
-      <span className="font-bold text-black">#{peers.votesRank.toLocaleString()}</span> by total votes.
-    </p>
   )
 }

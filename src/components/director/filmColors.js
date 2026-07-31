@@ -1,6 +1,11 @@
-// Categorical colors for per-film identity on the director page.
+// Categorical colors for per-line identity.
 //
-// Used by the rank-trajectory chart, where each plotted line needs its own hue.
+// CURRENTLY UNUSED — its only consumer was the director page's rank-trajectory
+// chart, cut when the standing chart took that slot. Kept for the validation
+// record below, which cost real work and applies to any future multi-line chart
+// on this surface (the directors hub, where several directors share one plot).
+//
+// Each plotted line needs its own hue.
 // This is the eight-slot categorical set from the dataviz standard, validated
 // for this surface (light mode, white chart card):
 //   lightness band PASS · chroma floor PASS · adjacent CVD ΔE 9.1 PASS ·
