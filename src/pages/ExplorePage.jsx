@@ -1,48 +1,64 @@
-import { useState, useMemo, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { AnimatePresence, LayoutGroup } from 'framer-motion'
+import { useState, useMemo, useRef, useEffect } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import FilterPanel from '../components/search/FilterPanel'
 import Pagination from '../components/search/Pagination'
 import GridTile, { withCurrent } from '../components/search/GridTile'
 import { useFilmQuery, POLL_YEARS } from '../hooks/useFilmQuery'
-import { POLL_VOTERS } from '../utils/polls'
 
 const PER_PAGE = 60         // poster tiles per page
-const MOVE_RANK_MAX = 50    // only the top 50 slide to their new slot on a poll change; the rest crossfade
 
 export default function ExplorePage() {
   const q = useFilmQuery()
   const {
-    loading, error, films, poll, topRank, rankIndex, filters, page,
+    loading, error, poll, topRank, rankIndex, filters, page,
     countriesData, filmCounts, titleOptions, directorOptions,
     beforeCountry, sorted, setParam, onFilterChange, clearFilters,
   } = q
 
-  // Animate the reflow only when the user lands on a poll and pauses; snap when
-  // they're clicking through quickly, paging, or moving the slider (avoids
-  // overlapping/whole-page churn animations).
-  const [animateReflow, setAnimateReflow] = useState(true)
-  const lastPollChangeRef = useRef(0)
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   const resultsRef = useRef(null)
 
+  // The poll timeline pins to the top of the viewport so the poll stays switchable
+  // from anywhere in the gallery. A sentinel sits just BELOW the in-flow timeline;
+  // once it scrolls out of view, a condensed copy of the bar is drawn as a separate
+  // fixed element (label and count line dropped, ~50px instead of ~150px).
+  //
+  // The condensed copy is deliberately not the same element made `sticky`: shrinking
+  // a sticky block removes ~100px of document height, the browser's scroll anchoring
+  // compensates by nudging scrollTop, that pushes the sentinel back into view, and
+  // the bar flickers between states forever when you scroll slowly across the
+  // boundary. Keeping the in-flow timeline at a constant size breaks that loop.
+  const stickySentinelRef = useRef(null)
+  const [pollBarStuck, setPollBarStuck] = useState(false)
+  useEffect(() => {
+    const el = stickySentinelRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setPollBarStuck(!entry.isIntersecting),
+      { threshold: 0 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [loading])   // the sentinel only exists once the loading screen is replaced
+
+  // A poll change keeps your page. The bar is pinned, so you can switch polls from
+  // anywhere in the gallery — resetting to page 1 while leaving the scroll position
+  // untouched would strand you at the same y-offset over a completely different
+  // depth of the canon. Holding the page keeps the comparison honest: the same rank
+  // window, one poll against another. (Depth and filters still reset to page 1 —
+  // those change the size of the result set rather than swapping the dataset.)
   const handlePollChange = (value) => {
     if (value === poll) return
-    const now = performance.now()
-    setAnimateReflow(now - lastPollChangeRef.current >= RAPID_MS)
-    lastPollChangeRef.current = now
-    setParam({ poll: value })
+    setParam({ poll: value, ...(page > 1 ? { page: String(page) } : {}) })
   }
 
   const handleTopRankChange = (value) => {
-    setAnimateReflow(false)
     setParam({ top: value == null ? '' : String(value) })
   }
 
   const handlePageChange = (p) => {
-    setAnimateReflow(false)
     setParam({ page: String(p) })
     resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
@@ -55,37 +71,15 @@ export default function ExplorePage() {
     [sorted, clampedPage]
   )
 
-  // Poll-level vital stats — computed from the whole poll (independent of the
-  // slider/filters), so it reads as a stable summary of the poll itself.
-  const vitalStats = useMemo(() => {
-    if (!films || poll === 'all') return null
-    const year = parseInt(poll, 10)
-    const members = films.filter(f => {
-      const p = f.pollHistory.find(x => x.year === year)
-      return p && p.votes > 0
-    })
-    if (!members.length) return null
-    const countrySet = new Set()
-    members.forEach(f => f.countries?.forEach(c => {
-      const name = c && c.trim()
-      if (name) countrySet.add(name)
-    }))
-    const years = members.map(f => parseInt(f.Year, 10)).filter(y => !Number.isNaN(y)).sort((a, b) => a - b)
-    let medianYear = null
-    if (years.length) {
-      const mid = Math.floor(years.length / 2)
-      medianYear = years.length % 2 ? years[mid] : Math.round((years[mid - 1] + years[mid]) / 2)
-    }
-    return {
-      voters: POLL_VOTERS[year] ?? null,
-      filmsWithVotes: members.length,
-      countries: countrySet.size,
-      medianYear,
-      medianAge: medianYear != null ? year - medianYear : null,
-    }
-  }, [films, poll])
-
-  const hasPriorPoll = poll !== 'all' && POLL_YEARS.indexOf(parseInt(poll, 10)) > 0
+  // Poll sizes differ enormously (1952 is 4 pages, 2022 is 64), so a preserved page
+  // can land past the end. clampedPage already handles the render; write it back so
+  // the URL can't say page 40 while page 4 is on screen and a shared link misleads.
+  // Skipped while loading: sorted is empty then, and clamping to 1 would break deep
+  // links to a page before the data arrives.
+  useEffect(() => {
+    if (loading || page === clampedPage) return
+    setParam({ page: clampedPage > 1 ? String(clampedPage) : '' }, { replace: true })
+  }, [loading, page, clampedPage, setParam])
 
   const filterPanelProps = {
     filters,
@@ -147,6 +141,31 @@ export default function ExplorePage() {
         </p>
 
         <PollTimeline activePoll={poll} onChange={handlePollChange} counts={filmCounts} />
+        <div ref={stickySentinelRef} aria-hidden className="h-px" />
+
+        {/* Slides in from above rather than cutting: safe to animate because the bar
+            is out of flow, so nothing here can perturb scroll position. */}
+        <AnimatePresence>
+          {pollBarStuck && (
+            <motion.div
+              key="poll-bar"
+              initial={{ y: '-100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '-100%' }}
+              transition={POLL_BAR_SLIDE}
+              className="fixed inset-x-0 top-0 z-40 bg-gray-50 border-b border-gray-300 py-2"
+            >
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <PollTimeline
+                  activePoll={poll}
+                  onChange={handlePollChange}
+                  counts={filmCounts}
+                  condensed
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="mt-6 grid grid-cols-12 gap-8">
           {/* FILTER SIDEBAR (desktop) */}
@@ -155,7 +174,8 @@ export default function ExplorePage() {
           </aside>
 
           {/* MAIN */}
-          <div className="col-span-12 lg:col-span-9" ref={resultsRef}>
+          {/* scroll-mt clears the pinned poll bar when paging jumps back to the top */}
+          <div className="col-span-12 lg:col-span-9 scroll-mt-24" ref={resultsRef}>
             {/* Toolbar: mobile filter toggle + result summary */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
               <button
@@ -182,25 +202,28 @@ export default function ExplorePage() {
                     <Pagination currentPage={clampedPage} totalPages={totalPages} onPageChange={handlePageChange} />
                   </div>
                 )}
-                <LayoutGroup>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    <AnimatePresence mode="popLayout">
-                      {pageFilms.map(f => {
-                        const film = withCurrent(f, poll)
-                        const isMover = film.currentRank != null && film.currentRank <= MOVE_RANK_MAX
-                        return (
-                          <GridTile
-                            key={isMover ? film.key : `${film.key}@${film.currentRank}`}
-                            film={film}
-                            activePoll={poll}
-                            animateMove={isMover}
-                            transition={animateReflow ? MOVE : SNAP}
-                          />
-                        )
-                      })}
-                    </AnimatePresence>
-                  </div>
-                </LayoutGroup>
+                {/* Keyed on poll, so the whole gallery fades in as one unit when you
+                    switch polls — a single calm "the page changed" gesture that reads the
+                    same at rank 1 or rank 180. Paging and filter changes swap instantly
+                    (the key is unchanged), which is what you want when you're typing into
+                    a filter. Tiles pass fade={false}: the container owns the fade, and
+                    per-tile fades on top of it would speckle. */}
+                <motion.div
+                  key={poll}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={GRID_FADE}
+                  className="grid grid-cols-2 md:grid-cols-3 gap-3"
+                >
+                  {pageFilms.map(f => (
+                    <GridTile
+                      key={f.key}
+                      film={withCurrent(f, poll)}
+                      activePoll={poll}
+                      fade={false}
+                    />
+                  ))}
+                </motion.div>
                 <div className="mt-6">
                   <Pagination currentPage={clampedPage} totalPages={totalPages} onPageChange={handlePageChange} />
                 </div>
@@ -209,20 +232,6 @@ export default function ExplorePage() {
               <EmptyState onClear={clearFilters} topRank={topRank} />
             )}
 
-            {/* POLL FOOTER — vital stats + evolution handoff (single poll only) */}
-            {vitalStats && <VitalStatsStrip stats={vitalStats} activePoll={poll} />}
-
-            {hasPriorPoll && (
-              <Link
-                to={`/visualizations/evolution?poll=${poll}`}
-                className="mt-8 flex items-center justify-between gap-4 border-2 border-black bg-white px-5 py-4 hover:bg-gray-50 transition-colors"
-              >
-                <span className="text-sm font-bold text-black">
-                  How the canon shifted into {poll} — biggest climbers &amp; fallers
-                </span>
-                <span className="text-sm font-bold uppercase tracking-wide whitespace-nowrap">See Canon Evolution →</span>
-              </Link>
-            )}
           </div>
         </div>
       </div>
@@ -274,95 +283,57 @@ function EmptyState({ onClear, topRank }) {
   )
 }
 
-function PollTimeline({ activePoll, onChange, counts }) {
+// Rendered twice on the page: once in flow at full size, and again — with
+// `condensed` — inside the fixed bar that takes over once the first scrolls away.
+// Condensed drops the framing label and the count sentence and lays the nine stops
+// out as one tight row (horizontally scrollable on narrow screens, where the full
+// version wraps to three). The count stays visible either way: QueryMeta carries it.
+function PollTimeline({ activePoll, onChange, counts, condensed }) {
   const options = ['all', ...POLL_YEARS]
   const total = activePoll === 'all'
     ? counts?.all ?? 0
     : counts?.[String(activePoll)] ?? 0
   return (
-    <div className="border-2 border-black bg-white p-4">
-      <div className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
-        Choose a poll
-      </div>
-      <div className="grid grid-cols-3 md:grid-cols-9 gap-2">
+    <div className={`border-2 border-black bg-white ${condensed ? 'p-2' : 'p-4'}`}>
+      {!condensed && (
+        <div className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
+          Choose a poll
+        </div>
+      )}
+      <div className={condensed ? 'flex gap-1.5 overflow-x-auto' : 'grid grid-cols-3 md:grid-cols-9 gap-2'}>
         {options.map(opt => {
           const value = String(opt)
           const active = value === String(activePoll)
+          const size = condensed
+            ? `flex-1 min-w-[3.25rem] py-1.5 ${opt === 'all' ? 'text-[11px] uppercase tracking-wide' : 'text-sm'}`
+            : `py-4 ${opt === 'all' ? 'text-sm uppercase tracking-wide' : 'text-xl'}`
           return (
             <button
               key={value}
               onClick={() => onChange(value)}
-              className={`py-4 font-black border-2 border-black transition-colors ${
-                opt === 'all' ? 'text-sm uppercase tracking-wide' : 'text-xl'
-              } ${active ? 'bg-black text-white' : 'bg-white text-black hover:bg-black hover:text-white'}`}
+              className={`font-black border-2 border-black transition-colors ${size} ${
+                active ? 'bg-black text-white' : 'bg-white text-black hover:bg-black hover:text-white'
+              }`}
             >
               {opt === 'all' ? 'All' : opt}
             </button>
           )
         })}
       </div>
-      <div className="mt-3 text-sm text-gray-500">
-        <span className="font-bold text-black">{total.toLocaleString()}</span>{' '}
-        {activePoll === 'all'
-          ? 'films received at least one vote across all polls.'
-          : <>films received at least one vote in the <span className="font-bold text-black">{activePoll}</span> poll.</>}
-      </div>
+      {!condensed && (
+        <div className="mt-3 text-sm text-gray-500">
+          <span className="font-bold text-black">{total.toLocaleString()}</span>{' '}
+          {activePoll === 'all'
+            ? 'films received at least one vote across all polls.'
+            : <>films received at least one vote in the <span className="font-bold text-black">{activePoll}</span> poll.</>}
+        </div>
+      )}
     </div>
   )
 }
 
-// Position-only tween — cheaper than a spring FLIP when many tiles reflow at once.
-const MOVE = { type: 'tween', duration: 0.7, ease: 'easeInOut' }
-// Instant transition when stepping through polls rapidly / paging, so animations don't pile up.
-const SNAP = { duration: 0 }
-// Poll changes closer together than this are "rapid" → snap instead of animate.
-const RAPID_MS = 800
-
-function VitalStatsStrip({ stats, activePoll }) {
-  const { filmsWithVotes, voters, countries, medianYear, medianAge } = stats
-  const cells = [
-    { label: 'Films with votes', value: filmsWithVotes.toLocaleString() },
-    { label: 'Voters', value: voters != null ? voters.toLocaleString() : '—' },
-    {
-      label: 'Countries represented',
-      value: countries.toLocaleString(),
-      href: `/countries?poll=${activePoll}`,
-      cue: 'See the map →',
-    },
-    {
-      label: 'Median film year',
-      value: medianYear != null ? medianYear : '—',
-      note: medianAge != null ? `${medianAge} yrs old in ${activePoll}` : null,
-      href: `/visualizations/decades?poll=${activePoll}`,
-      cue: 'See decades →',
-    },
-  ]
-
-  return (
-    <div className="mt-8 border-2 border-black bg-white">
-      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gray-200">
-        {cells.map(cell => {
-          const inner = (
-            <>
-              <div className="text-3xl font-black tabular-nums leading-none">{cell.value}</div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-widest text-gray-500">{cell.label}</div>
-              {cell.note && (
-                <div className="text-[11px] font-medium text-gray-500 tabular-nums">{cell.note}</div>
-              )}
-              {cell.cue && (
-                <div className="mt-2 text-[11px] font-bold uppercase tracking-wide text-black">{cell.cue}</div>
-              )}
-            </>
-          )
-          return cell.href ? (
-            <Link key={cell.label} to={cell.href} className="block p-4 group hover:bg-gray-50 transition-colors">
-              {inner}
-            </Link>
-          ) : (
-            <div key={cell.label} className="p-4">{inner}</div>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
+// Short enough that crossing the boundary still feels like a direct response to the scroll.
+const POLL_BAR_SLIDE = { type: 'tween', duration: 0.22, ease: 'easeOut' }
+// The gallery's fade-in on a poll change. Long enough to register as a deliberate
+// change, short enough that stepping through polls doesn't feel gated behind it.
+const GRID_FADE = { type: 'tween', duration: 0.15, ease: 'easeOut' }

@@ -209,8 +209,14 @@ export function useFilmQuery() {
 
   // ---- URL setters ----
   // Any change other than paging itself resets to page 1 (a filtered result set
-  // may not have the page you were on).
-  const setParam = useCallback((updates) => {
+  // may not have the page you were on). Callers that want to keep the current page
+  // — a poll change, which swaps the dataset without changing the question — pass
+  // `page` explicitly in the updates.
+  //
+  // `replace` swaps the current history entry instead of pushing a new one; used for
+  // corrections the user didn't ask for (e.g. clamping a page past the end), which
+  // shouldn't cost them a Back press.
+  const setParam = useCallback((updates, { replace = false } = {}) => {
     setSearchParams(prev => {
       const next = new URLSearchParams(prev)
       for (const [key, value] of Object.entries(updates)) {
@@ -225,7 +231,7 @@ export function useFilmQuery() {
       }
       if (!('page' in updates)) next.delete('page')
       return next
-    })
+    }, { replace })
   }, [setSearchParams])
 
   // Map the FilterPanel's filter-object shape to URL params.

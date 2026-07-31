@@ -172,7 +172,13 @@ export default function FilterPanel({
     filters.sortBy !== 'votes' || topRank != null
 
   return (
-    <div className="bg-white border-4 border-black p-4 lg:sticky lg:top-8">
+    // top-20 rather than the usual top-8: /explore pins the condensed poll bar to
+    // the top of the viewport, and the panel has to come to rest below it.
+    //
+    // The max-height is a guard, not a layout: a sticky element taller than the
+    // viewport never scrolls, so its bottom controls (Rank Depth, Sort) would be
+    // permanently unreachable on a short window. Inert whenever the panel fits.
+    <div className="bg-white border-4 border-black p-4 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
       {/* Header row: title + clear */}
       <div className="flex items-center justify-between mb-3 pb-3 border-b-2 border-gray-300">
         <h2 className="text-xl font-black text-black uppercase tracking-wider">Filters</h2>
@@ -206,16 +212,6 @@ export default function FilterPanel({
           </select>
         </div>
       )}
-
-      {/* Rank depth — the same control the country pages use */}
-      <div className="mb-3 pb-3 border-b border-gray-200">
-        <RankDepthFilter
-          index={rankIndex}
-          target={topRank}
-          onChange={onTopRankChange}
-          dense
-        />
-      </div>
 
       {/* Title Search */}
       <div className="mb-3 pb-3 border-b border-gray-200">
@@ -405,6 +401,20 @@ export default function FilterPanel({
             className="w-full px-2 py-1.5 border-2 border-black text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black"
           />
         </div>
+      </div>
+
+      {/* Rank depth — the same control the country pages use. It sits below the
+          others here (rather than first, as on the Countries page) because on
+          /explore the gallery is already rank-sorted and paginated, so the cutoff
+          reads as a refinement of a filtered set, not a primary axis. Adjacent to
+          Year on purpose: both narrow a range rather than name a thing. */}
+      <div className="mb-3 pb-3 border-b border-gray-200">
+        <RankDepthFilter
+          index={rankIndex}
+          target={topRank}
+          onChange={onTopRankChange}
+          dense
+        />
       </div>
 
       {/* Sort */}
