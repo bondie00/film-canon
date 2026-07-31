@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import {
-  LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Dot,
+  ComposedChart, Area, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Dot,
 } from 'recharts'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { backdropUrl, posterUrl } from '../utils/filmImages'
-import { POLL_YEARS, POLL_VOTERS, voteShare } from '../utils/polls'
+import { POLL_YEARS } from '../utils/polls'
 
 function formatRuntime(mins) {
   if (!mins) return null
@@ -49,6 +49,25 @@ export default function FilmDetailPage() {
   }, [films, key])
 
   const filmVoters = voters && film ? (voters[String(film.key)] || {}) : null
+
+  // Deepest rank recorded in each poll — the floor of the rank chart's axis.
+  // Derived from the data rather than hardcoded, because ties compress ranks far
+  // below the film count: 2022 records 3,816 films but its deepest rank is around
+  // #1,652, since every single-vote film shares one rank at the bottom.
+  const pollFloors = useMemo(() => {
+    if (!films) return {}
+    const floors = {}
+    films.forEach(f => {
+      f.pollHistory.forEach(p => {
+        // pollHistory also carries an 'all' aggregate entry; only real polls count.
+        if (!POLL_YEARS.includes(p.year)) return
+        if (p.votes > 0 && p.rank != null) {
+          floors[p.year] = Math.max(floors[p.year] || 1, p.rank)
+        }
+      })
+    })
+    return floors
+  }, [films])
 
   if (loading) {
     return (
@@ -201,9 +220,9 @@ export default function FilmDetailPage() {
 
         {/* Votes across the polls */}
         <section>
-          <SectionHeading title="Votes across the polls" />
-          <VotesStrip film={film} />
-          <PollTrendChart film={film} />
+          <SectionHeading title="Across the polls" />
+          <PollHistoryStrip film={film} />
+          <PollTrendChart film={film} pollFloors={pollFloors} />
         </section>
 
         {/* Voters */}
@@ -226,8 +245,25 @@ function SectionHeading({ title }) {
   )
 }
 
-// A cell per poll: rank + vote count, greyed when the film didn't appear.
-function VotesStrip({ film }) {
+/**
+ * A cell per poll: rank, with the vote count beneath it. Greyed when the film
+ * didn't appear.
+ *
+ * Rank leads and votes sits under it in smaller grey type. That hierarchy is the
+ * house metric rule (see CLAUDE.md) — votes are a secondary detail — and it earns
+ * its keep here specifically because the chart below is rank-only: the strip is
+ * where the vote counts live, as a per-poll lookup rather than a trend.
+ *
+ * Two other shapes were tried and rejected. Giving both figures equal weight left
+ * two big numerals stacked in a small box with nothing saying which was which;
+ * splitting each cell into labelled halves fixed that but broke the horizontal
+ * run. A transposed two-row table fixed the scanning, then became redundant once
+ * the chart took over the rank trajectory — and scanning votes across polls was
+ * never meaningful anyway, given the electorate grew 35x.
+ *
+ * Eight columns also put each cell directly above its point on the chart.
+ */
+function PollHistoryStrip({ film }) {
   return (
     <div className="grid grid-cols-4 sm:grid-cols-8 border-2 border-black divide-x divide-y sm:divide-y-0 divide-gray-200 mb-6">
       {POLL_YEARS.map(year => {
@@ -240,7 +276,7 @@ function VotesStrip({ film }) {
               {appeared && poll.rank ? `#${poll.rank}` : '—'}
             </div>
             <div className={`text-xs tabular-nums ${appeared ? 'text-gray-600' : 'text-gray-300'}`}>
-              {appeared ? `${poll.votes} ${poll.votes === 1 ? 'vote' : 'votes'}` : '—'}
+              {appeared ? `${poll.votes.toLocaleString()} ${poll.votes === 1 ? 'vote' : 'votes'}` : '—'}
             </div>
           </div>
         )
@@ -254,11 +290,30 @@ function VotesStrip({ film }) {
  *
  * Rank only, deliberately. Vote counts aren't comparable between polls — the
  * electorate grew from 47 critics to 1,635 — so a rising vote line reads as
- * growing support when it can mean the opposite. The counts stay available in
- * the tooltip, alongside each poll's share of voters, which is the like-for-like
- * measure if you want to weigh them.
+ * growing support when it can mean the opposite. A rank/votes toggle was tried
+ * and removed: with the depth band in place the rank view answers the positional
+ * question properly, and a votes view mostly offered a misleading second reading
+ * of the same eight points. The counts live in the strip above, per poll, where
+ * they're a lookup rather than a trend.
+ *
+ * The tooltip is just the poll year and the figures. It also carried each poll's
+ * share of voters and its deepest rank; both were dropped once the depth band
+ * landed, since the band shows positional context continuously and in place,
+ * where the tooltip only offered it one hover at a time.
+ *
+ * The chart carries no heading of its own — the axis format ('#12') names the
+ * measure and the section heading frames the block.
+ *
+ * The rank axis is logarithmic and always anchored at #1. It used to rescale to
+ * each film's own range, which drew relative movement but read as absolute
+ * standing: a film hovering around #1,200 filled the plot exactly like Vertigo.
+ * Anchoring a LINEAR axis at #1 fixes that but inverts the problem — against a
+ * domain of [1, 1652] a top-100 film's real movement collapses into a few pixels.
+ * Log escapes the trade because rank is already perceptually logarithmic (#1 to
+ * #10 matters far more than #1200 to #1210): height always means absolute
+ * standing, while movement stays legible at every depth.
  */
-function PollTrendChart({ film }) {
+function PollTrendChart({ film, pollFloors = {} }) {
   const chartData = useMemo(() => POLL_YEARS.map(year => {
     const poll = film.pollHistory.find(p => p.year === year)
     const votes = poll && poll.votes > 0 ? poll.votes : null
@@ -267,21 +322,34 @@ function PollTrendChart({ film }) {
       yearNum: year,
       votes,
       rank: poll && poll.votes > 0 ? poll.rank : null,
-      share: voteShare(year, votes),
+      // Present for every poll, not just the ones this film charted in — the
+      // shaded depth band spans the full width regardless.
+      floor: pollFloors[year] ?? null,
     }
-  }), [film.pollHistory])
+  }), [film.pollHistory, pollFloors])
 
   const hasHistory = chartData.some(d => d.rank !== null)
 
-  // Reversed axis (#1 at top), scaled to the film's own rank range.
-  const yDomain = useMemo(() => {
-    const ranks = chartData.filter(d => d.rank !== null).map(d => d.rank)
-    if (!ranks.length) return [1, 100]
-    const minRank = Math.min(...ranks)
-    const maxRank = Math.max(...ranks)
-    const upper = Math.max(maxRank * 1.3, minRank + 5)
-    return [Math.max(1, minRank - 1), Math.ceil(upper)]
-  }, [chartData])
+  // Reversed log axis, #1 down to the deepest rank any poll ever recorded — the
+  // SAME domain on every film page, so two films can be compared directly.
+  //
+  // An earlier pass scoped this floor to the film's own polls, to keep a 1952-only
+  // film off a #1,652 baseline it could never have reached. The depth band makes
+  // that unnecessary and is the better answer: rather than hiding the depth the
+  // film couldn't reach, it draws it, so the film reads as sitting at the edge of
+  // what existed instead of floating in blank space.
+  const yDomain = useMemo(
+    () => [1, Math.max(10, ...Object.values(pollFloors))],
+    [pollFloors]
+  )
+
+  // Decade strata (#1, #10, #100, #1000) — the natural reading of a log rank axis,
+  // and steadier across films than letting Recharts pick its own.
+  const rankTicks = useMemo(() => {
+    const ticks = []
+    for (let t = 1; t <= yDomain[1]; t *= 10) ticks.push(t)
+    return ticks
+  }, [yDomain])
 
   if (!hasHistory) return null
 
@@ -295,23 +363,14 @@ function PollTrendChart({ film }) {
           {d.rank ? `rank #${d.rank}` : 'unranked'}
           {d.votes ? ` · ${d.votes} ${d.votes === 1 ? 'vote' : 'votes'}` : ''}
         </div>
-        {d.share != null && (
-          <div className="text-white/60">
-            {d.share.toFixed(d.share < 1 ? 2 : 1)}% of {POLL_VOTERS[d.yearNum].toLocaleString()} voters
-          </div>
-        )}
       </div>
     )
   }
 
   return (
     <div>
-      <div className="text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2">
-        Rank by poll
-      </div>
-
       <ResponsiveContainer width="100%" height={200}>
-        <LineChart data={chartData} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
+        <ComposedChart data={chartData} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
           <XAxis
             dataKey="year"
             tick={{ fontSize: 12, fill: '#6b7280' }}
@@ -320,27 +379,57 @@ function PollTrendChart({ film }) {
           />
           <YAxis
             reversed
+            scale="log"
             domain={yDomain}
+            ticks={rankTicks}
             tick={{ fontSize: 11, fill: '#9ca3af' }}
             axisLine={false}
             tickLine={false}
-            width={40}
+            width={48}
             allowDecimals={false}
-            tickFormatter={(v) => `#${v}`}
+            allowDataOverflow={false}
+            tickFormatter={(v) => `#${v.toLocaleString()}`}
           />
           <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#d1d5db' }} />
+          {/* Depth band: ranks that poll never reached. Declared before the Line so
+              it paints behind it. Rendering it turns a bare '#83' into '#83, and
+              nothing went deeper that year' — which is the difference between The
+              Third Man reading as mid-table in 1952 and as dead last, which it was. */}
+          <Area
+            type="monotone"
+            dataKey="floor"
+            baseValue={yDomain[1]}
+            // gray-200 on the page's gray-50 background. gray-100 was only ~2%
+            // off the backdrop and read as nothing. The boundary is dashed and
+            // darker than the fill so it reads as a threshold rather than a
+            // second data series competing with the film's line.
+            fill="#e5e7eb"
+            stroke="#9ca3af"
+            strokeWidth={1.5}
+            strokeDasharray="4 3"
+            activeDot={false}
+            isAnimationActive={false}
+          />
+          {/* No connectNulls: a poll the film drew no votes in is a real absence,
+              and bridging it drew a straight line implying a trajectory through
+              polls where the film simply wasn't there. Gaps now break the line,
+              and a lone appearance renders as an unconnected dot. */}
           <Line
             type="monotone"
             dataKey="rank"
             stroke="#000000"
             strokeWidth={2}
-            connectNulls
             dot={<Dot r={3} fill="#000" stroke="#fff" strokeWidth={1.5} />}
             activeDot={{ r: 5, fill: '#000', stroke: '#fff', strokeWidth: 2 }}
             isAnimationActive={false}
           />
-        </LineChart>
+        </ComposedChart>
       </ResponsiveContainer>
+
+      <p className="mt-2 text-xs text-gray-500 italic">
+        Shading marks ranks that poll never recorded — 1952 bottomed out at #83, 2022
+        runs to #1,652. A film at the edge of the shading was last that year.
+      </p>
     </div>
   )
 }
