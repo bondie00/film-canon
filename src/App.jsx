@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useSearchParams, useL
 import LandingPage from './pages/LandingPage'
 import CountryOriginMain from './pages/CountryOriginMain'
 import CountryDetail from './pages/CountryDetail'
+import DirectorsMain from './pages/DirectorsMain'
 import ExplorePage from './pages/ExplorePage'
 import FilmDetailPage from './pages/FilmDetailPage'
 import DirectorDetailPage from './pages/DirectorDetailPage'
@@ -51,6 +52,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/countries" element={<CountryOriginMain />} />
         <Route path="/countries/:countryName" element={<CountryDetail />} />
+        <Route path="/directors" element={<DirectorsMain />} />
         <Route path="/visualizations/country" element={<CountryHubRedirect />} />
         <Route path="/visualizations/country/:countryName" element={<CountryDetailRedirect />} />
         <Route path="/visualizations/evolution" element={<CanonEvolution />} />

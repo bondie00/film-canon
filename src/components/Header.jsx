@@ -5,7 +5,7 @@ import GlobalSearch from './search/GlobalSearch'
 const VIZ_LINKS = [
   { to: '/visualizations/decades', label: 'By Decade & Age' },
   { to: '/visualizations/evolution', label: 'Canon Evolution' },
-  { to: null, label: 'By Director', soon: true },
+  { to: '/directors', label: 'By Director' },
 ]
 
 export default function Header() {
