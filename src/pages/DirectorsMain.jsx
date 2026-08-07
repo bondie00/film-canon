@@ -3,16 +3,14 @@ import { useSearchParams } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import RankDepthFilter from '../components/RankDepthFilter'
-import DirectorPodium from '../components/directors/DirectorPodium'
-import DirectorRankedList from '../components/directors/DirectorRankedList'
+import DirectorsRankedBarChart from '../components/directors/DirectorsRankedBarChart'
 import useDirectorAggregates from '../hooks/useDirectorAggregates'
+import { orderRows, tieFloor } from '../components/directors/rankedField'
+import { buildTierCutoffs } from '../components/director/rankTiers'
 import { buildRankIndex, resolveTarget, describeDepth, EMPTY_RANK_INDEX } from '../lib/rankDepth'
 
 const VALID_POLLS = ['all', '1952', '1962', '1972', '1982', '1992', '2002', '2012', '2022']
 
-// The podium takes every director inside this rank, ties included; the list picks
-// up after it.
-const PODIUM_RANKS = 10
 
 export default function DirectorsMain() {
   // Poll and rank depth live in the URL under the same names and with the same
@@ -66,6 +64,16 @@ export default function DirectorsMain() {
 
   const aggregates = useDirectorAggregates(filmsData, selectedPoll, cutoffRank)
 
+  // Rank-tier shading for the bar tiles. Cutoffs are percentiles of
+  // each poll's WHOLE field, so they're built from every film once and are
+  // independent of the rank-depth filter — a tile must shade a film by the
+  // field it competed in, not by whatever slice is on screen.
+  const tierCutoffs = useMemo(
+    () => (filmsData ? buildTierCutoffs(filmsData) : null),
+    [filmsData]
+  )
+  const cuts = tierCutoffs?.get(String(selectedPoll)) ?? null
+
   const filterText = `${selectedPoll === 'all' ? 'All Polls Combined' : `${selectedPoll} Poll`} • ${describeDepth(topTarget, depthFilmCount, depthMinVotes)}`
 
   // The long tail, as a headline figure: how much of the field is one film deep.
@@ -73,6 +81,17 @@ export default function DirectorsMain() {
     if (!aggregates?.rows.length) return null
     return aggregates.rows.filter(r => r.films === 1).length / aggregates.rows.length
   }, [aggregates])
+
+  // Where the ranking stops being a ranking. This used to be stated at the foot
+  // of a "rest of the field" list, which was retired once the chart covered the
+  // same ground — but the fact is the most surprising thing about this dataset
+  // (in 2022 the deepest director nobody ties is #149, and 1,038 of 2,071 share
+  // the vote floor), so it survives as a stat rather than dying with the list.
+  const rankingEnds = useMemo(() => {
+    if (!aggregates?.rows.length) return null
+    return tieFloor(orderRows(aggregates.rows, 'votes'), 'votes')
+  }, [aggregates])
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -171,6 +190,17 @@ export default function DirectorsMain() {
                     </span>
                   </>
                 )}
+                {rankingEnds?.lastUnique > 0 && (
+                  <>
+                    <span className="mx-2 text-black">|</span>
+                    <span
+                      className="font-medium"
+                      title={`${rankingEnds.tiedBelow.toLocaleString()} directors below this share a vote total with someone else, so ordering them would be arbitrary.`}
+                    >
+                      Ranking ends at #{rankingEnds.lastUnique.toLocaleString()}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
 
@@ -180,26 +210,24 @@ export default function DirectorsMain() {
               </div>
             )}
 
-            {/* HERO — the leaders, with posters. The page's question is who
-                stands highest among directors. */}
+            {/* HERO — the ranking itself, on the Countries page's bar chart
+                skeleton, with each bar built out of that director's own films.
+                This replaced a poster podium of the top ten (retired 2026-08-07;
+                recoverable at `git show 3268108:src/components/directors/
+                DirectorPodium.jsx`). The podium showed the same ten names this
+                chart's default view does, one screen higher, and said only how
+                many votes each had — the chart says that and the shape of the
+                filmography behind it. */}
             {aggregates && (
-              <DirectorPodium
-                rows={aggregates.rows}
-                metric={metric}
-                selectedPoll={selectedPoll}
-              />
-            )}
-
-            {/* The rest of the ranked field, ending where the ties begin */}
-            {aggregates && (
-              <DirectorRankedList
+              <DirectorsRankedBarChart
                 rows={aggregates.rows}
                 metric={metric}
                 selectedPoll={selectedPoll}
                 topTarget={topTarget}
-                skipRanks={PODIUM_RANKS}
+                cuts={cuts}
               />
             )}
+
           </div>
         </div>
       </div>

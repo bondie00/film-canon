@@ -12,7 +12,7 @@ const PANEL_FILM_CAP = 30
  * Absolutely positioned: the caller must render it inside a `relative` container
  * sized to the visualization it covers.
  */
-export default function DirectorPanel({ row, metric = 'votes', selectedPoll, topTarget = null, onClose, panelRef }) {
+export default function DirectorPanel({ row, metric = 'votes', selectedPoll, topTarget = null, subtitle = null, onClose, panelRef }) {
   const films = row.filmList.map(x => x.film)
   const filmLabel = `${row.films.toLocaleString()} ${row.films === 1 ? 'film' : 'films'}`
   const voteLabel = `${row.votes.toLocaleString()} votes`
@@ -50,6 +50,13 @@ export default function DirectorPanel({ row, metric = 'votes', selectedPoll, top
               </svg>
             </Link>
           </h4>
+          {/* Set when the panel was opened from a scoped cell (a decade), so the
+              counts below read as that slice rather than the whole filmography. */}
+          {subtitle && (
+            <p className="text-xs font-black uppercase tracking-widest text-gray-500 mt-0.5">
+              {subtitle}
+            </p>
+          )}
           <div className="flex gap-3 mt-1 items-end">
             <span className="text-base font-black text-black">
               {metric === 'films' ? filmLabel : voteLabel}
