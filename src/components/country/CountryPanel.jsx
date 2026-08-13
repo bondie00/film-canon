@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import GridTile, { withCurrent } from '../search/GridTile'
 import { pollKeyOf, pollEntryOf } from '../../lib/rankDepth'
+import { exploreUrl } from '../../lib/exploreUrl'
 
 // Cap posters shown in the panel; the rest live on the Explore page.
 const PANEL_FILM_CAP = 30
@@ -19,20 +20,6 @@ function CountryTitleLink({ name }) {
       </svg>
     </Link>
   )
-}
-
-// Explore-page link carrying the current filters. Both surfaces read the same params
-// with the same meaning, so poll, rank depth and any decade scope transfer as-is.
-function buildExploreUrl(countryName, poll, topTarget, yearRange) {
-  const params = new URLSearchParams()
-  if (poll) params.set('poll', poll)
-  params.append('country', countryName)
-  if (topTarget != null) params.set('top', String(topTarget))
-  if (yearRange) {
-    params.set('yearStart', String(yearRange.start))
-    params.set('yearEnd', String(yearRange.end))
-  }
-  return `/explore?${params.toString()}`
 }
 
 /**
@@ -137,7 +124,7 @@ export default function CountryPanel({
 
           {filmCount > 0 && (
             <Link
-              to={buildExploreUrl(name, selectedPoll, topTarget, yearRange)}
+              to={exploreUrl({ poll: selectedPoll, country: name, top: topTarget, yearRange })}
               className="mt-3 block w-full text-center px-4 py-2 bg-black text-white border-2 border-black font-bold text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors"
             >
               {filmCount > PANEL_FILM_CAP

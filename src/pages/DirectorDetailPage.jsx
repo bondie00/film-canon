@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import GridTile, { withCurrent } from '../components/search/GridTile'
+import PageShell from '../components/layout/PageShell'
+import SectionHeading, { HeadingToggle } from '../components/layout/SectionHeading'
+import FilmographyGrid from '../components/films/FilmographyGrid'
 import DirectorDecadeBars from '../components/director/DirectorDecadeBars'
 import DirectorFilterPanel from '../components/director/DirectorFilterPanel'
 import DirectorPollStrip from '../components/director/DirectorPollStrip'
@@ -92,23 +92,14 @@ export default function DirectorDetailPage() {
   const [gridPoll, setGridPoll] = useState('all')
   const [gridSort, setGridSort] = useState('rank')
 
+  // Just the selection; FilmographyGrid owns the ordering for both detail pages.
   const gridFilms = useMemo(() => {
     const key = gridPoll === 'all' ? 'all' : parseInt(gridPoll, 10)
-    const list = directorFilms.filter(f => {
+    return directorFilms.filter(f => {
       const p = f.pollHistory.find(x => x.year === key)
       return p && p.votes > 0
     })
-    // directorFilms is already oldest-first, so chronological needs no re-sort.
-    if (gridSort === 'chrono') return list
-    return [...list].sort((a, b) => {
-      const pa = a.pollHistory.find(x => x.year === key) || {}
-      const pb = b.pollHistory.find(x => x.year === key) || {}
-      if (pa.rank != null && pb.rank != null) return pa.rank - pb.rank
-      if (pa.rank != null) return -1
-      if (pb.rank != null) return 1
-      return (pb.votes || 0) - (pa.votes || 0)
-    })
-  }, [directorFilms, gridPoll, gridSort])
+  }, [directorFilms, gridPoll])
 
   // Where this director sits among everyone in the canon, poll by poll. Computed
   // from the same films.json rather than directors.json, which only carries 2022
@@ -117,18 +108,18 @@ export default function DirectorDetailPage() {
 
   if (loading) {
     return (
-      <Shell>
+      <PageShell>
         <div className="text-center py-20">
           <div className="inline-block w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin mb-4" />
           <p className="text-black font-medium">Loading…</p>
         </div>
-      </Shell>
+      </PageShell>
     )
   }
 
   if (!directorFilms.length) {
     return (
-      <Shell>
+      <PageShell>
         <div className="py-20 text-center">
           <h1 className="text-3xl font-black uppercase mb-3">Director not found</h1>
           <p className="text-gray-600 mb-6">
@@ -141,7 +132,7 @@ export default function DirectorDetailPage() {
             ← Back to Explore
           </Link>
         </div>
-      </Shell>
+      </PageShell>
     )
   }
 
@@ -153,7 +144,7 @@ export default function DirectorDetailPage() {
       : null
 
   return (
-    <Shell>
+    <PageShell>
       {/* Header — typographic, no imagery: the filmography grid carries the page */}
       <div className="pt-2 pb-8">
         <Link
@@ -211,26 +202,23 @@ export default function DirectorDetailPage() {
             <SectionHeading
               title="The filmography"
               action={
-                <SortToggle
-                  sort={gridSort}
+                <HeadingToggle
+                  value={gridSort}
                   onChange={setGridSort}
-                  rankLabel={gridPoll === 'all' ? 'Most votes' : 'By rank'}
+                  options={[
+                    ['rank', gridPoll === 'all' ? 'Most votes' : 'By rank'],
+                    ['chrono', 'Chronological'],
+                  ]}
                 />
               }
             />
-            {gridFilms.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {gridFilms.map(f => (
-                  <GridTile key={f.key} film={withCurrent(f, gridPoll)} activePoll={gridPoll} />
-                ))}
-              </div>
-            ) : (
-              <div className="bg-white border-2 border-black p-10 text-center">
-                <p className="font-bold text-black">
-                  Nothing from {canonicalName} drew a vote in the {gridPoll} poll.
-                </p>
-              </div>
-            )}
+            <FilmographyGrid
+              films={gridFilms}
+              poll={gridPoll}
+              sort={gridSort}
+              explore={{ director: canonicalName }}
+              emptyMessage={`Nothing from ${canonicalName} drew a vote in the ${gridPoll} poll.`}
+            />
           </section>
 
           {/* The one block on this side of the page that ignores the rail — it
@@ -258,47 +246,7 @@ export default function DirectorDetailPage() {
           </section>
         </div>
       </div>
-    </Shell>
+    </PageShell>
   )
 }
 
-function Shell({ children }) {
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">{children}</div>
-      <Footer />
-    </div>
-  )
-}
-
-function SectionHeading({ title, note, action }) {
-  return (
-    <div className="mb-3 border-b-2 border-black pb-1 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-      <h2 className="text-xl font-black uppercase tracking-tight">{title}</h2>
-      {note && <span className="text-xs text-gray-500">{note}</span>}
-      {action}
-    </div>
-  )
-}
-
-/** Ordering for the filmography grid — scoped to it, so it sits on its heading. */
-function SortToggle({ sort, onChange, rankLabel }) {
-  return (
-    <div className="flex border-2 border-black self-center">
-      {[['rank', rankLabel], ['chrono', 'Chronological']].map(([value, label]) => (
-        <button
-          key={value}
-          type="button"
-          onClick={() => onChange(value)}
-          aria-pressed={sort === value}
-          className={`px-3 py-1 text-[11px] font-bold uppercase tracking-wide transition-colors ${
-            sort === value ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-100'
-          }`}
-        >
-          {label}
-        </button>
-      ))}
-    </div>
-  )
-}

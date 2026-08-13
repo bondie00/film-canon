@@ -1,16 +1,20 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import FilmCardsGrid from '../components/country/FilmCardsGrid'
+import PageShell, { SidebarLayout } from '../components/layout/PageShell'
+import PageTitle from '../components/layout/PageTitle'
+import InfoBanner from '../components/layout/InfoBanner'
+import SectionHeading, { HeadingToggle } from '../components/layout/SectionHeading'
+import FilterCard, { FilterSection } from '../components/filters/FilterCard'
+import PollGrid, { POLL_YEARS } from '../components/filters/PollGrid'
+import MetricToggle from '../components/filters/MetricToggle'
+import FilmographyGrid, { COUNTRY_EXPANDED_ROWS } from '../components/films/FilmographyGrid'
 import DirectorsTreemap from '../components/country/DirectorsTreemap'
 import DecadeHeatmapRows from '../components/country/DecadeHeatmapRows'
 import DecadeRankHeatmap from '../components/country/DecadeRankHeatmap'
 import PollHistoryChart from '../components/country/PollHistoryChart'
 import RankDepthFilter from '../components/RankDepthFilter'
 import { buildRankIndex, resolveTarget, describeDepth, EMPTY_RANK_INDEX } from '../lib/rankDepth'
-
-const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
+import { metricPair, pollLabel } from '../lib/metrics'
 
 // Continent color mapping
 const continentColors = {
@@ -33,7 +37,9 @@ export default function CountryDetail() {
   const [topTarget, setTopTarget] = useState(null)
   // Which quantity every visualization is drawn in. Same control, same default and
   // same reach as the Countries page: it governs the whole page, not a section.
-  const [metric, setMetric] = useState('films')
+  const [metric, setMetric] = useState('votes')
+  // Ordering for the films grid. Scoped to that section, so it sits on its heading.
+  const [gridSort, setGridSort] = useState('rank')
   const [countriesData, setCountriesData] = useState(null)
   const [filmsData, setFilmsData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -162,307 +168,185 @@ export default function CountryDetail() {
     }
   }, [countryFilms, selectedPoll])
 
-  // Helper function for filter text
-  const getFilterText = () => {
-    const pollText = selectedPoll === 'all'
-      ? 'All Polls Combined'
-      : `${selectedPoll} Poll`
-
-    return `${pollText} • ${describeDepth(topTarget, activeDepth.filmCount, activeDepth.minVotes)}`
-  }
-
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center justify-center h-64">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-4 border-black border-t-transparent mx-auto mb-4"></div>
-              <p className="text-black font-medium">Loading country data...</p>
-            </div>
+      <PageShell>
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-black border-t-transparent mx-auto mb-4"></div>
+            <p className="text-black font-medium">Loading country data...</p>
           </div>
         </div>
-        <Footer />
-      </div>
+      </PageShell>
     )
   }
 
   // Error state
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-white border-4 border-black p-8 text-center">
-            <div className="text-6xl mb-4">⚠️</div>
-            <h1 className="text-3xl font-black text-black mb-4 uppercase">Error Loading Data</h1>
-            <p className="text-black mb-6">{error}</p>
-            <Link
-              to="/countries"
-              className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
-            >
-              ← Back to Countries
-            </Link>
-          </div>
+      <PageShell>
+        <div className="bg-white border-4 border-black p-8 text-center">
+          <h1 className="text-3xl font-black text-black mb-4 uppercase">Error Loading Data</h1>
+          <p className="text-black mb-6">{error}</p>
+          <BackToCountries />
         </div>
-        <Footer />
-      </div>
+      </PageShell>
     )
   }
 
   // Country not found
   if (!countryInfo) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-white border-4 border-black p-8 text-center">
-            <div className="text-6xl mb-4">🔍</div>
-            <h1 className="text-3xl font-black text-black mb-4 uppercase">Country Not Found</h1>
-            <p className="text-black mb-6">
-              "{decodedCountryName}" was not found in our database.
-            </p>
-            <Link
-              to="/countries"
-              className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
-            >
-              ← Back to Countries
-            </Link>
-          </div>
+      <PageShell>
+        <div className="bg-white border-4 border-black p-8 text-center">
+          <h1 className="text-3xl font-black text-black mb-4 uppercase">Country Not Found</h1>
+          <p className="text-black mb-6">
+            "{decodedCountryName}" was not found in our database.
+          </p>
+          <BackToCountries />
         </div>
-        <Footer />
-      </div>
+      </PageShell>
     )
   }
 
   const continentColor = continentColors[countryInfo.continent] || '#6b7280'
+  const { primary, secondary } = metricPair(metric, metrics)
+  const filterText = `${pollLabel(selectedPoll)} • ${describeDepth(topTarget, activeDepth.filmCount, activeDepth.minVotes)}`
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-12 gap-8">
-
-          {/* LEFT SIDEBAR - STICKY FILTERS */}
-          <div className="col-span-12 lg:col-span-3">
-            <div className="bg-white border-4 border-black p-6 lg:sticky lg:top-8">
-              <h2 className="text-3xl font-bold text-black mb-6 uppercase tracking-wider">Filters</h2>
-
-              {/* RANK DEPTH - the only control that governs the whole page. The poll
-                  selector lives down with the section it actually scopes. */}
-              <RankDepthFilter
-                index={activeIndex}
-                target={topTarget}
-                onChange={setTopTarget}
+    <PageShell>
+      <SidebarLayout
+        sidebar={
+          <FilterCard>
+            {/* Poll leads the rail, as on the director page. It used to sit inline
+                at the head of a "In the YYYY poll" zone, which made its scope
+                obvious but left the page with controls in two places; now every
+                page-wide control is in one column and the one section that
+                ignores the poll says so on its own heading. */}
+            <FilterSection label="Poll Selection" first>
+              <PollGrid
+                value={selectedPoll}
+                onChange={setSelectedPoll}
+                counts={pollCounts}
+                emptyLabel={poll => `${decodedCountryName} has no films in the ${poll} poll`}
               />
+            </FilterSection>
 
-              {/* METRIC */}
-              <div className="mt-6 pt-6 border-t-2 border-gray-300">
-                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
-                  Metric
-                </label>
-                <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
-                  {['films', 'votes'].map(m => (
-                    <button
-                      key={m}
-                      onClick={() => setMetric(m)}
-                      className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
-                        metric === m
-                          ? 'bg-black text-white border-2 border-black'
-                          : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                      }`}
-                    >
-                      {m}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+            <FilterSection>
+              <RankDepthFilter index={activeIndex} target={topTarget} onChange={setTopTarget} />
+            </FilterSection>
 
-          {/* MAIN CONTENT AREA */}
-          <div className="col-span-12 lg:col-span-9">
+            <FilterSection label="Metric">
+              <MetricToggle value={metric} onChange={setMetric} order={['votes', 'films']} />
+            </FilterSection>
+          </FilterCard>
+        }
+      >
+        <PageTitle crumb={{ to: '/countries', label: 'Countries' }}>
+          {decodedCountryName}
+        </PageTitle>
 
-            {/* BREADCRUMB */}
-            <div className="text-sm text-black mb-2 uppercase tracking-wide">
-              <Link to="/countries" className="hover:underline font-bold">Countries</Link>
-              <span> / </span>
-              <span className="font-bold">{decodedCountryName}</span>
-            </div>
+        <InfoBanner
+          lead={primary}
+          aside={secondary}
+          items={[filterText]}
+          chip={{ label: countryInfo.continent, color: continentColor }}
+          accent={continentColor}
+        />
 
-            {/* PAGE TITLE */}
-            <h1 className="text-6xl font-black text-black mb-6 uppercase tracking-tight border-b-4 border-black pb-4">
-              {decodedCountryName}
-            </h1>
-
-            {/* INFO BANNER */}
-            <div
-              className="bg-white border-2 border-black px-4 py-3 mb-8"
-              style={{ borderLeftWidth: '4px', borderLeftColor: continentColor }}
-            >
-              <div className="text-sm text-black">
-                <span
-                  className="inline-block px-2 py-1 text-white text-xs font-bold uppercase tracking-wide mr-3"
-                  style={{ backgroundColor: continentColor }}
-                >
-                  {countryInfo.continent}
-                </span>
-                <span className="font-bold uppercase tracking-wide">
-                  {metric === 'votes'
-                    ? `${metrics.votes.toLocaleString()} votes`
-                    : `${metrics.films.toLocaleString()} films`}
-                </span>
-                <span className="text-gray-500 font-medium normal-case ml-2">
-                  ({metric === 'votes'
-                    ? `${metrics.films.toLocaleString()} films`
-                    : `${metrics.votes.toLocaleString()} votes`})
-                </span>
-                <span className="mx-2 text-black">|</span>
-                <span className="font-medium">{getFilterText()}</span>
-              </div>
-            </div>
-
-            {/* ZONE 1 - the whole run. The poll selector deliberately doesn't reach
-                these; they're about the arc across all eight polls. */}
-            <div className="mb-6 border-t-4 border-black pt-6">
-              <h2 className="text-2xl font-black text-black uppercase tracking-wide">Over Time</h2>
-            </div>
-
-            <div className="bg-white border-4 border-black p-6 mb-8">
-              <div className="mb-4 border-b-2 border-gray-300 pb-3">
-                <h3 className="text-3xl font-black text-black uppercase tracking-wide">Canon Presence</h3>
-              </div>
-              <PollHistoryChart
-                filmsData={filmsData}
-                countryName={decodedCountryName}
-                cutoffByPoll={cutoffByPoll}
-                metric={metric}
-                topTarget={topTarget}
-                continentColor={continentColor}
+        {/* The films come first. They used to sit at the very bottom, behind four
+            abstract charts, in a bespoke card grid with no poster, no cross-poll
+            rank strip and no link to the film pages. */}
+        <section className="mb-10">
+          <SectionHeading
+            title="The films"
+            action={
+              <HeadingToggle
+                value={gridSort}
+                onChange={setGridSort}
+                options={[
+                  ['rank', selectedPoll === 'all' ? 'Most votes' : 'By rank'],
+                  ['chrono', 'Chronological'],
+                ]}
               />
-            </div>
+            }
+          />
+          <FilmographyGrid
+            films={countryFilms}
+            poll={selectedPoll}
+            sort={gridSort}
+            expandedRows={COUNTRY_EXPANDED_ROWS}
+            explore={{ country: decodedCountryName, top: topTarget }}
+            emptyMessage={`No films from ${decodedCountryName} match the current filters.`}
+          />
+        </section>
 
-            <div className="bg-white border-4 border-black p-6 mb-8">
-              <div className="mb-4 border-b-2 border-gray-300 pb-3">
-                <h3 className="text-3xl font-black text-black uppercase tracking-wide">Decades by Poll</h3>
-              </div>
-              <DecadeHeatmapRows
-                films={allCountryFilms}
-                countryName={decodedCountryName}
-                topTarget={topTarget}
-                cutoffByPoll={cutoffByPoll}
-                metric={metric}
-                continentColor={continentColor}
-              />
-            </div>
+        {/* Ignores the poll rail — these are about the arc across all eight polls,
+            and narrowing to one would leave a single point. */}
+        <section className="mb-10">
+          <SectionHeading
+            title="Canon presence"
+            note="All eight polls, whatever the filter is set to"
+          />
+          <PollHistoryChart
+            filmsData={filmsData}
+            countryName={decodedCountryName}
+            cutoffByPoll={cutoffByPoll}
+            metric={metric}
+            topTarget={topTarget}
+            continentColor={continentColor}
+          />
+        </section>
 
-            {/* ZONE 2 - one poll at a time. The selector sits at the head of the zone
-                rather than in the sidebar, so its scope is self-evident. */}
-            <div className="mb-8 border-t-4 border-black pt-6">
-              <h2 className="text-2xl font-black text-black uppercase tracking-wide mb-3">
-                {selectedPoll === 'all' ? 'All Polls Combined' : `In the ${selectedPoll} Poll`}
-              </h2>
-              <div className="grid grid-cols-5 sm:grid-cols-9 gap-1.5 max-w-2xl">
-                {['all', ...POLL_YEARS].map(opt => {
-                  const value = String(opt)
-                  const active = value === String(selectedPoll)
-                  const count = pollCounts[opt] ?? 0
-                  const empty = count === 0
-                  return (
-                    <button
-                      key={value}
-                      type="button"
-                      disabled={empty}
-                      onClick={() => setSelectedPoll(value)}
-                      title={empty
-                        ? `${decodedCountryName} has no films in the ${value} poll`
-                        : `${count} ${count === 1 ? 'film' : 'films'}`}
-                      className={`py-2 text-sm font-black border-2 transition-colors ${
-                        empty
-                          ? 'border-gray-200 bg-gray-50 text-gray-300 cursor-not-allowed'
-                          : active
-                            ? 'border-black bg-black text-white'
-                            : 'border-black bg-white text-black hover:bg-black hover:text-white'
-                      }`}
-                    >
-                      {opt === 'all' ? 'All' : opt}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
+        <section className="mb-10">
+          <SectionHeading title="Decades by poll" note="All eight polls" />
+          <DecadeHeatmapRows
+            films={allCountryFilms}
+            countryName={decodedCountryName}
+            topTarget={topTarget}
+            cutoffByPoll={cutoffByPoll}
+            metric={metric}
+            continentColor={continentColor}
+          />
+        </section>
 
-            {/* Check if we have enough data */}
-            {countryFilms.length === 0 ? (
-              <div className="bg-white border-4 border-black p-8 text-center">
-                <div className="text-6xl mb-4">📭</div>
-                <h2 className="text-2xl font-black text-black mb-4 uppercase">No Films Found</h2>
-                <p className="text-black">
-                  No films from {decodedCountryName} match the current filter settings.
-                  Try selecting "All Polls Combined" or "All Films" to see more results.
-                </p>
-              </div>
-            ) : (
-              <>
-                {/* VISUALIZATION 1: DECADE × RANK TIER HEATMAP */}
-                <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-4 border-b-2 border-gray-300 pb-3">
-                    <h3 className="text-3xl font-black text-black uppercase tracking-wide">Decades by Rank Tier</h3>
-                  </div>
-                  <DecadeRankHeatmap
-                    films={countryFilms}
-                    selectedPoll={selectedPoll}
-                    topTarget={topTarget}
-                    metric={metric}
-                    continentColor={continentColor}
-                  />
-                </div>
+        <section className="mb-10">
+          <SectionHeading title="Decades by rank tier" />
+          <DecadeRankHeatmap
+            films={countryFilms}
+            selectedPoll={selectedPoll}
+            topTarget={topTarget}
+            metric={metric}
+            continentColor={continentColor}
+          />
+        </section>
 
-                {/* VISUALIZATION 2: DIRECTORS TREEMAP */}
-                <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-4 border-b-2 border-gray-300 pb-3">
-                    <h3 className="text-3xl font-black text-black uppercase tracking-wide">Directors</h3>
-                  </div>
-                  <DirectorsTreemap
-                    films={countryFilms}
-                    selectedPoll={selectedPoll}
-                    metric={metric}
-                    continentColor={continentColor}
-                  />
-                </div>
+        <section className="mb-10">
+          <SectionHeading title="Directors" />
+          <DirectorsTreemap
+            films={countryFilms}
+            selectedPoll={selectedPoll}
+            metric={metric}
+            continentColor={continentColor}
+          />
+        </section>
 
-                {/* ALL FILMS GRID */}
-                <div className="bg-white border-4 border-black p-6 mb-8">
-                  <div className="mb-4 border-b-2 border-gray-300 pb-3">
-                    <h3 className="text-3xl font-black text-black uppercase tracking-wide">All Films</h3>
-                  </div>
-                  <FilmCardsGrid
-                    films={countryFilms}
-                    selectedPoll={selectedPoll}
-                    continentColor={continentColor}
-                  />
-                </div>
-              </>
-            )}
-
-            {/* BACK NAVIGATION */}
-            <div className="text-center">
-              <Link
-                to="/countries"
-                className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
-              >
-                ← Back to All Countries
-              </Link>
-            </div>
-
-          </div>
+        <div className="text-center">
+          <BackToCountries label="← Back to all countries" />
         </div>
-      </div>
+      </SidebarLayout>
+    </PageShell>
+  )
+}
 
-      <Footer />
-    </div>
+function BackToCountries({ label = '← Back to Countries' }) {
+  return (
+    <Link
+      to="/countries"
+      className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
+    >
+      {label}
+    </Link>
   )
 }

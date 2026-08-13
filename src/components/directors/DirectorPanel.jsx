@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import GridTile, { withCurrent } from '../search/GridTile'
+import { exploreUrl } from '../../lib/exploreUrl'
 
 // Cap posters shown in the panel; the rest live on the Explore page.
 const PANEL_FILM_CAP = 30
@@ -17,10 +18,7 @@ export default function DirectorPanel({ row, metric = 'votes', selectedPoll, top
   const filmLabel = `${row.films.toLocaleString()} ${row.films === 1 ? 'film' : 'films'}`
   const voteLabel = `${row.votes.toLocaleString()} votes`
 
-  const exploreParams = new URLSearchParams()
-  if (selectedPoll) exploreParams.set('poll', selectedPoll)
-  exploreParams.append('director', row.name)
-  if (topTarget != null) exploreParams.set('top', String(topTarget))
+  const exploreLink = exploreUrl({ poll: selectedPoll, director: row.name, top: topTarget })
 
   return (
     <div className="absolute inset-0 z-20 flex items-center justify-center p-4 pointer-events-none">
@@ -89,7 +87,7 @@ export default function DirectorPanel({ row, metric = 'votes', selectedPoll, top
           </div>
 
           <Link
-            to={`/explore?${exploreParams.toString()}`}
+            to={exploreLink}
             className="mt-3 block w-full text-center px-4 py-2 bg-black text-white border-2 border-black font-bold text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors"
           >
             {row.films > PANEL_FILM_CAP

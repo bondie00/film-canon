@@ -10,6 +10,7 @@ import { COUNTRY_NAME_TO_ISO } from './countryCodeMapping'
 import { pollKeyOf, pollEntryOf } from '../../lib/rankDepth'
 import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
 import GridTile, { withCurrent } from '../search/GridTile'
+import { exploreUrl } from '../../lib/exploreUrl'
 
 // Natural Earth 110m world topology - lower resolution for performance
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
@@ -30,16 +31,6 @@ function CountryTitleLink({ name }) {
       </svg>
     </Link>
   )
-}
-
-// Build an Explore-page link carrying the current filters. Both pages read the same
-// params with the same meaning, so the rank depth transfers as-is.
-function buildExploreUrl(countryNames, poll, topTarget) {
-  const params = new URLSearchParams()
-  if (poll) params.set('poll', poll)
-  countryNames.forEach(n => params.append('country', n))
-  if (topTarget != null) params.set('top', String(topTarget))
-  return `/explore?${params.toString()}`
 }
 
 // Split overseas territories so they don't get colored as their parent country.
@@ -670,7 +661,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
                       {country.films.length > 0 && (
                         <Link
-                          to={buildExploreUrl([country.name], selectedPoll, topTarget)}
+                          to={exploreUrl({ poll: selectedPoll, country: country.name, top: topTarget })}
                           className="mt-3 block w-full text-center px-4 py-2 bg-black text-white border-2 border-black font-bold text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors"
                         >
                           {country.films.length > PANEL_FILM_CAP
@@ -728,7 +719,7 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
 
                   {selectedCountryData.countries[0].films.length > 0 && (
                     <Link
-                      to={buildExploreUrl([selectedCountryData.countries[0].name], selectedPoll, topTarget)}
+                      to={exploreUrl({ poll: selectedPoll, country: selectedCountryData.countries[0].name, top: topTarget })}
                       className="mt-3 block w-full text-center px-4 py-2 bg-black text-white border-2 border-black font-bold text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors"
                     >
                       {selectedCountryData.countries[0].films.length > PANEL_FILM_CAP
