@@ -1,13 +1,19 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import PageShell, { SidebarLayout } from '../components/layout/PageShell'
+import PageTitle from '../components/layout/PageTitle'
+import InfoBanner from '../components/layout/InfoBanner'
+import VizCard from '../components/layout/VizCard'
+import FilterCard, { FilterSection } from '../components/filters/FilterCard'
+import PollGrid from '../components/filters/PollGrid'
+import MetricToggle from '../components/filters/MetricToggle'
 import TopCountriesBarChart from '../components/TopCountriesBarChart'
 import WorldMapChoropleth from '../components/WorldMapChoropleth'
 import DecadeCountryHeatmap from '../components/country/DecadeCountryHeatmap'
 import RankDepthFilter from '../components/RankDepthFilter'
 import useCountryAggregates from '../hooks/useCountryAggregates'
 import { buildRankIndex, resolveTarget, describeDepth, EMPTY_RANK_INDEX } from '../lib/rankDepth'
+import { metricPair, pollLabel } from '../lib/metrics'
 
 const VALID_POLLS = ['all', '1952', '1962', '1972', '1982', '1992', '2002', '2012', '2022']
 
@@ -32,9 +38,17 @@ export default function CountryOriginMain() {
   const setSelectedPoll = useCallback((poll) => setParam('poll', poll), [setParam])
   const setTopTarget = useCallback((target) => setParam('top', target), [setParam])
 
-  // Which quantity drives sizing/color/sorting: 'films' (breadth, era-neutral,
-  // default) or 'votes' (canonical weight). See CLAUDE.md metrics section.
-  const [metric, setMetric] = useState('films')
+  // Which quantity drives sizing/color/sorting: 'votes' (canonical weight,
+  // default) or 'films' (breadth, era-neutral). See CLAUDE.md metrics section.
+  //
+  // Votes leads because the DEPTH default leads: the page opens at All films,
+  // and across the whole field breadth is the less interesting half of the
+  // story — every country's bar is its long tail. Tighten the depth to a Top 100
+  // and it inverts, because inside a small consensus set the counts are small
+  // and legible and votes start re-concentrating on a handful of masterpieces.
+  // The metric follows the depth, so the default follows the default depth —
+  // which is also what Directors does, so the two hubs now open the same way.
+  const [metric, setMetric] = useState('votes')
   const [countriesData, setCountriesData] = useState(null)
   const [filmsData, setFilmsData] = useState(null)
 
@@ -77,161 +91,66 @@ export default function CountryOriginMain() {
     return { countries, votes: aggregates._totals.votes, films: aggregates._totals.films }
   }, [aggregates, selectedPoll])
 
-  // Helper function to generate filter description text
-  const getFilterText = () => {
-    const pollText = selectedPoll === 'all'
-      ? 'All Polls Combined'
-      : `${selectedPoll} Poll`
-
-    return `${pollText} • ${describeDepth(topTarget, depthFilmCount, depthMinVotes)}`
-  }
-
+  const { primary, secondary } = metricPair(metric, metrics)
+  const filterText = `${pollLabel(selectedPoll)} • ${describeDepth(topTarget, depthFilmCount, depthMinVotes)}`
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
+      <SidebarLayout
+        sidebar={
+          <FilterCard>
+            <FilterSection label="Poll Selection" first>
+              <PollGrid value={selectedPoll} onChange={setSelectedPoll} />
+            </FilterSection>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-12 gap-8">
+            {/* Shared with /explore and the country pages */}
+            <FilterSection>
+              <RankDepthFilter index={rankIndex} target={topTarget} onChange={setTopTarget} />
+            </FilterSection>
 
-          {/* LEFT SIDEBAR - STICKY FILTERS */}
-          <div className="col-span-12 lg:col-span-3">
-            <div className="bg-white border-4 border-black p-6 lg:sticky lg:top-8">
-              <h2 className="text-3xl font-bold text-black mb-6 uppercase tracking-wider">Filters</h2>
+            <FilterSection label="Metric">
+              <MetricToggle value={metric} onChange={setMetric} order={['votes', 'films']} />
+            </FilterSection>
+          </FilterCard>
+        }
+      >
+        <PageTitle>Countries</PageTitle>
 
-              {/* POLL SELECTION FILTER */}
-              <div className="mb-6 pb-6 border-b-2 border-gray-300">
-                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
-                  Poll Selection
-                </label>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {['all', 1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022].map(opt => {
-                    const value = String(opt)
-                    const active = value === String(selectedPoll)
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        onClick={() => setSelectedPoll(value)}
-                        className={`py-2 text-sm font-black border-2 transition-colors ${
-                          active
-                            ? 'border-black bg-black text-white'
-                            : 'border-black bg-white text-black hover:bg-black hover:text-white'
-                        }`}
-                      >
-                        {opt === 'all' ? 'All' : opt}
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
+        <InfoBanner
+          lead={`${metrics.countries} countries • ${primary}`}
+          aside={secondary}
+          items={[filterText]}
+        />
 
-              {/* RANK DEPTH FILTER — shared with /explore and the country pages */}
-              <div>
-                <RankDepthFilter
-                  index={rankIndex}
-                  target={topTarget}
-                  onChange={setTopTarget}
-                />
-              </div>
+        <VizCard title="Global Distribution">
+          <WorldMapChoropleth
+            countriesData={aggregates}
+            filmsData={filmsData}
+            selectedPoll={selectedPoll}
+            cutoffRank={cutoffRank}
+            topTarget={topTarget}
+            metric={metric}
+          />
+        </VizCard>
 
-              {/* METRIC FILTER */}
-              <div className="mt-6 pt-6 border-t-2 border-gray-300">
-                <label className="block text-sm font-semibold text-black mb-3 uppercase tracking-wide">
-                  Metric
-                </label>
-                <div className="grid grid-cols-2 gap-2 bg-white border-2 border-black p-1">
-                  <button
-                    onClick={() => setMetric('films')}
-                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
-                      metric === 'films'
-                        ? 'bg-black text-white border-2 border-black'
-                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                    }`}
-                  >
-                    Films
-                  </button>
-                  <button
-                    onClick={() => setMetric('votes')}
-                    className={`py-3 px-3 text-xs font-bold uppercase tracking-wide transition-all ${
-                      metric === 'votes'
-                        ? 'bg-black text-white border-2 border-black'
-                        : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                    }`}
-                  >
-                    Votes
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <TopCountriesBarChart
+          countriesData={aggregates}
+          selectedPoll={selectedPoll}
+          cutoffRank={cutoffRank}
+          topTarget={topTarget}
+          filmsData={filmsData}
+          metric={metric}
+        />
 
-          {/* MAIN CONTENT AREA - VISUALIZATIONS */}
-          <div className="col-span-12 lg:col-span-9">
-
-            {/* PAGE TITLE */}
-            <h1 className="text-6xl font-black text-black mb-6 uppercase tracking-tight border-b-4 border-black pb-4">Countries</h1>
-
-            {/* INFO BANNER */}
-            <div className="bg-white border-2 border-black px-4 py-3 mb-8">
-              <div className="text-sm text-black">
-                <span className="font-bold uppercase tracking-wide">
-                  {metrics.countries} countries • {metric === 'votes'
-                    ? `${metrics.votes.toLocaleString()} votes`
-                    : `${metrics.films.toLocaleString()} films`}
-                </span>
-                <span className="text-gray-500 font-medium ml-2">
-                  ({metric === 'votes'
-                    ? `${metrics.films.toLocaleString()} films`
-                    : `${metrics.votes.toLocaleString()} votes`})
-                </span>
-                <span className="mx-2 text-black">|</span>
-                <span className="font-medium">{getFilterText()}</span>
-              </div>
-            </div>
-
-            {/* VISUALIZATION 1: WORLD MAP */}
-            <div className="bg-white border-4 border-black p-6 mb-8">
-              <div className="mb-4 border-b-2 border-gray-300 pb-3">
-                <h2 className="text-3xl font-black text-black uppercase tracking-wide">Global Distribution</h2>
-              </div>
-
-              {/* World Map Choropleth */}
-              <WorldMapChoropleth
-                countriesData={aggregates}
-                filmsData={filmsData}
-                selectedPoll={selectedPoll}
-                cutoffRank={cutoffRank}
-                topTarget={topTarget}
-                metric={metric}
-              />
-            </div>
-
-            {/* VISUALIZATION 2: BAR CHART - TOP COUNTRIES */}
-            <TopCountriesBarChart
-              countriesData={aggregates}
-              selectedPoll={selectedPoll}
-              cutoffRank={cutoffRank}
-              topTarget={topTarget}
-              filmsData={filmsData}
-              metric={metric}
-            />
-
-            {/* VISUALIZATION 3: DECADE HEATMAP - COUNTRIES x DECADES */}
-            <DecadeCountryHeatmap
-              countriesData={aggregates}
-              filmsData={filmsData}
-              selectedPoll={selectedPoll}
-              cutoffRank={cutoffRank}
-              topTarget={topTarget}
-              metric={metric}
-            />
-
-          </div>
-        </div>
-      </div>
-
-      <Footer />
-    </div>
+        <DecadeCountryHeatmap
+          countriesData={aggregates}
+          filmsData={filmsData}
+          selectedPoll={selectedPoll}
+          cutoffRank={cutoffRank}
+          topTarget={topTarget}
+          metric={metric}
+        />
+      </SidebarLayout>
+    </PageShell>
   )
 }

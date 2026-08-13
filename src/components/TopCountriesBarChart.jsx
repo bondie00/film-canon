@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import CountryPanel from './country/CountryPanel'
+import VizCard from './layout/VizCard'
 import { filmsForCountry, assignCompetitionRanks } from '../lib/countryFilms'
 import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../utils/tooltip'
 
@@ -486,10 +487,10 @@ export default function TopCountriesBarChart({ countriesData, selectedPoll = '20
   }
 
   return (
-    <div className="bg-white border-4 border-black p-6 mb-8">
-      <div className="mb-4 border-b-2 border-gray-300 pb-3">
-        <h2 className="text-3xl font-black text-black mb-4 uppercase tracking-wide">Countries Ranked</h2>
-
+    <VizCard
+      title="Countries Ranked"
+      controls={
+      <>
         {/* Quick Filter Buttons */}
         <div className="flex flex-wrap gap-2">
           <div className="bg-white border-2 border-black p-1 flex-shrink-0">
@@ -564,7 +565,9 @@ export default function TopCountriesBarChart({ countriesData, selectedPoll = '20
             </button>
           </div>
         </div>
-      </div>
+      </>
+      }
+    >
 
       {/* BAR CHART with expanded panel overlay */}
       <div ref={chartContainerRef} className="relative" style={selectedCountryData ? { minHeight: `${expandedMinHeight}px` } : undefined}>
@@ -816,6 +819,6 @@ export default function TopCountriesBarChart({ countriesData, selectedPoll = '20
         )}
       </div>
       )}
-    </div>
+    </VizCard>
   )
 }

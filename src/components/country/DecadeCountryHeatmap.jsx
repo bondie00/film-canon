@@ -2,6 +2,7 @@ import { useMemo, useState, useRef, useEffect, useCallback } from 'react'
 import useCountrySelection from '../../hooks/useCountrySelection'
 import { CountryQuickFilters, CountrySearchDropdown } from './CountrySelectionControls'
 import CountryPanel from './CountryPanel'
+import VizCard from '../layout/VizCard'
 import { continentColors, shadeToward } from '../../utils/continents'
 import { ALL_DECADES, decadeColumns } from '../../utils/decades'
 import { filmsForCountry } from '../../lib/countryFilms'
@@ -168,14 +169,12 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
   }, [selectedCountryData])
 
   return (
-    <div className="bg-white border-4 border-black p-6 mb-8">
-      <div className="mb-4 border-b-2 border-gray-300 pb-3">
-        <h2 className="text-3xl font-black text-black mb-4 uppercase tracking-wide">Films by Decade</h2>
-
+    <VizCard
+      title="Films by Decade"
+      controls={
+      <>
         {/* Quick filters */}
-        <div className="mt-4">
-          <CountryQuickFilters sel={quickFilterSel} />
-        </div>
+        <CountryQuickFilters sel={quickFilterSel} />
 
         {/* Continents view toggle - its own row, matching the bar chart */}
         <div className="flex mt-2">
@@ -195,7 +194,9 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
             </button>
           </div>
         </div>
-      </div>
+      </>
+      }
+    >
 
       {rows.length === 0 || decades.length === 0 ? (
         <div className="bg-gray-50 border-2 border-dashed border-gray-300 h-64 flex items-center justify-center text-center">
@@ -327,6 +328,6 @@ export default function DecadeCountryHeatmap({ countriesData, filmsData, selecte
           continents view, where there's no per-country selection to customize. */}
       {viewMode === 'countries' && <CountrySearchDropdown sel={sel} />}
 
-    </div>
+    </VizCard>
   )
 }

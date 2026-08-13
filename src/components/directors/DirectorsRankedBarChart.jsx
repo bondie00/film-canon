@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
 import DirectorPanel from './DirectorPanel'
-import TierLegend from './TierLegend'
+import VizCard from '../layout/VizCard'
 import { TIER_COLORS, tierIndexForRank } from '../director/rankTiers'
 import { orderRows } from './rankedField'
 import useDirectorSelection from '../../hooks/useDirectorSelection'
@@ -41,8 +41,8 @@ function niceStep(raw) {
  * because nothing anchors it: his best film, Breathless, is 22% of his total and
  * the bar is mostly pale. Akerman ranks #2 on 312 votes from a bar barely half as
  * long, because 215 of those votes are Jeanne Dielman alone. Reading length
- * against order is reading breadth against weight, which is why the subtitle
- * names both.
+ * against order is reading breadth against weight; the axis label names the
+ * length and the sidebar's metric toggle names the order, so no caption has to.
  *
  * Implemented as a STACKED bar: one Recharts <Bar> per film slot, each carrying a
  * value of 1, so the x-axis is a plain film count and every tile is a real rect
@@ -73,11 +73,6 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
     }),
     [sel.selectedData, rankKey, valueKey]
   )
-
-  // Top N selects on rank, so a tie straddling the boundary brings its whole
-  // block in and the row count can exceed the number on the button. Said out
-  // loud rather than left as a chart that quietly holds 11 rows under "Top 10".
-  const tiedOverflow = sel.isTopNMode ? Math.max(0, chartData.length - sel.topN) : 0
 
   const maxFilms = useMemo(
     () => chartData.reduce((max, row) => Math.max(max, row.films), 0),
@@ -240,28 +235,7 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
   const hoveredFilm = hover ? hover.row.filmList[hover.filmIndex] : null
 
   return (
-    <div className="bg-white border-4 border-black p-6 mb-8">
-      <div className="mb-4 border-b-2 border-gray-300 pb-3">
-        <h2 className="text-3xl font-black text-black mb-1 uppercase tracking-wide">Directors Ranked</h2>
-        <p className="text-xs text-gray-500 mb-4">
-          One tile per film, shaded by its rank · bar length is films, ordered by{' '}
-          {metric === 'films' ? 'film count' : 'votes'}, so a long pale bar can sit below a short dark one
-          {tiedOverflow > 0 && (
-            <>
-              {' · '}
-              <span className="font-bold text-black">
-                showing {chartData.length} — {tiedOverflow === 1 ? 'a director ties' : `${tiedOverflow} directors tie`}{' '}
-                at the cut
-              </span>
-            </>
-          )}
-        </p>
-
-        <DirectorQuickFilters sel={sel} />
-
-        {cuts && <TierLegend cuts={cuts} className="mt-3" />}
-      </div>
-
+    <VizCard title="Directors Ranked" controls={<DirectorQuickFilters sel={sel} />}>
       <div
         ref={chartContainerRef}
         className="relative"
@@ -341,7 +315,7 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
 
       {/* Search-and-add sits BELOW the chart, as on the countries page. */}
       <DirectorSearchDropdown sel={sel} />
-    </div>
+    </VizCard>
   )
 
 }

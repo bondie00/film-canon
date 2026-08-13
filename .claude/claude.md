@@ -715,9 +715,11 @@ xl: 1280px  // Full layout
 - **Different visualization strategies needed for consensus vs. diversity**
 - Compare mode should show changes/differences clearly
 
-### Metrics: Distinct Films (primary) vs. Votes (secondary)
+### Metrics: Distinct Films vs. Votes
 
-**PRIMARY METRIC: Distinct Films**
+> **Note on the default.** The sections immediately below argue for distinct films as the primary
+> metric, and that reasoning still stands for what the two metrics *mean*. The page's opening view
+> has since changed to **Votes** — see **Metric toggle** at the end of this section for why.
 
 For the Country Origin visualizations, the primary metric is the **distinct film count** — the
 number of unique films a country contributed. Votes are kept only as a **secondary** detail
@@ -747,15 +749,28 @@ polls re-imports the exact recency bias we're avoiding — most film-poll events
 Depth control (and per-film votes remain visible in drill-down lists), so the headline metric
 doesn't need to encode it.
 
-**Metric toggle.** The Films by Country page has a **Metric** control in the filter sidebar
-(under Poll and Rank Depth) that switches every visualization — map, bar chart, continent
-breakdown, share-over-time — between **Films** (default) and **Votes**. It's a single page-level
-control (state in `CountryOriginMain`, passed as a `metric` prop to each component); keep all viz on
-one metric rather than per-card toggles. Films is the default because it's era-neutral and intuitive;
-Votes is the opt-in "canonical weight" view. Whichever is active drives sizing/color/sorting and the
-bold label; the other shows as the secondary line in tooltips and panels. When **Votes + All Polls
-Combined** is selected, the cross-poll recency distortion returns (2012/2022 dominate) — the sidebar
-copy flags that votes are best read within a single poll.
+**Metric toggle.** Both hub pages have a **Metric** control in the filter sidebar (under Poll and
+Rank Depth) that switches every visualization on the page — map, bar chart, continent breakdown,
+share-over-time — between **Votes** and **Films**. It's a single page-level control (state in
+`CountryOriginMain` / `DirectorsMain`, passed as a `metric` prop to each component); keep all viz on
+one metric rather than per-card toggles. Whichever is active drives sizing/color/sorting and the bold
+label; the other shows as the secondary line in tooltips and panels.
+
+**Votes is the default on both pages, because the metric follows the rank depth.** The pages open at
+**All films**, and across the whole field breadth says little — every country's bar is mostly its
+long tail, and the counts run to the thousands. Votes is what separates countries at that depth.
+Tighten to a Top 100 and it inverts: inside a small consensus set the film counts are small and
+legible, while votes re-concentrate on a handful of masterpieces. So: **all films → votes, tight
+depth → films**, and the default metric matches the default depth. This is a change from the
+original Films default (the reasoning for which is preserved in the sections above, and still holds
+for what each metric *means* — only the opening view changed). Directors reaches the same default by
+a second route: two thirds of directors place exactly one film, so ranking them by films is mostly
+ties.
+
+The toggle renders **Votes first** on both pages; `MetricToggle`'s `order` prop carries it. When
+**Votes + All Polls Combined** is selected, the cross-poll recency distortion returns (2012/2022
+dominate) — votes are best read within a single poll. This used to be stated in sidebar copy, which
+has been removed: the hub pages carry no explanatory prose, no chart subtitles and no legends.
 
 **Data fields.** The country pages no longer read `countries.json`'s per-poll buckets — those only
 cover two fixed depths and can't answer an arbitrary cutoff. `useCountryAggregates` recomputes them
