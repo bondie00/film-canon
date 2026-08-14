@@ -16,7 +16,7 @@ const startYear = film => parseInt(String(film.Year ?? ''), 10)
  * answer neither "the 1972 poll" nor any depth other than the whole poll. One
  * memoized pass over ~4,800 films answers every combination instead.
  *
- * Co-directed films count in full for each director, matching directorStandings
+ * Co-directed films count in full for each director, matching lib/standings.js
  * and the director detail pages.
  *
  * Each row carries both metrics, the span of their canonized work, and topShare —

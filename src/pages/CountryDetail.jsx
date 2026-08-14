@@ -1,20 +1,19 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import PageShell, { SidebarLayout } from '../components/layout/PageShell'
-import PageTitle from '../components/layout/PageTitle'
-import InfoBanner from '../components/layout/InfoBanner'
+import DetailHeader, { Figure } from '../components/layout/DetailHeader'
 import SectionHeading, { HeadingToggle } from '../components/layout/SectionHeading'
 import FilterCard, { FilterSection } from '../components/filters/FilterCard'
 import PollGrid, { POLL_YEARS } from '../components/filters/PollGrid'
-import MetricToggle from '../components/filters/MetricToggle'
 import FilmographyGrid, { COUNTRY_EXPANDED_ROWS } from '../components/films/FilmographyGrid'
-import DirectorsTreemap from '../components/country/DirectorsTreemap'
+import DirectorsRanked from '../components/country/DirectorsRanked'
 import DecadeHeatmapRows from '../components/country/DecadeHeatmapRows'
-import DecadeRankHeatmap from '../components/country/DecadeRankHeatmap'
-import PollHistoryChart from '../components/country/PollHistoryChart'
+import StandingStrip from '../components/standing/StandingStrip'
+import StandingChart from '../components/standing/StandingChart'
 import RankDepthFilter from '../components/RankDepthFilter'
 import { buildRankIndex, resolveTarget, describeDepth, EMPTY_RANK_INDEX } from '../lib/rankDepth'
-import { metricPair, pollLabel } from '../lib/metrics'
+import { buildCountryStandings, standingByPoll } from '../lib/standings'
+import { pollLabel } from '../lib/metrics'
 
 // Continent color mapping
 const continentColors = {
@@ -35,9 +34,12 @@ export default function CountryDetail() {
   // Film-count target for the rank-depth filter (null = all films), same units
   // and same control as the Countries page and /explore.
   const [topTarget, setTopTarget] = useState(null)
-  // Which quantity every visualization is drawn in. Same control, same default and
-  // same reach as the Countries page: it governs the whole page, not a section.
-  const [metric, setMetric] = useState('votes')
+  // No metric toggle here, unlike the Countries hub. On a hub the switch is
+  // load-bearing — it reorders the field (Italy and the UK swap, Belgium falls
+  // #7 to #23), which is the whole point of a hub. A detail page has no field to
+  // reorder, and most of what's on this one can't answer to a metric at all:
+  // standing is a rank, and the decade bars shade by rank tier. So each section
+  // uses the quantity that suits it, as the director page already does.
   // Ordering for the films grid. Scoped to that section, so it sits on its heading.
   const [gridSort, setGridSort] = useState('rank')
   const [countriesData, setCountriesData] = useState(null)
@@ -90,6 +92,17 @@ export default function CountryDetail() {
     })
     return out
   }, [rankIndexes, topTarget])
+
+  // Ranks every country in every poll. Built from the whole dataset, not this
+  // country's films — a standing needs the field it was drawn from.
+  const standings = useMemo(
+    () => (filmsData ? buildCountryStandings(filmsData) : null),
+    [filmsData]
+  )
+  const standingRows = useMemo(
+    () => standingByPoll(standings, decodedCountryName),
+    [standings, decodedCountryName]
+  )
 
   const activeIndex = rankIndexes[selectedPoll] || EMPTY_RANK_INDEX
   const activeDepth = useMemo(() => resolveTarget(activeIndex, topTarget), [activeIndex, topTarget])
@@ -144,9 +157,23 @@ export default function CountryDetail() {
     })
   }, [filmsData, decodedCountryName, selectedPoll, cutoffByPoll])
 
-  // Calculate metrics
+  // The header's figures. Every one of them is drawn from the FILTERED set, so
+  // the header reports what the rail selects — tightening the depth narrows the
+  // year span and drops the directors who only place in the long tail.
   const metrics = useMemo(() => {
-    if (!countryFilms.length) return { films: 0, votes: 0 }
+    if (!countryFilms.length) {
+      return { films: 0, votes: 0, directors: 0, span: null }
+    }
+
+    const years = []
+    const directors = new Set()
+    countryFilms.forEach(film => {
+      const y = parseInt(String(film.Year ?? '').split(/[-–]/)[0], 10)
+      if (!Number.isNaN(y)) years.push(y)
+      ;(film.directors || []).forEach(d => {
+        if (d && d !== '(unknown)') directors.add(d)
+      })
+    })
 
     let totalVotes = 0
     countryFilms.forEach(film => {
@@ -164,7 +191,9 @@ export default function CountryDetail() {
 
     return {
       films: countryFilms.length,
-      votes: totalVotes
+      votes: totalVotes,
+      directors: directors.size,
+      span: years.length ? `${Math.min(...years)}–${Math.max(...years)}` : null,
     }
   }, [countryFilms, selectedPoll])
 
@@ -211,11 +240,40 @@ export default function CountryDetail() {
   }
 
   const continentColor = continentColors[countryInfo.continent] || '#6b7280'
-  const { primary, secondary } = metricPair(metric, metrics)
+  // What the rail is currently showing. This used to sit in the header banner
+  // beside the country's totals, which conflated two different things — the size
+  // of the canon and the size of the current slice of it. It reads better next to
+  // the controls that produce it, which is where the director page puts it.
   const filterText = `${pollLabel(selectedPoll)} • ${describeDepth(topTarget, activeDepth.filmCount, activeDepth.minVotes)}`
 
   return (
     <PageShell>
+      {/* Above the split, not inside it — the header names the whole page, so it
+          runs full width rather than being inset into the content column. Same
+          shape as the director page. */}
+      <DetailHeader
+        crumb={{ to: '/countries', label: 'Countries' }}
+        chip={{ label: countryInfo.continent, color: continentColor }}
+        title={decodedCountryName}
+        facts={[
+          <Figure key="films" value={metrics.films.toLocaleString()}>
+            {metrics.films === 1 ? 'film' : 'films'}
+          </Figure>,
+          <Figure key="votes" value={metrics.votes.toLocaleString()}>
+            {metrics.votes === 1 ? 'vote' : 'votes'}
+          </Figure>,
+          metrics.directors > 0 && (
+            <Figure key="dirs" value={metrics.directors.toLocaleString()}>
+              {metrics.directors === 1 ? 'director' : 'directors'}
+            </Figure>
+          ),
+          metrics.span && <span key="span" className="tabular-nums">{metrics.span}</span>,
+          // What the rail is set to, de-emphasised — it names the figures above
+          // rather than being one of them.
+          <span key="filter" className="text-gray-400">{filterText}</span>,
+        ]}
+      />
+
       <SidebarLayout
         sidebar={
           <FilterCard>
@@ -237,24 +295,9 @@ export default function CountryDetail() {
               <RankDepthFilter index={activeIndex} target={topTarget} onChange={setTopTarget} />
             </FilterSection>
 
-            <FilterSection label="Metric">
-              <MetricToggle value={metric} onChange={setMetric} order={['votes', 'films']} />
-            </FilterSection>
           </FilterCard>
         }
       >
-        <PageTitle crumb={{ to: '/countries', label: 'Countries' }}>
-          {decodedCountryName}
-        </PageTitle>
-
-        <InfoBanner
-          lead={primary}
-          aside={secondary}
-          items={[filterText]}
-          chip={{ label: countryInfo.continent, color: continentColor }}
-          accent={continentColor}
-        />
-
         {/* The films come first. They used to sit at the very bottom, behind four
             abstract charts, in a bespoke card grid with no poster, no cross-poll
             rank strip and no link to the film pages. */}
@@ -282,53 +325,62 @@ export default function CountryDetail() {
           />
         </section>
 
-        {/* Ignores the poll rail — these are about the arc across all eight polls,
-            and narrowing to one would leave a single point. */}
-        <section className="mb-10">
-          <SectionHeading
-            title="Canon presence"
-            note="All eight polls, whatever the filter is set to"
-          />
-          <PollHistoryChart
-            filmsData={filmsData}
-            countryName={decodedCountryName}
-            cutoffByPoll={cutoffByPoll}
-            metric={metric}
-            topTarget={topTarget}
-            continentColor={continentColor}
-          />
-        </section>
+        {/* Ignores the poll rail — this ranks the COUNTRY across all eight polls,
+            so a single poll isn't an input to it. Strip above, chart below, as on
+            the director and film pages: the strip is the per-poll lookup, the
+            chart is the trend and the field-depth context the cells have no room
+            for. Replaced a share-of-poll chart whose percentages were so small
+            that half the countries needed two decimals to avoid reading as 0.0%,
+            and which could never say "France is the #2 country". */}
+        {standings && (
+          <section className="mb-10">
+            <SectionHeading
+              title="Among all countries"
+              note="All eight polls, whatever the filter is set to"
+            />
+            <StandingStrip rows={standingRows} />
+            <StandingChart
+              rows={standingRows}
+              noun="country"
+              nounPlural="countries"
+              color={continentColor}
+            />
+          </section>
+        )}
 
         <section className="mb-10">
-          <SectionHeading title="Decades by poll" note="All eight polls" />
+          {/* Ignores the poll rail, like the standing section above — the poll is
+              an AXIS here rather than a filter. It earns one because a country
+              has the density to spend a dimension on it (France fills 69% of the
+              poll x decade grid, Japan 52%); the director page's decade chart
+              spends the poll as a control instead, because 73% of directors span
+              a single decade and would draw an eight-row grid to show one number.
+              Same phrasing as the standing sections, so "whatever the filter is
+              set to" means the same thing wherever it appears. */}
+          <SectionHeading
+            title="Decades by poll"
+            note="All eight polls, whatever the filter is set to"
+          />
           <DecadeHeatmapRows
             films={allCountryFilms}
             countryName={decodedCountryName}
             topTarget={topTarget}
             cutoffByPoll={cutoffByPoll}
-            metric={metric}
-            continentColor={continentColor}
-          />
-        </section>
-
-        <section className="mb-10">
-          <SectionHeading title="Decades by rank tier" />
-          <DecadeRankHeatmap
-            films={countryFilms}
-            selectedPoll={selectedPoll}
-            topTarget={topTarget}
-            metric={metric}
             continentColor={continentColor}
           />
         </section>
 
         <section className="mb-10">
           <SectionHeading title="Directors" />
-          <DirectorsTreemap
+          {/* Votes, matching the standing chart. Ranking a country's directors by
+              film count is mostly ties down the tail — the great majority place
+              one film — so votes are what separate them. */}
+          <DirectorsRanked
             films={countryFilms}
             selectedPoll={selectedPoll}
-            metric={metric}
             continentColor={continentColor}
+            country={decodedCountryName}
+            topTarget={topTarget}
           />
         </section>
 

@@ -1,9 +1,24 @@
 // Categorical colors for per-line identity.
 //
 // CURRENTLY UNUSED — its only consumer was the director page's rank-trajectory
-// chart, cut when the standing chart took that slot. Kept for the validation
-// record below, which cost real work and applies to any future multi-line chart
-// on this surface (the directors hub, where several directors share one plot).
+// chart, cut twice now. First when the standing chart took that slot; then again
+// after it was restored and prototyped beside a multi-series version of the
+// standing chart, because BOTH failed at the job they were brought back for.
+//
+// Worth knowing before proposing a third: the question they were meant to answer
+// is "how did this director's films move across the polls", and RANK cannot
+// answer it. Notorious falls #33 to #133 while its votes go 6 to 22 — the
+// electorate grew 13x underneath it — and in the tail a rank is a tie-block
+// label rather than a position (2,165 films share #1652 in 2022). Vote share is
+// the measure that works, and voteShare() in utils/polls already computes it:
+// Rear Window 1.2% → 3.2% of voters, Notorious 4.9% → 1.3%, which is the real
+// story rank told backwards. The filmography grid's per-tile rank strips, read
+// against the poll filter, already cover this well enough that no chart earned
+// the space.
+//
+// Kept for the validation record below, which cost real work and applies to any
+// future multi-line chart on this surface (the directors hub, where several
+// directors share one plot).
 //
 // Each plotted line needs its own hue.
 // This is the eight-slot categorical set from the dataviz standard, validated

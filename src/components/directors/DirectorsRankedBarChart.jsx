@@ -2,15 +2,11 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
 import DirectorPanel from './DirectorPanel'
 import VizCard from '../layout/VizCard'
-import { TIER_COLORS, tierIndexForRank } from '../director/rankTiers'
+import { TIER_COLORS, tierIndexForRank } from '../../lib/rankTiers'
 import { orderRows } from './rankedField'
 import useDirectorSelection from '../../hooks/useDirectorSelection'
 import { DirectorQuickFilters, DirectorSearchDropdown } from './DirectorSelectionControls'
-import { posterUrl } from '../../utils/filmImages'
-import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
-
-// 2:3, and sized so it fits inside the 72px row of the ten-director view.
-const POSTER = { w: 40, h: 60 }
+import { TOOLTIP_BOX, TOOLTIP_NAME, TOOLTIP_SUBTITLE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
 
 /** Nearest 1/2/5/10 at the right magnitude — the axis step, rounded up. */
 function niceStep(raw) {
@@ -81,27 +77,14 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
 
   // Taller than the countries chart's 40/30, because this is the page's hero and
   // because each bar has internal structure to read — thirty tiles in a 28px bar
-  // are too fine to aim at, let alone tell apart. 72px at the top view is also
-  // what buys the poster its 60px of height; see POSTER below.
+  // are too fine to aim at, let alone tell apart.
   const rowHeight = chartData.length <= 10 ? 72 : chartData.length <= 25 ? 40 : 28
   const chartHeight = useMemo(
     () => Math.max(180, Math.min(1900, chartData.length * rowHeight)),
     [chartData.length, rowHeight]
   )
 
-  /**
-   * Posters appear only in the ten-row view, and that is a size decision, not a
-   * taste one. A poster is 2:3, so a 40px-wide one needs 60px of height, and only
-   * the 72px row has that to give — at Top 25's 40px row the poster falls to
-   * 24px wide, which is below the size where anyone recognises an image. The
-   * deeper views are for reading the field; the top view is the one where "who
-   * IS that" is a real question, and where the retired podium used to answer it.
-   */
-  // A module constant, not an inline literal: this feeds the chart's memo deps,
-  // and a fresh object every render would invalidate it on every mouse move —
-  // which is exactly the re-render that destroys the tiles' hover events.
-  const poster = chartData.length <= 10 ? POSTER : null
-  const axisWidth = poster ? 140 + poster.w + 10 : 140
+  const axisWidth = 140
 
   const rowsByName = useMemo(() => {
     const map = new Map()
@@ -196,7 +179,7 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
           stroke="#000000"
           axisLine={{ stroke: '#000000', strokeWidth: 2 }}
           tickLine={{ stroke: '#000000' }}
-          tick={<DirectorTick rowsByName={rowsByName} poster={poster} />}
+          tick={<DirectorTick rowsByName={rowsByName} />}
         />
 
         {/* One Bar per film slot, each drawn by a custom shape. Bar's own
@@ -222,7 +205,7 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
         ))}
       </BarChart>
     </ResponsiveContainer>
-  ), [chartData, maxFilms, chartHeight, cuts, domain, ticks, axisWidth, rowsByName, poster, enterTile, leaveTile])
+  ), [chartData, maxFilms, chartHeight, cuts, domain, ticks, axisWidth, rowsByName, enterTile, leaveTile])
 
   if (!rows?.length) {
     return (
@@ -297,18 +280,19 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
             top: mouse.y + 14,
           }}
         >
-          <p className={TOOLTIP_TITLE}>{hoveredFilm.film?.FilmTitle}</p>
+          {/* Identity-led: the tile is anonymous, so naming the film is the whole
+              point and the figures are context. See utils/tooltip.
+              No fourth line — it read "Film 3 of 17 · Alfred Hitchcock is #1 on
+              votes", repeating the director from the line above and describing
+              the chart rather than the thing under the cursor. */}
+          <p className={TOOLTIP_NAME}>{hoveredFilm.film?.FilmTitle}</p>
           <p className={TOOLTIP_SUBTITLE}>
             {hoveredFilm.film?.Year} · {hover.row.name}
           </p>
-          <p className={TOOLTIP_VALUE}>
+          <p className={`${TOOLTIP_DETAIL} font-bold tabular-nums`}>
             {hoveredFilm.rank == null ? 'Unranked' : `#${hoveredFilm.rank.toLocaleString()}`}
             {' · '}
             {hoveredFilm.votes.toLocaleString()} {hoveredFilm.votes === 1 ? 'vote' : 'votes'}
-          </p>
-          <p className={TOOLTIP_DETAIL}>
-            Film {hover.filmIndex + 1} of {hover.row.films} · {hover.row.name} is #
-            {hover.row[rankKey].toLocaleString()} on {metric === 'films' ? 'film count' : 'votes'}
           </p>
         </div>
       )}
@@ -351,56 +335,32 @@ function FilmTile({ x, y, width, height, payload, filmIndex, cuts, onEnter, onLe
 }
 
 /**
- * The axis label: the director's name, and in the top view their most-voted
- * film's poster.
+ * The axis label: the director's name.
  *
- * The poster is doing the one job the bars cannot. A reader who doesn't know the
- * name "Chantal Akerman" recognises the Jeanne Dielman poster on sight, and
- * without it the row is a name and an abstract shape. This is the job the retired
- * podium existed for; putting it on the axis keeps it without restating the top
- * ten in a second section.
+ * It used to carry their most-voted film's poster in the ten-row view only, on
+ * the grounds that a poster is 2:3 and only that view's 72px row had the 60px of
+ * height to render one legibly. That conditional was the problem: the row count
+ * is a rank cutoff, not a slice, so ties push the top view to eleven rows and the
+ * posters silently vanish — present at one rank depth and gone at the next, for
+ * reasons invisible to the reader. Removed rather than made conditional on
+ * something steadier; the bars and the tooltip carry the films.
  *
  * Names run long — Rainer Werner Fassbinder is 25 characters — so the label gets
  * more room than the countries chart's 95px and still truncates.
  */
-function DirectorTick({ x, y, payload, rowsByName, poster }) {
+function DirectorTick({ x, y, payload, rowsByName }) {
   const name = payload.value
-  const row = rowsByName?.get(name)
-  const film = row?.topFilm
-  const src = poster && film ? posterUrl(film, 'w185') : null
+  const film = rowsByName?.get(name)?.topFilm
 
   const maxChars = 20
   const display = name.length > maxChars ? `${name.substring(0, maxChars - 1)}…` : name
-  const textX = poster ? -(poster.w + 18) : -8
 
   return (
     <g transform={`translate(${x},${y})`}>
       <title>{film ? `${name} — ${film.FilmTitle}` : name}</title>
-
-      {poster && (
-        // No poster art for this film: a bordered blank still reads as "a film
-        // sits here", where an absent box would punch a hole in the column.
-        <g transform={`translate(${-(poster.w + 8)}, ${-poster.h / 2})`}>
-          <rect width={poster.w} height={poster.h} fill="#111827" stroke="#000000" strokeWidth={1} />
-          {src && (
-            <image
-              href={src}
-              width={poster.w}
-              height={poster.h}
-              preserveAspectRatio="xMidYMid slice"
-            />
-          )}
-        </g>
-      )}
-
-      <text x={textX} y={0} dy={poster ? -1 : 4} textAnchor="end" fill="#000000" fontSize="12" fontWeight="600">
+      <text x={-8} y={0} dy={4} textAnchor="end" fill="#000000" fontSize="12" fontWeight="600">
         {display}
       </text>
-      {poster && film && (
-        <text x={textX} y={0} dy={13} textAnchor="end" fill="#6b7280" fontSize="10" fontStyle="italic">
-          {film.FilmTitle.length > 24 ? `${film.FilmTitle.substring(0, 23)}…` : film.FilmTitle}
-        </text>
-      )}
     </g>
   )
 }

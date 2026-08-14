@@ -1,15 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, Link } from 'react-router-dom'
 import PageShell, { SidebarLayout } from '../components/layout/PageShell'
-import PageTitle from '../components/layout/PageTitle'
-import InfoBanner from '../components/layout/InfoBanner'
+import DetailHeader, { Figure } from '../components/layout/DetailHeader'
 import FilterCard, { FilterSection } from '../components/filters/FilterCard'
 import PollGrid from '../components/filters/PollGrid'
 import MetricToggle from '../components/filters/MetricToggle'
 import RankDepthFilter from '../components/RankDepthFilter'
 import DirectorsRankedBarChart from '../components/directors/DirectorsRankedBarChart'
 import useDirectorAggregates from '../hooks/useDirectorAggregates'
-import { buildTierCutoffs } from '../components/director/rankTiers'
+import { buildTierCutoffs } from '../lib/rankTiers'
 import { buildRankIndex, resolveTarget, describeDepth, EMPTY_RANK_INDEX } from '../lib/rankDepth'
 import { metricPair, pollLabel } from '../lib/metrics'
 
@@ -25,6 +24,7 @@ export default function DirectorsMain() {
   const selectedPoll = VALID_POLLS.includes(rawPoll) ? rawPoll : '2022'
   const rawTop = searchParams.get('top')
   const topTarget = rawTop && /^\d+$/.test(rawTop) ? parseInt(rawTop, 10) : null
+  const country = searchParams.get('country') || null
 
   const setParam = useCallback((key, value) => {
     setSearchParams(prev => {
@@ -46,8 +46,8 @@ export default function DirectorsMain() {
   // depths it's worse — every one of the eleven directors inside 2022's top ten
   // has exactly one film there. Across the whole 2022 poll there are 21 distinct
   // film counts against 106 distinct vote totals. Ranking by films would print
-  // most of the chart as a wall of ties. directorStandings.js reached the same
-  // conclusion for the standing chart on the director pages.
+  // most of the chart as a wall of ties. lib/standings.js reached the same
+  // conclusion for the standing chart on the detail pages.
   const [metric, setMetric] = useState('votes')
   const [filmsData, setFilmsData] = useState(null)
 
@@ -58,6 +58,11 @@ export default function DirectorsMain() {
       .catch(error => console.error('Error loading data:', error))
   }, [])
 
+  // BOTH of these read the WHOLE corpus, never the country subset below. Rank
+  // depth means "the top 100 films of this poll", not "the top 100 French films",
+  // and tier shading is percentiles of each poll's entire field — a film has to
+  // be shaded by the field it competed in. Filtering filmsData up here instead
+  // would make both silently country-relative and every number would drift.
   const rankIndex = useMemo(
     () => (filmsData ? buildRankIndex(filmsData, selectedPoll) : EMPTY_RANK_INDEX),
     [filmsData, selectedPoll]
@@ -66,8 +71,6 @@ export default function DirectorsMain() {
     () => resolveTarget(rankIndex, topTarget),
     [rankIndex, topTarget]
   )
-
-  const aggregates = useDirectorAggregates(filmsData, selectedPoll, cutoffRank)
 
   // Rank-tier shading for the bar tiles. Cutoffs are percentiles of
   // each poll's WHOLE field, so they're built from every film once and are
@@ -79,13 +82,82 @@ export default function DirectorsMain() {
   )
   const cuts = tierCutoffs?.get(String(selectedPoll)) ?? null
 
+  // Optional country scope, arriving from a country page's "all directors" link.
+  //
+  // The films are narrowed HERE, one level above the aggregation, which is why
+  // this needed no changes to the hook, the ranking, the bar chart or the
+  // selection controls — they simply receive fewer films and re-rank within them.
+  //
+  // Note what this is and isn't: it selects films CREDITED TO a country, and
+  // totals only those. It does not give a director a nationality — see the note
+  // in useDirectorAggregates about why that would be a fiction. Hitchcock scoped
+  // to the United States is his 17 US films, not his 28.
+  const scopedFilms = useMemo(() => {
+    if (!filmsData) return null
+    if (!country) return filmsData
+    return filmsData.filter(f => (f.countries || []).includes(country))
+  }, [filmsData, country])
+
+  const aggregates = useDirectorAggregates(scopedFilms, selectedPoll, cutoffRank)
+
+  // A country in the URL that no film is credited to — a typo, or a country that
+  // only ever appears as a co-production partner (Luxembourg, Estonia).
+  const unknownCountry = Boolean(country) && scopedFilms?.length === 0
+
   const filterText = `${pollLabel(selectedPoll)} • ${describeDepth(topTarget, depthFilmCount, depthMinVotes)}`
 
   const totals = aggregates?.totals ?? { directors: 0, films: 0, votes: 0 }
   const { primary, secondary } = metricPair(metric, totals)
 
+  // Dropping the country keeps poll and depth, so clearing the scope widens the
+  // field without also resetting where you were reading.
+  const clearCountryHref = useMemo(() => {
+    const next = new URLSearchParams(searchParams)
+    next.delete('country')
+    const qs = next.toString()
+    return qs ? `/directors?${qs}` : '/directors'
+  }, [searchParams])
+
   return (
     <PageShell>
+      {/* Above the split, not inside it — the title names the whole page,
+          including the rail. Same header component as the detail pages, without
+          a crumb (this IS the hub) or a chip. */}
+      <DetailHeader
+        title="Directors"
+        facts={[
+          // The country scope leads the line and is removable, because it's the
+          // only fact here that isn't set by a control in the rail — arriving by
+          // link, it needs a visible way back out.
+          country && (
+            <span key="country" className="flex items-center gap-1.5">
+              <Link
+                to={`/countries/${encodeURIComponent(country)}`}
+                className="font-bold text-black underline decoration-gray-300 hover:decoration-black"
+              >
+                {country}
+              </Link>
+              <Link
+                to={clearCountryHref}
+                aria-label={`Show directors from every country, not just ${country}`}
+                title="Clear country filter"
+                className="text-gray-400 hover:text-black text-base leading-none border border-gray-300 hover:border-black px-1"
+              >
+                ×
+              </Link>
+            </span>
+          ),
+          <Figure key="directors" value={totals.directors.toLocaleString()}>
+            {totals.directors === 1 ? 'director' : 'directors'}
+          </Figure>,
+          <Figure key="primary" value={primary} />,
+          <span key="secondary" className="tabular-nums">{secondary}</span>,
+          // What the rail is set to, de-emphasised — it names the figures above
+          // rather than being one of them.
+          <span key="filter" className="text-gray-400">{filterText}</span>,
+        ]}
+      />
+
       <SidebarLayout
         sidebar={
           <FilterCard>
@@ -103,17 +175,23 @@ export default function DirectorsMain() {
           </FilterCard>
         }
       >
-        <PageTitle>Directors</PageTitle>
-
-        <InfoBanner
-          lead={`${totals.directors.toLocaleString()} directors • ${primary}`}
-          aside={secondary}
-          items={[filterText]}
-        />
-
-        {!aggregates && (
+        {!aggregates && !unknownCountry && (
           <div className="bg-white border-4 border-black p-6 text-center text-black font-medium py-16">
             Loading director data…
+          </div>
+        )}
+
+        {unknownCountry && (
+          <div className="bg-white border-4 border-black p-8 text-center">
+            <p className="text-black font-medium mb-4">
+              No film in the canon is credited to “{country}”.
+            </p>
+            <Link
+              to={clearCountryHref}
+              className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide text-sm hover:bg-gray-800"
+            >
+              Show all directors
+            </Link>
           </div>
         )}
 

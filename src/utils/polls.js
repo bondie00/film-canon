@@ -24,10 +24,11 @@ export function voteShare(year, votes) {
  * below the film count: 2022 records 3,816 films but bottoms out around #1,652,
  * since every single-vote film shares one rank at the bottom.
  *
- * These are FILM-rank floors, used by the film page's rank chart. The director
- * page's standing chart draws a band too, but over a different field — director
- * ranks against 2,072 directors, not film ranks against 3,816 films — and builds
- * its own floors in directorStandings.
+ * These are FILM-rank floors, fed to the shared standing chart by the film page.
+ * The director and country pages draw the same band over different fields —
+ * director ranks against 2,072 directors, country ranks against 105 countries,
+ * not film ranks against 3,816 films — and build their own floors in
+ * lib/standings.js.
  */
 export function buildPollFloors(films) {
   const floors = {}

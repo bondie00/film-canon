@@ -12,10 +12,14 @@ const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
  * Only controls that drive the WHOLE page belong here. Sort order lives on the
  * filmography itself, since it reorders that grid and nothing else.
  *
+ * CONTROLS ONLY — no readout. What the poll currently selects is counted in the
+ * page header, which responds to this control; a second small-print copy of the
+ * same figure down here was noise in a pane whose job is to be operated, not read.
+ *
  * Polls the director missed are rendered disabled rather than hidden, so the
  * gaps in a career are visible in the control itself.
  */
-export default function DirectorFilterPanel({ poll, onPollChange, counts, showing }) {
+export default function DirectorFilterPanel({ poll, onPollChange, counts }) {
   const options = ['all', ...POLL_YEARS]
 
   return (
@@ -54,11 +58,6 @@ export default function DirectorFilterPanel({ poll, onPollChange, counts, showin
               </button>
             )
           })}
-        </div>
-        <div className="mt-2 text-xs text-gray-500">
-          <span className="font-bold text-black tabular-nums">{showing}</span>{' '}
-          {showing === 1 ? 'film' : 'films'}
-          {poll === 'all' ? ' across all polls' : ` in the ${poll} poll`}
         </div>
       </div>
     </div>

@@ -1,15 +1,16 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import PageShell from '../components/layout/PageShell'
+import PageShell, { SidebarLayout } from '../components/layout/PageShell'
 import SectionHeading, { HeadingToggle } from '../components/layout/SectionHeading'
+import DetailHeader, { Figure } from '../components/layout/DetailHeader'
 import FilmographyGrid from '../components/films/FilmographyGrid'
 import DirectorDecadeBars from '../components/director/DirectorDecadeBars'
 import DirectorFilterPanel from '../components/director/DirectorFilterPanel'
-import DirectorPollStrip from '../components/director/DirectorPollStrip'
-import DirectorStandingChart from '../components/director/DirectorStandingChart'
-import { totalVotes } from '../components/director/filmColors'
-import { buildTierCutoffs } from '../components/director/rankTiers'
-import { buildDirectorStandings } from '../components/director/directorStandings'
+import StandingStrip from '../components/standing/StandingStrip'
+import StandingChart from '../components/standing/StandingChart'
+import { buildTierCutoffs, votesIn } from '../lib/rankTiers'
+import { buildDirectorStandings, standingByPoll } from '../lib/standings'
+import { pollLabel } from '../lib/metrics'
 
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
 
@@ -59,20 +60,6 @@ export default function DirectorDetailPage() {
   // slice, so a shade means the same thing on every director's page.
   const tierCutoffs = useMemo(() => (films ? buildTierCutoffs(films) : null), [films])
 
-  const stats = useMemo(() => {
-    if (!directorFilms.length) return null
-    const years = directorFilms.map(startYear).filter(y => !Number.isNaN(y))
-    const countries = new Set()
-    directorFilms.forEach(f => (f.countries || []).forEach(c => c && countries.add(c)))
-    return {
-      filmCount: directorFilms.length,
-      votes: directorFilms.reduce((sum, f) => sum + totalVotes(f), 0),
-      yearFrom: years.length ? Math.min(...years) : null,
-      yearTo: years.length ? Math.max(...years) : null,
-      countries: [...countries],
-    }
-  }, [directorFilms])
-
   // How many of this director's films drew votes in each poll — drives the
   // filmography's poll selector.
   const pollCounts = useMemo(() => {
@@ -101,10 +88,32 @@ export default function DirectorDetailPage() {
     })
   }, [directorFilms, gridPoll])
 
+  // Header figures. Computed from the POLL-FILTERED set, not the whole
+  // filmography: the header is where this page reports what the rail selects, so
+  // every number in it has to move when the rail moves. Switching to 1972 should
+  // narrow the year span and drop the countries that only appear in later work.
+  const stats = useMemo(() => {
+    if (!gridFilms.length) return null
+    const years = gridFilms.map(startYear).filter(y => !Number.isNaN(y))
+    const countries = new Set()
+    gridFilms.forEach(f => (f.countries || []).forEach(c => c && countries.add(c)))
+    return {
+      filmCount: gridFilms.length,
+      votes: gridFilms.reduce((sum, f) => sum + votesIn(f, gridPoll), 0),
+      yearFrom: years.length ? Math.min(...years) : null,
+      yearTo: years.length ? Math.max(...years) : null,
+      countries: [...countries],
+    }
+  }, [gridFilms, gridPoll])
+
   // Where this director sits among everyone in the canon, poll by poll. Computed
   // from the same films.json rather than directors.json, which only carries 2022
   // ranks.
   const standings = useMemo(() => (films ? buildDirectorStandings(films) : null), [films])
+  const standingRows = useMemo(
+    () => standingByPoll(standings, canonicalName),
+    [standings, canonicalName]
+  )
 
   if (loading) {
     return (
@@ -145,59 +154,49 @@ export default function DirectorDetailPage() {
 
   return (
     <PageShell>
-      {/* Header — typographic, no imagery: the filmography grid carries the page */}
-      <div className="pt-2 pb-8">
-        <Link
-          to="/explore?poll=all"
-          className="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black"
-        >
-          ← Explore
-        </Link>
-        <h1 className="mt-3 text-5xl sm:text-6xl font-black text-black uppercase tracking-tight leading-none">
-          {canonicalName}
-        </h1>
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-lg text-gray-600">
-          <span className="font-bold text-black">
-            {stats.filmCount} {stats.filmCount === 1 ? 'film' : 'films'} in the canon
-          </span>
-          <span className="text-gray-300">·</span>
-          <span className="font-bold text-black tabular-nums">{stats.votes.toLocaleString()}</span>
-          <span className="-ml-1.5">votes all-time</span>
-          {activeYears && (
-            <><span className="text-gray-300">·</span><span className="tabular-nums">{activeYears}</span></>
-          )}
-          {stats.countries.length > 0 && (
-            <>
-              <span className="text-gray-300">·</span>
-              <span className="flex flex-wrap gap-x-2">
-                {stats.countries.map(c => (
-                  <Link
-                    key={c}
-                    to={`/countries/${encodeURIComponent(c)}`}
-                    className="underline decoration-gray-300 hover:decoration-black hover:text-black"
-                  >
-                    {c}
-                  </Link>
-                ))}
-              </span>
-            </>
-          )}
-        </div>
-      </div>
+      <DetailHeader
+        crumb={{ to: '/explore?poll=all', label: 'Explore' }}
+        title={canonicalName}
+        facts={[
+          <Figure key="films" value={stats.filmCount}>
+            {stats.filmCount === 1 ? 'film' : 'films'}
+          </Figure>,
+          <Figure key="votes" value={stats.votes.toLocaleString()}>
+            {stats.votes === 1 ? 'vote' : 'votes'}
+          </Figure>,
+          activeYears && <span key="years" className="tabular-nums">{activeYears}</span>,
+          stats.countries.length > 0 && (
+            <span key="countries" className="flex flex-wrap gap-x-2">
+              {stats.countries.map(c => (
+                <Link
+                  key={c}
+                  to={`/countries/${encodeURIComponent(c)}`}
+                  className="underline decoration-gray-300 hover:decoration-black hover:text-black"
+                >
+                  {c}
+                </Link>
+              ))}
+            </span>
+          ),
+          // What the rail is set to, de-emphasised — it names the figures above
+          // rather than being one of them.
+          <span key="filter" className="text-gray-400">{pollLabel(gridPoll)}</span>,
+        ]}
+      />
 
-      {/* Control rail + content. The rail stays with you down the page, so the
-          poll is still switchable while you're reading the decade chart. */}
-      <div className="grid grid-cols-12 gap-8">
-        <aside className="col-span-12 lg:col-span-3">
+      {/* Control rail + content, via the shared SidebarLayout — this was a
+          hand-rolled copy of the same grid-cols-12 3/9 split, which is how the
+          two detail pages drifted apart. The rail stays with you down the page,
+          so the poll is still switchable while you're reading the decade chart. */}
+      <SidebarLayout
+        sidebar={
           <DirectorFilterPanel
             poll={gridPoll}
             onPollChange={setGridPoll}
             counts={pollCounts}
-            showing={gridFilms.length}
           />
-        </aside>
-
-        <div className="col-span-12 lg:col-span-9">
+        }
+      >
           <section>
             <SectionHeading
               title="The filmography"
@@ -232,20 +231,19 @@ export default function DirectorDetailPage() {
                 title="Among all directors"
                 note="All eight polls, whatever the filter is set to"
               />
-              <DirectorPollStrip standings={standings} name={canonicalName} />
-              <DirectorStandingChart standings={standings} name={canonicalName} />
+              <StandingStrip rows={standingRows} />
+              <StandingChart rows={standingRows} noun="director" nounPlural="directors" />
             </section>
           )}
 
           <section className="mt-10 mb-4">
             <SectionHeading
               title="Which decade the canon rewards"
-              note="One chunk per film — hover for the film"
+              note="One chunk per film · darker ranks higher"
             />
             <DirectorDecadeBars films={directorFilms} poll={gridPoll} cutoffs={tierCutoffs} />
           </section>
-        </div>
-      </div>
+      </SidebarLayout>
     </PageShell>
   )
 }

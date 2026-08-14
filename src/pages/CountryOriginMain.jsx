@@ -1,8 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import PageShell, { SidebarLayout } from '../components/layout/PageShell'
-import PageTitle from '../components/layout/PageTitle'
-import InfoBanner from '../components/layout/InfoBanner'
+import DetailHeader, { Figure } from '../components/layout/DetailHeader'
 import VizCard from '../components/layout/VizCard'
 import FilterCard, { FilterSection } from '../components/filters/FilterCard'
 import PollGrid from '../components/filters/PollGrid'
@@ -96,6 +95,23 @@ export default function CountryOriginMain() {
 
   return (
     <PageShell>
+      {/* Above the split, not inside it — the title names the whole page,
+          including the rail. Same header component as the detail pages, without
+          a crumb (this IS the hub) or a chip. */}
+      <DetailHeader
+        title="Countries"
+        facts={[
+          <Figure key="countries" value={metrics.countries.toLocaleString()}>
+            {metrics.countries === 1 ? 'country' : 'countries'}
+          </Figure>,
+          <Figure key="primary" value={primary} />,
+          <span key="secondary" className="tabular-nums">{secondary}</span>,
+          // What the rail is set to, de-emphasised — it names the figures above
+          // rather than being one of them.
+          <span key="filter" className="text-gray-400">{filterText}</span>,
+        ]}
+      />
+
       <SidebarLayout
         sidebar={
           <FilterCard>
@@ -114,14 +130,6 @@ export default function CountryOriginMain() {
           </FilterCard>
         }
       >
-        <PageTitle>Countries</PageTitle>
-
-        <InfoBanner
-          lead={`${metrics.countries} countries • ${primary}`}
-          aside={secondary}
-          items={[filterText]}
-        />
-
         <VizCard title="Global Distribution">
           <WorldMapChoropleth
             countriesData={aggregates}
