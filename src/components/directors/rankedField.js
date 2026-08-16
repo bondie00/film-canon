@@ -10,10 +10,32 @@
 // Both the ranked list and the scatter cut here, from this one function, so they
 // can never disagree about where the field ends.
 
-/** Rows sorted by the active metric, ties broken by name for a stable order. */
+/**
+ * Rows sorted by the active metric, ties broken by THE OTHER METRIC.
+ *
+ * The tiebreak matters far more than it looks, because under the films metric
+ * almost everything is a tie: at 2022's Top-100 depth, 48 of 73 directors have
+ * exactly one film. That block used to be ordered by NAME, so the chart read
+ * Kiarostami, Hammid, Weerasethakul, Loden — alphabetical, which is genuinely
+ * arbitrary and looked it. By votes the same block opens Welles (164), Denis
+ * (106), Vertov (100), which is an ordering that means something.
+ *
+ * It also makes the top-N cut defensible: DirectorsMain takes exactly N rows
+ * and therefore cuts through a tie block. Cutting is only acceptable because
+ * this secondary key decides where the cut falls.
+ *
+ * Symmetric in both directions — a votes tie breaks by films, so two directors
+ * on equal votes are separated by whose canon is broader. Name is the last
+ * resort, present only to keep the sort deterministic (Donen and Kelly share
+ * both totals, being credited on the same film).
+ */
 export function orderRows(rows, valueKey) {
+  const tiebreak = valueKey === 'films' ? 'votes' : 'films'
   return [...(rows || [])].sort(
-    (a, b) => b[valueKey] - a[valueKey] || a.name.localeCompare(b.name)
+    (a, b) =>
+      b[valueKey] - a[valueKey] ||
+      b[tiebreak] - a[tiebreak] ||
+      a.name.localeCompare(b.name)
   )
 }
 

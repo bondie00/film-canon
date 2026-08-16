@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import PageShell from '../components/layout/PageShell'
+import DetailHeader, { Figure } from '../components/layout/DetailHeader'
+import NotFound, { LoadingState } from '../components/layout/NotFound'
+import { EXPLORE, filmUrl, voterUrl } from '../lib/routes'
 
 /**
  * One critic's ballots, poll by poll.
@@ -31,28 +33,29 @@ export default function VoterDetailPage() {
   const voter = voters ? voters[slug] : null
 
   if (error) {
-    return <Shell><Message title="Couldn't load the ballots" body="Please try again." /></Shell>
+    return (
+      <PageShell width="narrow">
+        <NotFound title="Couldn't load the ballots" body="Please try again." />
+      </PageShell>
+    )
   }
 
   if (!voters) {
     return (
-      <Shell>
-        <div className="text-center py-20">
-          <div className="inline-block w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin mb-4" />
-          <p className="text-black font-medium">Loading…</p>
-        </div>
-      </Shell>
+      <PageShell width="narrow">
+        <LoadingState />
+      </PageShell>
     )
   }
 
   if (!voter) {
     return (
-      <Shell>
-        <Message
+      <PageShell width="narrow">
+        <NotFound
           title="Voter not found"
           body="No ballots in the record match this address."
         />
-      </Shell>
+      </PageShell>
     )
   }
 
@@ -63,31 +66,24 @@ export default function VoterDetailPage() {
     : String(voter.polls[0])
 
   return (
-    <Shell>
-      <div className="pt-2 pb-8">
-        <Link
-          to="/explore?poll=all"
-          className="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black"
-        >
-          ← Explore
-        </Link>
-        <h1 className="mt-3 text-4xl sm:text-5xl font-black text-black uppercase tracking-tight leading-none">
-          {voter.name}
-        </h1>
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-lg text-gray-600">
-          <span className="font-bold text-black">
-            {ballots.length} {ballots.length === 1 ? 'ballot' : 'ballots'}
-          </span>
-          <span className="text-gray-300">·</span>
-          <span className="tabular-nums">{span}</span>
-          {voter.countries.length > 0 && (
-            <>
-              <span className="text-gray-300">·</span>
-              <span>{voter.countries.join(' / ')}</span>
-            </>
-          )}
-        </div>
-      </div>
+    <PageShell width="narrow">
+      {/* This page had a hand-written copy of DetailHeader's markup — same
+          crumb, same h1, same middot-joined facts line — which is how its crumb
+          came to read "Explore" where every other page's reads "Back to X".
+          Voters have no hub of their own, so Explore is the parent overview. */}
+      <DetailHeader
+        crumb={{ to: EXPLORE, label: 'Explore' }}
+        title={voter.name}
+        facts={[
+          <Figure key="ballots" value={ballots.length}>
+            {ballots.length === 1 ? 'ballot' : 'ballots'}
+          </Figure>,
+          <span key="span" className="tabular-nums">{span}</span>,
+          voter.countries.length > 0 && (
+            <span key="countries">{voter.countries.join(' / ')}</span>
+          ),
+        ]}
+      />
 
       {ballots.map(ballot => (
         <section key={ballot.poll} className="mb-10">
@@ -104,7 +100,7 @@ export default function VoterDetailPage() {
                     <span key={n}>
                       {i > 0 && ', '}
                       <Link
-                        to={`/voter/${slugify(n)}`}
+                        to={voterUrl(slugify(n))}
                         className="font-bold text-black underline decoration-gray-300 hover:decoration-black"
                       >
                         {n}
@@ -120,7 +116,7 @@ export default function VoterDetailPage() {
             {ballot.films.map(pick => (
               <li key={pick.key}>
                 <Link
-                  to={`/film/${pick.key}`}
+                  to={filmUrl(pick.key)}
                   className="block px-4 py-2.5 hover:bg-gray-50 transition-colors"
                 >
                   <span className="font-bold text-black">{pick.title}</span>
@@ -134,7 +130,7 @@ export default function VoterDetailPage() {
           </ol>
         </section>
       ))}
-    </Shell>
+    </PageShell>
   )
 }
 
@@ -150,27 +146,3 @@ function slugify(name) {
     .replace(/\s+/g, '-')
 }
 
-function Shell({ children }) {
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">{children}</div>
-      <Footer />
-    </div>
-  )
-}
-
-function Message({ title, body }) {
-  return (
-    <div className="py-20 text-center">
-      <h1 className="text-3xl font-black uppercase mb-3">{title}</h1>
-      <p className="text-gray-600 mb-6">{body}</p>
-      <Link
-        to="/explore?poll=all"
-        className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide text-sm hover:bg-gray-800"
-      >
-        ← Back to Explore
-      </Link>
-    </div>
-  )
-}

@@ -11,27 +11,14 @@ import { pollKeyOf, pollEntryOf } from '../../lib/rankDepth'
 import { TOOLTIP_BOX, TOOLTIP_TITLE, TOOLTIP_SUBTITLE, TOOLTIP_VALUE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
 import GridTile, { withCurrent } from '../search/GridTile'
 import { exploreUrl } from '../../lib/exploreUrl'
+import { countryUrl } from '../../lib/routes'
+import EntityTitleLink from '../layout/EntityTitleLink'
 
 // Natural Earth 110m world topology - lower resolution for performance
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
 
 // Cap posters shown in the expanded panel; the rest live on the Explore page.
 const PANEL_FILM_CAP = 30
-
-// Country name as a link to its detail page, with an arrow icon signalling it's clickable.
-function CountryTitleLink({ name }) {
-  return (
-    <Link
-      to={`/countries/${encodeURIComponent(name)}`}
-      className="group inline-flex items-center gap-1.5 hover:underline decoration-2 underline-offset-2"
-    >
-      <span>{name}</span>
-      <svg className="w-4 h-4 shrink-0 opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M7 17L17 7M17 7H8M17 7v9" />
-      </svg>
-    </Link>
-  )
-}
 
 // Split overseas territories so they don't get colored as their parent country.
 // French Guiana is part of France's MultiPolygon but sits in South America.
@@ -626,7 +613,12 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
                   <div key={country.name} className="flex flex-col w-[400px] flex-shrink-0">
                     {/* Country header */}
                     <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
-                      <h4 className="font-black text-lg text-black uppercase tracking-wide"><CountryTitleLink name={country.name} /></h4>
+                      <h4 className="font-black text-lg text-black uppercase tracking-wide">
+                        <EntityTitleLink
+                          to={countryUrl(country.name, { poll: selectedPoll, top: topTarget })}
+                          name={country.name}
+                        />
+                      </h4>
                       <div className="flex gap-3 mt-1">
                         <span className="text-base font-black text-black">
                           {metric === 'votes'
@@ -684,7 +676,12 @@ export default function WorldMapChoropleth({ countriesData, filmsData, selectedP
               <>
                 {/* Country header */}
                 <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
-                  <h4 className="font-black text-lg text-black uppercase tracking-wide"><CountryTitleLink name={selectedCountryData.countries[0].name} /></h4>
+                  <h4 className="font-black text-lg text-black uppercase tracking-wide">
+                    <EntityTitleLink
+                      to={countryUrl(selectedCountryData.countries[0].name, { poll: selectedPoll, top: topTarget })}
+                      name={selectedCountryData.countries[0].name}
+                    />
+                  </h4>
                   <div className="flex gap-3 mt-1">
                     <span className="text-base font-black text-black">
                       {metric === 'votes'

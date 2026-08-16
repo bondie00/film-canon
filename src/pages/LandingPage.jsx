@@ -5,12 +5,17 @@ import Footer from '../components/Footer'
 import GlobalSearch from '../components/search/GlobalSearch'
 import { loadFilms } from '../utils/filmsData'
 import { posterUrl, landscapeImage } from '../utils/filmImages'
+import { filmUrl } from '../lib/routes'
 
 const POLL_YEARS = [2022, 2012, 2002, 1992, 1982, 1972, 1962, 1952]
 const SHELF_MAX = 12 // top ~10, a little slack for ties at rank 10
 
+// Countries and Directors lead, in that order: they're the two entity sections,
+// each a hub over its own detail pages, and the two the header also carries at
+// top level. The other two are single visualizations.
 const VIZ_CARDS = [
   { to: '/countries', title: 'Countries', blurb: 'Where the canon comes from — a world map of 117 countries.' },
+  { to: '/directors', title: 'Directors', blurb: 'Whose films the critics keep choosing, and how deep each filmography runs.' },
   { to: '/visualizations/decades', title: 'Decades & Age', blurb: 'Which eras the critics keep returning to.' },
   { to: '/visualizations/evolution', title: 'Canon Evolution', blurb: 'How films climbed and fell across seven decades of polls.' },
 ]
@@ -99,7 +104,9 @@ export default function LandingPage() {
       <section className="border-t-2 border-black bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <h2 className="text-3xl font-black text-black uppercase tracking-tight mb-6">Dig deeper</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Four across at lg, two at md — a 3-column grid left the fourth card
+              alone on a second row looking like an afterthought. */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {VIZ_CARDS.map(card => (
               <Link
                 key={card.to}
@@ -191,7 +198,7 @@ function PosterCard({ film }) {
   const backdrop = poster ? null : landscapeImage(film, { mubiWidth: 320, tmdbBackdropSize: 'w300' }).url
 
   return (
-    <Link to={`/film/${film.key}`} className="group flex-shrink-0 w-[140px] snap-start">
+    <Link to={filmUrl(film.key)} className="group flex-shrink-0 w-[140px] snap-start">
       <div className="relative aspect-[2/3] bg-black border-2 border-black overflow-hidden">
         {poster ? (
           <img src={poster} alt={film.FilmTitle} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />

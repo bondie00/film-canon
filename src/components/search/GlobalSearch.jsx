@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSearchIndex } from '../../hooks/useSearchIndex'
+import { filmUrl, directorUrl, voterUrl, countryUrl } from '../../lib/routes'
 
 const GROUP_LABELS = {
   film: 'Films',
@@ -13,20 +14,25 @@ const GROUP_LABELS = {
 // Turn the grouped search result into a flat, ordered list of navigable rows.
 // Order = Films, Directors, Voters, Countries, Polls — the two kinds of people
 // sit together. Each row carries its destination.
+//
+// Destinations are UNFILTERED, unlike the links between hubs and detail pages.
+// Search is a jump from anywhere to anywhere: inheriting the poll and depth of
+// whatever page you happened to search from would open the page you asked for
+// with most of it hidden, for a reason nothing on screen would explain.
 function flatten(results) {
   if (!results) return []
   const rows = []
   results.films.forEach(f =>
-    rows.push({ type: 'film', label: f.title, sub: [f.year, f.director].filter(Boolean).join(' · '), to: `/film/${f.key}` })
+    rows.push({ type: 'film', label: f.title, sub: [f.year, f.director].filter(Boolean).join(' · '), to: filmUrl(f.key) })
   )
   results.directors.forEach(d =>
-    rows.push({ type: 'director', label: d, sub: 'Director', to: `/director/${encodeURIComponent(d)}` })
+    rows.push({ type: 'director', label: d, sub: 'Director', to: directorUrl(d) })
   )
   results.voters?.forEach(v =>
-    rows.push({ type: 'voter', label: v.name, sub: 'Voter', to: `/voter/${v.slug}` })
+    rows.push({ type: 'voter', label: v.name, sub: 'Voter', to: voterUrl(v.slug) })
   )
   results.countries.forEach(c =>
-    rows.push({ type: 'country', label: c, sub: 'Country', to: `/countries/${encodeURIComponent(c)}` })
+    rows.push({ type: 'country', label: c, sub: 'Country', to: countryUrl(c) })
   )
   results.polls.forEach(p =>
     rows.push({ type: 'poll', label: `${p} poll`, sub: 'Poll year', to: `/explore?poll=${p}` })

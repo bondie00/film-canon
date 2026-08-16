@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import PageShell, { SidebarLayout } from '../components/layout/PageShell'
 import DetailHeader, { Figure } from '../components/layout/DetailHeader'
+import NotFound, { LoadingState } from '../components/layout/NotFound'
 import SectionHeading, { HeadingToggle } from '../components/layout/SectionHeading'
 import FilterCard, { FilterSection } from '../components/filters/FilterCard'
 import PollGrid, { POLL_YEARS } from '../components/filters/PollGrid'
@@ -14,6 +15,8 @@ import RankDepthFilter from '../components/RankDepthFilter'
 import { buildRankIndex, resolveTarget, describeDepth, EMPTY_RANK_INDEX } from '../lib/rankDepth'
 import { buildCountryStandings, standingByPoll } from '../lib/standings'
 import { pollLabel } from '../lib/metrics'
+import { countriesHubUrl } from '../lib/routes'
+import useFilterParams from '../hooks/useFilterParams'
 
 // Continent color mapping
 const continentColors = {
@@ -29,11 +32,18 @@ export default function CountryDetail() {
   const { countryName } = useParams()
   const decodedCountryName = decodeURIComponent(countryName)
 
-  // Filter state
-  const [selectedPoll, setSelectedPoll] = useState('2022')
-  // Film-count target for the rank-depth filter (null = all films), same units
-  // and same control as the Countries page and /explore.
-  const [topTarget, setTopTarget] = useState(null)
+  // Poll and rank depth live in the URL, exactly as they do on the Countries
+  // hub — same param names, same meanings, same parsing (useFilterParams). That
+  // is what lets a link between the two carry the selection: arriving here from
+  // a hub filtered to 1972 at Top 100 used to reset you to 2022 at All films,
+  // discarding two deliberate choices for no reason you could see.
+  const {
+    poll: selectedPoll,
+    setPoll: setSelectedPoll,
+    top: topTarget,
+    setTop: setTopTarget,
+    filters,
+  } = useFilterParams()
   // No metric toggle here, unlike the Countries hub. On a hub the switch is
   // load-bearing — it reorders the field (Italy and the UK swap, Belgium falls
   // #7 to #23), which is the whole point of a hub. A detail page has no field to
@@ -197,44 +207,36 @@ export default function CountryDetail() {
     }
   }, [countryFilms, selectedPoll])
 
-  // Loading state
+  // The three states before the page can render, all going through the shared
+  // components so they look the same here as on the film, director and voter
+  // pages. Each offers the country hub, which is both this page's crumb target
+  // and the useful next move when the country you asked for isn't there.
+  const backToHub = { to: countriesHubUrl(filters), label: 'Back to Countries' }
+
   if (loading) {
     return (
       <PageShell>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-black border-t-transparent mx-auto mb-4"></div>
-            <p className="text-black font-medium">Loading country data...</p>
-          </div>
-        </div>
+        <LoadingState label="Loading country data…" />
       </PageShell>
     )
   }
 
-  // Error state
   if (error) {
     return (
       <PageShell>
-        <div className="bg-white border-4 border-black p-8 text-center">
-          <h1 className="text-3xl font-black text-black mb-4 uppercase">Error Loading Data</h1>
-          <p className="text-black mb-6">{error}</p>
-          <BackToCountries />
-        </div>
+        <NotFound title="Error loading data" body={error} action={backToHub} />
       </PageShell>
     )
   }
 
-  // Country not found
   if (!countryInfo) {
     return (
       <PageShell>
-        <div className="bg-white border-4 border-black p-8 text-center">
-          <h1 className="text-3xl font-black text-black mb-4 uppercase">Country Not Found</h1>
-          <p className="text-black mb-6">
-            "{decodedCountryName}" was not found in our database.
-          </p>
-          <BackToCountries />
-        </div>
+        <NotFound
+          title="Country not found"
+          body={`“${decodedCountryName}” is not one of the 117 countries in the poll data.`}
+          action={backToHub}
+        />
       </PageShell>
     )
   }
@@ -252,7 +254,7 @@ export default function CountryDetail() {
           runs full width rather than being inset into the content column. Same
           shape as the director page. */}
       <DetailHeader
-        crumb={{ to: '/countries', label: 'Countries' }}
+        crumb={{ to: countriesHubUrl(filters), label: 'Countries' }}
         chip={{ label: countryInfo.continent, color: continentColor }}
         title={decodedCountryName}
         facts={[
@@ -384,21 +386,7 @@ export default function CountryDetail() {
           />
         </section>
 
-        <div className="text-center">
-          <BackToCountries label="← Back to all countries" />
-        </div>
       </SidebarLayout>
     </PageShell>
-  )
-}
-
-function BackToCountries({ label = '← Back to Countries' }) {
-  return (
-    <Link
-      to="/countries"
-      className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
-    >
-      {label}
-    </Link>
   )
 }

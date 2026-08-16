@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { filmUrl } from '../../lib/routes'
 import { motion } from 'framer-motion'
 import { landscapeImage } from '../../utils/filmImages'
 
@@ -70,7 +71,7 @@ export default function GridTile({ film, activePoll, square = true, fade = true 
       exit={{ opacity: 0 }}
       className={`bg-white border-2 border-black flex flex-col overflow-hidden hover:shadow-lg transition-shadow ${square ? 'aspect-square' : ''}`}
     >
-      <Link to={`/film/${film.key}`} className="flex flex-col h-full min-h-0">
+      <Link to={filmUrl(film.key)} className="flex flex-col h-full min-h-0">
         {/* 16:9 image band — uncropped backdrop (poster fallback is blurred-cover so it fills without distortion) */}
         <div className="relative w-full aspect-video bg-black flex-shrink-0 overflow-hidden">
           {img.url ? (

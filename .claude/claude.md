@@ -749,12 +749,21 @@ polls re-imports the exact recency bias we're avoiding — most film-poll events
 Depth control (and per-film votes remain visible in drill-down lists), so the headline metric
 doesn't need to encode it.
 
-**Metric toggle.** Both hub pages have a **Metric** control in the filter sidebar (under Poll and
-Rank Depth) that switches every visualization on the page — map, bar chart, continent breakdown,
-share-over-time — between **Votes** and **Films**. It's a single page-level control (state in
-`CountryOriginMain` / `DirectorsMain`, passed as a `metric` prop to each component); keep all viz on
+**Metric toggle — Countries only.** The **Countries** hub has a **Metric** control in the filter
+sidebar (under Poll and Rank Depth) that switches every visualization on the page — map, bar chart,
+continent breakdown, share-over-time — between **Votes** and **Films**. It's a single page-level
+control (state in `CountryOriginMain`, passed as a `metric` prop to each component); keep all viz on
 one metric rather than per-card toggles. Whichever is active drives sizing/color/sorting and the bold
 label; the other shows as the secondary line in tooltips and panels.
+
+**The Directors hub has no Metric control — it has a `Sort by` control on the chart's own heading**
+(`DirectorSortToggle`, state inside `DirectorsRankedBarChart`). The toggle was in that page's rail
+too until it was measured against what it actually did: the ranking chart's bar LENGTH is a film
+count *by construction* (one equal tile per film) and tile color is the film's rank tier, so there
+was no encoding for a metric switch to change. It reordered the chart and bolded a header figure,
+and nothing else — a sort control in the slot reserved for page-level controls. The page header no
+longer follows it either; it reads votes-bold, fixed, as the detail-page headers do. Hub parity is
+broken here deliberately: the two rails differ because the two pages' charts differ.
 
 **Votes is the default on both pages, because the metric follows the rank depth.** The pages open at
 **All films**, and across the whole field breadth says little — every country's bar is mostly its
@@ -767,7 +776,7 @@ for what each metric *means* — only the opening view changed). Directors reach
 a second route: two thirds of directors place exactly one film, so ranking them by films is mostly
 ties.
 
-The toggle renders **Votes first** on both pages; `MetricToggle`'s `order` prop carries it. When
+Both controls render **Votes first**; on Countries `MetricToggle`'s `order` prop carries it. When
 **Votes + All Polls Combined** is selected, the cross-poll recency distortion returns (2012/2022
 dominate) — votes are best read within a single poll. This used to be stated in sidebar copy, which
 has been removed: the hub pages carry no explanatory prose, no chart subtitles and no legends.

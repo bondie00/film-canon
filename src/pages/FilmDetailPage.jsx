@@ -1,12 +1,14 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import PageShell from '../components/layout/PageShell'
+import { Crumb } from '../components/layout/DetailHeader'
+import NotFound, { LoadingState } from '../components/layout/NotFound'
 import StandingStrip from '../components/standing/StandingStrip'
 import StandingChart from '../components/standing/StandingChart'
 import { backdropUrl, posterUrl } from '../utils/filmImages'
 import { POLL_YEARS, buildPollFloors } from '../utils/polls'
 import { filmStandingRows } from '../lib/standings'
+import { EXPLORE, countryUrl, directorUrl, voterUrl } from '../lib/routes'
 
 function formatRuntime(mins) {
   if (!mins) return null
@@ -57,32 +59,17 @@ export default function FilmDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center py-20">
-            <div className="inline-block w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-black font-medium">Loading…</p>
-          </div>
-        </div>
-        <Footer />
-      </div>
+      <PageShell width="narrow">
+        <LoadingState />
+      </PageShell>
     )
   }
 
   if (!film) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-          <h1 className="text-3xl font-black uppercase mb-3">Film not found</h1>
-          <p className="text-gray-600 mb-6">No film matches this address.</p>
-          <Link to="/explore" className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide text-sm hover:bg-gray-800">
-            ← Back to Explore
-          </Link>
-        </div>
-        <Footer />
-      </div>
+      <PageShell width="narrow">
+        <NotFound title="Film not found" body="No film matches this address." />
+      </PageShell>
     )
   }
 
@@ -95,30 +82,35 @@ export default function FilmDetailPage() {
     c => !(film.countries || []).includes(c)
   )
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-
-      {/* Hero band */}
-      <div className="relative bg-black">
-        {backdrop && (
-          <img
-            src={backdrop}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover opacity-40"
-          />
-        )}
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="flex flex-col sm:flex-row gap-6">
-            {poster && (
-              <img
-                src={poster}
-                alt={film.FilmTitle}
-                className="w-40 flex-shrink-0 border-2 border-white/80 self-start"
-              />
-            )}
-            <div className="text-white pt-1">
+  // The hero runs edge to edge behind the content column, so it goes in
+  // PageShell's bleed slot rather than inside the column.
+  const hero = (
+    <div className="relative bg-black">
+      {backdrop && (
+        <img
+          src={backdrop}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
+      )}
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {/* This page had NO way back at all — the only crumb was on its
+            not-found state, so arriving from global search or a shared link
+            left the browser's back button as the sole exit. Explore is the
+            parent overview for a film, being the page that lists them. */}
+        <div className="mb-5">
+          <Crumb to={EXPLORE} label="Explore" tone="dark" />
+        </div>
+        <div className="flex flex-col sm:flex-row gap-6">
+          {poster && (
+            <img
+              src={poster}
+              alt={film.FilmTitle}
+              className="w-40 flex-shrink-0 border-2 border-white/80 self-start"
+            />
+          )}
+          <div className="text-white pt-1">
               <h1 className="text-4xl sm:text-5xl font-black uppercase tracking-tight leading-none">
                 {film.FilmTitle}
               </h1>
@@ -135,7 +127,7 @@ export default function FilmDetailPage() {
                       {film.directors.map((d, i) => (
                         <span key={d}>
                           {i > 0 && ', '}
-                          <Link to={`/director/${encodeURIComponent(d)}`} className="underline decoration-white/30 hover:decoration-white">
+                          <Link to={directorUrl(d)} className="underline decoration-white/30 hover:decoration-white">
                             {d}
                           </Link>
                         </span>
@@ -153,12 +145,15 @@ export default function FilmDetailPage() {
                   ))}
                 </div>
               )}
-            </div>
           </div>
         </div>
       </div>
+    </div>
+  )
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+  return (
+    <PageShell width="narrow" bleed={hero}>
+      <div className="space-y-10">
 
         {/* Countries + synopsis */}
         <section className="grid md:grid-cols-3 gap-6">
@@ -176,7 +171,7 @@ export default function FilmDetailPage() {
               {(film.countries || []).map(c => (
                 <Link
                   key={c}
-                  to={`/countries/${encodeURIComponent(c)}`}
+                  to={countryUrl(c)}
                   className="text-sm font-bold border-2 border-black px-3 py-1 bg-white hover:bg-black hover:text-white transition-colors"
                 >
                   {c}
@@ -192,7 +187,7 @@ export default function FilmDetailPage() {
                   {extraCoProd.map(c => (
                     <Link
                       key={c}
-                      to={`/countries/${encodeURIComponent(c)}`}
+                      to={countryUrl(c)}
                       className="text-xs font-medium border border-gray-300 px-2 py-1 bg-white text-gray-600 hover:border-black hover:text-black transition-colors"
                     >
                       {c}
@@ -217,9 +212,7 @@ export default function FilmDetailPage() {
           <VotersSection film={film} filmVoters={filmVoters} voterSlugs={voterSlugs} />
         </section>
       </div>
-
-      <Footer />
-    </div>
+    </PageShell>
   )
 }
 
@@ -327,7 +320,7 @@ function VotersList({ voters, voterSlugs }) {
                 <span key={p.slug}>
                   {j > 0 && <span className="text-gray-300"> &amp; </span>}
                   <Link
-                    to={`/voter/${p.slug}`}
+                    to={voterUrl(p.slug)}
                     className="hover:text-black hover:underline decoration-gray-400"
                   >
                     {p.name}

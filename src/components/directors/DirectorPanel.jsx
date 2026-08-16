@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import GridTile, { withCurrent } from '../search/GridTile'
 import { exploreUrl } from '../../lib/exploreUrl'
+import { directorUrl } from '../../lib/routes'
+import EntityTitleLink from '../layout/EntityTitleLink'
 
 // Cap posters shown in the panel; the rest live on the Explore page.
 const PANEL_FILM_CAP = 30
@@ -38,15 +40,7 @@ export default function DirectorPanel({ row, metric = 'votes', selectedPoll, top
 
         <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
           <h4 className="font-black text-lg text-black uppercase tracking-wide">
-            <Link
-              to={`/director/${encodeURIComponent(row.name)}`}
-              className="group inline-flex items-center gap-1.5 hover:underline decoration-2 underline-offset-2"
-            >
-              <span>{row.name}</span>
-              <svg className="w-4 h-4 shrink-0 opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M7 17L17 7M17 7H8M17 7v9" />
-              </svg>
-            </Link>
+            <EntityTitleLink to={directorUrl(row.name, { poll: selectedPoll })} name={row.name} />
           </h4>
           {/* Set when the panel was opened from a scoped cell (a decade), so the
               counts below read as that slice rather than the whole filmography. */}

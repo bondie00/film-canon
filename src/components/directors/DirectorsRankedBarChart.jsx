@@ -3,9 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 
 import DirectorPanel from './DirectorPanel'
 import VizCard from '../layout/VizCard'
 import { TIER_COLORS, tierIndexForRank } from '../../lib/rankTiers'
-import { orderRows } from './rankedField'
-import useDirectorSelection from '../../hooks/useDirectorSelection'
-import { DirectorQuickFilters, DirectorSearchDropdown } from './DirectorSelectionControls'
+import { DirectorQuickFilters, DirectorSortToggle } from './DirectorSelectionControls'
 import { TOOLTIP_BOX, TOOLTIP_NAME, TOOLTIP_SUBTITLE, TOOLTIP_DETAIL, TOOLTIP_WIDTH } from '../../utils/tooltip'
 
 /** Nearest 1/2/5/10 at the right magnitude — the axis step, rounded up. */
@@ -31,21 +29,26 @@ function niceStep(raw) {
  * and move depth into color — the same trade the director decade bars already
  * make, for the same reason. It also makes each film a target big enough to hover.
  *
- * **So bar LENGTH is film count, while bar ORDER is the active metric.** Those are
+ * **So bar LENGTH is film count, while bar ORDER is the chosen sort.** Those are
  * deliberately different quantities, and the gap between them is the point. In
  * 2022 Godard draws the longest bar — 30 films — and still ranks #5 on 238 votes,
  * because nothing anchors it: his best film, Breathless, is 22% of his total and
  * the bar is mostly pale. Akerman ranks #2 on 312 votes from a bar barely half as
  * long, because 215 of those votes are Jeanne Dielman alone. Reading length
  * against order is reading breadth against weight; the axis label names the
- * length and the sidebar's metric toggle names the order, so no caption has to.
+ * length and the heading's Sort by control names the order, so no caption has to.
  *
  * Implemented as a STACKED bar: one Recharts <Bar> per film slot, each carrying a
  * value of 1, so the x-axis is a plain film count and every tile is a real rect
  * with its own hover target. Rows with fewer films leave later slots undefined and
  * Recharts simply doesn't draw them.
  */
-export default function DirectorsRankedBarChart({ rows, metric = 'votes', selectedPoll, topTarget, cuts }) {
+export default function DirectorsRankedBarChart({
+  rows, selectedPoll, topTarget, cuts,
+  sortBy = 'votes', onSortChange,
+  topN, onTopNChange,
+  pinnedDirectors = [], onClearPinned,
+}) {
   const [openDirector, setOpenDirector] = useState(null)
 
   const [hover, setHover] = useState(null)
@@ -54,20 +57,27 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
   const chartContainerRef = useRef(null)
   const panelRef = useRef(null)
 
-  const valueKey = metric === 'films' ? 'films' : 'votes'
-  const rankKey = metric === 'films' ? 'filmsRank' : 'votesRank'
-
-  const ordered = useMemo(() => orderRows(rows, valueKey), [rows, valueKey])
-  const sel = useDirectorSelection(ordered, rankKey)
+  /**
+   * `rows` arrives ALREADY ordered and already cut to the rows to draw — the
+   * page owns that, because two controls in two places depend on it: the Top-N
+   * buttons in this heading and the director picker in the rail, which ticks
+   * whatever is currently charted. This component draws what it's given.
+   *
+   * `sortBy` comes down only to pick which rank to label a row with; its control
+   * still renders here, on the heading, since ordering one chart is a property
+   * of that chart rather than of the page.
+   */
+  const valueKey = sortBy === 'films' ? 'films' : 'votes'
+  const rankKey = sortBy === 'films' ? 'filmsRank' : 'votesRank'
 
   const chartData = useMemo(
-    () => sel.selectedData.map(row => {
+    () => (rows || []).map(row => {
       // One key per film slot; the value is always 1 so the axis counts films.
       const slots = {}
       row.filmList.forEach((_, i) => { slots[`f${i}`] = 1 })
       return { ...row, ...slots, rank: row[rankKey], value: row[valueKey] }
     }),
-    [sel.selectedData, rankKey, valueKey]
+    [rows, rankKey, valueKey]
   )
 
   const maxFilms = useMemo(
@@ -111,8 +121,8 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
   }, [maxFilms])
 
   const openRow = useMemo(
-    () => ordered.find(r => r.name === openDirector) || null,
-    [ordered, openDirector]
+    () => (rows || []).find(r => r.name === openDirector) || null,
+    [rows, openDirector]
   )
 
   useEffect(() => {
@@ -122,8 +132,8 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
   // Filter changes leave the panel open — it re-reads the new data, matching the
   // countries chart. Only close if the director dropped out of the data entirely.
   useEffect(() => {
-    if (openDirector && !ordered.some(r => r.name === openDirector)) setOpenDirector(null)
-  }, [ordered, openDirector])
+    if (openDirector && !(rows || []).some(r => r.name === openDirector)) setOpenDirector(null)
+  }, [rows, openDirector])
 
   // Both stable, so they never change the memoized chart's identity below.
   const enterTile = useCallback(next => setHover(next), [])
@@ -207,21 +217,46 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
     </ResponsiveContainer>
   ), [chartData, maxFilms, chartHeight, cuts, domain, ticks, axisWidth, rowsByName, enterTile, leaveTile])
 
-  if (!rows?.length) {
-    return (
-      <div className="bg-white border-4 border-black p-6 mb-8">
-        <div className="text-center text-black font-medium py-8">Loading director data…</div>
-      </div>
-    )
-  }
-
   const hoveredFilm = hover ? hover.row.filmList[hover.filmIndex] : null
 
   return (
-    <VizCard title="Directors Ranked" controls={<DirectorQuickFilters sel={sel} />}>
+    <VizCard
+      title="Directors Ranked"
+      controls={
+        // Depth on the left, order on the right — the two things you can do to
+        // this ranking, both on the chart's own heading rather than in the rail.
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          <DirectorQuickFilters
+            value={topN}
+            onChange={n => { onClearPinned?.(); onTopNChange?.(n) }}
+            pinnedCount={pinnedDirectors.length}
+          />
+          <DirectorSortToggle value={sortBy} onChange={onSortChange} />
+        </div>
+      }
+    >
+      {/* A pinned director can survive a change of poll or depth that leaves
+          them with no films — Godard pinned, then 1952 selected. Say so, rather
+          than drawing an empty axis that looks like a failure. */}
+      {chartData.length === 0 && pinnedDirectors.length > 0 && (
+        <div className="py-12 text-center">
+          <p className="text-black font-medium mb-3">
+            {pinnedDirectors.length === 1
+              ? `${pinnedDirectors[0]} has no films in this selection.`
+              : 'None of the chosen directors has films in this selection.'}
+          </p>
+          <button
+            onClick={onClearPinned}
+            className="px-5 py-2 bg-black text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
+          >
+            Show the ranking
+          </button>
+        </div>
+      )}
+
       <div
         ref={chartContainerRef}
-        className="relative"
+        className={`relative ${chartData.length === 0 ? 'hidden' : ''}`}
         onMouseMove={e => setMouse({ x: e.clientX, y: e.clientY })}
         onMouseLeave={() => setHover(null)}
       >
@@ -261,7 +296,7 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
         {openRow && (
           <DirectorPanel
             row={openRow}
-            metric={metric}
+            metric={sortBy}
             selectedPoll={selectedPoll}
             topTarget={topTarget}
             onClose={() => setOpenDirector(null)}
@@ -297,8 +332,6 @@ export default function DirectorsRankedBarChart({ rows, metric = 'votes', select
         </div>
       )}
 
-      {/* Search-and-add sits BELOW the chart, as on the countries page. */}
-      <DirectorSearchDropdown sel={sel} />
     </VizCard>
   )
 
@@ -339,11 +372,14 @@ function FilmTile({ x, y, width, height, payload, filmIndex, cuts, onEnter, onLe
  *
  * It used to carry their most-voted film's poster in the ten-row view only, on
  * the grounds that a poster is 2:3 and only that view's 72px row had the 60px of
- * height to render one legibly. That conditional was the problem: the row count
- * is a rank cutoff, not a slice, so ties push the top view to eleven rows and the
- * posters silently vanish — present at one rank depth and gone at the next, for
- * reasons invisible to the reader. Removed rather than made conditional on
- * something steadier; the bars and the tooltip carry the films.
+ * height to render one legibly. That conditional was the problem: back then the
+ * row count was a rank cutoff rather than a slice, so ties pushed the top view to
+ * eleven rows and the posters silently vanished — present at one rank depth and
+ * gone at the next, for reasons invisible to the reader.
+ *
+ * NOTE: that reason has since expired. Top N now takes exactly N rows (see
+ * DirectorsMain), so the ten-row view is always ten rows and the poster
+ * condition would be stable. Restoring them is a live option, not a closed one.
  *
  * Names run long — Rainer Werner Fassbinder is 25 characters — so the label gets
  * more room than the countries chart's 95px and still truncates.

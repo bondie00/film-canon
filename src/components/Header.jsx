@@ -2,10 +2,15 @@ import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import GlobalSearch from './search/GlobalSearch'
 
+// The Visualizations menu holds the pages that are a chart and nothing else.
+// Countries and Directors are not in it: they're entity SECTIONS — a hub over a
+// set of detail pages, each with its own address — and they sit beside Explore
+// at the top level. Directors was in this menu until it got its own hub and
+// /directors/:name detail pages, which made it Countries' twin and left the two
+// halves of the same pair reached by different means.
 const VIZ_LINKS = [
   { to: '/visualizations/decades', label: 'By Decade & Age' },
   { to: '/visualizations/evolution', label: 'Canon Evolution' },
-  { to: '/directors', label: 'By Director' },
 ]
 
 export default function Header() {
@@ -48,6 +53,9 @@ export default function Header() {
             </Link>
             <Link to="/countries" className="text-gray-700 hover:text-gray-900 font-medium">
               Countries
+            </Link>
+            <Link to="/directors" className="text-gray-700 hover:text-gray-900 font-medium">
+              Directors
             </Link>
 
             {/* Visualizations dropdown */}

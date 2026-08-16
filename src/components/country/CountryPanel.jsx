@@ -3,24 +3,11 @@ import { Link } from 'react-router-dom'
 import GridTile, { withCurrent } from '../search/GridTile'
 import { pollKeyOf, pollEntryOf } from '../../lib/rankDepth'
 import { exploreUrl } from '../../lib/exploreUrl'
+import { countryUrl } from '../../lib/routes'
+import EntityTitleLink from '../layout/EntityTitleLink'
 
 // Cap posters shown in the panel; the rest live on the Explore page.
 const PANEL_FILM_CAP = 30
-
-// Country name as a link to its detail page, with an arrow icon signalling it's clickable.
-function CountryTitleLink({ name }) {
-  return (
-    <Link
-      to={`/countries/${encodeURIComponent(name)}`}
-      className="group inline-flex items-center gap-1.5 hover:underline decoration-2 underline-offset-2"
-    >
-      <span>{name}</span>
-      <svg className="w-4 h-4 shrink-0 opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M7 17L17 7M17 7H8M17 7v9" />
-      </svg>
-    </Link>
-  )
-}
 
 /**
  * The expanded country panel: a dimming overlay plus a centred card of poster tiles.
@@ -79,7 +66,12 @@ export default function CountryPanel({
         {/* Country header — active metric bold, the other as a secondary detail */}
         <div className="px-4 py-3 bg-gray-50 border-b-2 border-gray-300 flex-shrink-0">
           <h4 className="font-black text-lg text-black uppercase tracking-wide">
-            <CountryTitleLink name={name} />
+            {/* Carries the poll and depth through, so the country page opens on
+                the same selection the panel is showing. */}
+            <EntityTitleLink
+              to={countryUrl(name, { poll: selectedPoll, top: topTarget })}
+              name={name}
+            />
           </h4>
           <div className="flex gap-3 mt-1 items-end">
             <span className="text-base font-black text-black">

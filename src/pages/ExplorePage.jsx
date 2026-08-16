@@ -245,11 +245,17 @@ export default function ExplorePage() {
 function QueryMeta({ total, poll, filters }) {
   const pollLabel = poll === 'all' ? 'All polls' : `${poll} poll`
   const bits = []
+  // Continents first, and as themselves — this line is where selecting a
+  // continent used to spell out all forty of its countries.
+  if (filters.selectedContinents?.length) bits.push(filters.selectedContinents.join(', '))
   if (filters.selectedCountries.length) bits.push(filters.selectedCountries.join(', '))
   if (filters.selectedDirectors.length) bits.push(filters.selectedDirectors.join(', '))
   if (filters.yearStart || filters.yearEnd) bits.push(`${filters.yearStart || '…'}–${filters.yearEnd || '…'}`)
   return (
-    <div className="text-sm text-gray-600 flex-1 min-w-0">
+    // Truncation lives HERE, on the block, not on the inner span it used to sit
+    // on: `text-overflow` needs a block box with overflow hidden, so on an inline
+    // <span> it did nothing and a long list simply widened the row it shares.
+    <div className="text-sm text-gray-600 flex-1 min-w-0 whitespace-nowrap overflow-hidden text-ellipsis">
       <span className="font-bold text-black">{total.toLocaleString()}</span>{' '}
       {total === 1 ? 'film' : 'films'}
       <span className="text-gray-300 mx-1.5">·</span>
@@ -257,7 +263,7 @@ function QueryMeta({ total, poll, filters }) {
       {bits.length > 0 && (
         <>
           <span className="text-gray-300 mx-1.5">·</span>
-          <span className="truncate">{bits.join(' · ')}</span>
+          {bits.join(' · ')}
         </>
       )}
     </div>

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import PageShell, { SidebarLayout } from '../components/layout/PageShell'
 import SectionHeading, { HeadingToggle } from '../components/layout/SectionHeading'
 import DetailHeader, { Figure } from '../components/layout/DetailHeader'
+import NotFound, { LoadingState } from '../components/layout/NotFound'
 import FilmographyGrid from '../components/films/FilmographyGrid'
 import DirectorDecadeBars from '../components/director/DirectorDecadeBars'
 import DirectorFilterPanel from '../components/director/DirectorFilterPanel'
@@ -11,6 +12,8 @@ import StandingChart from '../components/standing/StandingChart'
 import { buildTierCutoffs, votesIn } from '../lib/rankTiers'
 import { buildDirectorStandings, standingByPoll } from '../lib/standings'
 import { pollLabel } from '../lib/metrics'
+import { directorsHubUrl, countryUrl } from '../lib/routes'
+import useFilterParams from '../hooks/useFilterParams'
 
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
 
@@ -73,10 +76,19 @@ export default function DirectorDetailPage() {
     return out
   }, [directorFilms])
 
-  // Which poll the page is showing, and how the filmography grid is ordered.
-  // Rank-first by default: the canon's own ordering is the more useful opening
-  // read, and chronological is one click away.
-  const [gridPoll, setGridPoll] = useState('all')
+  // Which poll the page is showing. In the URL, under the same name and with the
+  // same meaning as everywhere else, so arriving from the Directors hub keeps
+  // the poll you had picked there.
+  //
+  // The default is 'all', not the hub's 2022: a filmography is a career, and
+  // opening 43 Godard films filtered to one poll would hide most of it. There is
+  // no ?top= here — the page has no rank-depth control, so lib/routes.js drops
+  // one rather than filtering the grid by something invisible.
+  const { poll: gridPoll, setPoll: setGridPoll } = useFilterParams({ defaultPoll: 'all' })
+
+  // How the filmography grid is ordered. Rank-first by default: the canon's own
+  // ordering is the more useful opening read, chronological is one click away.
+  // Local state, not the URL — it reorders one section, not the page.
   const [gridSort, setGridSort] = useState('rank')
 
   // Just the selection; FilmographyGrid owns the ordering for both detail pages.
@@ -118,10 +130,7 @@ export default function DirectorDetailPage() {
   if (loading) {
     return (
       <PageShell>
-        <div className="text-center py-20">
-          <div className="inline-block w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin mb-4" />
-          <p className="text-black font-medium">Loading…</p>
-        </div>
+        <LoadingState />
       </PageShell>
     )
   }
@@ -129,21 +138,20 @@ export default function DirectorDetailPage() {
   if (!directorFilms.length) {
     return (
       <PageShell>
-        <div className="py-20 text-center">
-          <h1 className="text-3xl font-black uppercase mb-3">Director not found</h1>
-          <p className="text-gray-600 mb-6">
-            No films in the canon are credited to “{directorName}”.
-          </p>
-          <Link
-            to="/explore?poll=all"
-            className="inline-block px-6 py-3 bg-black text-white font-bold uppercase tracking-wide text-sm hover:bg-gray-800"
-          >
-            ← Back to Explore
-          </Link>
-        </div>
+        <NotFound
+          title="Director not found"
+          body={`No films in the canon are credited to “${directorName}”.`}
+          action={{ to: directorsHubUrl(), label: 'Back to Directors' }}
+        />
       </PageShell>
     )
   }
+
+  // Up to the Directors hub, not to Explore. This crumb pointed at Explore only
+  // because no hub existed to point at when the page shipped — and Explore lists
+  // FILMS, so going "up" from a director left you among 4,851 films rather than
+  // among the other directors. It carries the poll back with it.
+  const crumb = { to: directorsHubUrl({ poll: gridPoll }), label: 'Directors' }
 
   const activeYears =
     stats.yearFrom != null
@@ -155,7 +163,7 @@ export default function DirectorDetailPage() {
   return (
     <PageShell>
       <DetailHeader
-        crumb={{ to: '/explore?poll=all', label: 'Explore' }}
+        crumb={crumb}
         title={canonicalName}
         facts={[
           <Figure key="films" value={stats.filmCount}>
@@ -170,7 +178,7 @@ export default function DirectorDetailPage() {
               {stats.countries.map(c => (
                 <Link
                   key={c}
-                  to={`/countries/${encodeURIComponent(c)}`}
+                  to={countryUrl(c, { poll: gridPoll })}
                   className="underline decoration-gray-300 hover:decoration-black hover:text-black"
                 >
                   {c}

@@ -1,5 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useState, useEffect, useMemo } from 'react'
 import PageShell, { SidebarLayout } from '../components/layout/PageShell'
 import DetailHeader, { Figure } from '../components/layout/DetailHeader'
 import VizCard from '../components/layout/VizCard'
@@ -13,29 +12,18 @@ import RankDepthFilter from '../components/RankDepthFilter'
 import useCountryAggregates from '../hooks/useCountryAggregates'
 import { buildRankIndex, resolveTarget, describeDepth, EMPTY_RANK_INDEX } from '../lib/rankDepth'
 import { metricPair, pollLabel } from '../lib/metrics'
-
-const VALID_POLLS = ['all', '1952', '1962', '1972', '1982', '1992', '2002', '2012', '2022']
+import useFilterParams from '../hooks/useFilterParams'
 
 export default function CountryOriginMain() {
   // Poll and rank depth both live in the URL, using the same param names as
-  // /explore — that's what makes the handoff between the two pages exact.
-  const [searchParams, setSearchParams] = useSearchParams()
-  const rawPoll = searchParams.get('poll')
-  const selectedPoll = VALID_POLLS.includes(rawPoll) ? rawPoll : '2022'
-  const rawTop = searchParams.get('top')
-  const topTarget = rawTop && /^\d+$/.test(rawTop) ? parseInt(rawTop, 10) : null
-
-  const setParam = useCallback((key, value) => {
-    setSearchParams(prev => {
-      const next = new URLSearchParams(prev)
-      if (value == null) next.delete(key)
-      else next.set(key, String(value))
-      return next
-    }, { replace: true })
-  }, [setSearchParams])
-
-  const setSelectedPoll = useCallback((poll) => setParam('poll', poll), [setParam])
-  const setTopTarget = useCallback((target) => setParam('top', target), [setParam])
+  // /explore — that's what makes the handoff between the two pages exact. The
+  // parsing is shared with the other three pages that have these filters.
+  const {
+    poll: selectedPoll,
+    setPoll: setSelectedPoll,
+    top: topTarget,
+    setTop: setTopTarget,
+  } = useFilterParams()
 
   // Which quantity drives sizing/color/sorting: 'votes' (canonical weight,
   // default) or 'films' (breadth, era-neutral). See CLAUDE.md metrics section.

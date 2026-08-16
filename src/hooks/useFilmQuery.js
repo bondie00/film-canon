@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { buildRankIndex, resolveTarget, EMPTY_RANK_INDEX } from '../lib/rankDepth'
+import { buildContinentIndex, filterFilmsByCountrySelection } from '../lib/geo'
+import { POLL_YEARS, VALID_POLLS } from './useFilterParams'
 
 // Single source of truth for the unified films surface (/explore).
 //
@@ -17,14 +19,18 @@ import { buildRankIndex, resolveTarget, EMPTY_RANK_INDEX } from '../lib/rankDept
 //   title      repeated — selected film titles
 //   director   repeated — selected directors
 //   country    repeated — selected countries
+//   continent  repeated — selected continents (a continent is its own token,
+//              NOT expanded into its countries; see lib/geo.js)
 //   yearStart  production-year lower bound
 //   yearEnd    production-year upper bound
 //
 // Multi-selects use REPEATED params (?country=Japan&country=France) rather than
 // a delimiter, because film titles contain commas ("Jeanne Dielman, 23, …").
 
-export const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
-const VALID_POLLS = ['all', ...POLL_YEARS.map(String)]
+// The poll vocabulary is shared with useFilterParams, which the hubs and detail
+// pages use — ?poll= has to mean the same thing on every page for the links
+// between them to carry it. Re-exported because callers already import it here.
+export { POLL_YEARS, VALID_POLLS }
 const VALID_SORTS = ['votes', 'title-az', 'year-newest', 'year-oldest']
 
 export function useFilmQuery() {
@@ -68,16 +74,20 @@ export function useFilmQuery() {
   const selectedTitles = searchParams.getAll('title')
   const selectedDirectors = searchParams.getAll('director')
   const selectedCountries = searchParams.getAll('country')
+  // Continents are their own dimension, not shorthand for their countries — see
+  // lib/geo.js for why one chip beats forty.
+  const selectedContinents = searchParams.getAll('continent')
   const yearStart = searchParams.get('yearStart') || ''
   const yearEnd = searchParams.get('yearEnd') || ''
 
   // Shape the FilterPanel already expects.
-  const filters = { selectedTitles, selectedDirectors, selectedCountries, yearStart, yearEnd, sortBy }
+  const filters = { selectedTitles, selectedDirectors, selectedCountries, selectedContinents, yearStart, yearEnd, sortBy }
 
   const hasActiveFilters =
     selectedTitles.length > 0 ||
     selectedDirectors.length > 0 ||
     selectedCountries.length > 0 ||
+    selectedContinents.length > 0 ||
     !!yearStart ||
     !!yearEnd
 
@@ -174,11 +184,17 @@ export function useFilmQuery() {
     return result
   }, [pollFiltered, selectedTitles, selectedDirectors, yearStart, yearEnd])
 
-  // Step 3 — apply country filter.
-  const filtered = useMemo(() => {
-    if (selectedCountries.length === 0) return beforeCountry
-    return beforeCountry.filter(f => f.countries.some(c => selectedCountries.includes(c)))
-  }, [beforeCountry, selectedCountries])
+  // Step 3 — apply the country filter, which is countries OR continents.
+  // Resolved to one flat Set so the two dimensions cost the same as one.
+  const continentIndex = useMemo(() => buildContinentIndex(countriesData), [countriesData])
+  const filtered = useMemo(
+    () => filterFilmsByCountrySelection(
+      beforeCountry,
+      { countries: selectedCountries, continents: selectedContinents },
+      continentIndex
+    ),
+    [beforeCountry, selectedCountries, selectedContinents, continentIndex]
+  )
 
   // Step 4 — sort (relative to the active poll).
   const sorted = useMemo(() => {
@@ -240,6 +256,7 @@ export function useFilmQuery() {
       selectedTitles: 'title',
       selectedDirectors: 'director',
       selectedCountries: 'country',
+      selectedContinents: 'continent',
       yearStart: 'yearStart',
       yearEnd: 'yearEnd',
       sortBy: 'sort',
@@ -252,7 +269,7 @@ export function useFilmQuery() {
   }, [setParam])
 
   const clearFilters = useCallback(() => {
-    setParam({ title: [], director: [], country: [], yearStart: '', yearEnd: '', sort: '', top: '' })
+    setParam({ title: [], director: [], country: [], continent: [], yearStart: '', yearEnd: '', sort: '', top: '' })
   }, [setParam])
 
   return {

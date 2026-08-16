@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { filmUrl } from '../../lib/routes'
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Dot } from 'recharts'
 
 const POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
@@ -204,7 +205,7 @@ export default function FilmCard({ film, activePoll }) {
 
           <div className="mt-3 pt-3 border-t border-gray-200">
             <Link
-              to={`/film/${film.key}`}
+              to={filmUrl(film.key)}
               className="text-sm font-bold text-black uppercase tracking-wide hover:underline"
             >
               View full film page →

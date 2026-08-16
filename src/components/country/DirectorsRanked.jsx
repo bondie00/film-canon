@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { tallyDirectors } from './countryDirectors'
+import { directorUrl } from '../../lib/routes'
 import Pagination from '../search/Pagination'
 
 // The section is one page tall, always. Deep enough to be worth turning to,
@@ -105,7 +106,7 @@ export default function DirectorsRanked({
                 {firstIndex + i + 1}
               </span>
               <Link
-                to={`/director/${encodeURIComponent(d.name)}`}
+                to={directorUrl(d.name, { poll: selectedPoll })}
                 title={d.name}
                 className="shrink-0 text-xs font-bold text-black truncate hover:underline"
                 style={{ width: NAME_WIDTH }}

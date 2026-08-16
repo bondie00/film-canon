@@ -33,6 +33,16 @@ function CountryDetailRedirect() {
   return <Navigate to={`/countries/${encodeURIComponent(countryName)}${search}`} replace />
 }
 
+// Director pages shipped at the singular /director/:name, before /directors
+// existed as a hub. Now that it does, the pair matches countries: a plural hub
+// with its detail pages beneath it. Redirect the old singular path — it's the
+// address in every link that was shared or bookmarked before this.
+function DirectorDetailRedirect() {
+  const { name } = useParams()
+  const { search } = useLocation()
+  return <Navigate to={`/directors/${encodeURIComponent(name)}${search}`} replace />
+}
+
 // Reset scroll to the top whenever the route (pathname) changes. Keyed to
 // pathname only — changing filters/view on /explore updates the query string
 // but should keep your place, so we intentionally ignore search-param changes.
@@ -53,6 +63,7 @@ function App() {
         <Route path="/countries" element={<CountryOriginMain />} />
         <Route path="/countries/:countryName" element={<CountryDetail />} />
         <Route path="/directors" element={<DirectorsMain />} />
+        <Route path="/directors/:name" element={<DirectorDetailPage />} />
         <Route path="/visualizations/country" element={<CountryHubRedirect />} />
         <Route path="/visualizations/country/:countryName" element={<CountryDetailRedirect />} />
         <Route path="/visualizations/evolution" element={<CanonEvolution />} />
@@ -60,7 +71,7 @@ function App() {
         <Route path="/search" element={<SearchRedirect />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/film/:key" element={<FilmDetailPage />} />
-        <Route path="/director/:name" element={<DirectorDetailPage />} />
+        <Route path="/director/:name" element={<DirectorDetailRedirect />} />
         <Route path="/voter/:slug" element={<VoterDetailPage />} />
       </Routes>
     </Router>

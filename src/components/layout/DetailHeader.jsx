@@ -37,14 +37,7 @@ export default function DetailHeader({ crumb, chip, title, facts = [] }) {
 
   return (
     <div className="pt-2 pb-8">
-      {crumb && (
-        <Link
-          to={crumb.to}
-          className="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black"
-        >
-          ← {crumb.label}
-        </Link>
-      )}
+      {crumb && <Crumb {...crumb} />}
 
       {chip && (
         <div className="mt-3">
@@ -72,6 +65,54 @@ export default function DetailHeader({ crumb, chip, title, facts = [] }) {
         </div>
       )}
     </div>
+  )
+}
+
+/**
+ * The way back up, and the site's ONLY back affordance.
+ *
+ * ## The standard
+ *
+ * One crumb per page. It sits at the top, above the title, and points at the
+ * PARENT OVERVIEW — the page one level larger than this one, the one that lists
+ * things of this kind. Not "the page you came from": a crumb that mirrored
+ * history would say something different on every visit, and the browser's own
+ * back button already does that job better than a link can.
+ *
+ * So the targets are structural, and each detail page has exactly one:
+ *
+ *     /countries/:name   →  /countries      the country hub lists countries
+ *     /directors/:name   →  /directors      likewise
+ *     /film/:key         →  /explore        films are listed by /explore
+ *     /voter/:slug       →  /explore        voters have no hub of their own
+ *
+ * The director page pointed at /explore until directors became a top-level
+ * section with a hub to point at.
+ *
+ * IT CARRIES THE FILTERS (see lib/routes.js). Arriving from a hub where you'd
+ * chosen a poll and a depth and landing back on an unfiltered hub loses work
+ * that took several clicks to express.
+ *
+ * ## No second back affordance
+ *
+ * The country page also ended with a full-width black "Back to all countries"
+ * button. Two ways back, in two visual languages, saying the same thing — and
+ * the bottom one implies the page is a flow you complete, rather than a place
+ * you leave whenever you like. The crumb is enough, and being at the top it is
+ * reachable before you've read anything rather than only after.
+ *
+ * `tone` is for the film page, whose crumb sits on the dark backdrop hero
+ * rather than on the page background.
+ */
+export function Crumb({ to, label, tone = 'light' }) {
+  const color =
+    tone === 'dark'
+      ? 'text-white/70 hover:text-white'
+      : 'text-gray-500 hover:text-black'
+  return (
+    <Link to={to} className={`text-xs font-bold uppercase tracking-widest ${color}`}>
+      ← {label}
+    </Link>
   )
 }
 
