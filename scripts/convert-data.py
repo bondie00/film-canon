@@ -90,7 +90,8 @@ CONTINENT_MAP = {
     'Estonia': 'Europe', 'Iceland': 'Europe', 'Bosnia and Herzegovina': 'Europe',
     'Albania': 'Europe', 'Macedonia': 'Europe', 'Montenegro': 'Europe', 'Kosovo': 'Europe',
     'Belarus': 'Europe', 'Ukraine': 'Europe', 'Moldova': 'Europe', 'Armenia': 'Europe',
-    'Georgia': 'Europe', 'Luxembourg': 'Europe', 'Malta': 'Europe', 'Cyprus': 'Europe',
+    'Georgia': 'Europe', 'Azerbaijan': 'Europe', 'Luxembourg': 'Europe',
+    'Malta': 'Europe', 'Cyprus': 'Europe',
     'Faroe Islands': 'Europe',
 
     # Historic Europe
@@ -107,6 +108,7 @@ CONTINENT_MAP = {
     'Kazakhstan': 'Asia', 'Uzbekistan': 'Asia', 'Cambodia': 'Asia', 'Laos': 'Asia',
     'Myanmar': 'Asia', 'Sri Lanka': 'Asia', 'Nepal': 'Asia', 'Mongolia': 'Asia',
     'North Korea': 'Asia', 'Kyrgyzstan': 'Asia', 'Tajikistan': 'Asia',
+    'Turkmenistan': 'Asia',
 
     # Africa
     'South Africa': 'Africa', 'Egypt': 'Africa', 'Nigeria': 'Africa', 'Kenya': 'Africa',

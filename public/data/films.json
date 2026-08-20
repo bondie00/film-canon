@@ -3081,7 +3081,8 @@
       "Abram Room"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -12997,7 +12998,8 @@
       "Aleksandr Dovzhenko"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -13070,7 +13072,8 @@
       "Aleksandr Dovzhenko"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -13144,7 +13147,8 @@
       "Aleksandr Dovzhenko"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -13218,7 +13222,8 @@
       "Aleksandr Dovzhenko"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -30230,7 +30235,8 @@
       "Artavazd Peleshian"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Armenia"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -30303,7 +30309,8 @@
       "Artavazd Peleshian"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Armenia"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -32717,7 +32724,8 @@
       "Bakhtyar Khudojnazarov"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Tajikistan"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -63922,7 +63930,7 @@
       "Romania",
       "Bosnia and Herzegovina",
       "Croatia",
-      "North Macedonia",
+      "Macedonia",
       "France"
     ],
     "genres": [
@@ -67490,8 +67498,7 @@
       "Germany"
     ],
     "coProductionCountries": [
-      "Germany",
-      "Frace"
+      "France"
     ],
     "genres": [
       "Comedy"
@@ -68010,7 +68017,8 @@
       "Darezhan Omirbayev"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Kazakhstan"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -79333,7 +79341,8 @@
       "Dziga Vertov"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -79406,7 +79415,8 @@
       "Dziga Vertov"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -79625,7 +79635,8 @@
       "Dziga Vertov"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -82205,7 +82216,8 @@
       "Elem Klimov"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Belarus"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -120672,10 +120684,9 @@
     "coProductionCountries": [
       "France",
       "Sweden",
-      "Britain",
+      "United Kingdom",
       "Belgium",
-      "Netherlands",
-      "Lebanon"
+      "Netherlands"
     ],
     "genres": [
       "Documentary",
@@ -166329,8 +166340,6 @@
       "United Kingdom"
     ],
     "coProductionCountries": [
-      "United KingdomUnited States",
-      "United Kingdom",
       "United States"
     ],
     "genres": [
@@ -166919,8 +166928,7 @@
       "United States"
     ],
     "coProductionCountries": [
-      "United Kingdom",
-      "United States"
+      "United Kingdom"
     ],
     "genres": [
       "Adventure",
@@ -187928,7 +187936,8 @@
       "Khodzha Kuli Narliyev"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Turkmenistan"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -190276,7 +190285,8 @@
       "Kira Muratova"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -190344,7 +190354,8 @@
       "Kira Muratova"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -190416,7 +190427,8 @@
       "Kira Muratova"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -193417,7 +193429,8 @@
       "Lana Ghoghoberidze"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Georgia"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -193490,7 +193503,8 @@
       "Lana Ghoghoberidze"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Georgia"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -197786,12 +197800,10 @@
       "Leida Laius"
     ],
     "countries": [
-      "Soviet Union"
-    ],
-    "coProductionCountries": [
       "Soviet Union",
       "Estonia"
     ],
+    "coProductionCountries": [],
     "genres": [
       "Drama"
     ],
@@ -197861,12 +197873,10 @@
       "Leida Laius"
     ],
     "countries": [
-      "Soviet Union"
-    ],
-    "coProductionCountries": [
       "Soviet Union",
       "Estonia"
     ],
+    "coProductionCountries": [],
     "genres": [
       "Drama"
     ],
@@ -210927,10 +210937,7 @@
     "countries": [
       "Germany"
     ],
-    "coProductionCountries": [
-      "Germany",
-      "German Reich"
-    ],
+    "coProductionCountries": [],
     "genres": [
       "Drama",
       "Silent"
@@ -237114,7 +237121,8 @@
       "Mikhail Kalatozov"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Georgia"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -237186,7 +237194,8 @@
       "Mikhail Kaufman"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -247925,7 +247934,8 @@
       "Nikolaj Maščenko"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -253721,7 +253731,8 @@
       "Otar Iosseliani"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Georgia"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -271556,7 +271567,8 @@
       "Priit Pärn"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Estonia"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -279086,7 +279098,8 @@
       "Rezo Chkheidze"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Georgia"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -288975,7 +288988,8 @@
       "Robertas Verba"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Lithuania"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -303651,7 +303665,10 @@
     "countries": [
       "Soviet Union"
     ],
-    "coProductionCountries": [],
+    "coProductionCountries": [
+      "United States",
+      "Mexico"
+    ],
     "genres": [
       "Drama",
       "Documentary"
@@ -303796,7 +303813,8 @@
       "Sergei Parajanov"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Armenia"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -303872,7 +303890,8 @@
       "Sergei Parajanov"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -304922,7 +304941,8 @@
       "Shaken Aimanov"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Kazakhstan"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -325144,7 +325164,7 @@
       "Romania",
       "United Kingdom",
       "Germany",
-      "Bosnia",
+      "Bosnia and Herzegovina",
       "France"
     ],
     "genres": [
@@ -328102,7 +328122,8 @@
       "Tolomush Okeyev"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Kyrgyzstan"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -353705,7 +353726,8 @@
       "Yuliya Solntseva"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
@@ -353777,7 +353799,8 @@
       "Yuliya Solntseva"
     ],
     "countries": [
-      "Soviet Union"
+      "Soviet Union",
+      "Ukraine"
     ],
     "coProductionCountries": [],
     "genres": [
