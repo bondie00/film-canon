@@ -178,22 +178,16 @@ export default function FilmDetailPage() {
                 </Link>
               ))}
             </div>
+            {/* Co-production is a credit, not a destination: these countries are
+                deliberately excluded from every count, so their country pages would
+                not list this film. Plain text, and visually distinct from the
+                bordered primary chips above, which do navigate. */}
             {extraCoProd.length > 0 && (
               <div className="mt-3">
                 <div className="text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-1">
                   Co-production
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {extraCoProd.map(c => (
-                    <Link
-                      key={c}
-                      to={countryUrl(c)}
-                      className="text-xs font-medium border border-gray-300 px-2 py-1 bg-white text-gray-600 hover:border-black hover:text-black transition-colors"
-                    >
-                      {c}
-                    </Link>
-                  ))}
-                </div>
+                <p className="text-sm font-bold text-black">{extraCoProd.join(', ')}</p>
               </div>
             )}
           </div>
@@ -232,11 +226,14 @@ function VotersSection({ film, filmVoters, voterSlugs }) {
     return POLL_YEARS.filter(y => (filmVoters[String(y)] || []).length > 0).reverse()
   }, [filmVoters])
 
-  // Default to the most recent poll that has voters.
-  const [selectedPoll, setSelectedPoll] = useState(null)
-  useEffect(() => {
-    if (pollsWithVoters.length && selectedPoll === null) setSelectedPoll(pollsWithVoters[0])
-  }, [pollsWithVoters, selectedPoll])
+  // The router reuses this component across /film/:key navigations, so a poll
+  // picked on the previous film outlives it. Derive the active poll instead of
+  // storing it: an explicit choice wins only while it's available on THIS film,
+  // otherwise fall back to the most recent poll that has voters.
+  const [chosenPoll, setChosenPoll] = useState(null)
+  const selectedPoll = pollsWithVoters.includes(chosenPoll)
+    ? chosenPoll
+    : pollsWithVoters[0]
 
   if (filmVoters === null) {
     return <p className="text-sm text-gray-500">Loading voters…</p>
@@ -258,7 +255,7 @@ function VotersSection({ film, filmVoters, voterSlugs }) {
           return (
             <button
               key={year}
-              onClick={() => setSelectedPoll(year)}
+              onClick={() => setChosenPoll(year)}
               className={`px-4 py-2 font-black text-lg border-2 border-black transition-colors ${
                 active
                   ? 'bg-black text-white'
