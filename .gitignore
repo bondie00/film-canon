@@ -32,3 +32,12 @@ data/tmdb_review.json
 .claude/settings.local.json
 ~$*.xlsx
 __pycache__/
+
+# Local-only source data. Kept on disk, not in the repo:
+#   - the old workbook, superseded by "sight and sound data new.xlsx"
+#   - review scratch and the MUBI export (baked into the workbook, see data/README.md)
+data/sight and sound.xlsx
+data/full_mubi_data.csv
+data/archived/
+data/review.html
+data/*_review*.csv
