@@ -41779,13 +41779,14 @@
     "director_verified": "verified"
   },
   "3161": {
-    "tmdb_id": 415645,
-    "tmdb_title": "Conversations on Alex North's Spartacus: The Celebration of a Masterpiece",
+    "tmdb_id": 46296,
+    "tmdb_title": "Spartacus",
     "tmdb_release_year": 2010,
-    "poster_path": null,
-    "backdrop_path": null,
-    "confidence": "medium",
-    "director_verified": "no_tmdb_director"
+    "poster_path": "/c2GKN4VHCj1dnjFMANRpGkCVBae.jpg",
+    "backdrop_path": "/pbpMk2JmcoNnQwx5JGpXngfoWtp.jpg",
+    "media_type": "tv",
+    "confidence": "high",
+    "director_verified": "verified"
   },
   "3166": {
     "tmdb_id": 163366,

@@ -33,10 +33,13 @@ import films from '/data/films.json';
 
 ## Regenerating Data
 
-Whenever `/data/sight_and_sound.xlsx` is updated:
-1. Run the conversion script: `npm run convert-data`
-2. Commit the updated JSON files
-3. The changes will be reflected in the web app
+Whenever `/data/sight and sound data new.xlsx` is updated:
+1. `python scripts/convert-data.py`
+2. `python scripts/merge_tmdb_images.py`  (re-applies tmdbId + image paths)
+3. Commit the updated JSON files
+
+There is no `npm run convert-data` script; run the Python steps directly.
+See `/data/README.md` for the full pipeline and which columns are editable.
 
 ## Notes
 

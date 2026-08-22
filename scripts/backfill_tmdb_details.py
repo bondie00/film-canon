@@ -1,21 +1,29 @@
 #!/usr/bin/env python3
 """
-Backfill synopsis / runtime / genres from TMDB for films MUBI didn't cover.
+Backfill Synopsis / Runtime / Genre from TMDB for films the workbook leaves blank.
 
-MUBI is the primary source for these fields (see convert-data.py). ~95 films
-have no MUBI data but do have a confident TMDB match — this script calls TMDB's
-details endpoint for just those, and fills ONLY the fields still empty. MUBI
-values are never overwritten.
+The workbook's "main data" sheet is the source of truth for these three fields
+(baked in by scripts/bake_mubi_fields.py). So this script fills gaps IN THE
+SHEET, not in films.json: anything written to films.json would be wiped by the
+next convert-data.py run, which regenerates it from the sheet.
 
 Two-part, mirroring merge_tmdb_images.py:
   1. FETCH  — for films missing a field AND carrying a tmdbId, call
               /movie/{id} or /tv/{id}, cache the result to data/tmdb_details.json.
               Idempotent: films already cached are skipped, so re-runs are free.
-  2. APPLY  — fill empty synopsis/runtime/genres in films.json from the cache.
-              Runs even without an API key (uses whatever is already cached), so
-              it can re-apply after convert-data.py regenerates films.json.
+              Reads films.json for the tmdbId (merge_tmdb_images.py puts it there).
+  2. APPLY  — fill blank Genre/Runtime/Synopsis cells in the sheet from the cache.
+              Existing cell values are never overwritten. Runs without an API key
+              (uses whatever is already cached).
 
-Pipeline order: convert-data.py -> merge_tmdb_images.py -> backfill_tmdb_details.py
+Genre names are normalised on the way in (TMDB's vocabulary differs from MUBI's)
+so the sheet keeps one vocabulary. That guard is why "Science Fiction" and the
+two "&" television genres can no longer leak in.
+
+This is an occasional tool, not a pipeline step. After it writes to the sheet,
+re-run convert-data.py to carry the new values into films.json.
+
+Normal build order: convert-data.py -> merge_tmdb_images.py
 
 Setup:
   1. pip install requests
@@ -29,12 +37,22 @@ Setup:
 import json
 import os
 import time
+import sys
 from pathlib import Path
 
 import requests
+from openpyxl import load_workbook
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from genre_vocab import normalize_genres  # noqa: E402  (shared alias map)
 
 ROOT = Path(__file__).resolve().parent.parent
 FILMS_JSON = ROOT / "public" / "data" / "films.json"
+XLSX = ROOT / "data" / "sight and sound data new.xlsx"
+SHEET = "main data"
+
+# Sheet column <- films.json field, for the three fields this script fills.
+COLUMN_FOR_FIELD = {"synopsis": "Synopsis", "runtime": "Runtime", "genres": "Genre"}
 DETAILS_JSON = ROOT / "data" / "tmdb_details.json"
 
 TMDB_API = "https://api.themoviedb.org/3"
@@ -126,28 +144,44 @@ def main():
                 save_cache(cache)
             print(f"  Fetched {fetched} film(s); cache now has {len(cache)} entries.")
 
-    # ---- APPLY (fill only empty fields) ----
+    # ---- APPLY (fill blank cells in the sheet; never overwrite) ----
     filled = {"synopsis": 0, "runtime": 0, "genres": 0}
-    for film in films:
-        entry = cache.get(str(film["key"]))
+
+    wb = load_workbook(XLSX)
+    ws = wb[SHEET]
+    header = {str(c.value): c.column for c in ws[1] if c.value is not None}
+    missing_cols = [c for c in COLUMN_FOR_FIELD.values() if c not in header]
+    if missing_cols:
+        raise SystemExit(
+            f"Sheet is missing {', '.join(missing_cols)}. "
+            "Run scripts/bake_mubi_fields.py first."
+        )
+    key_col = header["key"]
+
+    for row in range(2, ws.max_row + 1):
+        raw = ws.cell(row=row, column=key_col).value
+        if raw is None:
+            continue
+        entry = cache.get(str(int(raw)))
         if not entry:
             continue
-        if not film.get("synopsis") and entry.get("synopsis"):
-            film["synopsis"] = entry["synopsis"]
-            filled["synopsis"] += 1
-        if not film.get("runtime") and entry.get("runtime"):
-            film["runtime"] = entry["runtime"]
-            filled["runtime"] += 1
-        if not film.get("genres") and entry.get("genres"):
-            film["genres"] = entry["genres"]
-            filled["genres"] += 1
+        for field, column in COLUMN_FOR_FIELD.items():
+            value = entry.get(field)
+            if not value:
+                continue
+            cell = ws.cell(row=row, column=header[column])
+            if cell.value not in (None, ""):
+                continue
+            if field == "genres":
+                value = ", ".join(normalize_genres(value))
+                if not value:
+                    continue
+            cell.value = value
+            filled[field] += 1
 
-    tmp = FILMS_JSON.with_suffix(".json.tmp")
-    with tmp.open("w", encoding="utf-8") as f:
-        json.dump(films, f, ensure_ascii=False, indent=2)
-    tmp.replace(FILMS_JSON)
+    wb.save(XLSX)
 
-    print(f"\n[OK] Applied to films.json — filled "
+    print(f"\n[OK] Applied to the sheet — filled "
           f"{filled['synopsis']} synopses, {filled['runtime']} runtimes, {filled['genres']} genre sets.")
 
 

@@ -68686,9 +68686,11 @@
     ],
     "coProductionCountries": [],
     "genres": [
-      "Sci-Fi & Fantasy",
+      "Sci-Fi",
+      "Fantasy",
       "Drama",
-      "Action & Adventure"
+      "Action",
+      "Adventure"
     ],
     "runtime": null,
     "synopsis": "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.",
@@ -172018,7 +172020,9 @@
       "United Kingdom"
     ],
     "coProductionCountries": [],
-    "genres": [],
+    "genres": [
+      "Music Video"
+    ],
     "runtime": 11,
     "synopsis": "A raw, live-in-studio performance of \"The Perfect Kiss\" by New Order.",
     "imageUrl": null,
@@ -181673,7 +181677,9 @@
       "United Kingdom"
     ],
     "coProductionCountries": [],
-    "genres": [],
+    "genres": [
+      "VR"
+    ],
     "runtime": null,
     "synopsis": null,
     "imageUrl": null,
@@ -219221,7 +219227,7 @@
     ],
     "coProductionCountries": [],
     "genres": [
-      "Science Fiction",
+      "Sci-Fi",
       "Comedy",
       "Romance"
     ],
@@ -242319,7 +242325,7 @@
     ],
     "coProductionCountries": [],
     "genres": [
-      "Avant Garde",
+      "Avant-Garde",
       "Curated Program"
     ],
     "runtime": null,
@@ -316561,9 +316567,14 @@
       "United States"
     ],
     "coProductionCountries": [],
-    "genres": [],
-    "runtime": 109,
-    "synopsis": "Record Producer Robert Townson and seven film composers discuss the importance of composer Alex North and his score for Spartacus.",
+    "genres": [
+      "TV Series",
+      "Drama",
+      "Action",
+      "History"
+    ],
+    "runtime": null,
+    "synopsis": "Torn from his homeland and the woman he loves, Spartacus is condemned to the brutal world of the arena where blood and death are primetime entertainment.",
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -316613,8 +316624,10 @@
         "votes": 1
       }
     ],
-    "tmdbId": 415645,
-    "tmdbMediaType": "movie"
+    "tmdbId": 46296,
+    "tmdbMediaType": "tv",
+    "tmdbPosterPath": "/c2GKN4VHCj1dnjFMANRpGkCVBae.jpg",
+    "tmdbBackdropPath": "/pbpMk2JmcoNnQwx5JGpXngfoWtp.jpg"
   },
   {
     "key": 4502,

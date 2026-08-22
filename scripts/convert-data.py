@@ -16,53 +16,22 @@ Generates:
 import pandas as pd
 import json
 from collections import defaultdict
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from genre_vocab import unknown_genres
 
 # Poll years constant
 POLL_YEARS = [1952, 1962, 1972, 1982, 1992, 2002, 2012, 2022]
 
-# Source workbook (flattened-to-values export; mubi imagery/genre columns were
-# dropped from this file, so they're re-derived from the MUBI CSV by mubi_id).
+# Source workbook. Genre, Runtime, Synopsis, ImageUrl and StillUrl used to be
+# re-derived on every build by joining data/full_mubi_data.csv on mubi_id. They
+# were baked into the sheet's own columns by scripts/bake_mubi_fields.py, so the
+# sheet is now the single editable source for them and the MUBI CSV is archival
+# -- edit Genre here the same way you edit Country. See that script for why.
 EXCEL_PATH = 'data/sight and sound data new.xlsx'
-MUBI_CSV_PATH = 'data/full_mubi_data.csv'
 
-# MUBI CSV columns we join in by mubi_id (id). genres/0..6 collapse to one list;
-# artworks/0/image_url is the poster, still_url the backdrop, duration the
-# runtime (minutes), short_synopsis the blurb.
-_MUBI_GENRE_COLS = [f'genres/{i}' for i in range(7)]
-_MUBI_USE_COLS = ['id', 'artworks/0/image_url', 'still_url', 'duration',
-                  'short_synopsis'] + _MUBI_GENRE_COLS
-
-
-def build_mubi_lookup(csv_path):
-    """Load the MUBI CSV → dict keyed by mubi id with image/genre/runtime/synopsis."""
-    mubi = pd.read_csv(csv_path, usecols=_MUBI_USE_COLS, low_memory=False)
-    # MUBI CSV has one row per locale — keep the first row per id.
-    mubi = mubi.drop_duplicates(subset='id', keep='first')
-
-    lookup = {}
-    for _, row in mubi.iterrows():
-        if pd.isna(row['id']):
-            continue
-        genres = [str(row[c]).strip() for c in _MUBI_GENRE_COLS
-                  if pd.notna(row[c]) and str(row[c]).strip()]
-        runtime = None
-        if pd.notna(row['duration']):
-            try:
-                runtime = int(row['duration'])
-            except (ValueError, TypeError):
-                runtime = None
-        synopsis = str(row['short_synopsis']).strip() if pd.notna(row['short_synopsis']) else None
-        image_url = str(row['artworks/0/image_url']).strip() if pd.notna(row['artworks/0/image_url']) else None
-        still_url = str(row['still_url']).strip() if pd.notna(row['still_url']) else None
-        lookup[int(row['id'])] = {
-            'imageUrl': image_url or None,
-            'stillUrl': still_url or None,
-            'genres': genres,
-            'runtime': runtime,
-            'synopsis': synopsis or None,
-        }
-    return lookup
 
 # Country to continent mapping
 CONTINENT_MAP = {
@@ -152,9 +121,12 @@ def compute_consensus_cutoff(df, year):
     return cutoff_rank, cumulative
 
 
-def generate_films_json(df, output_path, mubi_lookup):
+def generate_films_json(df, output_path):
     """Generate films.json with all film data"""
     print("Generating films.json...")
+
+    # Genre tags found in the sheet that aren't in the controlled vocabulary.
+    off_vocabulary = []
 
     # Backfill rank for voted-but-unranked films. The source data has a few
     # films with votes but a blank rank (e.g. two 1-vote films in the 1952 poll)
@@ -187,19 +159,31 @@ def generate_films_json(df, output_path, mubi_lookup):
             co_production_countries = [c.strip() for c in str(row['CoProductionCountries']).split(',')]
             co_production_countries = [c for c in co_production_countries if c]
 
-        # MUBI-derived fields, joined by mubi_id from the MUBI CSV.
-        mubi_id = int(row['mubi_id']) if pd.notna(row.get('mubi_id')) else None
-        mubi = mubi_lookup.get(mubi_id, {}) if mubi_id is not None else {}
-
-        genres = mubi.get('genres') or []
-        # Fall back to the sheet's own Genre column if MUBI had none.
-        if not genres and pd.notna(row.get('Genre')) and str(row['Genre']).strip():
+        # Descriptive fields, read straight from the sheet (see EXCEL_PATH note).
+        genres = []
+        if pd.notna(row.get('Genre')) and str(row['Genre']).strip():
             genres = [g.strip() for g in str(row['Genre']).split(',') if g.strip()]
+        # The Genre column is hand-edited, so a typo would otherwise ship as a
+        # brand-new genre. Collected here, reported once below.
+        for bad in unknown_genres(genres):
+            off_vocabulary.append((str(row['FilmTitle']), bad))
 
-        image_url = mubi.get('imageUrl')
-        still_url = mubi.get('stillUrl')
-        runtime = mubi.get('runtime')
-        synopsis = mubi.get('synopsis')
+        runtime = None
+        if pd.notna(row.get('Runtime')):
+            try:
+                runtime = int(row['Runtime'])
+            except (ValueError, TypeError):
+                runtime = None
+
+        def _text(column):
+            value = row.get(column)
+            if pd.isna(value):
+                return None
+            return str(value).strip() or None
+
+        synopsis = _text('Synopsis')
+        image_url = _text('ImageUrl')
+        still_url = _text('StillUrl')
 
         # Build poll history for individual polls
         poll_history = []
@@ -241,6 +225,15 @@ def generate_films_json(df, output_path, mubi_lookup):
             'pollHistory': poll_history
         }
         films.append(film)
+
+    if off_vocabulary:
+        print(f"  ! {len(off_vocabulary)} unrecognised genre tag(s) in the sheet's "
+              f"Genre column. Fix the sheet, or add to GENRE_VOCABULARY "
+              f"in scripts/genre_vocab.py:")
+        for title, bad in off_vocabulary[:20]:
+            print(f"      {bad!r} on {title}")
+        if len(off_vocabulary) > 20:
+            print(f"      ...and {len(off_vocabulary) - 20} more")
 
     # Write to file
     with open(output_path, 'w', encoding='utf-8') as f:
@@ -594,17 +587,12 @@ def main():
     df = pd.read_excel(EXCEL_PATH, sheet_name='main data')
     print(f"Loaded {len(df):,} films from Excel")
 
-    # Load MUBI CSV (imagery, genres, runtime, synopsis) keyed by mubi_id.
-    print(f"Reading MUBI data from {MUBI_CSV_PATH}...")
-    mubi_lookup = build_mubi_lookup(MUBI_CSV_PATH)
-    print(f"  {len(mubi_lookup):,} MUBI records loaded (deduped by id)")
-
     # Ensure output directory exists
     output_dir = Path('public/data')
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Generate all JSON files
-    generate_films_json(df, output_dir / 'films.json', mubi_lookup)
+    generate_films_json(df, output_dir / 'films.json')
     generate_countries_json(df, output_dir / 'countries.json')
     generate_directors_json(df, output_dir / 'directors.json')
     generate_polls_json(df, output_dir / 'polls.json')
@@ -613,9 +601,10 @@ def main():
     print("[OK] All JSON files generated successfully!")
     print("=" * 60)
     print("\nNext steps:")
-    print("  1. Review the generated files in public/data/")
-    print("  2. Commit the updated JSON files to git")
-    print("  3. The web app will now use the latest data")
+    print("  1. python scripts/merge_tmdb_images.py   <- REQUIRED: this run")
+    print("     cleared the tmdbId/poster/backdrop fields; that step re-applies them.")
+    print("  2. Review the generated files in public/data/")
+    print("  3. Commit the updated JSON files to git")
 
 
 if __name__ == '__main__':
