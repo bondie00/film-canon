@@ -160,10 +160,19 @@ def generate_films_json(df, output_path):
             co_production_countries = [c for c in co_production_countries if c]
 
         # Descriptive fields, read straight from the sheet (see EXCEL_PATH note).
+        #
+        # GENRE COMES FROM GenreRevised, not Genre (2026-09-12). `Genre` holds MUBI's
+        # and TMDB's original tagging and is never written to -- it is the provenance
+        # record, and the only copy of what Cult and Film noir marked before they were
+        # retired. `GenreRevised` is the output of the nine review passes
+        # (scripts/genre_compose.py) and is complete for every film, so there is no
+        # fallback: a blank there means the film genuinely has no genre, which is true
+        # of exactly three (an unmade film, an unidentified short, a pop promo).
+        genre_col = 'GenreRevised' if 'GenreRevised' in row else 'Genre'
         genres = []
-        if pd.notna(row.get('Genre')) and str(row['Genre']).strip():
-            genres = [g.strip() for g in str(row['Genre']).split(',') if g.strip()]
-        # The Genre column is hand-edited, so a typo would otherwise ship as a
+        if pd.notna(row.get(genre_col)) and str(row[genre_col]).strip():
+            genres = [g.strip() for g in str(row[genre_col]).split(',') if g.strip()]
+        # The column is hand-edited, so a typo would otherwise ship as a
         # brand-new genre. Collected here, reported once below.
         for bad in unknown_genres(genres):
             off_vocabulary.append((str(row['FilmTitle']), bad))
@@ -228,7 +237,7 @@ def generate_films_json(df, output_path):
 
     if off_vocabulary:
         print(f"  ! {len(off_vocabulary)} unrecognised genre tag(s) in the sheet's "
-              f"Genre column. Fix the sheet, or add to GENRE_VOCABULARY "
+              f"GenreRevised column. Fix the sheet, or add to GENRE_VOCABULARY "
               f"in scripts/genre_vocab.py:")
         for title, bad in off_vocabulary[:20]:
             print(f"      {bad!r} on {title}")

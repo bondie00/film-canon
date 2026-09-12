@@ -1778,12 +1778,19 @@
     "bestRank": 131
   },
   "Alejandro Amenábar": {
-    "totalFilms": 1,
+    "totalFilms": 2,
     "films": [
       {
         "key": 2546,
         "title": "Open Your Eyes",
         "year": "1997",
+        "rank2022": 1652,
+        "votes2022": 1
+      },
+      {
+        "key": 4143,
+        "title": "The Sea Inside",
+        "year": "2004",
         "rank2022": 1652,
         "votes2022": 1
       }
@@ -1792,7 +1799,7 @@
     "bestRank": 1652
   },
   "Alejandro González Iñárritu": {
-    "totalFilms": 4,
+    "totalFilms": 3,
     "films": [
       {
         "key": 281,
@@ -1812,13 +1819,6 @@
         "key": 4109,
         "title": "The Revenant",
         "year": "2015",
-        "rank2022": 1652,
-        "votes2022": 1
-      },
-      {
-        "key": 4143,
-        "title": "The Sea Inside",
-        "year": "2004",
         "rank2022": 1652,
         "votes2022": 1
       }
@@ -6986,7 +6986,7 @@
     "bestRank": 217
   },
   "Buster Keaton": {
-    "totalFilms": 12,
+    "totalFilms": 13,
     "films": [
       {
         "key": 3029,
@@ -7145,20 +7145,6 @@
     ],
     "pollsAppeared": 5,
     "bestRank": 77
-  },
-  "Buston Keaton": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3997,
-        "title": "The Navigator",
-        "year": "1924",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 6,
-    "bestRank": 54
   },
   "Donald Crisp": {
     "totalFilms": 1,
@@ -24899,7 +24885,7 @@
     "bestRank": 597
   },
   "John Huston": {
-    "totalFilms": 12,
+    "totalFilms": 14,
     "films": [
       {
         "key": 4284,
@@ -25640,27 +25626,6 @@
         "key": 610,
         "title": "Breakdown",
         "year": "1997",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 899
-  },
-  "Jonhn Huston": {
-    "totalFilms": 2,
-    "films": [
-      {
-        "key": 1490,
-        "title": "Heaven Knows, Mr. Allison",
-        "year": "1957",
-        "rank2022": null,
-        "votes2022": 0
-      },
-      {
-        "key": 3863,
-        "title": "The Life and Times of Judge Roy Bean",
-        "year": "1972",
         "rank2022": null,
         "votes2022": 0
       }
