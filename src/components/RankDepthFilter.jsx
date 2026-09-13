@@ -17,16 +17,12 @@ const THUMB_WIDTH = 16
  *
  * The UI only offers the stops, but any target is valid — a ?top=200 link resolves
  * and displays correctly, landing the handle on the nearest stop.
- *
- * `dense` matches the compact Explore sidebar; the default suits the roomier
- * Countries filter pane.
  */
-export default function RankDepthFilter({ index, target, onChange, dense = false }) {
+export default function RankDepthFilter({ index, target, onChange }) {
   const stops = useMemo(() => buildStops(index), [index])
   const { filmCount, minVotes } = useMemo(() => resolveTarget(index, target), [index, target])
   const sliderIndex = stopIndexFor(stops, filmCount)
 
-  const labelSize = dense ? 'text-xs' : 'text-sm'
   const hasData = index.total > 0
   // A hand-written ?top= larger than the poll is the whole poll — read it as All
   // rather than "Top 3,816 films · to #1652".
@@ -37,7 +33,7 @@ export default function RankDepthFilter({ index, target, onChange, dense = false
       {/* Label and value stack rather than sharing a line — side by side they wrap in
           the narrow Countries sidebar, and stacking matches its sibling filters. */}
       <div className="mb-1.5">
-        <label className={`block ${labelSize} font-semibold text-black uppercase tracking-wide`}>
+        <label className="block text-sm font-semibold text-black uppercase tracking-wide">
           Rank Depth
         </label>
         <div className="text-xs font-bold text-black tabular-nums whitespace-nowrap overflow-hidden text-ellipsis">

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { Fragment, useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import PageShell from '../components/layout/PageShell'
 import { Crumb } from '../components/layout/DetailHeader'
@@ -9,6 +9,7 @@ import { backdropUrl, posterUrl } from '../utils/filmImages'
 import { POLL_YEARS, buildPollFloors } from '../utils/polls'
 import { filmStandingRows } from '../lib/standings'
 import { EXPLORE, countryUrl, directorUrl, voterUrl } from '../lib/routes'
+import { splitGenres } from '../lib/genres'
 
 function formatRuntime(mins) {
   if (!mins) return null
@@ -76,6 +77,10 @@ export default function FilmDetailPage() {
   const backdrop = backdropUrl(film, { mubiWidth: 1280, tmdbSize: 'w1280' })
   const poster = posterUrl(film, 'w342')
   const runtime = formatRuntime(film.runtime)
+  // Format (Short, Silent, TV Mini-series…) is what the work IS, the same kind
+  // of fact as its runtime, so it reads in the metadata line. The chips are
+  // left to content genre.
+  const { content: contentGenres, format: formatTags } = splitGenres(film.genres)
 
   // Co-production countries not already in the primary list.
   const extraCoProd = (film.coProductionCountries || []).filter(
@@ -120,6 +125,9 @@ export default function FilmDetailPage() {
               <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-bold uppercase tracking-wide text-white/90">
                 {film.Year && <span>{film.Year}</span>}
                 {runtime && <><span className="text-white/40">·</span><span>{runtime}</span></>}
+                {formatTags.map(tag => (
+                  <Fragment key={tag}><span className="text-white/40">·</span><span>{tag}</span></Fragment>
+                ))}
                 {film.directors?.length > 0 && (
                   <>
                     <span className="text-white/40">·</span>
@@ -136,12 +144,15 @@ export default function FilmDetailPage() {
                   </>
                 )}
               </div>
-              {film.genres?.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {film.genres.map(g => (
-                    <span key={g} className="text-[11px] font-bold uppercase tracking-widest border border-white/40 px-2 py-1">
-                      {g}
-                    </span>
+              {/* Genre is secondary to the details line above: plain, smaller,
+                  unbolded text rather than bordered chips, which outweighed it. */}
+              {contentGenres.length > 0 && (
+                <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-widest text-white">
+                  {contentGenres.map((g, i) => (
+                    <Fragment key={g}>
+                      {i > 0 && <span className="text-white/30">·</span>}
+                      <span>{g}</span>
+                    </Fragment>
                   ))}
                 </div>
               )}

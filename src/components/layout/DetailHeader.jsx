@@ -28,15 +28,20 @@ import { Link } from 'react-router-dom'
  * emphasis and links (a bold count with a plain label, a run of country links).
  * They're joined with middots here so no caller has to punctuate.
  *
+ * `aside` sits at the right, level with the facts line, and wraps beneath on a
+ * narrow screen. /explore puts its pagination there, so the poster grid can start
+ * level with the top of the filter rail.
+ *
  * `chip` is the accent: a small colour block above the name. The country page
  * gives it the continent, which is the only categorical fact a country has and
  * the same colour that keys its charts.
  */
-export default function DetailHeader({ crumb, chip, title, facts = [] }) {
+export default function DetailHeader({ crumb, chip, title, facts = [], aside = null }) {
   const shown = facts.filter(Boolean)
 
   return (
-    <div className="pt-2 pb-8">
+    <div className="pt-2 pb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+      <div className="min-w-0">
       {crumb && <Crumb {...crumb} />}
 
       {chip && (
@@ -64,6 +69,9 @@ export default function DetailHeader({ crumb, chip, title, facts = [] }) {
           ))}
         </div>
       )}
+      </div>
+
+      {aside && <div className="shrink-0">{aside}</div>}
     </div>
   )
 }

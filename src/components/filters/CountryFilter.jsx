@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { buildContinentIndex } from '../../lib/geo'
+import { FilterLabel, ClearButton } from './FilterCard'
 
 const continentColors = {
   'Europe': '#3b82f6',
@@ -48,6 +49,13 @@ export default function CountryFilter({
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
   const rootRef = useRef(null)
+  const listRef = useRef(null)
+
+  // The list opens in flow inside the scrolling filter rail (see FilterCard),
+  // pushing the controls below it down; bring it into view when it opens.
+  useEffect(() => {
+    if (open) listRef.current?.scrollIntoView({ block: 'nearest' })
+  }, [open])
 
   useEffect(() => {
     if (!open) return
@@ -162,17 +170,10 @@ export default function CountryFilter({
   const selectedCount = chips.length
 
   return (
-    <div className="relative" ref={rootRef}>
-      <div className="flex items-center justify-between mb-1.5">
-        <label className="text-xs font-semibold text-black uppercase tracking-wide">{label}</label>
-        {selectedCount > 0 && (
-          <button
-            onClick={() => onChange({ countries: [], continents: [] })}
-            className="text-xs font-bold text-red-600 hover:text-red-800 uppercase tracking-wide"
-          >
-            Clear ({selectedCount})
-          </button>
-        )}
+    <div ref={rootRef}>
+      <div className="flex items-center justify-between mb-2">
+        <FilterLabel>{label}</FilterLabel>
+        <ClearButton count={selectedCount} onClick={() => onChange({ countries: [], continents: [] })} />
       </div>
 
       {/* Continent chips lead and carry their colour, so a selection of one
@@ -215,7 +216,7 @@ export default function CountryFilter({
       />
 
       {open && (
-        <div className="absolute left-0 right-0 top-full z-50 bg-white border-2 border-black shadow-[0_8px_24px_rgba(0,0,0,0.25)] max-h-48 overflow-y-auto">
+        <div ref={listRef} className="bg-white border-2 border-black border-t-0 max-h-48 overflow-y-auto">
           {visible.map(group => {
             const members = group.countries.map(c => c.name)
             const wholeContinent = continentSet.has(group.continent)

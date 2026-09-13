@@ -10,6 +10,7 @@ export default function SearchSelect({
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef(null)
+  const listRef = useRef(null)
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -21,6 +22,13 @@ export default function SearchSelect({
     document.addEventListener('click', handleClick)
     return () => document.removeEventListener('click', handleClick)
   }, [])
+
+  // Results open in flow inside the scrolling filter rail (see FilterCard), so
+  // one opened near the rail's bottom edge is brought into view.
+  const showList = isOpen && !!query.trim()
+  useEffect(() => {
+    if (showList) listRef.current?.scrollIntoView({ block: 'nearest' })
+  }, [showList])
 
   // Filter options by query, exclude already-selected
   const filteredOptions = useMemo(() => {
@@ -72,7 +80,7 @@ export default function SearchSelect({
       )}
 
       {/* Search input */}
-      <div className="relative">
+      <div ref={listRef}>
         <input
           type="text"
           value={query}
@@ -87,7 +95,7 @@ export default function SearchSelect({
 
         {/* Dropdown */}
         {isOpen && filteredOptions.length > 0 && (
-          <div className="absolute z-50 left-0 right-0 top-full bg-white border-2 border-black border-t-0 max-h-48 overflow-y-auto shadow-lg">
+          <div className="bg-white border-2 border-black border-t-0 max-h-48 overflow-y-auto">
             {filteredOptions.map(opt => (
               <div
                 key={opt}
@@ -101,7 +109,7 @@ export default function SearchSelect({
         )}
 
         {isOpen && query.trim() && filteredOptions.length === 0 && (
-          <div className="absolute z-50 left-0 right-0 top-full bg-white border-2 border-black border-t-0 shadow-lg">
+          <div className="bg-white border-2 border-black border-t-0">
             <div className="px-2 py-2 text-xs text-gray-500">
               No matches found
             </div>

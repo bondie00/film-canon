@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { buildRankIndex, resolveTarget, EMPTY_RANK_INDEX } from '../lib/rankDepth'
 import { buildContinentIndex, filterFilmsByCountrySelection } from '../lib/geo'
+import { filterFilmsByGenres } from '../lib/genres'
 import { POLL_YEARS, VALID_POLLS } from './useFilterParams'
 
 // Single source of truth for the unified films surface (/explore).
@@ -21,6 +22,8 @@ import { POLL_YEARS, VALID_POLLS } from './useFilterParams'
 //   country    repeated — selected countries
 //   continent  repeated — selected continents (a continent is its own token,
 //              NOT expanded into its countries; see lib/geo.js)
+//   genre      repeated — selected genre and format tags. A film must carry ALL
+//              of them, unlike country and director; see lib/genres.js
 //   yearStart  production-year lower bound
 //   yearEnd    production-year upper bound
 //
@@ -77,17 +80,19 @@ export function useFilmQuery() {
   // Continents are their own dimension, not shorthand for their countries — see
   // lib/geo.js for why one chip beats forty.
   const selectedContinents = searchParams.getAll('continent')
+  const selectedGenres = searchParams.getAll('genre')
   const yearStart = searchParams.get('yearStart') || ''
   const yearEnd = searchParams.get('yearEnd') || ''
 
   // Shape the FilterPanel already expects.
-  const filters = { selectedTitles, selectedDirectors, selectedCountries, selectedContinents, yearStart, yearEnd, sortBy }
+  const filters = { selectedTitles, selectedDirectors, selectedCountries, selectedContinents, selectedGenres, yearStart, yearEnd, sortBy }
 
   const hasActiveFilters =
     selectedTitles.length > 0 ||
     selectedDirectors.length > 0 ||
     selectedCountries.length > 0 ||
     selectedContinents.length > 0 ||
+    selectedGenres.length > 0 ||
     !!yearStart ||
     !!yearEnd
 
@@ -109,18 +114,6 @@ export function useFilmQuery() {
     return Array.from(directors).sort()
   }, [films])
 
-  const filmCounts = useMemo(() => {
-    if (!films) return {}
-    const counts = { all: films.length }
-    POLL_YEARS.forEach(year => {
-      counts[year.toString()] = films.filter(f => {
-        const p = f.pollHistory.find(x => x.year === year)
-        return p && p.votes > 0
-      }).length
-    })
-    return counts
-  }, [films])
-
   // ---- Filtering pipeline ----
   // Poll's rank/votes entry for a film ('all' is a real aggregate entry in the data).
   const pollKey = poll === 'all' ? 'all' : parseInt(poll, 10)
@@ -138,7 +131,7 @@ export function useFilmQuery() {
 
   // topRank is a film-COUNT target, not a rank — "top 100" means the ~100
   // highest-ranked films of this poll, resolved to whatever rank that takes here.
-  const { cutoffRank, filmCount: depthFilmCount } = useMemo(
+  const { cutoffRank, filmCount: depthFilmCount, minVotes: depthMinVotes } = useMemo(
     () => resolveTarget(rankIndex, topRank),
     [rankIndex, topRank]
   )
@@ -156,8 +149,8 @@ export function useFilmQuery() {
     })
   }, [films, pollKey, cutoffRank])
 
-  // Step 2 — everything EXCEPT the country filter (drives the sidebar's country counts).
-  const beforeCountry = useMemo(() => {
+  // Step 2 — the filters that don't count their own options: title, director, year.
+  const narrowed = useMemo(() => {
     let result = pollFiltered
     if (selectedTitles.length > 0) {
       result = result.filter(f =>
@@ -184,16 +177,32 @@ export function useFilmQuery() {
     return result
   }, [pollFiltered, selectedTitles, selectedDirectors, yearStart, yearEnd])
 
-  // Step 3 — apply the country filter, which is countries OR continents.
-  // Resolved to one flat Set so the two dimensions cost the same as one.
+  // Step 3 — country and genre. Each picker counts its options against every
+  // filter EXCEPT its own (otherwise every count would read as the number already
+  // selected), so each gets a "before" set with only the other one applied.
+  // Country is countries OR continents, resolved to one flat Set so the two
+  // dimensions cost the same as one.
   const continentIndex = useMemo(() => buildContinentIndex(countriesData), [countriesData])
-  const filtered = useMemo(
+  const beforeGenre = useMemo(
     () => filterFilmsByCountrySelection(
-      beforeCountry,
+      narrowed,
       { countries: selectedCountries, continents: selectedContinents },
       continentIndex
     ),
-    [beforeCountry, selectedCountries, selectedContinents, continentIndex]
+    [narrowed, selectedCountries, selectedContinents, continentIndex]
+  )
+  // Repeated params arrive as a fresh array every render, so the memos below key
+  // on the joined content instead.
+  const genreKey = selectedGenres.join('|')
+  const beforeCountry = useMemo(
+    () => filterFilmsByGenres(narrowed, selectedGenres),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [narrowed, genreKey]
+  )
+  const filtered = useMemo(
+    () => filterFilmsByGenres(beforeGenre, selectedGenres),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [beforeGenre, genreKey]
   )
 
   // Step 4 — sort (relative to the active poll).
@@ -257,6 +266,7 @@ export function useFilmQuery() {
       selectedDirectors: 'director',
       selectedCountries: 'country',
       selectedContinents: 'continent',
+      selectedGenres: 'genre',
       yearStart: 'yearStart',
       yearEnd: 'yearEnd',
       sortBy: 'sort',
@@ -269,7 +279,7 @@ export function useFilmQuery() {
   }, [setParam])
 
   const clearFilters = useCallback(() => {
-    setParam({ title: [], director: [], country: [], continent: [], yearStart: '', yearEnd: '', sort: '', top: '' })
+    setParam({ title: [], director: [], country: [], continent: [], genre: [], yearStart: '', yearEnd: '', sort: '', top: '' })
   }, [setParam])
 
   return {
@@ -283,6 +293,7 @@ export function useFilmQuery() {
     rankIndex,
     cutoffRank,
     depthFilmCount,
+    depthMinVotes,
     sortBy,
     page,
     filters,
@@ -290,10 +301,10 @@ export function useFilmQuery() {
     // options
     titleOptions,
     directorOptions,
-    filmCounts,
     // pipeline
     pollFiltered,
     beforeCountry,
+    beforeGenre,
     filtered,
     sorted,
     getPollData,
