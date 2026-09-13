@@ -15907,12 +15907,12 @@
     "director_verified": "verified"
   },
   "1054": {
-    "tmdb_id": 66018,
-    "tmdb_title": "Drunken Master III",
+    "tmdb_id": 12207,
+    "tmdb_title": "The Legend of Drunken Master",
     "tmdb_release_year": 1994,
-    "poster_path": "/gGJECMJTUBU9OWBFBdy9oUbL60Y.jpg",
-    "backdrop_path": "/oJsghkM1Tzi5D7pvQkcKngEU066.jpg",
-    "confidence": "medium",
+    "poster_path": "/xqUBrSBtPYLvCtfqHF5sapU6Div.jpg",
+    "backdrop_path": "/zo14UuFDTVy91cBNWHplHCqHCPt.jpg",
+    "confidence": "high",
     "director_verified": "verified"
   },
   "1067": {
@@ -20350,15 +20350,7 @@
     "confidence": "high",
     "director_verified": "verified"
   },
-  "512": {
-    "tmdb_id": 922169,
-    "tmdb_title": "The Making of Bioshock",
-    "tmdb_release_year": 2007,
-    "poster_path": "/c02bZacyD3uJbekNVzADcwYm3Fq.jpg",
-    "backdrop_path": "/7GWWt6t0VnVUUrfd6z7r9YCrSjv.jpg",
-    "confidence": "medium",
-    "director_verified": "no_tmdb_director"
-  },
+  "512": {},
   "513": {
     "tmdb_id": 24679,
     "tmdb_title": "Bird",
@@ -31217,13 +31209,14 @@
     "director_verified": "verified"
   },
   "4633": {
-    "tmdb_id": 296559,
-    "tmdb_title": "SpongeBob SquarePants: Viking-sized Adventures",
-    "tmdb_release_year": 2010,
-    "poster_path": "/kraVKWoQOOJa6DRASBOc4755UJV.jpg",
-    "backdrop_path": "/d6Uzz1DiMG4fRLeh68Lf4wtbMTD.jpg",
-    "confidence": "medium",
-    "director_verified": "no_tmdb_director"
+    "tmdb_id": 44217,
+    "media_type": "tv",
+    "tmdb_title": "Vikings",
+    "tmdb_release_year": 2013,
+    "poster_path": "/bQLrHIRNEkE3PdIWQrZHynQZazu.jpg",
+    "backdrop_path": "/13kblIK8DnxMurcRDkeyy2sGR7v.jpg",
+    "confidence": "high",
+    "director_verified": "verified"
   },
   "4634": {
     "tmdb_id": 85871,
@@ -34189,15 +34182,6 @@
     "tmdb_release_year": 1976,
     "poster_path": "/kAEIpNc4uTP3NyEafYykpEWtzTr.jpg",
     "backdrop_path": null,
-    "confidence": "high",
-    "director_verified": "verified"
-  },
-  "3289": {
-    "tmdb_id": 45987,
-    "tmdb_title": "Taira Clan Saga",
-    "tmdb_release_year": 1955,
-    "poster_path": "/jT7srjv8OzZ1cBBUsE5EMCZttev.jpg",
-    "backdrop_path": "/fBG4j1fKYdwBVTVpfTaZqzNSLUC.jpg",
     "confidence": "high",
     "director_verified": "verified"
   },
@@ -40380,12 +40364,12 @@
     "director_verified": "verified"
   },
   "1968": {
-    "tmdb_id": 282452,
-    "tmdb_title": "Les Misérables - Part 3: Cosette",
-    "tmdb_release_year": 1913,
+    "tmdb_id": 285232,
+    "tmdb_title": "Les Misérables",
+    "tmdb_release_year": 1912,
     "poster_path": null,
     "backdrop_path": null,
-    "confidence": "medium",
+    "confidence": "high",
     "director_verified": "verified"
   },
   "2346": {

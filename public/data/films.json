@@ -3229,7 +3229,7 @@
     "AlternateTitle": null,
     "Year": "1951",
     "directors": [
-      "acques Tourneur"
+      "Jacques Tourneur"
     ],
     "countries": [
       "United States"
@@ -10675,8 +10675,8 @@
     "genres": [
       "Drama"
     ],
-    "runtime": 35,
-    "synopsis": "The Thenardiers and their small daughter, Eponine, and young son, Gavroche, are seen at their dingy country tavern. Here little Cosette, the daughter of Fantine, is seen performing drudgery and menial tasks. The Thenardiers are treating their own children kindly, but are cruel to Cosette.",
+    "runtime": 163,
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -10726,7 +10726,7 @@
         "votes": 2
       }
     ],
-    "tmdbId": 282452,
+    "tmdbId": 285232,
     "tmdbMediaType": "movie"
   },
   {
@@ -11480,7 +11480,7 @@
     "AlternateTitle": "L'uomo la donna e la bestia - Spell, dolce mattatoio",
     "Year": "1977",
     "directors": [
-      "Alberto Caballone"
+      "Alberto Cavallone"
     ],
     "countries": [
       "Italy"
@@ -12207,7 +12207,7 @@
     "AlternateTitle": null,
     "Year": "1957",
     "directors": [
-      "Aledander Mackendrick"
+      "Alexander Mackendrick"
     ],
     "countries": [
       "United States"
@@ -14850,7 +14850,7 @@
     "AlternateTitle": null,
     "Year": "1997",
     "directors": [
-      "Alex Shichel"
+      "Alex Sichel"
     ],
     "countries": [
       "United States"
@@ -21354,10 +21354,10 @@
     ],
     "coProductionCountries": [],
     "genres": [
-      "Comedy"
+      "Documentary"
     ],
     "runtime": 93,
-    "synopsis": "An American pilot is shot down in World War II and avoids capture from the Germans with the help of a cow.",
+    "synopsis": "A close-up portrait of the daily lives of a pair of cows: told by way of some narrative-free, intimate POV photography, with plenty of close shot images, we follow the daily routine of these animals as they live what can only be described as mundane, boring lives - all with an ultimate purpose within the human food chain.",
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -24486,7 +24486,7 @@
     "FilmTitle": "The Most Important Thing: Love",
     "databaseFilmTitle": "The Most Important Thing: Love",
     "AlternateTitle": "L'important c'est d'aimer",
-    "Year": "1965",
+    "Year": "1975",
     "directors": [
       "Andrzej Żuławski"
     ],
@@ -25963,7 +25963,7 @@
       "Short"
     ],
     "runtime": 15,
-    "synopsis": "‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -28643,7 +28643,7 @@
     "AlternateTitle": null,
     "Year": "2020",
     "directors": [
-      "Anvita Duff"
+      "Anvita Dutt"
     ],
     "countries": [
       "India"
@@ -39851,7 +39851,7 @@
     "AlternateTitle": null,
     "Year": "2021",
     "directors": [
-      "Bo Buhrnham"
+      "Bo Burnham"
     ],
     "countries": [
       "United States"
@@ -54254,12 +54254,12 @@
     ],
     "coProductionCountries": [],
     "genres": [
-      "Music Video"
+      "VR"
     ],
-    "runtime": 3,
-    "synopsis": "SUSPENDED: In this music video for an unreleased song, Guerilla Toss frontwoman Kassie Carlson embarks on a journey of the mind. Cosmic colors rush through the world of a tiny housefly.",
+    "runtime": 11,
+    "synopsis": "Fly is an interactive multi-sensory narrative experience that returns the awe and wonder to the concept of mankind being able to fly.",
     "imageUrl": null,
-    "stillUrl": "https://images.mubicdn.net/images/film/233077/cache-425572-1745495927/image-w1280.jpg",
+    "stillUrl": null,
     "pollHistory": [
       {
         "year": 1952,
@@ -57701,7 +57701,7 @@
       "Short"
     ],
     "runtime": 15,
-    "synopsis": "Directed by Christopher Petit.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": "https://images.mubicdn.net/images/film/237960/cache-443868-1745496122/image-w1280.jpg",
     "pollHistory": [
@@ -62334,7 +62334,7 @@
     "AlternateTitle": "Que la bête meure",
     "Year": "1969",
     "directors": [
-      "Cluade Chabrol"
+      "Claude Chabrol"
     ],
     "countries": [
       "France"
@@ -72957,7 +72957,7 @@
     "AlternateTitle": null,
     "Year": "2018",
     "directors": [
-      "Debra Grankik"
+      "Debra Granik"
     ],
     "countries": [
       "United States"
@@ -74955,7 +74955,7 @@
       "Short"
     ],
     "runtime": 6,
-    "synopsis": "A 2009 silent short film directed by Diana Toucedo.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": "https://images.mubicdn.net/images/film/245344/cache-472197-1745496391/image-w1280.jpg",
     "pollHistory": [
@@ -82541,7 +82541,7 @@
     "AlternateTitle": "Le temps qu'il reste",
     "Year": "2009",
     "directors": [
-      "Elia Seleiman"
+      "Elia Suleiman"
     ],
     "countries": [
       "Palestine"
@@ -84541,10 +84541,10 @@
     "genres": [
       "Drama"
     ],
-    "runtime": 111,
-    "synopsis": "When the patriarch of a wealthy and powerful political family passes away, he leaves his daughter with a secret and malignant inheritance that threatens to unravel and destroy their lives and everyone around them.",
+    "runtime": 102,
+    "synopsis": "Based on real events, the film's protagonist inherits a house in West Philadelphia that becomes home to an urban collective for activists of color. The increasingly claustrophobic drama unfolds as the group attempts to live together and find consensus through Black political discourse and social philosophy.",
     "imageUrl": null,
-    "stillUrl": "https://images.mubicdn.net/images/film/220574/cache-437515-1745496058/image-w1280.jpg",
+    "stillUrl": null,
     "pollHistory": [
       {
         "year": 1952,
@@ -85781,7 +85781,7 @@
     "AlternateTitle": null,
     "Year": "1928",
     "directors": [
-      "Erich von Strohein"
+      "Erich von Stroheim"
     ],
     "countries": [
       "United States"
@@ -90107,7 +90107,7 @@
     "AlternateTitle": "Gegen die Wand",
     "Year": "2004",
     "directors": [
-      "Faith Akin"
+      "Fatih Akin"
     ],
     "countries": [
       "Germany"
@@ -94390,7 +94390,7 @@
     "AlternateTitle": "Le Dîner de Cons",
     "Year": "1998",
     "directors": [
-      "Francis Verber"
+      "Francis Veber"
     ],
     "countries": [
       "France"
@@ -100419,7 +100419,7 @@
     "AlternateTitle": null,
     "Year": "1956",
     "directors": [
-      "Fritz Land"
+      "Fritz Lang"
     ],
     "countries": [
       "United States"
@@ -101812,7 +101812,7 @@
     "AlternateTitle": "Der müde Tod",
     "Year": "1921",
     "directors": [
-      "Frtiz Lang"
+      "Fritz Lang"
     ],
     "countries": [
       "Germany"
@@ -104668,7 +104668,7 @@
     "AlternateTitle": null,
     "Year": "1938",
     "directors": [
-      "George Cuckor"
+      "George Cukor"
     ],
     "countries": [
       "United States"
@@ -104741,7 +104741,7 @@
     "AlternateTitle": null,
     "Year": "1954",
     "directors": [
-      "George Cuckor"
+      "George Cukor"
     ],
     "countries": [
       "United States"
@@ -112556,7 +112556,7 @@
     "FilmTitle": "My Man Godfrey",
     "databaseFilmTitle": "My Man Godfrey",
     "AlternateTitle": null,
-    "Year": "1939",
+    "Year": "1936",
     "directors": [
       "Gregory La Cava"
     ],
@@ -116522,7 +116522,7 @@
     "AlternateTitle": "Valter Brani Sarajevo",
     "Year": "1972",
     "directors": [
-      "Hajrudin Kravac"
+      "Hajrudin Krvavac"
     ],
     "countries": [
       "Yugoslavia"
@@ -122336,7 +122336,7 @@
       "Comedy"
     ],
     "runtime": 86,
-    "synopsis": "Voted for in Sight & Sound's 2022 Greatest Films of all time poll.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -145450,7 +145450,7 @@
     "AlternateTitle": null,
     "Year": "1926",
     "directors": [
-      "Jean Renior"
+      "Jean Renoir"
     ],
     "countries": [
       "France"
@@ -147653,7 +147653,7 @@
     "FilmTitle": "The Enclosed Valley",
     "databaseFilmTitle": "The Enclosed Valley",
     "AlternateTitle": "La vallee close",
-    "Year": "1955",
+    "Year": "1995",
     "directors": [
       "Jean-Claude Rousseau"
     ],
@@ -151738,10 +151738,10 @@
       "Crime",
       "Thriller"
     ],
-    "runtime": 90,
-    "synopsis": "Middle-aged attorney Pierre falls for a young woman who dances in a discotheque to work her way through medical school. The lovestruck lawyer can’t bring himself to leave his wife over the young woman. When the dancer’s wealthy suitor is murdered, Pierre is accused of the crime.",
+    "runtime": 150,
+    "synopsis": "A gangster escapes jail and quickly makes plans to continue his criminal ways elsewhere, but a determined inspector is closing in.",
     "imageUrl": null,
-    "stillUrl": "https://images.mubicdn.net/images/film/262485/cache-532710-1745496984/image-w1280.jpg",
+    "stillUrl": null,
     "pollHistory": [
       {
         "year": 1952,
@@ -154284,7 +154284,7 @@
     "AlternateTitle": null,
     "Year": "1985",
     "directors": [
-      "Jerzy Sklimowski"
+      "Jerzy Skolimowski"
     ],
     "countries": [
       "United States"
@@ -164772,7 +164772,7 @@
     "AlternateTitle": null,
     "Year": "1966",
     "directors": [
-      "John Frakenheimer"
+      "John Frankenheimer"
     ],
     "countries": [
       "United States"
@@ -167996,7 +167996,7 @@
     "AlternateTitle": null,
     "Year": "1961",
     "directors": [
-      "John Schlesigner"
+      "John Schlesinger"
     ],
     "countries": [
       "United Kingdom"
@@ -168069,7 +168069,7 @@
     "AlternateTitle": null,
     "Year": "1963",
     "directors": [
-      "John Schlesigner"
+      "John Schlesinger"
     ],
     "countries": [
       "United Kingdom"
@@ -174657,7 +174657,7 @@
     "AlternateTitle": null,
     "Year": "1963",
     "directors": [
-      "Joseph L. Mackiewicz"
+      "Joseph L. Mankiewicz"
     ],
     "countries": [
       "United States"
@@ -177112,7 +177112,7 @@
       "Short"
     ],
     "runtime": 9,
-    "synopsis": "An experimental animation by Julian Józef Antonisz.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": "https://images.mubicdn.net/images/film/101617/cache-67555-1745491406/image-w1280.jpg",
     "pollHistory": [
@@ -177544,7 +177544,7 @@
     "AlternateTitle": "La fin du jour",
     "Year": "1939",
     "directors": [
-      "Julien Divivier"
+      "Julien Duvivier"
     ],
     "countries": [
       "France"
@@ -178198,7 +178198,7 @@
     "AlternateTitle": "Dohee-ya",
     "Year": "2014",
     "directors": [
-      "July Jang"
+      "July Jung"
     ],
     "countries": [
       "South Korea"
@@ -182988,10 +182988,10 @@
     ],
     "coProductionCountries": [],
     "genres": [
-      "Documentary"
+      "Video Game"
     ],
     "runtime": 41,
-    "synopsis": "A series of interviews with the key developers of the groundbreaking video game, Bioshock.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -183040,11 +183040,7 @@
         "rank": 2373,
         "votes": 1
       }
-    ],
-    "tmdbId": 922169,
-    "tmdbMediaType": "movie",
-    "tmdbPosterPath": "/c02bZacyD3uJbekNVzADcwYm3Fq.jpg",
-    "tmdbBackdropPath": "/7GWWt6t0VnVUUrfd6z7r9YCrSjv.jpg"
+    ]
   },
   {
     "key": 2866,
@@ -184850,8 +184846,8 @@
       },
       {
         "year": 2012,
-        "rank": null,
-        "votes": 0
+        "rank": 899,
+        "votes": 1
       },
       {
         "year": 2022,
@@ -184860,8 +184856,8 @@
       },
       {
         "year": "all",
-        "rank": 1283,
-        "votes": 3
+        "rank": 1045,
+        "votes": 4
       }
     ],
     "tmdbId": 45987,
@@ -185012,78 +185008,6 @@
     "tmdbMediaType": "movie",
     "tmdbPosterPath": "/vUjzHsj05zmobNXcXaMLvwss7eN.jpg",
     "tmdbBackdropPath": "/3VmllcrUxsS9xYUG82QY6OuRLXf.jpg"
-  },
-  {
-    "key": 3289,
-    "FilmTitle": "Taira Clan Saga",
-    "databaseFilmTitle": "Taira Clan Saga",
-    "AlternateTitle": "Shin heike monogatari",
-    "Year": "1955",
-    "directors": [
-      "Kenji Mizoguchi"
-    ],
-    "countries": [
-      "Japan"
-    ],
-    "coProductionCountries": [],
-    "genres": [
-      "Drama"
-    ],
-    "runtime": 108,
-    "synopsis": "After his father is not rewarded for his military achievements, Taira Kiyomori rebels against the court and the monks who rule the country. He also falls in love with Tokiko and discovers unsettling revelations about his parentage.",
-    "imageUrl": null,
-    "stillUrl": "https://images.mubicdn.net/images/film/1519/cache-8895-1745489530/image-w1280.jpg",
-    "pollHistory": [
-      {
-        "year": 1952,
-        "rank": null,
-        "votes": 0
-      },
-      {
-        "year": 1962,
-        "rank": null,
-        "votes": 0
-      },
-      {
-        "year": 1972,
-        "rank": null,
-        "votes": 0
-      },
-      {
-        "year": 1982,
-        "rank": null,
-        "votes": 0
-      },
-      {
-        "year": 1992,
-        "rank": null,
-        "votes": 0
-      },
-      {
-        "year": 2002,
-        "rank": null,
-        "votes": 0
-      },
-      {
-        "year": 2012,
-        "rank": 899,
-        "votes": 1
-      },
-      {
-        "year": 2022,
-        "rank": null,
-        "votes": 0
-      },
-      {
-        "year": "all",
-        "rank": 2373,
-        "votes": 1
-      }
-    ],
-    "tmdbId": 45987,
-    "tmdbMediaType": "movie",
-    "tmdbPosterPath": "/jT7srjv8OzZ1cBBUsE5EMCZttev.jpg",
-    "tmdbBackdropPath": "/fBG4j1fKYdwBVTVpfTaZqzNSLUC.jpg"
   },
   {
     "key": 2976,
@@ -186826,7 +186750,7 @@
     "key": 906,
     "FilmTitle": "Daughter-in-Law",
     "databaseFilmTitle": "Daughter-in-Law",
-    "AlternateTitle": "Nevestka",
+    "AlternateTitle": null,
     "Year": "1972",
     "directors": [
       "Khodzha Kuli Narliyev"
@@ -187259,7 +187183,7 @@
     "key": 2607,
     "FilmTitle": "Parents' Hearts",
     "databaseFilmTitle": "Parents' Hearts",
-    "AlternateTitle": "Fu mu xin",
+    "AlternateTitle": null,
     "Year": "1955",
     "directors": [
       "Kim Chun"
@@ -187406,7 +187330,7 @@
     "key": 34,
     "FilmTitle": "3-Iron",
     "databaseFilmTitle": "3-Iron",
-    "AlternateTitle": "Bin-Jip",
+    "AlternateTitle": null,
     "Year": "2004",
     "directors": [
       "Kim Ki-duk"
@@ -187629,7 +187553,7 @@
     "AlternateTitle": null,
     "Year": "1999",
     "directors": [
-      "Kimberly Pierce"
+      "Kimberly Peirce"
     ],
     "countries": [
       "United States"
@@ -187698,7 +187622,7 @@
     "key": 3639,
     "FilmTitle": "The Fate of Lee Khan",
     "databaseFilmTitle": "The Fate of Lee Khan",
-    "AlternateTitle": "Ying chun ge zhi fengbo",
+    "AlternateTitle": null,
     "Year": "1973",
     "directors": [
       "King Hu"
@@ -188790,7 +188714,7 @@
     "key": 446,
     "FilmTitle": "Battle Royale",
     "databaseFilmTitle": "Battle Royale",
-    "AlternateTitle": "Batoru Rowaiaru",
+    "AlternateTitle": null,
     "Year": "2000",
     "directors": [
       "Kinji Fukasaku"
@@ -189367,7 +189291,7 @@
     "key": 1360,
     "FilmTitle": "Getting to Know the Big Wide World",
     "databaseFilmTitle": "Getting to Know the Big Wide World",
-    "AlternateTitle": "Poznavaya belyi svet",
+    "AlternateTitle": null,
     "Year": "1979",
     "directors": [
       "Kira Muratova"
@@ -189590,7 +189514,7 @@
     "AlternateTitle": null,
     "Year": "2016",
     "directors": [
-      "Kirsten Johnsom"
+      "Kirsten Johnson"
     ],
     "countries": [
       "United States"
@@ -189735,7 +189659,7 @@
     "key": 3673,
     "FilmTitle": "The Ghost Cat and the Mysterious Shamisen",
     "databaseFilmTitle": "The Ghost Cat and the Mysterious Shamisen",
-    "AlternateTitle": "Kaibyo nazo no shamisen",
+    "AlternateTitle": null,
     "Year": "1938",
     "directors": [
       "Kiyohiko Ushihara"
@@ -190243,7 +190167,7 @@
     "key": 3433,
     "FilmTitle": "The Birth of a Nation",
     "databaseFilmTitle": "The Birth of a Nation (1973)",
-    "AlternateTitle": "Die Geburt der Nation",
+    "AlternateTitle": null,
     "Year": "1973",
     "directors": [
       "Klaus Wyborny"
@@ -190529,7 +190453,7 @@
     "key": 286,
     "FilmTitle": "An Actor's Revenge",
     "databaseFilmTitle": "An Actor's Revenge",
-    "AlternateTitle": "Yukinojō henge",
+    "AlternateTitle": null,
     "Year": "1963",
     "directors": [
       "Kon Ichikawa"
@@ -191778,7 +191702,7 @@
     "key": 671,
     "FilmTitle": "Camouflage",
     "databaseFilmTitle": "Camouflage",
-    "AlternateTitle": "Barwy ochronne",
+    "AlternateTitle": null,
     "Year": "1977",
     "directors": [
       "Krzysztof Zanussi"
@@ -192138,7 +192062,7 @@
     "key": 870,
     "FilmTitle": "Cry When it Happens",
     "databaseFilmTitle": "Cry When it Happens",
-    "AlternateTitle": "Llora cuando te pase",
+    "AlternateTitle": null,
     "Year": "2010",
     "directors": [
       "Laida Lertxundi"
@@ -192356,7 +192280,7 @@
     "key": 3129,
     "FilmTitle": "Some Interviews on Personal Matters",
     "databaseFilmTitle": "Some Interviews on Personal Matters",
-    "AlternateTitle": "Ramdenime interviu pirad sakitkhebze",
+    "AlternateTitle": null,
     "Year": "1978",
     "directors": [
       "Lana Ghoghoberidze"
@@ -193797,7 +193721,7 @@
     "key": 3140,
     "FilmTitle": "Son of Saul",
     "databaseFilmTitle": "Son of Saul",
-    "AlternateTitle": "Saul fia",
+    "AlternateTitle": null,
     "Year": "2015",
     "directors": [
       "László Nemes"
@@ -194029,8 +193953,8 @@
       "Action & Adventure",
       "Comedy"
     ],
-    "runtime": 91,
-    "synopsis": "Set around the turn of the century in China, the White Lotus Society plots to put the next Emperor on the throne. To do this they want their protege to marry the Princess Sun Yu who possesses an important jade ring. They dispatch Yueng Kwan to fetch her. However, Yueng Kwan is a patriot, working for the revolutionary forces of Sun Yat Sen. He abducts Sun Yu and finds refuge with the father of the future hero Wong Fei Hung.",
+    "runtime": 102,
+    "synopsis": "Returning home with his father after a shopping expedition, Wong Fei-Hong is unwittingly caught up in the battle between foreigners who wish to export ancient Chinese artifacts and loyalists who don't want the pieces to leave the country.",
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -194080,10 +194004,10 @@
         "votes": 2
       }
     ],
-    "tmdbId": 66018,
+    "tmdbId": 12207,
     "tmdbMediaType": "movie",
-    "tmdbPosterPath": "/gGJECMJTUBU9OWBFBdy9oUbL60Y.jpg",
-    "tmdbBackdropPath": "/oJsghkM1Tzi5D7pvQkcKngEU066.jpg"
+    "tmdbPosterPath": "/xqUBrSBtPYLvCtfqHF5sapU6Div.jpg",
+    "tmdbBackdropPath": "/zo14UuFDTVy91cBNWHplHCqHCPt.jpg"
   },
   {
     "key": 3343,
@@ -194455,7 +194379,7 @@
     "key": 2694,
     "FilmTitle": "Playground",
     "databaseFilmTitle": "Playground",
-    "AlternateTitle": "Un monde",
+    "AlternateTitle": null,
     "Year": "2021",
     "directors": [
       "Laura Wandel"
@@ -194957,7 +194881,7 @@
     "key": 1160,
     "FilmTitle": "Evolution of a Filipino Family",
     "databaseFilmTitle": "Evolution of a Filipino Family",
-    "AlternateTitle": "Ebolusyon ng isang pamilyang Pilipino",
+    "AlternateTitle": null,
     "Year": "2005",
     "directors": [
       "Lav Diaz"
@@ -195252,7 +195176,7 @@
     "key": 2983,
     "FilmTitle": "Season of the Devil",
     "databaseFilmTitle": "Season of the Devil",
-    "AlternateTitle": "Ang Panahon ng Halimaw",
+    "AlternateTitle": null,
     "Year": "2018",
     "directors": [
       "Lav Diaz"
@@ -195760,7 +195684,7 @@
     "key": 2691,
     "FilmTitle": "Plastic Jesus",
     "databaseFilmTitle": "Plastic Jesus",
-    "AlternateTitle": "Plastični Isus",
+    "AlternateTitle": null,
     "Year": "1971",
     "directors": [
       "Lazar Stojanović"
@@ -196634,7 +196558,7 @@
     "key": 4706,
     "FilmTitle": "Werewolf",
     "databaseFilmTitle": "Werewolf",
-    "AlternateTitle": "Libahunt",
+    "AlternateTitle": null,
     "Year": "1968",
     "directors": [
       "Leida Laius"
@@ -196856,7 +196780,7 @@
     "AlternateTitle": null,
     "Year": "2019",
     "directors": [
-      "Lemohang Jeremiah Mossese"
+      "Lemohang Jeremiah Mosese"
     ],
     "countries": [
       "Lesotho"
@@ -197228,7 +197152,7 @@
     "key": 4525,
     "FilmTitle": "Triumph of the Will",
     "databaseFilmTitle": "Triumph of the Will",
-    "AlternateTitle": "Triumph des Willens",
+    "AlternateTitle": null,
     "Year": "1935",
     "directors": [
       "Leni Riefenstahl"
@@ -197447,7 +197371,7 @@
     "AlternateTitle": null,
     "Year": "1937",
     "directors": [
-      "Leo LcCarey"
+      "Leo McCarey"
     ],
     "countries": [
       "United States"
@@ -197520,7 +197444,7 @@
     "AlternateTitle": null,
     "Year": "1945",
     "directors": [
-      "Leo Mc"
+      "Leo McCarey"
     ],
     "countries": [
       "United States"
@@ -197731,7 +197655,7 @@
     "FilmTitle": "An Affair to Remember",
     "databaseFilmTitle": "An Affair to Remember",
     "AlternateTitle": null,
-    "Year": "1947",
+    "Year": "1957",
     "directors": [
       "Leo McCarey"
     ],
@@ -198458,7 +198382,7 @@
     "key": 2385,
     "FilmTitle": "Nazareno Cruz and the Wolf",
     "databaseFilmTitle": "Nazareno Cruz and the Wolf",
-    "AlternateTitle": "Nazareno Cruz y el lobo",
+    "AlternateTitle": null,
     "Year": "1975",
     "directors": [
       "Leonardo Favio"
@@ -198606,7 +198530,7 @@
     "key": 4126,
     "FilmTitle": "The Romance of Aniceto and Francesca",
     "databaseFilmTitle": "The Romance of Aniceto and Francesca",
-    "AlternateTitle": "El romace del Aniceto y la Francisca",
+    "AlternateTitle": null,
     "Year": "1967",
     "directors": [
       "Leonardo Favio"
@@ -198966,7 +198890,7 @@
     "key": 3905,
     "FilmTitle": "The Lovers on the Bridge",
     "databaseFilmTitle": "The Lovers on the Bridge",
-    "AlternateTitle": "Les amants du pont-neuf",
+    "AlternateTitle": null,
     "Year": "1991",
     "directors": [
       "Leos Carax"
@@ -199634,7 +199558,7 @@
     "key": 2019,
     "FilmTitle": "Line of Destiny",
     "databaseFilmTitle": "Line of Destiny",
-    "AlternateTitle": "Rekava",
+    "AlternateTitle": null,
     "Year": "1956",
     "directors": [
       "Lester James Peries"
@@ -199923,7 +199847,7 @@
     "key": 1819,
     "FilmTitle": "Kingdom and the Beauty",
     "databaseFilmTitle": "Kingdom and the Beauty",
-    "AlternateTitle": "Jiang shan mei ren",
+    "AlternateTitle": null,
     "Year": "1959",
     "directors": [
       "Li Han-Hsiang"
@@ -201093,7 +201017,7 @@
     "key": 4828,
     "FilmTitle": "You Have Been Weighed and Found Wanting",
     "databaseFilmTitle": "You Have Been Weighed and Found Wanting",
-    "AlternateTitle": "Tinimbang Ka Ngunit Kulang",
+    "AlternateTitle": null,
     "Year": "1974",
     "directors": [
       "Lino Brocka"
@@ -201824,7 +201748,7 @@
     "key": 2621,
     "FilmTitle": "Passages",
     "databaseFilmTitle": "Passages",
-    "AlternateTitle": "Passagen",
+    "AlternateTitle": null,
     "Year": "1996",
     "directors": [
       "Lisl Ponger"
@@ -202257,7 +202181,7 @@
     "key": 1546,
     "FilmTitle": "Honeyland",
     "databaseFilmTitle": "Honeyland",
-    "AlternateTitle": "Medena zemja",
+    "AlternateTitle": null,
     "Year": "2019",
     "directors": [
       "Ljubomir Stefanov",
@@ -202619,7 +202543,7 @@
     "key": 3350,
     "FilmTitle": "The Adventures of Prince Achmed",
     "databaseFilmTitle": "The Adventures of Prince Achmed",
-    "AlternateTitle": "Die Abenteuer des Prinzen Achmed",
+    "AlternateTitle": null,
     "Year": "1926",
     "directors": [
       "Lotte Reiniger"
@@ -203205,7 +203129,7 @@
     "key": 3441,
     "FilmTitle": "The Blind Man of Jerusalem",
     "databaseFilmTitle": "The Blind Man of Jerusalem",
-    "AlternateTitle": "L'aveugle de Jérusalem",
+    "AlternateTitle": null,
     "Year": "1909",
     "directors": [
       "Louis Feuillade"
@@ -203421,7 +203345,7 @@
     "key": 4801,
     "FilmTitle": "Workers Leaving the Lumière Factory",
     "databaseFilmTitle": "Workers Leaving the Lumière Factory",
-    "AlternateTitle": "La sortie de l'usine Lumière à Lyon",
+    "AlternateTitle": null,
     "Year": "1895",
     "directors": [
       "Louis Lumière"
@@ -203570,7 +203494,7 @@
     "FilmTitle": "Boat Leaving the Port",
     "databaseFilmTitle": "Boat Leaving the Port",
     "AlternateTitle": "Barque sortant du port",
-    "Year": "1985",
+    "Year": "1895",
     "directors": [
       "Louis Lumière"
     ],
@@ -203863,7 +203787,7 @@
     "key": 1107,
     "FilmTitle": "Elevator to the Gallows",
     "databaseFilmTitle": "Elevator to the Gallows",
-    "AlternateTitle": "Ascenseur pour l'échafaud",
+    "AlternateTitle": null,
     "Year": "1958",
     "directors": [
       "Louis Malle"
@@ -204236,7 +204160,7 @@
     "key": 2327,
     "FilmTitle": "Murmur of the Heart",
     "databaseFilmTitle": "Murmur of the Heart",
-    "AlternateTitle": "Le Souffle au cœur",
+    "AlternateTitle": null,
     "Year": "1971",
     "directors": [
       "Louis Malle"
@@ -205042,7 +204966,7 @@
     "key": 3860,
     "FilmTitle": "The Leopard",
     "databaseFilmTitle": "The Leopard",
-    "AlternateTitle": "Il gattopardo",
+    "AlternateTitle": null,
     "Year": "1963",
     "directors": [
       "Luchino Visconti"
@@ -205262,7 +205186,7 @@
     "key": 941,
     "FilmTitle": "Death in Venice",
     "databaseFilmTitle": "Death in Venice",
-    "AlternateTitle": "Morte a Venezia",
+    "AlternateTitle": null,
     "Year": "1971",
     "directors": [
       "Luchino Visconti"
@@ -205635,7 +205559,7 @@
     "key": 2882,
     "FilmTitle": "Rocco and His Brothers",
     "databaseFilmTitle": "Rocco and His Brothers",
-    "AlternateTitle": "Rocco e i suoi fratelli",
+    "AlternateTitle": null,
     "Year": "1960",
     "directors": [
       "Luchino Visconti"
@@ -206303,7 +206227,7 @@
     "FilmTitle": "Balle traversant une bulle de savon",
     "databaseFilmTitle": "Balle traversant une bulle de savon",
     "AlternateTitle": null,
-    "Year": "1982",
+    "Year": "1892",
     "directors": [
       "Lucien Georges Bull"
     ],
@@ -206449,7 +206373,7 @@
     "key": 1159,
     "FilmTitle": "Evolution",
     "databaseFilmTitle": "Evolution",
-    "AlternateTitle": "Évolution",
+    "AlternateTitle": null,
     "Year": "2015",
     "directors": [
       "Lucile Hadžihalilović"
@@ -206892,7 +206816,7 @@
     "key": 3732,
     "FilmTitle": "The Headless Woman",
     "databaseFilmTitle": "The Headless Woman",
-    "AlternateTitle": "La mujer sin cabeza",
+    "AlternateTitle": null,
     "Year": "2008",
     "directors": [
       "Lucrecia Martel"
@@ -207197,7 +207121,7 @@
     "key": 2264,
     "FilmTitle": "Misunderstood",
     "databaseFilmTitle": "Misunderstood",
-    "AlternateTitle": "Incompreso",
+    "AlternateTitle": null,
     "Year": "1966",
     "directors": [
       "Luigi Comencini"
@@ -209628,7 +209552,7 @@
     "key": 2013,
     "FilmTitle": "Lilya 4-ever",
     "databaseFilmTitle": "Lilya 4-ever",
-    "AlternateTitle": "Lilja 4-ever",
+    "AlternateTitle": null,
     "Year": "2002",
     "directors": [
       "Lukas Moodysson"
@@ -210585,7 +210509,7 @@
     "key": 2975,
     "FilmTitle": "Scorching Winds",
     "databaseFilmTitle": "Scorching Winds",
-    "AlternateTitle": "Garam Hava",
+    "AlternateTitle": null,
     "Year": "1973",
     "directors": [
       "M.S. Sathyu"
@@ -211091,7 +211015,7 @@
     "key": 1056,
     "FilmTitle": "Dry Season",
     "databaseFilmTitle": "Dry Season",
-    "AlternateTitle": "Daratt",
+    "AlternateTitle": null,
     "Year": "2006",
     "directors": [
       "Mahamat-Saleh Haroun"
@@ -212345,7 +212269,7 @@
     "key": 986,
     "FilmTitle": "Dil Se",
     "databaseFilmTitle": "Dil Se",
-    "AlternateTitle": "From the Heart",
+    "AlternateTitle": null,
     "Year": "1998",
     "directors": [
       "Mani Ratnam"
@@ -212632,7 +212556,7 @@
     "key": 1712,
     "FilmTitle": "Iruvar",
     "databaseFilmTitle": "Iruvar",
-    "AlternateTitle": "The Duo",
+    "AlternateTitle": null,
     "Year": "1997",
     "directors": [
       "Mani Ratnam"
@@ -212777,7 +212701,7 @@
     "key": 1028,
     "FilmTitle": "Doomed Love",
     "databaseFilmTitle": "Doomed Love",
-    "AlternateTitle": "Amor de Perdição",
+    "AlternateTitle": null,
     "Year": "1978",
     "directors": [
       "Manoel de Oliveira"
@@ -214091,7 +214015,7 @@
     "key": 2025,
     "FilmTitle": "Little Indi",
     "databaseFilmTitle": "Little Indi",
-    "AlternateTitle": "Petit Indi",
+    "AlternateTitle": null,
     "Year": "2009",
     "directors": [
       "Marc Recha"
@@ -214390,7 +214314,7 @@
     "key": 2718,
     "FilmTitle": "Port of Shadows",
     "databaseFilmTitle": "Port of Shadows",
-    "AlternateTitle": "Le quai des brumes",
+    "AlternateTitle": null,
     "Year": "1938",
     "directors": [
       "Marcel Carné"
@@ -214900,7 +214824,7 @@
     "key": 340,
     "FilmTitle": "Anything Can Happen",
     "databaseFilmTitle": "Anything Can Happen",
-    "AlternateTitle": "Wszystko może się przytrafić",
+    "AlternateTitle": null,
     "Year": "1995",
     "directors": [
       "Marcel Łoziński"
@@ -215636,10 +215560,10 @@
     "key": 4191,
     "FilmTitle": "The Son of the White Mare",
     "databaseFilmTitle": "The Son of the White Mare",
-    "AlternateTitle": "Fehérlófia",
+    "AlternateTitle": null,
     "Year": "1981",
     "directors": [
-      "Marcell Jankovic"
+      "Marcell Jankovics"
     ],
     "countries": [
       "Hungary"
@@ -215713,7 +215637,7 @@
     "AlternateTitle": "Sangue del mio sangue",
     "Year": "2015",
     "directors": [
-      "Marco Bellocchino"
+      "Marco Bellocchio"
     ],
     "countries": [
       "Italy"
@@ -216442,7 +216366,7 @@
     "key": 3656,
     "FilmTitle": "The Forest for the Trees",
     "databaseFilmTitle": "The Forest for the Trees",
-    "AlternateTitle": "Der Wald vor lauter Bäumen",
+    "AlternateTitle": null,
     "Year": "2003",
     "directors": [
       "Maren Ade"
@@ -217381,7 +217305,7 @@
     "key": 4293,
     "FilmTitle": "The Truck",
     "databaseFilmTitle": "The Truck",
-    "AlternateTitle": "Le camion",
+    "AlternateTitle": null,
     "Year": "1977",
     "directors": [
       "Marguerite Duras"
@@ -217671,7 +217595,7 @@
     "key": 965,
     "FilmTitle": "Destroy, She Said",
     "databaseFilmTitle": "Destroy, She Said",
-    "AlternateTitle": "Détruire, dit-elle",
+    "AlternateTitle": null,
     "Year": "1969",
     "directors": [
       "Marguerite Duras"
@@ -217815,7 +217739,7 @@
     "key": 4821,
     "FilmTitle": "Yellow the Sun",
     "databaseFilmTitle": "Yellow the Sun",
-    "AlternateTitle": "Jaune le soleil",
+    "AlternateTitle": null,
     "Year": "1971",
     "directors": [
       "Marguerite Duras"
@@ -218122,7 +218046,7 @@
       "Documentary"
     ],
     "runtime": null,
-    "synopsis": "Voted for in Sight & Sound's 2022 Greatest Films of All Time poll",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -218193,7 +218117,7 @@
       "Short"
     ],
     "runtime": 4,
-    "synopsis": "A short industrial experimental film",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -218689,7 +218613,7 @@
     "key": 4591,
     "FilmTitle": "Unfinished Diary",
     "databaseFilmTitle": "Unfinished Diary",
-    "AlternateTitle": "Journal inachevé",
+    "AlternateTitle": null,
     "Year": "1982",
     "directors": [
       "Marilú Mallet"
@@ -218840,7 +218764,7 @@
     "key": 898,
     "FilmTitle": "Danger: Diabolik",
     "databaseFilmTitle": "Danger: Diabolik",
-    "AlternateTitle": "Diabolik",
+    "AlternateTitle": null,
     "Year": "1968",
     "directors": [
       "Mario Bava"
@@ -220300,7 +220224,7 @@
     "key": 336,
     "FilmTitle": "Antonia's Line",
     "databaseFilmTitle": "Antonia's Line",
-    "AlternateTitle": "Antonia",
+    "AlternateTitle": null,
     "Year": "1995",
     "directors": [
       "Marleen Gorris"
@@ -220801,7 +220725,7 @@
     "key": 2443,
     "FilmTitle": "No Regret",
     "databaseFilmTitle": "No Regret",
-    "AlternateTitle": "Non, je ne regrette rien",
+    "AlternateTitle": null,
     "Year": "1993",
     "directors": [
       "Marlon Riggs"
@@ -223230,7 +223154,7 @@
     "key": 3920,
     "FilmTitle": "The Man Who Disappeared Yesterday",
     "databaseFilmTitle": "The Man Who Disappeared Yesterday",
-    "AlternateTitle": "Kinô kieta otoko",
+    "AlternateTitle": null,
     "Year": "1941",
     "directors": [
       "Masahiro Makino"
@@ -223518,7 +223442,7 @@
     "key": 3760,
     "FilmTitle": "The Human Condition",
     "databaseFilmTitle": "The Human Condition",
-    "AlternateTitle": "Ningen no jōken",
+    "AlternateTitle": null,
     "Year": "1959",
     "directors": [
       "Masaki Kobayashi"
@@ -223807,7 +223731,7 @@
     "key": 194,
     "FilmTitle": "A.K.A. Serial Killer",
     "databaseFilmTitle": "A.K.A. Serial Killer",
-    "AlternateTitle": "Ryakushō: renzoku shasatsuma",
+    "AlternateTitle": null,
     "Year": "1969",
     "directors": [
       "Masao Adachi"
@@ -224093,7 +224017,7 @@
     "key": 170,
     "FilmTitle": "A Thousand Suns",
     "databaseFilmTitle": "A Thousand Suns",
-    "AlternateTitle": "Mille soleils",
+    "AlternateTitle": null,
     "Year": "2013",
     "directors": [
       "Mati Diop"
@@ -224455,10 +224379,10 @@
     "key": 3755,
     "FilmTitle": "The House in the Woods",
     "databaseFilmTitle": "The House in the Woods",
-    "AlternateTitle": "La maison des bois",
+    "AlternateTitle": null,
     "Year": "1971",
     "directors": [
-      "Maurice Pailat"
+      "Maurice Pialat"
     ],
     "countries": [
       "France"
@@ -224671,7 +224595,7 @@
     "key": 2372,
     "FilmTitle": "Naked Childhood",
     "databaseFilmTitle": "Naked Childhood",
-    "AlternateTitle": "L'enfance nue",
+    "AlternateTitle": null,
     "Year": "1968",
     "directors": [
       "Maurice Pialat"
@@ -225177,7 +225101,7 @@
     "key": 3081,
     "FilmTitle": "Sir Arne's Treasure",
     "databaseFilmTitle": "Sir Arne's Treasure",
-    "AlternateTitle": "Herr Arnes Pengar",
+    "AlternateTitle": null,
     "Year": "1919",
     "directors": [
       "Mauritz Stiller"
@@ -225838,7 +225762,7 @@
     "key": 4377,
     "FilmTitle": "There's No Tomorrow",
     "databaseFilmTitle": "There's No Tomorrow",
-    "AlternateTitle": "Sans lendemain",
+    "AlternateTitle": null,
     "Year": "1939",
     "directors": [
       "Max Ophüls"
@@ -226275,7 +226199,7 @@
     "FilmTitle": "Ritual in Transfigured Time",
     "databaseFilmTitle": "Ritual in Transfigured Time",
     "AlternateTitle": null,
-    "Year": "1949",
+    "Year": "1946",
     "directors": [
       "Maya Deren"
     ],
@@ -226494,7 +226418,7 @@
     "key": 4707,
     "FilmTitle": "West Indies",
     "databaseFilmTitle": "West Indies",
-    "AlternateTitle": "West Indies ou les Nègres marrons de la liberté)",
+    "AlternateTitle": null,
     "Year": "1979",
     "directors": [
       "Med Hondo"
@@ -227152,7 +227076,7 @@
     "key": 4216,
     "FilmTitle": "The Story of a Three-Day Pass",
     "databaseFilmTitle": "The Story of a Three-Day Pass",
-    "AlternateTitle": "La permission",
+    "AlternateTitle": null,
     "Year": "1968",
     "directors": [
       "Melvin Van Peebles"
@@ -228101,7 +228025,7 @@
     "key": 1410,
     "FilmTitle": "Goodbye First Love",
     "databaseFilmTitle": "Goodbye First Love",
-    "AlternateTitle": "Un amour de jeunesse",
+    "AlternateTitle": null,
     "Year": "2011",
     "directors": [
       "Mia Hansen-Løve"
@@ -229054,7 +228978,7 @@
     "key": 1292,
     "FilmTitle": "France, Here We Are!!!",
     "databaseFilmTitle": "France, Here We Are!!!",
-    "AlternateTitle": "Frankreich, Wir Kommen!!!",
+    "AlternateTitle": null,
     "Year": "1999",
     "directors": [
       "Michael Glawogger"
@@ -229273,7 +229197,7 @@
     "key": 1518,
     "FilmTitle": "Hidden",
     "databaseFilmTitle": "Hidden",
-    "AlternateTitle": "Caché",
+    "AlternateTitle": null,
     "Year": "2005",
     "directors": [
       "Michael Haneke"
@@ -229722,7 +229646,7 @@
     "key": 4157,
     "FilmTitle": "The Seventh Continent",
     "databaseFilmTitle": "The Seventh Continent",
-    "AlternateTitle": "Der siebente Kontinent",
+    "AlternateTitle": null,
     "Year": "1989",
     "directors": [
       "Michael Haneke"
@@ -229962,7 +229886,7 @@
       "TV Series"
     ],
     "runtime": 88,
-    "synopsis": "Dive in to hilarity when SpongeBob learns about the Vikings - right from the source, Squidward is banned from his lodge, SpongeBob and Patrick fill in for their heroes at an event, Captain Redbeard gets a surprise from his grandson, Mr. Krabs, and more!",
+    "synopsis": "The adventures of Ragnar Lothbrok, the greatest hero of his age. The series tells the sagas of Ragnar's band of Viking brothers and his family, as he rises to become King of the Viking tribes.",
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -230012,10 +229936,10 @@
         "votes": 1
       }
     ],
-    "tmdbId": 296559,
-    "tmdbMediaType": "movie",
-    "tmdbPosterPath": "/kraVKWoQOOJa6DRASBOc4755UJV.jpg",
-    "tmdbBackdropPath": "/d6Uzz1DiMG4fRLeh68Lf4wtbMTD.jpg"
+    "tmdbId": 44217,
+    "tmdbMediaType": "tv",
+    "tmdbPosterPath": "/bQLrHIRNEkE3PdIWQrZHynQZazu.jpg",
+    "tmdbBackdropPath": "/13kblIK8DnxMurcRDkeyy2sGR7v.jpg"
   },
   {
     "key": 1106,
@@ -230534,7 +230458,7 @@
     "key": 3099,
     "FilmTitle": "Slow Summer",
     "databaseFilmTitle": "Slow Summer",
-    "AlternateTitle": "Langsamer Sommer",
+    "AlternateTitle": null,
     "Year": "1976",
     "directors": [
       "Michael Pilz"
@@ -231267,7 +231191,7 @@
     "key": 4781,
     "FilmTitle": "Witchfinder General",
     "databaseFilmTitle": "Witchfinder General",
-    "AlternateTitle": "The Conqueror Worm",
+    "AlternateTitle": null,
     "Year": "1968",
     "directors": [
       "Michael Reeves"
@@ -232292,7 +232216,7 @@
     "key": 2490,
     "FilmTitle": "Of Whales, the Moon and Men",
     "databaseFilmTitle": "Of Whales, the Moon and Men",
-    "AlternateTitle": "Pour la suite du monde",
+    "AlternateTitle": null,
     "Year": "1963",
     "directors": [
       "Michel Brault",
@@ -232738,7 +232662,7 @@
     "key": 1219,
     "FilmTitle": "Fertile Memory",
     "databaseFilmTitle": "Fertile Memory",
-    "AlternateTitle": "Al Dhakira Al Khasba",
+    "AlternateTitle": null,
     "Year": "1980",
     "directors": [
       "Michel Khleifi"
@@ -232968,7 +232892,7 @@
     "key": 4046,
     "FilmTitle": "The Passenger",
     "databaseFilmTitle": "The Passenger",
-    "AlternateTitle": "Professione: Reporter",
+    "AlternateTitle": null,
     "Year": "1975",
     "directors": [
       "Michelangelo Antonioni"
@@ -233490,7 +233414,7 @@
     "key": 3215,
     "FilmTitle": "Story of a Love Affair",
     "databaseFilmTitle": "Story of a Love Affair",
-    "AlternateTitle": "Cronana di un amore",
+    "AlternateTitle": null,
     "Year": "1950",
     "directors": [
       "Michelangelo Antonioni"
@@ -233635,7 +233559,7 @@
     "key": 3823,
     "FilmTitle": "The Lady Without Camelias",
     "databaseFilmTitle": "The Lady Without Camelias",
-    "AlternateTitle": "La signora senza camelie",
+    "AlternateTitle": null,
     "Year": "1953",
     "directors": [
       "Michelangelo Antonioni"
@@ -234234,7 +234158,7 @@
     "key": 4782,
     "FilmTitle": "With Faith in God",
     "databaseFilmTitle": "With Faith in God",
-    "AlternateTitle": "Sa verom u Boga",
+    "AlternateTitle": null,
     "Year": "1932",
     "directors": [
       "Mihajlo Al. Popović"
@@ -235258,7 +235182,7 @@
     "key": 2474,
     "FilmTitle": "Nuts in May",
     "databaseFilmTitle": "Nuts in May",
-    "AlternateTitle": "Play for Today: Nuts in May",
+    "AlternateTitle": null,
     "Year": "1976",
     "directors": [
       "Mike Leigh"
@@ -235550,7 +235474,7 @@
     "key": 728,
     "FilmTitle": "Character",
     "databaseFilmTitle": "Character",
-    "AlternateTitle": "Karakter",
+    "AlternateTitle": null,
     "Year": "1997",
     "directors": [
       "Mike van Diem"
@@ -235698,7 +235622,7 @@
     "key": 1590,
     "FilmTitle": "I Am Cuba",
     "databaseFilmTitle": "I Am Cuba",
-    "AlternateTitle": "Soy Cuba",
+    "AlternateTitle": null,
     "Year": "1964",
     "directors": [
       "Mikhail Kalatozov"
@@ -235992,7 +235916,7 @@
     "key": 2729,
     "FilmTitle": "Post",
     "databaseFilmTitle": "Post",
-    "AlternateTitle": "Pochta",
+    "AlternateTitle": null,
     "Year": "1929",
     "directors": [
       "Mikhail Tsekhanovskiy"
@@ -237654,7 +237578,7 @@
     "key": 2091,
     "FilmTitle": "Loves of a Blonde",
     "databaseFilmTitle": "Loves of a Blonde",
-    "AlternateTitle": "Lásky jedné plavovlásky",
+    "AlternateTitle": null,
     "Year": "1965",
     "directors": [
       "Miloš Forman"
@@ -238552,7 +238476,7 @@
     "key": 4813,
     "FilmTitle": "Yama: Attack to Attack",
     "databaseFilmTitle": "Yama: Attack to Attack",
-    "AlternateTitle": "Yama - Yararetara yarikaese",
+    "AlternateTitle": null,
     "Year": "1985",
     "directors": [
       "Mitsuo Sato",
@@ -238848,7 +238772,7 @@
     "AlternateTitle": "Sheytan Vojud Nadarad",
     "Year": "2020",
     "directors": [
-      "Mohammad Rassoulof"
+      "Mohammad Rasoulof"
     ],
     "countries": [
       "Iran"
@@ -239218,7 +239142,7 @@
     "key": 3538,
     "FilmTitle": "The Cyclist",
     "databaseFilmTitle": "The Cyclist",
-    "AlternateTitle": "Bicycleran",
+    "AlternateTitle": null,
     "Year": "1989",
     "directors": [
       "Mohsen Makhmalbaf"
@@ -239436,7 +239360,7 @@
     "key": 4635,
     "FilmTitle": "Virgin Machine",
     "databaseFilmTitle": "Virgin Machine",
-    "AlternateTitle": "Die Jungfrauenmaschine",
+    "AlternateTitle": null,
     "Year": "1988",
     "directors": [
       "Monika Treut"
@@ -240312,7 +240236,7 @@
     "AlternateTitle": "Samt el Qusur",
     "Year": "1994",
     "directors": [
-      "Moufida Tiatli"
+      "Moufida Tlatli"
     ],
     "countries": [
       "Tunisia"
@@ -241156,7 +241080,7 @@
     "key": 1891,
     "FilmTitle": "Labour Party General Election social media launch video",
     "databaseFilmTitle": "Labour Party General Election social media launch video",
-    "AlternateTitle": "https://twitter.com/i/status/1189276879292960768",
+    "AlternateTitle": null,
     "Year": "2019",
     "directors": [],
     "countries": [
@@ -241441,7 +241365,7 @@
       "Short"
     ],
     "runtime": 20,
-    "synopsis": "A 1937 English language documentary.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -241499,7 +241423,7 @@
     "key": 677,
     "FilmTitle": "Capernaum",
     "databaseFilmTitle": "Capernaum",
-    "AlternateTitle": "Capernaüm",
+    "AlternateTitle": null,
     "Year": "2018",
     "directors": [
       "Nadine Labaki"
@@ -241644,7 +241568,7 @@
     "key": 1659,
     "FilmTitle": "In the Realm of the Senses",
     "databaseFilmTitle": "In the Realm of the Senses",
-    "AlternateTitle": "Ai no Korīda",
+    "AlternateTitle": null,
     "Year": "1976",
     "directors": [
       "Nagisa Ôshima"
@@ -242383,7 +242307,7 @@
     "key": 2835,
     "FilmTitle": "Red Wood Pigeon",
     "databaseFilmTitle": "Red Wood Pigeon",
-    "AlternateTitle": "Palombella rossa",
+    "AlternateTitle": null,
     "Year": "1989",
     "directors": [
       "Nanni Moretti"
@@ -242673,7 +242597,7 @@
     "key": 3205,
     "FilmTitle": "Still the Water",
     "databaseFilmTitle": "Still the Water",
-    "AlternateTitle": "Futatsume no mado",
+    "AlternateTitle": null,
     "Year": "2014",
     "directors": [
       "Naomi Kawase"
@@ -243260,7 +243184,7 @@
     "key": 1724,
     "FilmTitle": "It Will Never Happen Again",
     "databaseFilmTitle": "It Will Never Happen Again",
-    "AlternateTitle": "Unzere Kinder",
+    "AlternateTitle": null,
     "Year": "1951",
     "directors": [
       "Natan Gross"
@@ -244273,7 +244197,7 @@
     "key": 3974,
     "FilmTitle": "The Most Dangerous Man in the World",
     "databaseFilmTitle": "The Most Dangerous Man in the World",
-    "AlternateTitle": "Akhtar ragol fil alam",
+    "AlternateTitle": null,
     "Year": "1967",
     "directors": [
       "Niazi Mostafa"
@@ -245738,7 +245662,7 @@
     "key": 410,
     "FilmTitle": "Bad Timing",
     "databaseFilmTitle": "Bad Timing",
-    "AlternateTitle": "Bad Timing: A Sensual Obsession",
+    "AlternateTitle": null,
     "Year": "1980",
     "directors": [
       "Nicolas Roeg"
@@ -246560,7 +246484,7 @@
       "Drama"
     ],
     "runtime": 77,
-    "synopsis": "Film by Mashchenko.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": "https://images.mubicdn.net/images/film/331502/cache-750023-1745499475/image-w1280.jpg",
     "pollHistory": [
@@ -246690,7 +246614,7 @@
     "key": 2956,
     "FilmTitle": "Satan's Rhapsody",
     "databaseFilmTitle": "Satan's Rhapsody",
-    "AlternateTitle": "Rapsodia satanica",
+    "AlternateTitle": null,
     "Year": "1915",
     "directors": [
       "Nino Oxilia"
@@ -246982,7 +246906,7 @@
     "key": 1560,
     "FilmTitle": "House",
     "databaseFilmTitle": "House (1977)",
-    "AlternateTitle": "Hausu",
+    "AlternateTitle": null,
     "Year": "1977",
     "directors": [
       "Nobuhiko Ôbayashi"
@@ -247345,7 +247269,7 @@
     "key": 2244,
     "FilmTitle": "Minamata: The Victims and Their World",
     "databaseFilmTitle": "Minamata: The Victims and Their World",
-    "AlternateTitle": "Minamata: kanjo-san to sono sekai",
+    "AlternateTitle": null,
     "Year": "1971",
     "directors": [
       "Noriaki Tsuchimoto"
@@ -248074,7 +247998,7 @@
     "key": 71,
     "FilmTitle": "A Dance for Two",
     "databaseFilmTitle": "A Dance for Two",
-    "AlternateTitle": "Pas de deux",
+    "AlternateTitle": null,
     "Year": "1968",
     "directors": [
       "Norman McLaren"
@@ -248433,7 +248357,7 @@
     "key": 790,
     "FilmTitle": "Clouds of May",
     "databaseFilmTitle": "Clouds of May",
-    "AlternateTitle": "Mayis Sikintisi",
+    "AlternateTitle": null,
     "Year": "1999",
     "directors": [
       "Nuri Bilge Ceylan"
@@ -248581,7 +248505,7 @@
     "key": 996,
     "FilmTitle": "Distant",
     "databaseFilmTitle": "Distant",
-    "AlternateTitle": "Uzak",
+    "AlternateTitle": null,
     "Year": "2002",
     "directors": [
       "Nuri Bilge Ceylan"
@@ -248801,7 +248725,7 @@
     "AlternateTitle": "Üç Maymun",
     "Year": "2008",
     "directors": [
-      "Nuri Bilge Ceyland"
+      "Nuri Bilge Ceylan"
     ],
     "countries": [
       "Turkey"
@@ -250266,7 +250190,7 @@
     "key": 994,
     "FilmTitle": "Disorder",
     "databaseFilmTitle": "Disorder",
-    "AlternateTitle": "Désordre",
+    "AlternateTitle": null,
     "Year": "1986",
     "directors": [
       "Olivier Assayas"
@@ -250489,7 +250413,7 @@
     "key": 1434,
     "FilmTitle": "Grey Morning",
     "databaseFilmTitle": "Grey Morning",
-    "AlternateTitle": "Manhã Cinzenta",
+    "AlternateTitle": null,
     "Year": "1969",
     "directors": [
       "Olney São Paulo"
@@ -250992,7 +250916,7 @@
     "key": 743,
     "FilmTitle": "Chimes at Midnight",
     "databaseFilmTitle": "Chimes at Midnight",
-    "AlternateTitle": "Campanadas a medianoche",
+    "AlternateTitle": null,
     "Year": "1965",
     "directors": [
       "Orson Welles"
@@ -251142,7 +251066,7 @@
     "key": 2562,
     "FilmTitle": "Othello",
     "databaseFilmTitle": "Othello",
-    "AlternateTitle": "The Tragedy of Othello: The Moor of Venice",
+    "AlternateTitle": null,
     "Year": "1951",
     "directors": [
       "Orson Welles"
@@ -252029,7 +251953,7 @@
     "key": 3190,
     "FilmTitle": "Stars in Broad Daylight",
     "databaseFilmTitle": "Stars in Broad Daylight",
-    "AlternateTitle": "Nujum al-Nahar",
+    "AlternateTitle": null,
     "Year": "1988",
     "directors": [
       "Ossama Mohammed"
@@ -253947,7 +253871,7 @@
     "key": 2355,
     "FilmTitle": "My Name is Tonho",
     "databaseFilmTitle": "My Name is Tonho",
-    "AlternateTitle": "Meu Nome é Tonho",
+    "AlternateTitle": null,
     "Year": "1969",
     "directors": [
       "Ozualdo Ribeiro Candeias"
@@ -254461,7 +254385,7 @@
     "key": 3179,
     "FilmTitle": "Spring Shower",
     "databaseFilmTitle": "Spring Shower",
-    "AlternateTitle": "Tavaszi zápor",
+    "AlternateTitle": null,
     "Year": "1932",
     "directors": [
       "Pál Fejös"
@@ -255419,7 +255343,7 @@
     "AlternateTitle": null,
     "Year": "2008",
     "directors": [
-      "Pascal Laughier"
+      "Pascal Laugier"
     ],
     "countries": [
       "France"
@@ -256970,7 +256894,7 @@
     "key": 3807,
     "FilmTitle": "The King and the Mockingbird",
     "databaseFilmTitle": "The King and the Mockingbird",
-    "AlternateTitle": "Le roi et l'oiseau",
+    "AlternateTitle": null,
     "Year": "1980",
     "directors": [
       "Paul Grimault"
@@ -257347,7 +257271,7 @@
     "key": 558,
     "FilmTitle": "Blood for Dracula",
     "databaseFilmTitle": "Blood for Dracula",
-    "AlternateTitle": "Sangue per Dracula",
+    "AlternateTitle": null,
     "Year": "1974",
     "directors": [
       "Paul Morrissey"
@@ -257723,7 +257647,7 @@
     "key": 202,
     "FilmTitle": "Abraham Lincoln",
     "databaseFilmTitle": "Abraham Lincoln",
-    "AlternateTitle": "Studio One: Abraham Lincoln",
+    "AlternateTitle": null,
     "Year": "1952",
     "directors": [
       "Paul Nickell"
@@ -258743,7 +258667,7 @@
     "key": 1052,
     "FilmTitle": "Drugstore Romance",
     "databaseFilmTitle": "Drugstore Romance",
-    "AlternateTitle": "Corps à cœur",
+    "AlternateTitle": null,
     "Year": "1979",
     "directors": [
       "Paul Vecchiali"
@@ -259789,7 +259713,7 @@
     "key": 2605,
     "FilmTitle": "Paraguayan Hammock",
     "databaseFilmTitle": "Paraguayan Hammock",
-    "AlternateTitle": "Hamaca paraguaya",
+    "AlternateTitle": null,
     "Year": "2006",
     "directors": [
       "Paz Encina"
@@ -261404,7 +261328,7 @@
     "key": 4612,
     "FilmTitle": "Vampir",
     "databaseFilmTitle": "Vampir",
-    "AlternateTitle": "Cuadecuc, vampir",
+    "AlternateTitle": null,
     "Year": "1971",
     "directors": [
       "Pere Portabella"
@@ -261848,7 +261772,7 @@
     "AlternateTitle": null,
     "Year": "1990",
     "directors": [
-      "Peter Bodganovich"
+      "Peter Bogdanovich"
     ],
     "countries": [
       "United States"
@@ -262357,7 +262281,7 @@
     "key": 2162,
     "FilmTitle": "Marat/Sade",
     "databaseFilmTitle": "Marat/Sade",
-    "AlternateTitle": "The Persecution and Assassination of Jean-Paul Marat as Performed by the Inmates of the Asylum of Charenton Under the Direction of the Marquis de Sade",
+    "AlternateTitle": null,
     "Year": "1967",
     "directors": [
       "Peter Brook"
@@ -262574,7 +262498,7 @@
     "key": 2102,
     "FilmTitle": "Lyrical Nitrate",
     "databaseFilmTitle": "Lyrical Nitrate",
-    "AlternateTitle": "Lyrisch nitraat",
+    "AlternateTitle": null,
     "Year": "1991",
     "directors": [
       "Peter Delpeut"
@@ -263398,7 +263322,7 @@
     "key": 3859,
     "FilmTitle": "The Left-Handed Woman",
     "databaseFilmTitle": "The Left-Handed Woman",
-    "AlternateTitle": "Die linkshändige Frau",
+    "AlternateTitle": null,
     "Year": "1978",
     "directors": [
       "Peter Handke"
@@ -263912,7 +263836,7 @@
     "key": 926,
     "FilmTitle": "Dead Alive",
     "databaseFilmTitle": "Dead Alive",
-    "AlternateTitle": "Braindead",
+    "AlternateTitle": null,
     "Year": "1992",
     "directors": [
       "Peter Jackson"
@@ -264134,7 +264058,7 @@
     "FilmTitle": "Arnulf Rainer",
     "databaseFilmTitle": "Arnulf Rainer",
     "AlternateTitle": null,
-    "Year": "1969",
+    "Year": "1960",
     "directors": [
       "Peter Kubelka"
     ],
@@ -264492,7 +264416,7 @@
     "key": 3899,
     "FilmTitle": "The Lost One",
     "databaseFilmTitle": "The Lost One",
-    "AlternateTitle": "Der Verlorene",
+    "AlternateTitle": null,
     "Year": "1951",
     "directors": [
       "Peter Lorre"
@@ -264637,7 +264561,7 @@
     "key": 4013,
     "FilmTitle": "The Northern Calot",
     "databaseFilmTitle": "The Northern Calot",
-    "AlternateTitle": "Die Nordkalotte",
+    "AlternateTitle": null,
     "Year": "1990",
     "directors": [
       "Peter Nestler"
@@ -264785,8 +264709,8 @@
     "key": 2517,
     "FilmTitle": "On the Way",
     "databaseFilmTitle": "On the Way",
-    "AlternateTitle": "Auf def Weg",
-    "Year": "1980",
+    "AlternateTitle": null,
+    "Year": "1990",
     "directors": [
       "Peter Schreiner"
     ],
@@ -265076,7 +265000,7 @@
     "key": 3118,
     "FilmTitle": "Socialism",
     "databaseFilmTitle": "Socialism",
-    "AlternateTitle": "Sosialismi",
+    "AlternateTitle": null,
     "Year": "2014",
     "directors": [
       "Peter von Bagh"
@@ -266605,7 +266529,7 @@
     "key": 2302,
     "FilmTitle": "Mother Krause's Journey to Happiness",
     "databaseFilmTitle": "Mother Krause's Journey to Happiness",
-    "AlternateTitle": "Mutter Krausens Fahrt ins Glück",
+    "AlternateTitle": null,
     "Year": "1929",
     "directors": [
       "Phil Jutzi"
@@ -266970,7 +266894,7 @@
     "key": 1641,
     "FilmTitle": "In Camera",
     "databaseFilmTitle": "In Camera",
-    "AlternateTitle": "The Wednesday Play: In Camera",
+    "AlternateTitle": null,
     "Year": "1964",
     "directors": [
       "Philip Saville"
@@ -267262,7 +267186,7 @@
     "key": 3784,
     "FilmTitle": "The Inner Scar",
     "databaseFilmTitle": "The Inner Scar",
-    "AlternateTitle": "La cicatrice intérieure",
+    "AlternateTitle": null,
     "Year": "1972",
     "directors": [
       "Philippe Garrel"
@@ -267406,7 +267330,7 @@
     "key": 2839,
     "FilmTitle": "Regular Lovers",
     "databaseFilmTitle": "Regular Lovers",
-    "AlternateTitle": "Les amants réguliers",
+    "AlternateTitle": null,
     "Year": "2005",
     "directors": [
       "Philippe Garrel"
@@ -268289,7 +268213,7 @@
     "key": 2461,
     "FilmTitle": "Notes Towards an African Orestes",
     "databaseFilmTitle": "Notes Towards an African Orestes",
-    "AlternateTitle": "Appunti per un'Orestiade africana",
+    "AlternateTitle": null,
     "Year": "1970",
     "directors": [
       "Pier Paolo Pasolini"
@@ -268810,7 +268734,7 @@
     "key": 3856,
     "FilmTitle": "The Laughing Woman",
     "databaseFilmTitle": "The Laughing Woman",
-    "AlternateTitle": "Femina ridens",
+    "AlternateTitle": null,
     "Year": "1969",
     "directors": [
       "Piero Schivazappa"
@@ -268887,7 +268811,7 @@
     "AlternateTitle": "Le train",
     "Year": "1973",
     "directors": [
-      "Pierre Grainer-Deferre"
+      "Pierre Granier-Deferre"
     ],
     "countries": [
       "France"
@@ -269325,7 +269249,7 @@
     "key": 3598,
     "FilmTitle": "The East is Red",
     "databaseFilmTitle": "The East is Red",
-    "AlternateTitle": "Dongfang hong",
+    "AlternateTitle": null,
     "Year": "1965",
     "directors": [
       "Ping Wang"
@@ -270060,7 +269984,7 @@
     "key": 614,
     "FilmTitle": "Breakfast on the grass",
     "databaseFilmTitle": "Breakfast on the grass",
-    "AlternateTitle": "Eine murul",
+    "AlternateTitle": null,
     "Year": "1987",
     "directors": [
       "Priit Pärn"
@@ -270208,7 +270132,7 @@
     "key": 1667,
     "FilmTitle": "Incredible But True",
     "databaseFilmTitle": "Incredible But True",
-    "AlternateTitle": "Incroyable mais vrai",
+    "AlternateTitle": null,
     "Year": "2022",
     "directors": [
       "Quentin Dupieux"
@@ -271017,7 +270941,7 @@
     "key": 409,
     "FilmTitle": "Bad Luck Banging or Loony Porn",
     "databaseFilmTitle": "Bad Luck Banging or Loony Porn",
-    "AlternateTitle": "Babardeală cu bucluc sau porno balamuc",
+    "AlternateTitle": null,
     "Year": "2021",
     "directors": [
       "Radu Jude"
@@ -271684,7 +271608,7 @@
     "key": 3435,
     "FilmTitle": "The Bitter Tears of Petra von Kant",
     "databaseFilmTitle": "The Bitter Tears of Petra von Kant",
-    "AlternateTitle": "Die bitteren Tränen der Petra von Kant",
+    "AlternateTitle": null,
     "Year": "1972",
     "directors": [
       "Rainer Werner Fassbinder"
@@ -274832,7 +274756,7 @@
     "key": 2805,
     "FilmTitle": "Rattlesnake",
     "databaseFilmTitle": "Rattlesnake",
-    "AlternateTitle": "Cascabel",
+    "AlternateTitle": null,
     "Year": "1977",
     "directors": [
       "Raúl Araiza"
@@ -276076,7 +276000,7 @@
     "AlternateTitle": null,
     "Year": "1989",
     "directors": [
-      "Reece Auguistine"
+      "Reece Auguiste"
     ],
     "countries": [
       "United Kingdom"
@@ -276290,7 +276214,7 @@
     "key": 4441,
     "FilmTitle": "Times and Winds",
     "databaseFilmTitle": "Times and Winds",
-    "AlternateTitle": "Beş Vakit",
+    "AlternateTitle": null,
     "Year": "2006",
     "directors": [
       "Reha Erdem"
@@ -276726,7 +276650,7 @@
     "key": 3794,
     "FilmTitle": "The Italian Straw Hat",
     "databaseFilmTitle": "The Italian Straw Hat",
-    "AlternateTitle": "Un chapeau de paille d'Italie",
+    "AlternateTitle": null,
     "Year": "1928",
     "directors": [
       "René Clair"
@@ -277617,7 +277541,7 @@
     "AlternateTitle": null,
     "Year": "2012",
     "directors": [
-      "Rian Johson"
+      "Rian Johnson"
     ],
     "countries": [
       "United States"
@@ -280633,7 +280557,7 @@
     "key": 2922,
     "FilmTitle": "S21: The Khmer Rouge Death Machine",
     "databaseFilmTitle": "S21: The Khmer Rouge Death Machine",
-    "AlternateTitle": "S-21, la machine de mort Khmère rouge",
+    "AlternateTitle": null,
     "Year": "2003",
     "directors": [
       "Rithy Panh"
@@ -283775,7 +283699,7 @@
     "key": 979,
     "FilmTitle": "Diary of a Country Priest",
     "databaseFilmTitle": "Diary of a Country Priest",
-    "AlternateTitle": "Journal d'un curé de campagne",
+    "AlternateTitle": null,
     "Year": "1951",
     "directors": [
       "Robert Bresson"
@@ -284067,7 +283991,7 @@
     "key": 111,
     "FilmTitle": "A Man Escaped",
     "databaseFilmTitle": "A Man Escaped",
-    "AlternateTitle": "Un condamné à mort s'est échappé ou Le vent souffle où il veut",
+    "AlternateTitle": null,
     "Year": "1956",
     "directors": [
       "Robert Bresson"
@@ -285606,7 +285530,7 @@
     "key": 2265,
     "FilmTitle": "Moana",
     "databaseFilmTitle": "Moana",
-    "AlternateTitle": "Moana: A Story of the South Seas",
+    "AlternateTitle": null,
     "Year": "1926",
     "directors": [
       "Robert J. Flaherty",
@@ -285756,7 +285680,7 @@
     "key": 2572,
     "FilmTitle": "Our Nazi",
     "databaseFilmTitle": "Our Nazi",
-    "AlternateTitle": "Notre Nazi",
+    "AlternateTitle": null,
     "Year": "1985",
     "directors": [
       "Robert Kramer"
@@ -286334,7 +286258,7 @@
     "key": 3566,
     "FilmTitle": "The Devil Strikes at Night",
     "databaseFilmTitle": "The Devil Strikes at Night",
-    "AlternateTitle": "Nachts, wenn der Teufel kam",
+    "AlternateTitle": null,
     "Year": "1957",
     "directors": [
       "Robert Siodmak"
@@ -286555,7 +286479,7 @@
     "AlternateTitle": null,
     "Year": "1944",
     "directors": [
-      "Robert Soidmak"
+      "Robert Siodmak"
     ],
     "countries": [
       "United States"
@@ -287363,7 +287287,7 @@
     "key": 3587,
     "FilmTitle": "The Dreams of the Centenarians",
     "databaseFilmTitle": "The Dreams of the Centenarians",
-    "AlternateTitle": "imtamečių godos",
+    "AlternateTitle": null,
     "Year": "1969",
     "directors": [
       "Robertas Verba"
@@ -288246,7 +288170,7 @@
     "key": 3356,
     "FilmTitle": "The Age of the Medici",
     "databaseFilmTitle": "The Age of the Medici",
-    "AlternateTitle": "L'età di Cosimo de Medici",
+    "AlternateTitle": null,
     "Year": "1973",
     "directors": [
       "Roberto Rossellini"
@@ -288615,7 +288539,7 @@
     "key": 2892,
     "FilmTitle": "Rome, Open City",
     "databaseFilmTitle": "Rome, Open City",
-    "AlternateTitle": "Roma città aperta",
+    "AlternateTitle": null,
     "Year": "1945",
     "directors": [
       "Roberto Rossellini"
@@ -288987,7 +288911,7 @@
     "key": 2575,
     "FilmTitle": "Out",
     "databaseFilmTitle": "Out",
-    "AlternateTitle": "Tse",
+    "AlternateTitle": null,
     "Year": "2010",
     "directors": [
       "Roee Rosen"
@@ -289209,7 +289133,7 @@
     "key": 1297,
     "FilmTitle": "Frankenstein Unbound",
     "databaseFilmTitle": "Frankenstein Unbound",
-    "AlternateTitle": "Roger Corman's Frankenstein Unbound",
+    "AlternateTitle": null,
     "Year": "1990",
     "directors": [
       "Roger Corman"
@@ -289727,7 +289651,7 @@
     "key": 4593,
     "FilmTitle": "United Kingdom",
     "databaseFilmTitle": "United Kingdom",
-    "AlternateTitle": "Play for Today: United Kingdom",
+    "AlternateTitle": null,
     "Year": "1981",
     "directors": [
       "Roland Joffé"
@@ -290092,7 +290016,7 @@
     "key": 833,
     "FilmTitle": "Confrontation",
     "databaseFilmTitle": "Confrontation",
-    "AlternateTitle": "Konfrontation",
+    "AlternateTitle": null,
     "Year": "1974",
     "directors": [
       "Rolf Lyssy"
@@ -291045,7 +290969,7 @@
     "key": 2431,
     "FilmTitle": "Nightsongs",
     "databaseFilmTitle": "Nightsongs",
-    "AlternateTitle": "Die Nacht singt ihre Lieder",
+    "AlternateTitle": null,
     "Year": "2004",
     "directors": [
       "Romuald Karmakar"
@@ -291699,7 +291623,7 @@
     "key": 2716,
     "FilmTitle": "Poppies and Sailboats",
     "databaseFilmTitle": "Poppies and Sailboats",
-    "AlternateTitle": "Voiliers et coquelicots",
+    "AlternateTitle": null,
     "Year": "2001",
     "directors": [
       "Rose Lowder"
@@ -291920,7 +291844,7 @@
     "key": 3030,
     "FilmTitle": "Sherman's March",
     "databaseFilmTitle": "Sherman's March",
-    "AlternateTitle": "Sherman's March: A Meditation to the Possibility of Romantic Love in the South During an Era of Nuclear Weapons Proliferation",
+    "AlternateTitle": null,
     "Year": "1985",
     "directors": [
       "Ross McElwee"
@@ -292429,7 +292353,7 @@
     "key": 3474,
     "FilmTitle": "The Cabinet of Dr. Caligari",
     "databaseFilmTitle": "The Cabinet of Dr. Caligari",
-    "AlternateTitle": "Das cabinet des Dr. Caligari",
+    "AlternateTitle": null,
     "Year": "1920",
     "directors": [
       "Rovert Wiene"
@@ -293100,7 +293024,7 @@
     "key": 4150,
     "FilmTitle": "The Secret Formula",
     "databaseFilmTitle": "The Secret Formula",
-    "AlternateTitle": "La fórmula secreta",
+    "AlternateTitle": null,
     "Year": "1965",
     "directors": [
       "Rubén Gámez"
@@ -293406,7 +293330,7 @@
     "key": 1108,
     "FilmTitle": "Eleven Miles",
     "databaseFilmTitle": "Eleven Miles",
-    "AlternateTitle": "Egaro Mile",
+    "AlternateTitle": null,
     "Year": "1991",
     "directors": [
       "Ruchir Joshi"
@@ -294279,7 +294203,7 @@
     "key": 3585,
     "FilmTitle": "The Dreamed Ones",
     "databaseFilmTitle": "The Dreamed Ones",
-    "AlternateTitle": "Die Geträumten",
+    "AlternateTitle": null,
     "Year": "2016",
     "directors": [
       "Ruth Beckermann"
@@ -294643,7 +294567,7 @@
     "key": 1321,
     "FilmTitle": "Fruitvale Station",
     "databaseFilmTitle": "Fruitvale Station",
-    "AlternateTitle": "Fruitvale",
+    "AlternateTitle": null,
     "Year": "2013",
     "directors": [
       "Ryan Coogler"
@@ -294861,7 +294785,7 @@
     "key": 853,
     "FilmTitle": "Crazy Lee",
     "databaseFilmTitle": "Crazy Lee",
-    "AlternateTitle": "Dachimawa Lee",
+    "AlternateTitle": null,
     "Year": "2008",
     "directors": [
       "Ryoo Seung-wan"
@@ -295291,7 +295215,7 @@
     "key": 360,
     "FilmTitle": "Asako I & II",
     "databaseFilmTitle": "Asako I & II",
-    "AlternateTitle": "Netemo sametemo",
+    "AlternateTitle": null,
     "Year": "2018",
     "directors": [
       "Ryusuke Hamaguchi"
@@ -295799,7 +295723,7 @@
     "key": 4215,
     "FilmTitle": "The Story of a Cheat",
     "databaseFilmTitle": "The Story of a Cheat",
-    "AlternateTitle": "Le roman d'un tricheur",
+    "AlternateTitle": null,
     "Year": "1936",
     "directors": [
       "Sacha Guitry"
@@ -295958,7 +295882,7 @@
       "Short"
     ],
     "runtime": 44,
-    "synopsis": "Directed by Sacha Guitry.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": "https://images.mubicdn.net/images/film/239748/cache-650319-1745498154/image-w1280.jpg",
     "pollHistory": [
@@ -296683,7 +296607,7 @@
     "key": 2865,
     "FilmTitle": "Ride the High Country",
     "databaseFilmTitle": "Ride the High Country",
-    "AlternateTitle": "Guns in the Afternoon",
+    "AlternateTitle": null,
     "Year": "1962",
     "directors": [
       "Sam Peckinpah"
@@ -297634,7 +297558,7 @@
   },
   {
     "key": 2672,
-    "FilmTitle": "Pickup on the South Street",
+    "FilmTitle": "Pickup on South Street",
     "databaseFilmTitle": "Pickup on the South Street",
     "AlternateTitle": null,
     "Year": "1953",
@@ -298801,7 +298725,7 @@
     "key": 2537,
     "FilmTitle": "One Way or Another",
     "databaseFilmTitle": "One Way or Another",
-    "AlternateTitle": "De cierta manera",
+    "AlternateTitle": null,
     "Year": "1977",
     "directors": [
       "Sara Gómez"
@@ -299538,7 +299462,7 @@
     "key": 2239,
     "FilmTitle": "Millennium Actress",
     "databaseFilmTitle": "Millennium Actress",
-    "AlternateTitle": "Sennen joyû",
+    "AlternateTitle": null,
     "Year": "2001",
     "directors": [
       "Satoshi Kon"
@@ -299901,7 +299825,7 @@
     "key": 3983,
     "FilmTitle": "The Music Room",
     "databaseFilmTitle": "The Music Room",
-    "AlternateTitle": "Jalsaghar",
+    "AlternateTitle": null,
     "Year": "1958",
     "directors": [
       "Satyajit Ray"
@@ -300705,7 +300629,7 @@
     "key": 1427,
     "FilmTitle": "Great Freedom",
     "databaseFilmTitle": "Great Freedom",
-    "AlternateTitle": "Große Freiheit",
+    "AlternateTitle": null,
     "Year": "2021",
     "directors": [
       "Sebastian Meise"
@@ -300853,7 +300777,7 @@
     "key": 606,
     "FilmTitle": "Branded to Kill",
     "databaseFilmTitle": "Branded to Kill",
-    "AlternateTitle": "Koroshi no rakuin",
+    "AlternateTitle": null,
     "Year": "1967",
     "directors": [
       "Seijun Suzuki"
@@ -301430,7 +301354,7 @@
     "key": 1651,
     "FilmTitle": "In the Dark",
     "databaseFilmTitle": "In the Dark",
-    "AlternateTitle": "B Temhote",
+    "AlternateTitle": null,
     "Year": "2004",
     "directors": [
       "Sergei Dvortsevoy"
@@ -301650,7 +301574,7 @@
     "key": 3229,
     "FilmTitle": "Strike",
     "databaseFilmTitle": "Strike",
-    "AlternateTitle": "Stachka",
+    "AlternateTitle": null,
     "Year": "1925",
     "directors": [
       "Sergei Eisenstein"
@@ -304741,7 +304665,7 @@
     "AlternateTitle": null,
     "Year": "1963",
     "directors": [
-      "Shirely Clarke"
+      "Shirley Clarke"
     ],
     "countries": [
       "United States"
@@ -306472,7 +306396,7 @@
     "AlternateTitle": null,
     "Year": "1945",
     "directors": [
-      "Sidney Gilliant"
+      "Sidney Gilliat"
     ],
     "countries": [
       "United Kingdom"
@@ -307265,7 +307189,7 @@
     "key": 2079,
     "FilmTitle": "Love Exposure",
     "databaseFilmTitle": "Love Exposure",
-    "AlternateTitle": "Ai no mukidashi",
+    "AlternateTitle": null,
     "Year": "2008",
     "directors": [
       "Sion Sono"
@@ -307337,7 +307261,7 @@
   },
   {
     "key": 375,
-    "FilmTitle": "Athiest",
+    "FilmTitle": "Atheist",
     "databaseFilmTitle": "Athiest",
     "AlternateTitle": "Atheis",
     "Year": "1974",
@@ -307930,7 +307854,7 @@
     "key": 3202,
     "FilmTitle": "Still Life",
     "databaseFilmTitle": "Still Life (1974)",
-    "AlternateTitle": "Tabiate bijan",
+    "AlternateTitle": null,
     "Year": "1974",
     "directors": [
       "Sohrab Shahid Saless"
@@ -308297,7 +308221,7 @@
     "key": 4817,
     "FilmTitle": "Yeelen",
     "databaseFilmTitle": "Yeelen",
-    "AlternateTitle": "Brightness",
+    "AlternateTitle": null,
     "Year": "1987",
     "directors": [
       "Souleymane Cissé"
@@ -308522,7 +308446,7 @@
     "AlternateTitle": null,
     "Year": "1941",
     "directors": [
-      "Spencher Williams"
+      "Spencer Williams"
     ],
     "countries": [
       "United States"
@@ -309323,7 +309247,7 @@
     "key": 2739,
     "FilmTitle": "Pretty Village, Pretty Flame",
     "databaseFilmTitle": "Pretty Village, Pretty Flame",
-    "AlternateTitle": "Lepa sela lepo gore",
+    "AlternateTitle": null,
     "Year": "1996",
     "directors": [
       "Srdjan Dragojević"
@@ -310138,7 +310062,7 @@
       "Short"
     ],
     "runtime": 17,
-    "synopsis": "Voted for the 2012 Sight & Sound poll.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": "https://images.mubicdn.net/images/film/209865/cache-351809-1745495143/image-w1280.jpg",
     "pollHistory": [
@@ -312481,7 +312405,7 @@
     "key": 2592,
     "FilmTitle": "Painting Today",
     "databaseFilmTitle": "Painting Today",
-    "AlternateTitle": "Malerei heute",
+    "AlternateTitle": null,
     "Year": "2005",
     "directors": [
       "Stefan Hayn",
@@ -312626,7 +312550,7 @@
     "AlternateTitle": null,
     "Year": "1994",
     "directors": [
-      "Stephan Elliot"
+      "Stephan Elliott"
     ],
     "countries": [
       "Australia"
@@ -313140,7 +313064,7 @@
     "key": 1526,
     "FilmTitle": "Hindered",
     "databaseFilmTitle": "Hindered",
-    "AlternateTitle": "Behindert",
+    "AlternateTitle": null,
     "Year": "1974",
     "directors": [
       "Stephen Dwoskin"
@@ -316725,7 +316649,7 @@
     "key": 4070,
     "FilmTitle": "The Poem of Hayachine Valley",
     "databaseFilmTitle": "The Poem of Hayachine Valley",
-    "AlternateTitle": "Hayachine no fu",
+    "AlternateTitle": null,
     "Year": "1982",
     "directors": [
       "Sumiko Haneda"
@@ -317232,7 +317156,7 @@
     "key": 2482,
     "FilmTitle": "Obscure Light",
     "databaseFilmTitle": "Obscure Light",
-    "AlternateTitle": "Luz obscura",
+    "AlternateTitle": null,
     "Year": "2017",
     "directors": [
       "Susana de Sousa Dias"
@@ -317663,7 +317587,7 @@
     "key": 1556,
     "FilmTitle": "Hour of the Star",
     "databaseFilmTitle": "Hour of the Star",
-    "AlternateTitle": "A hora da estrela",
+    "AlternateTitle": null,
     "Year": "1985",
     "directors": [
       "Suzana Amaral"
@@ -318243,7 +318167,7 @@
     "key": 4291,
     "FilmTitle": "The Triplets of Belleville",
     "databaseFilmTitle": "The Triplets of Belleville",
-    "AlternateTitle": "Les triplettes de Belleville",
+    "AlternateTitle": null,
     "Year": "2003",
     "directors": [
       "Sylvain Chomet"
@@ -318686,7 +318610,7 @@
     "key": 3833,
     "FilmTitle": "The Last Day of Summer",
     "databaseFilmTitle": "The Last Day of Summer",
-    "AlternateTitle": "Ostatni dzień lata",
+    "AlternateTitle": null,
     "Year": "1958",
     "directors": [
       "Tadeusz Konwicki"
@@ -318906,7 +318830,7 @@
     "AlternateTitle": null,
     "Year": "2004",
     "directors": [
-      "Taika Waitit"
+      "Taika Waititi"
     ],
     "countries": [
       "New Zealand"
@@ -319050,7 +318974,7 @@
     "key": 3646,
     "FilmTitle": "The Five",
     "databaseFilmTitle": "The Five",
-    "AlternateTitle": "Gonin",
+    "AlternateTitle": null,
     "Year": "1995",
     "directors": [
       "Takashi Ishii"
@@ -319849,7 +319773,7 @@
     "FilmTitle": "Mumblecore",
     "databaseFilmTitle": "Mumblecore",
     "AlternateTitle": null,
-    "Year": "2001",
+    "Year": "2011",
     "directors": [
       "Tao Lin",
       "Megan Boyle"
@@ -319918,7 +319842,7 @@
     "key": 3501,
     "FilmTitle": "The Clay Bird",
     "databaseFilmTitle": "The Clay Bird",
-    "AlternateTitle": "Matir Moina",
+    "AlternateTitle": null,
     "Year": "2002",
     "directors": [
       "Tareque Masud"
@@ -320589,7 +320513,7 @@
     "key": 517,
     "FilmTitle": "Bitter Coffee",
     "databaseFilmTitle": "Bitter Coffee",
-    "AlternateTitle": "Secangkir Kopi Pahit",
+    "AlternateTitle": null,
     "Year": "1985",
     "directors": [
       "Teguh Karya"
@@ -321096,7 +321020,7 @@
     "key": 3565,
     "FilmTitle": "The Devil Rides Out",
     "databaseFilmTitle": "The Devil Rides Out",
-    "AlternateTitle": "The Devil's Bride",
+    "AlternateTitle": null,
     "Year": "1968",
     "directors": [
       "Terence Fisher"
@@ -321316,7 +321240,7 @@
     "key": 231,
     "FilmTitle": "Alex",
     "databaseFilmTitle": "Alex",
-    "AlternateTitle": "A Idade Maior",
+    "AlternateTitle": null,
     "Year": "1991",
     "directors": [
       "Teresa Villaverde"
@@ -323002,7 +322926,7 @@
     "key": 3767,
     "FilmTitle": "The Hunters",
     "databaseFilmTitle": "The Hunters (1977)",
-    "AlternateTitle": "Oi kynigoi",
+    "AlternateTitle": null,
     "Year": "1977",
     "directors": [
       "Theodoros Angelopoulos"
@@ -323738,7 +323662,7 @@
     "key": 87,
     "FilmTitle": "A Fine Day",
     "databaseFilmTitle": "A Fine Day",
-    "AlternateTitle": "Der schöne Tag",
+    "AlternateTitle": null,
     "Year": "2001",
     "directors": [
       "Thomas Arslan"
@@ -324121,7 +324045,7 @@
       "Documentary"
     ],
     "runtime": 27,
-    "synopsis": "Directed by Thomas Stobart.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -324400,7 +324324,7 @@
     "key": 3749,
     "FilmTitle": "The Horse Thief",
     "databaseFilmTitle": "The Horse Thief",
-    "AlternateTitle": "Dao me zei",
+    "AlternateTitle": null,
     "Year": "1986",
     "directors": [
       "Tian Zhuangzhuang",
@@ -324833,7 +324757,7 @@
   },
   {
     "key": 3098,
-    "FilmTitle": "Sleepy Hallow",
+    "FilmTitle": "Sleepy Hollow",
     "databaseFilmTitle": "Sleepy Hallow",
     "AlternateTitle": null,
     "Year": "1999",
@@ -326755,7 +326679,7 @@
     "key": 2913,
     "FilmTitle": "Run Lola Run",
     "databaseFilmTitle": "Run Lola Run",
-    "AlternateTitle": "Lola Rennt",
+    "AlternateTitle": null,
     "Year": "1998",
     "directors": [
       "Tom Tykwer"
@@ -327278,7 +327202,7 @@
     "key": 89,
     "FilmTitle": "A Fugitive from the Past",
     "databaseFilmTitle": "A Fugitive from the Past",
-    "AlternateTitle": "Kiga kaikyō",
+    "AlternateTitle": null,
     "Year": "1965",
     "directors": [
       "Tomu Uchida"
@@ -328081,7 +328005,7 @@
     "key": 1324,
     "FilmTitle": "Funeral Parade of Roses",
     "databaseFilmTitle": "Funeral Parade of Roses",
-    "AlternateTitle": "Bara no Sōretsu",
+    "AlternateTitle": null,
     "Year": "1969",
     "directors": [
       "Toshio Matsumoto"
@@ -328375,7 +328299,7 @@
     "AlternateTitle": null,
     "Year": "1987",
     "directors": [
-      "Tracey Moffat"
+      "Tracey Moffatt"
     ],
     "countries": [
       "Australia"
@@ -328737,7 +328661,7 @@
     "key": 4644,
     "FilmTitle": "Vive l'amour",
     "databaseFilmTitle": "Vive l'amour",
-    "AlternateTitle": "Ai qing wan sui",
+    "AlternateTitle": null,
     "Year": "1994",
     "directors": [
       "Tsai Ming-liang"
@@ -329103,7 +329027,7 @@
     "key": 919,
     "FilmTitle": "Days",
     "databaseFilmTitle": "Days (2020)",
-    "AlternateTitle": "Rizi",
+    "AlternateTitle": null,
     "Year": "2020",
     "directors": [
       "Tsai Ming-liang"
@@ -330292,7 +330216,7 @@
       "Short"
     ],
     "runtime": 22,
-    "synopsis": "Experimental venezuelan documentary.",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": "https://images.mubicdn.net/images/film/220454/cache-385756-1745495504/image-w1280.jpg",
     "pollHistory": [
@@ -330428,7 +330352,7 @@
     "key": 752,
     "FilmTitle": "Christiane F.",
     "databaseFilmTitle": "Christiane F.",
-    "AlternateTitle": "Christiane F. - Wir Kinder vom Bahnhof Zoo",
+    "AlternateTitle": null,
     "Year": "1981",
     "directors": [
       "Uli Edel"
@@ -330647,7 +330571,7 @@
     "key": 2063,
     "FilmTitle": "Losses to Be Expected",
     "databaseFilmTitle": "Losses to Be Expected",
-    "AlternateTitle": "Mit Verlust ist zu rechnen",
+    "AlternateTitle": null,
     "Year": "1992",
     "directors": [
       "Ulrich Seidl"
@@ -331008,7 +330932,7 @@
     "key": 4581,
     "FilmTitle": "Under Snow",
     "databaseFilmTitle": "Under Snow",
-    "AlternateTitle": "Unter Schnee",
+    "AlternateTitle": null,
     "Year": "2011",
     "directors": [
       "Ulrike Ottinger"
@@ -331156,7 +331080,7 @@
     "AlternateTitle": null,
     "Year": "1957",
     "directors": [
-      "United Kingdom"
+      "Val Guest"
     ],
     "countries": [
       "United Kingdom"
@@ -331370,7 +331294,7 @@
     "key": 2069,
     "FilmTitle": "Louisa",
     "databaseFilmTitle": "Louisa",
-    "AlternateTitle": "Loviisa, Niskavuoren nuori emäntä",
+    "AlternateTitle": null,
     "Year": "1946",
     "directors": [
       "Valentin Vaala"
@@ -331890,7 +331814,7 @@
     "AlternateTitle": null,
     "Year": "1973",
     "directors": [
-      "Vasili Shuskin"
+      "Vasili Shukshin"
     ],
     "countries": [
       "Soviet Union"
@@ -331959,7 +331883,7 @@
     "key": 3712,
     "FilmTitle": "The Great Sacrifice",
     "databaseFilmTitle": "The Great Sacrifice",
-    "AlternateTitle": "Opfergang",
+    "AlternateTitle": null,
     "Year": "1944",
     "directors": [
       "Veit Harlan"
@@ -332398,7 +332322,7 @@
     "key": 4204,
     "FilmTitle": "The Spirit of the Beehive",
     "databaseFilmTitle": "The Spirit of the Beehive",
-    "AlternateTitle": "El espíritu de la colmena",
+    "AlternateTitle": null,
     "Year": "1973",
     "directors": [
       "Víctor Erice"
@@ -333205,7 +333129,7 @@
     "key": 4057,
     "FilmTitle": "The Phantom Carriage",
     "databaseFilmTitle": "The Phantom Carriage",
-    "AlternateTitle": "Körkarlen",
+    "AlternateTitle": null,
     "Year": "1921",
     "directors": [
       "Victor Sjöström"
@@ -334013,7 +333937,7 @@
     "key": 3502,
     "FilmTitle": "The Clock",
     "databaseFilmTitle": "The Clock (1945)",
-    "AlternateTitle": "Under the Clock",
+    "AlternateTitle": null,
     "Year": "1945",
     "directors": [
       "Vincente Minnelli"
@@ -334601,7 +334525,7 @@
     "AlternateTitle": null,
     "Year": "1960",
     "directors": [
-      "Vinvente Minnelli"
+      "Vincente Minnelli"
     ],
     "countries": [
       "United States"
@@ -335033,7 +334957,7 @@
     "key": 425,
     "FilmTitle": "Bandits of Orgosolo",
     "databaseFilmTitle": "Bandits of Orgosolo",
-    "AlternateTitle": "Banditi a Orgosolo",
+    "AlternateTitle": null,
     "Year": "1961",
     "directors": [
       "Vittorio De Seta"
@@ -335395,7 +335319,7 @@
     "key": 2252,
     "FilmTitle": "Miracle in Milan",
     "databaseFilmTitle": "Miracle in Milan",
-    "AlternateTitle": "Miracolo a Milano",
+    "AlternateTitle": null,
     "Year": "1951",
     "directors": [
       "Vittorio De Sica"
@@ -335837,7 +335761,7 @@
     "key": 94,
     "FilmTitle": "A Girl and a Tree",
     "databaseFilmTitle": "A Girl and a Tree",
-    "AlternateTitle": "Deklica in Drevo",
+    "AlternateTitle": null,
     "Year": "2012",
     "directors": [
       "Vlado Škafar"
@@ -336271,7 +336195,7 @@
     "key": 2295,
     "FilmTitle": "Mother",
     "databaseFilmTitle": "Mother (1926)",
-    "AlternateTitle": "Mat",
+    "AlternateTitle": null,
     "Year": "1926",
     "directors": [
       "Vsevolod Pudovkin"
@@ -336931,7 +336855,7 @@
     "key": 3378,
     "FilmTitle": "The Astronauts",
     "databaseFilmTitle": "The Astronauts",
-    "AlternateTitle": "Les astronautes",
+    "AlternateTitle": null,
     "Year": "1959",
     "directors": [
       "Walerian Borowczyk",
@@ -337372,7 +337296,7 @@
     "key": 3363,
     "FilmTitle": "The Angkar",
     "databaseFilmTitle": "The Angkar",
-    "AlternateTitle": "Die Angkar",
+    "AlternateTitle": null,
     "Year": "1981",
     "directors": [
       "Walter Heynowski",
@@ -337663,7 +337587,7 @@
     "key": 3908,
     "FilmTitle": "The Lyre of Delight",
     "databaseFilmTitle": "The Lyre of Delight",
-    "AlternateTitle": "A Lira do Delírio",
+    "AlternateTitle": null,
     "Year": "1978",
     "directors": [
       "Walter Lima Jr."
@@ -337750,7 +337674,7 @@
       "Short"
     ],
     "runtime": 28,
-    "synopsis": "Voted for in the 2012 Sight & Sound poll",
+    "synopsis": null,
     "imageUrl": null,
     "stillUrl": null,
     "pollHistory": [
@@ -337882,7 +337806,7 @@
     "key": 487,
     "FilmTitle": "Berlin: Symphony of a Great City",
     "databaseFilmTitle": "Berlin: Symphony of a Great City",
-    "AlternateTitle": "Berlin: Die Sinfonie der Großstadt",
+    "AlternateTitle": null,
     "Year": "1927",
     "directors": [
       "Walter Ruttmann"
@@ -338100,7 +338024,7 @@
     "key": 713,
     "FilmTitle": "Central Station",
     "databaseFilmTitle": "Central Station",
-    "AlternateTitle": "Central do Brasil",
+    "AlternateTitle": null,
     "Year": "1998",
     "directors": [
       "Walter Salles"
@@ -338319,7 +338243,7 @@
     "key": 932,
     "FilmTitle": "Dead Souls",
     "databaseFilmTitle": "Dead Souls",
-    "AlternateTitle": "Si ling hun",
+    "AlternateTitle": null,
     "Year": "2018",
     "directors": [
       "Wang Bing"
@@ -339406,7 +339330,7 @@
     "key": 1150,
     "FilmTitle": "Even Dwarfs Started Small",
     "databaseFilmTitle": "Even Dwarfs Started Small",
-    "AlternateTitle": "Auch Zwerge haben klein angefangen",
+    "AlternateTitle": null,
     "Year": "1970",
     "directors": [
       "Wener Herzog"
@@ -339774,7 +339698,7 @@
     "key": 1906,
     "FilmTitle": "Land of Silence and Darkness",
     "databaseFilmTitle": "Land of Silence and Darkness",
-    "AlternateTitle": "Land des Schweigens und der Dunkelheit",
+    "AlternateTitle": null,
     "Year": "1971",
     "directors": [
       "Werner Herzog"
@@ -339994,7 +339918,7 @@
     "key": 3708,
     "FilmTitle": "The Great Ecstasy of Woodcarver Steiner",
     "databaseFilmTitle": "The Great Ecstasy of Woodcarver Steiner",
-    "AlternateTitle": "Die grosse Ekstase des Bildschnitzers Steiner",
+    "AlternateTitle": null,
     "Year": "1974",
     "directors": [
       "Werner Herzog"
@@ -340436,7 +340360,7 @@
     "key": 3554,
     "FilmTitle": "The Death of Maria Malibran",
     "databaseFilmTitle": "The Death of Maria Malibran",
-    "AlternateTitle": "Der tod der Maria Malibran",
+    "AlternateTitle": null,
     "Year": "1972",
     "directors": [
       "Werner Schroeter"
@@ -340582,7 +340506,7 @@
     "key": 3812,
     "FilmTitle": "The Kingdom of Naples",
     "databaseFilmTitle": "The Kingdom of Naples",
-    "AlternateTitle": "Nel regno di Napoli",
+    "AlternateTitle": null,
     "Year": "1978",
     "directors": [
       "Werner Schroeter"
@@ -341542,7 +341466,7 @@
     "key": 4178,
     "FilmTitle": "The Sinner",
     "databaseFilmTitle": "The Sinner",
-    "AlternateTitle": "Die Sünderin",
+    "AlternateTitle": null,
     "Year": "1951",
     "directors": [
       "Willi Forst"
@@ -341618,7 +341542,7 @@
     "AlternateTitle": null,
     "Year": "1934",
     "directors": [
-      "Willi Frost"
+      "Willi Forst"
     ],
     "countries": [
       "Austria"
@@ -342418,7 +342342,7 @@
     "key": 3562,
     "FilmTitle": "The Devil and Daniel Webster",
     "databaseFilmTitle": "The Devil and Daniel Webster",
-    "AlternateTitle": "The Devil and Daniel Webster",
+    "AlternateTitle": null,
     "Year": "1941",
     "directors": [
       "William Dieterle"
@@ -344169,7 +344093,7 @@
     "AlternateTitle": null,
     "Year": "1927",
     "directors": [
-      "Willian A. Wellman"
+      "William A. Wellman"
     ],
     "countries": [
       "United States"
@@ -344759,7 +344683,7 @@
     "AlternateTitle": "Der Himmel über Berlin",
     "Year": "1987",
     "directors": [
-      "Win Wenders"
+      "Wim Wenders"
     ],
     "countries": [
       "West Germany"
@@ -344834,7 +344758,7 @@
     "AlternateTitle": "Alice in den Stätden",
     "Year": "1974",
     "directors": [
-      "Win Wenders"
+      "Wim Wenders"
     ],
     "countries": [
       "West Germany"
@@ -344977,7 +344901,7 @@
     "key": 766,
     "FilmTitle": "Citizen Dog",
     "databaseFilmTitle": "Citizen Dog",
-    "AlternateTitle": "Mah Nakorn",
+    "AlternateTitle": null,
     "Year": "2004",
     "directors": [
       "Wisit Sasanatieng"
@@ -345199,7 +345123,7 @@
     "key": 4137,
     "FilmTitle": "The Saragossa Manuscript",
     "databaseFilmTitle": "The Saragossa Manuscript",
-    "AlternateTitle": "Rękopis znaleziony w Saragossie",
+    "AlternateTitle": null,
     "Year": "1965",
     "directors": [
       "Wojchiech Has"
@@ -345638,7 +345562,7 @@
     "key": 3797,
     "FilmTitle": "The Kaiser's Lackey",
     "databaseFilmTitle": "The Kaiser's Lackey",
-    "AlternateTitle": "Der Untertan (Man of Straw)",
+    "AlternateTitle": null,
     "Year": "1951",
     "directors": [
       "Wolfgang Staudte"
@@ -345860,7 +345784,7 @@
     "key": 1467,
     "FilmTitle": "Happy Together",
     "databaseFilmTitle": "Happy Together",
-    "AlternateTitle": "Chun gwong cha sit",
+    "AlternateTitle": null,
     "Year": "1997",
     "directors": [
       "Wong Kar Wai"
@@ -346158,7 +346082,7 @@
     "key": 3700,
     "FilmTitle": "The Grandmaster",
     "databaseFilmTitle": "The Grandmaster",
-    "AlternateTitle": "Yi dai zong shi",
+    "AlternateTitle": null,
     "Year": "2013",
     "directors": [
       "Wong Kar Wai"
@@ -347991,7 +347915,7 @@
     "key": 3138,
     "FilmTitle": "Somewhere, Someone",
     "databaseFilmTitle": "Somewhere, Someone",
-    "AlternateTitle": "Quelque part quelqu'un",
+    "AlternateTitle": null,
     "Year": "1972",
     "directors": [
       "Yannick Bellon"
@@ -350103,7 +350027,7 @@
     "key": 3594,
     "FilmTitle": "The Dying Swan",
     "databaseFilmTitle": "The Dying Swan",
-    "AlternateTitle": "Umirayushchiy lebed",
+    "AlternateTitle": null,
     "Year": "1917",
     "directors": [
       "Yevgeni Bauer"
@@ -350248,7 +350172,7 @@
     "key": 1549,
     "FilmTitle": "Hope",
     "databaseFilmTitle": "Hope",
-    "AlternateTitle": "Umut",
+    "AlternateTitle": null,
     "Year": "1970",
     "directors": [
       "Yılmaz Güney"
@@ -350391,7 +350315,7 @@
     "key": 957,
     "FilmTitle": "Departures",
     "databaseFilmTitle": "Departures",
-    "AlternateTitle": "Okuribito",
+    "AlternateTitle": null,
     "Year": "2008",
     "directors": [
       "Yôjirô Takita"
@@ -350767,7 +350691,7 @@
     "key": 4741,
     "FilmTitle": "Whisper of the Heart",
     "databaseFilmTitle": "Whisper of the Heart",
-    "AlternateTitle": "Mimi wo sumaseba",
+    "AlternateTitle": null,
     "Year": "1995",
     "directors": [
       "Yoshifumi Kondô"
@@ -351852,7 +351776,7 @@
     "key": 3295,
     "FilmTitle": "Tale of Tales",
     "databaseFilmTitle": "Tale of Tales",
-    "AlternateTitle": "Skazka Skazok",
+    "AlternateTitle": null,
     "Year": "1979",
     "directors": [
       "Yuri Norstein"
@@ -352001,7 +351925,7 @@
     "key": 3244,
     "FilmTitle": "Sun in the Last Days of the Shogunate",
     "databaseFilmTitle": "Sun in the Last Days of the Shogunate",
-    "AlternateTitle": "Bakumatsu taiyôden",
+    "AlternateTitle": null,
     "Year": "1957",
     "directors": [
       "Yûzô Kawashima"
@@ -352443,7 +352367,7 @@
     "key": 374,
     "FilmTitle": "Atanarjuat: The Fast Runner",
     "databaseFilmTitle": "Atanarjuat: The Fast Runner",
-    "AlternateTitle": "Atanarjuat",
+    "AlternateTitle": null,
     "Year": "2001",
     "directors": [
       "Zacharias Kunuk"
@@ -352661,7 +352585,7 @@
     "key": 4437,
     "FilmTitle": "Time of the Leopards",
     "databaseFilmTitle": "Time of the Leopards",
-    "AlternateTitle": "Vreme leoparda",
+    "AlternateTitle": null,
     "Year": "1985",
     "directors": [
       "Zdravko Velimirovic"
@@ -352807,7 +352731,7 @@
     "key": 964,
     "FilmTitle": "Destiny",
     "databaseFilmTitle": "Destiny (2006)",
-    "AlternateTitle": "Kader",
+    "AlternateTitle": null,
     "Year": "2006",
     "directors": [
       "Zeki Demirkubuz"
@@ -354211,12 +354135,13 @@
       "Italy"
     ],
     "genres": [
-      "Drama"
+      "Animation",
+      "Short"
     ],
-    "runtime": 86,
-    "synopsis": "Pierre Granier-Deferre’s poignant drama stars Jean Gabin and Simone Signoret as a couple struggling to retain their affection for one another in their now stagnant marriage.",
+    "runtime": 10,
+    "synopsis": "Short animated inspired by the Aesop's fable.",
     "imageUrl": null,
-    "stillUrl": "https://images.mubicdn.net/images/film/31515/cache-27847-1745490202/image-w1280.jpg",
+    "stillUrl": null,
     "pollHistory": [
       {
         "year": 1952,
@@ -354561,7 +354486,7 @@
     "key": 4111,
     "FilmTitle": "The Rhythm of Crime",
     "databaseFilmTitle": "The Rhythm of Crime",
-    "AlternateTitle": "Ritam zločina",
+    "AlternateTitle": null,
     "Year": "1981",
     "directors": [
       "Zoran Tadić"

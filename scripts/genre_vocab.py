@@ -72,6 +72,7 @@ GENRE_ALIASES = {
 # What it IS -- medium, length, delivery.
 FORMAT_TAGS = {
     "Short",             # MUBI's line, looser than the Academy's 40 minutes
+    "Video Game",        # BioShock: voted for as a film, is not one (2026-09-13)
     "Silent",            # no dialogue, NOT "made before 1930" -- cf. The Artist
     "Animation",         # a medium, not a subject: an animated film is also a comedy
     "Anthology",         # portmanteau / omnibus

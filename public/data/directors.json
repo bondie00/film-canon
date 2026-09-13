@@ -398,19 +398,61 @@
     "pollsAppeared": 2,
     "bestRank": 217
   },
-  "acques Tourneur": {
-    "totalFilms": 1,
+  "Jacques Tourneur": {
+    "totalFilms": 7,
     "films": [
+      {
+        "key": 2581,
+        "title": "Out of the Past",
+        "year": "1947",
+        "rank2022": 157,
+        "votes2022": 18
+      },
+      {
+        "key": 1608,
+        "title": "I Walked With a Zombie",
+        "year": "1943",
+        "rank2022": 354,
+        "votes2022": 8
+      },
+      {
+        "key": 3191,
+        "title": "Stars in My Crown",
+        "year": "1950",
+        "rank2022": 668,
+        "votes2022": 4
+      },
+      {
+        "key": 704,
+        "title": "Cat People",
+        "year": "1942",
+        "rank2022": 846,
+        "votes2022": 3
+      },
+      {
+        "key": 2423,
+        "title": "Night of the Demon",
+        "year": "1957",
+        "rank2022": 1105,
+        "votes2022": 2
+      },
       {
         "key": 324,
         "title": "Anne of the Indies",
         "year": "1951",
         "rank2022": 1652,
         "votes2022": 1
+      },
+      {
+        "key": 676,
+        "title": "Canyon Passage",
+        "year": "1946",
+        "rank2022": null,
+        "votes2022": 0
       }
     ],
-    "pollsAppeared": 1,
-    "bestRank": 1652
+    "pollsAppeared": 5,
+    "bestRank": 62
   },
   "Adam Curtis": {
     "totalFilms": 1,
@@ -1616,7 +1658,7 @@
     "pollsAppeared": 2,
     "bestRank": 899
   },
-  "Alberto Caballone": {
+  "Alberto Cavallone": {
     "totalFilms": 1,
     "films": [
       {
@@ -1763,8 +1805,8 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Aledander Mackendrick": {
-    "totalFilms": 1,
+  "Alexander Mackendrick": {
+    "totalFilms": 3,
     "films": [
       {
         "key": 3267,
@@ -1772,10 +1814,24 @@
         "year": "1957",
         "rank2022": 668,
         "votes2022": 4
+      },
+      {
+        "key": 3917,
+        "title": "The Man in the White Suit",
+        "year": "1951",
+        "rank2022": 1652,
+        "votes2022": 1
+      },
+      {
+        "key": 3824,
+        "title": "The Ladykillers",
+        "year": "1955",
+        "rank2022": 1652,
+        "votes2022": 1
       }
     ],
-    "pollsAppeared": 4,
-    "bestRank": 131
+    "pollsAppeared": 5,
+    "bestRank": 83
   },
   "Alejandro Amenábar": {
     "totalFilms": 2,
@@ -2134,7 +2190,7 @@
     "pollsAppeared": 1,
     "bestRank": 227
   },
-  "Alex Shichel": {
+  "Alex Sichel": {
     "totalFilms": 1,
     "films": [
       {
@@ -2203,27 +2259,6 @@
     ],
     "pollsAppeared": 2,
     "bestRank": 597
-  },
-  "Alexander Mackendrick": {
-    "totalFilms": 2,
-    "films": [
-      {
-        "key": 3917,
-        "title": "The Man in the White Suit",
-        "year": "1951",
-        "rank2022": 1652,
-        "votes2022": 1
-      },
-      {
-        "key": 3824,
-        "title": "The Ladykillers",
-        "year": "1955",
-        "rank2022": 1652,
-        "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 4,
-    "bestRank": 83
   },
   "Alexander Nanau": {
     "totalFilms": 1,
@@ -3519,7 +3554,7 @@
       {
         "key": 3975,
         "title": "The Most Important Thing: Love",
-        "year": "1965",
+        "year": "1975",
         "rank2022": null,
         "votes2022": 0
       }
@@ -4213,7 +4248,7 @@
     "pollsAppeared": 1,
     "bestRank": 553
   },
-  "Anvita Duff": {
+  "Anvita Dutt": {
     "totalFilms": 1,
     "films": [
       {
@@ -4793,7 +4828,7 @@
       {
         "key": 579,
         "title": "Boat Leaving the Port",
-        "year": "1985",
+        "year": "1895",
         "rank2022": 1652,
         "votes2022": 1
       },
@@ -6243,7 +6278,7 @@
     "pollsAppeared": 3,
     "bestRank": 227
   },
-  "Bo Buhrnham": {
+  "Bo Burnham": {
     "totalFilms": 1,
     "films": [
       {
@@ -9226,7 +9261,7 @@
     "bestRank": 1652
   },
   "William A. Wellman": {
-    "totalFilms": 7,
+    "totalFilms": 8,
     "films": [
       {
         "key": 2563,
@@ -9234,6 +9269,13 @@
         "year": "1931",
         "rank2022": 846,
         "votes2022": 3
+      },
+      {
+        "key": 4772,
+        "title": "Wings",
+        "year": "1927",
+        "rank2022": 1105,
+        "votes2022": 2
       },
       {
         "key": 1725,
@@ -9303,7 +9345,7 @@
     "bestRank": 83
   },
   "Claude Chabrol": {
-    "totalFilms": 7,
+    "totalFilms": 8,
     "films": [
       {
         "key": 3472,
@@ -9316,6 +9358,13 @@
         "key": 1861,
         "title": "La cérémonie",
         "year": "1995",
+        "rank2022": 1105,
+        "votes2022": 2
+      },
+      {
+        "key": 4398,
+        "title": "This Man Must Die",
+        "year": "1969",
         "rank2022": 1105,
         "votes2022": 2
       },
@@ -9673,20 +9722,6 @@
     "pollsAppeared": 1,
     "bestRank": 846
   },
-  "Cluade Chabrol": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 4398,
-        "title": "This Man Must Die",
-        "year": "1969",
-        "rank2022": 1105,
-        "votes2022": 2
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1105
-  },
   "Clyde Geronimi": {
     "totalFilms": 1,
     "films": [
@@ -10038,7 +10073,7 @@
     "bestRank": 83
   },
   "Robert Siodmak": {
-    "totalFilms": 4,
+    "totalFilms": 5,
     "films": [
       {
         "key": 2642,
@@ -10046,6 +10081,13 @@
         "year": "1930",
         "rank2022": 405,
         "votes2022": 7
+      },
+      {
+        "key": 2663,
+        "title": "Phantom Lady",
+        "year": "1944",
+        "rank2022": 1652,
+        "votes2022": 1
       },
       {
         "key": 3566,
@@ -11431,7 +11473,7 @@
     "bestRank": 1652
   },
   "Debra Granik": {
-    "totalFilms": 1,
+    "totalFilms": 2,
     "films": [
       {
         "key": 4779,
@@ -11439,14 +11481,7 @@
         "year": "2010",
         "rank2022": 1652,
         "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1652
-  },
-  "Debra Grankik": {
-    "totalFilms": 1,
-    "films": [
+      },
       {
         "key": 1955,
         "title": "Leave No Trace",
@@ -12970,22 +13005,8 @@
     "pollsAppeared": 6,
     "bestRank": 87
   },
-  "Elia Seleiman": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 4276,
-        "title": "The Time That Remains",
-        "year": "2009",
-        "rank2022": 1105,
-        "votes2022": 2
-      }
-    ],
-    "pollsAppeared": 2,
-    "bestRank": 899
-  },
   "Elia Suleiman": {
-    "totalFilms": 2,
+    "totalFilms": 3,
     "films": [
       {
         "key": 999,
@@ -12993,6 +13014,13 @@
         "year": "2002",
         "rank2022": 462,
         "votes2022": 6
+      },
+      {
+        "key": 4276,
+        "title": "The Time That Remains",
+        "year": "2009",
+        "rank2022": 1105,
+        "votes2022": 2
       },
       {
         "key": 756,
@@ -13405,7 +13433,7 @@
     "bestRank": 130
   },
   "Erich von Stroheim": {
-    "totalFilms": 3,
+    "totalFilms": 4,
     "films": [
       {
         "key": 1429,
@@ -13413,6 +13441,13 @@
         "year": "1924",
         "rank2022": 185,
         "votes2022": 16
+      },
+      {
+        "key": 4330,
+        "title": "The Wedding March",
+        "year": "1928",
+        "rank2022": 462,
+        "votes2022": 6
       },
       {
         "key": 1266,
@@ -13431,20 +13466,6 @@
     ],
     "pollsAppeared": 8,
     "bestRank": 4
-  },
-  "Erich von Strohein": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 4330,
-        "title": "The Wedding March",
-        "year": "1928",
-        "rank2022": 462,
-        "votes2022": 6
-      }
-    ],
-    "pollsAppeared": 8,
-    "bestRank": 47
   },
   "Erik Blomberg": {
     "totalFilms": 1,
@@ -13650,7 +13671,7 @@
     "bestRank": 41
   },
   "George Cukor": {
-    "totalFilms": 10,
+    "totalFilms": 12,
     "films": [
       {
         "key": 4059,
@@ -13681,6 +13702,20 @@
         "votes2022": 1
       },
       {
+        "key": 1539,
+        "title": "Holiday",
+        "year": "1938",
+        "rank2022": 1652,
+        "votes2022": 1
+      },
+      {
+        "key": 1723,
+        "title": "It Should Happen to You",
+        "year": "1954",
+        "rank2022": 1652,
+        "votes2022": 1
+      },
+      {
         "key": 1340,
         "title": "Gaslight",
         "year": "1944",
@@ -13705,20 +13740,6 @@
         "key": 670,
         "title": "Camille",
         "year": "1936",
-        "rank2022": null,
-        "votes2022": 0
-      },
-      {
-        "key": 3276,
-        "title": "Sylvia Scarlett",
-        "year": "1935",
-        "rank2022": null,
-        "votes2022": 0
-      },
-      {
-        "key": 3489,
-        "title": "The Chapman Report",
-        "year": "1962",
         "rank2022": null,
         "votes2022": 0
       }
@@ -14055,7 +14076,7 @@
     "pollsAppeared": 2,
     "bestRank": 899
   },
-  "Faith Akin": {
+  "Fatih Akin": {
     "totalFilms": 1,
     "films": [
       {
@@ -14678,7 +14699,7 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Francis Verber": {
+  "Francis Veber": {
     "totalFilms": 1,
     "films": [
       {
@@ -15406,22 +15427,8 @@
     "pollsAppeared": 2,
     "bestRank": 899
   },
-  "Fritz Land": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 496,
-        "title": "Beyond a Reasonable Doubt",
-        "year": "1956",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 227
-  },
   "Fritz Lang": {
-    "totalFilms": 18,
+    "totalFilms": 20,
     "films": [
       {
         "key": 2103,
@@ -15496,20 +15503,6 @@
     ],
     "pollsAppeared": 8,
     "bestRank": 25
-  },
-  "Frtiz Lang": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 963,
-        "title": "Destiny",
-        "year": "1921",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 2,
-    "bestRank": 217
   },
   "Fruit Chan": {
     "totalFilms": 2,
@@ -16056,27 +16049,6 @@
     ],
     "pollsAppeared": 1,
     "bestRank": 1652
-  },
-  "George Cuckor": {
-    "totalFilms": 2,
-    "films": [
-      {
-        "key": 1539,
-        "title": "Holiday",
-        "year": "1938",
-        "rank2022": 1652,
-        "votes2022": 1
-      },
-      {
-        "key": 1723,
-        "title": "It Should Happen to You",
-        "year": "1954",
-        "rank2022": 1652,
-        "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 5,
-    "bestRank": 217
   },
   "George Dunning": {
     "totalFilms": 1,
@@ -17197,7 +17169,7 @@
       {
         "key": 2352,
         "title": "My Man Godfrey",
-        "year": "1939",
+        "year": "1936",
         "rank2022": null,
         "votes2022": 0
       }
@@ -17982,7 +17954,7 @@
     "pollsAppeared": 3,
     "bestRank": 218
   },
-  "Hajrudin Kravac": {
+  "Hajrudin Krvavac": {
     "totalFilms": 1,
     "films": [
       {
@@ -21034,55 +21006,6 @@
     "pollsAppeared": 7,
     "bestRank": 23
   },
-  "Jacques Tourneur": {
-    "totalFilms": 6,
-    "films": [
-      {
-        "key": 2581,
-        "title": "Out of the Past",
-        "year": "1947",
-        "rank2022": 157,
-        "votes2022": 18
-      },
-      {
-        "key": 1608,
-        "title": "I Walked With a Zombie",
-        "year": "1943",
-        "rank2022": 354,
-        "votes2022": 8
-      },
-      {
-        "key": 3191,
-        "title": "Stars in My Crown",
-        "year": "1950",
-        "rank2022": 668,
-        "votes2022": 4
-      },
-      {
-        "key": 704,
-        "title": "Cat People",
-        "year": "1942",
-        "rank2022": 846,
-        "votes2022": 3
-      },
-      {
-        "key": 2423,
-        "title": "Night of the Demon",
-        "year": "1957",
-        "rank2022": 1105,
-        "votes2022": 2
-      },
-      {
-        "key": 676,
-        "title": "Canyon Passage",
-        "year": "1946",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 5,
-    "bestRank": 62
-  },
   "Jafar Panahi": {
     "totalFilms": 8,
     "films": [
@@ -22511,22 +22434,8 @@
     "pollsAppeared": 1,
     "bestRank": 217
   },
-  "Jean Renior": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 2374,
-        "title": "Nana",
-        "year": "1926",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 899
-  },
   "Jean Renoir": {
-    "totalFilms": 17,
+    "totalFilms": 18,
     "films": [
       {
         "key": 4131,
@@ -22692,7 +22601,7 @@
       {
         "key": 3610,
         "title": "The Enclosed Valley",
-        "year": "1955",
+        "year": "1995",
         "rank2022": 1652,
         "votes2022": 1
       },
@@ -23393,22 +23302,8 @@
     "pollsAppeared": 1,
     "bestRank": 899
   },
-  "Jerzy Sklimowski": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3867,
-        "title": "The Lightship",
-        "year": "1985",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 218
-  },
   "Jerzy Skolimowski": {
-    "totalFilms": 4,
+    "totalFilms": 5,
     "films": [
       {
         "key": 948,
@@ -23437,10 +23332,17 @@
         "year": "1978",
         "rank2022": 1652,
         "votes2022": 1
+      },
+      {
+        "key": 3867,
+        "title": "The Lightship",
+        "year": "1985",
+        "rank2022": null,
+        "votes2022": 0
       }
     ],
-    "pollsAppeared": 2,
-    "bestRank": 899
+    "pollsAppeared": 3,
+    "bestRank": 218
   },
   "Jessica Beshir": {
     "totalFilms": 1,
@@ -24681,9 +24583,16 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "John Frakenheimer": {
-    "totalFilms": 1,
+  "John Frankenheimer": {
+    "totalFilms": 2,
     "films": [
+      {
+        "key": 3932,
+        "title": "The Manchurian Candidate",
+        "year": "1962",
+        "rank2022": 1652,
+        "votes2022": 1
+      },
       {
         "key": 2986,
         "title": "Seconds",
@@ -24692,21 +24601,7 @@
         "votes2022": 0
       }
     ],
-    "pollsAppeared": 1,
-    "bestRank": 218
-  },
-  "John Frankenheimer": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3932,
-        "title": "The Manchurian Candidate",
-        "year": "1962",
-        "rank2022": 1652,
-        "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 3,
+    "pollsAppeared": 4,
     "bestRank": 155
   },
   "John G. Avildsen": {
@@ -25143,9 +25038,23 @@
     "pollsAppeared": 3,
     "bestRank": 227
   },
-  "John Schlesigner": {
-    "totalFilms": 2,
+  "John Schlesinger": {
+    "totalFilms": 4,
     "films": [
+      {
+        "key": 2234,
+        "title": "Midnight Cowboy",
+        "year": "1969",
+        "rank2022": 668,
+        "votes2022": 4
+      },
+      {
+        "key": 902,
+        "title": "Darling",
+        "year": "1965",
+        "rank2022": 1652,
+        "votes2022": 1
+      },
       {
         "key": 3324,
         "title": "Terminus",
@@ -25161,29 +25070,8 @@
         "votes2022": 0
       }
     ],
-    "pollsAppeared": 2,
+    "pollsAppeared": 4,
     "bestRank": 217
-  },
-  "John Schlesinger": {
-    "totalFilms": 2,
-    "films": [
-      {
-        "key": 2234,
-        "title": "Midnight Cowboy",
-        "year": "1969",
-        "rank2022": 668,
-        "votes2022": 4
-      },
-      {
-        "key": 902,
-        "title": "Darling",
-        "year": "1965",
-        "rank2022": 1652,
-        "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 2,
-    "bestRank": 227
   },
   "John Singleton": {
     "totalFilms": 2,
@@ -26060,22 +25948,8 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Joseph L. Mackiewicz": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 783,
-        "title": "Cleopatra",
-        "year": "1963",
-        "rank2022": 1652,
-        "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1652
-  },
   "Joseph L. Mankiewicz": {
-    "totalFilms": 4,
+    "totalFilms": 5,
     "films": [
       {
         "key": 243,
@@ -26090,6 +25964,13 @@
         "year": "1947",
         "rank2022": 553,
         "votes2022": 5
+      },
+      {
+        "key": 783,
+        "title": "Cleopatra",
+        "year": "1963",
+        "rank2022": 1652,
+        "votes2022": 1
       },
       {
         "key": 1445,
@@ -26536,8 +26417,8 @@
     "pollsAppeared": 1,
     "bestRank": 899
   },
-  "Julien Divivier": {
-    "totalFilms": 1,
+  "Julien Duvivier": {
+    "totalFilms": 7,
     "films": [
       {
         "key": 3615,
@@ -26545,14 +26426,7 @@
         "year": "1939",
         "rank2022": 1652,
         "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1652
-  },
-  "Julien Duvivier": {
-    "totalFilms": 6,
-    "films": [
+      },
       {
         "key": 383,
         "title": "Au bonheur des dames",
@@ -26627,7 +26501,7 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "July Jang": {
+  "July Jung": {
     "totalFilms": 1,
     "films": [
       {
@@ -27545,7 +27419,7 @@
     "bestRank": 1652
   },
   "Kenji Mizoguchi": {
-    "totalFilms": 18,
+    "totalFilms": 17,
     "films": [
       {
         "key": 2951,
@@ -28013,7 +27887,7 @@
     "pollsAppeared": 2,
     "bestRank": 899
   },
-  "Kimberly Pierce": {
+  "Kimberly Peirce": {
     "totalFilms": 1,
     "films": [
       {
@@ -28244,7 +28118,7 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Kirsten Johnsom": {
+  "Kirsten Johnson": {
     "totalFilms": 1,
     "films": [
       {
@@ -29336,7 +29210,7 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Lemohang Jeremiah Mossese": {
+  "Lemohang Jeremiah Mosese": {
     "totalFilms": 1,
     "films": [
       {
@@ -29420,36 +29294,8 @@
     "pollsAppeared": 1,
     "bestRank": 597
   },
-  "Leo LcCarey": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3384,
-        "title": "The Awful Truth",
-        "year": "1937",
-        "rank2022": 405,
-        "votes2022": 7
-      }
-    ],
-    "pollsAppeared": 6,
-    "bestRank": 155
-  },
-  "Leo Mc": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3412,
-        "title": "The Bells of St. Mary's",
-        "year": "1945",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 899
-  },
   "Leo McCarey": {
-    "totalFilms": 10,
+    "totalFilms": 12,
     "films": [
       {
         "key": 1059,
@@ -29461,9 +29307,16 @@
       {
         "key": 287,
         "title": "An Affair to Remember",
-        "year": "1947",
+        "year": "1957",
         "rank2022": 292,
         "votes2022": 10
+      },
+      {
+        "key": 3384,
+        "title": "The Awful Truth",
+        "year": "1937",
+        "rank2022": 405,
+        "votes2022": 7
       },
       {
         "key": 2134,
@@ -29508,21 +29361,14 @@
         "votes2022": 1
       },
       {
-        "key": 1390,
-        "title": "Going My Way",
-        "year": "1944",
-        "rank2022": null,
-        "votes2022": 0
-      },
-      {
-        "key": 2794,
-        "title": "Rally 'Round the Flag, Boys!",
-        "year": "1958",
+        "key": 3412,
+        "title": "The Bells of St. Mary's",
+        "year": "1945",
         "rank2022": null,
         "votes2022": 0
       }
     ],
-    "pollsAppeared": 5,
+    "pollsAppeared": 6,
     "bestRank": 54
   },
   "Fred Guiol": {
@@ -30735,7 +30581,7 @@
       {
         "key": 414,
         "title": "Balle traversant une bulle de savon",
-        "year": "1982",
+        "year": "1892",
         "rank2022": null,
         "votes2022": 0
       }
@@ -32045,7 +31891,7 @@
     "pollsAppeared": 3,
     "bestRank": 227
   },
-  "Marcell Jankovic": {
+  "Marcell Jankovics": {
     "totalFilms": 1,
     "films": [
       {
@@ -32059,22 +31905,8 @@
     "pollsAppeared": 1,
     "bestRank": 1105
   },
-  "Marco Bellocchino": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 560,
-        "title": "Blood of My Blood",
-        "year": "2015",
-        "rank2022": 1652,
-        "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1652
-  },
   "Marco Bellocchio": {
-    "totalFilms": 3,
+    "totalFilms": 4,
     "films": [
       {
         "key": 1246,
@@ -32089,6 +31921,13 @@
         "year": "2003",
         "rank2022": 1105,
         "votes2022": 2
+      },
+      {
+        "key": 560,
+        "title": "Blood of My Blood",
+        "year": "2015",
+        "rank2022": 1652,
+        "votes2022": 1
       },
       {
         "key": 2354,
@@ -33291,8 +33130,8 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Maurice Pailat": {
-    "totalFilms": 1,
+  "Maurice Pialat": {
+    "totalFilms": 9,
     "films": [
       {
         "key": 3755,
@@ -33300,14 +33139,7 @@
         "year": "1971",
         "rank2022": 846,
         "votes2022": 3
-      }
-    ],
-    "pollsAppeared": 2,
-    "bestRank": 597
-  },
-  "Maurice Pialat": {
-    "totalFilms": 8,
-    "films": [
+      },
       {
         "key": 125,
         "title": "À nos amours",
@@ -33626,7 +33458,7 @@
       {
         "key": 2874,
         "title": "Ritual in Transfigured Time",
-        "year": "1949",
+        "year": "1946",
         "rank2022": 1105,
         "votes2022": 2
       },
@@ -35419,7 +35251,7 @@
     "pollsAppeared": 2,
     "bestRank": 899
   },
-  "Mohammad Rassoulof": {
+  "Mohammad Rasoulof": {
     "totalFilms": 1,
     "films": [
       {
@@ -35685,7 +35517,7 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Moufida Tiatli": {
+  "Moufida Tlatli": {
     "totalFilms": 1,
     "films": [
       {
@@ -36862,7 +36694,7 @@
     "bestRank": 1652
   },
   "Nuri Bilge Ceylan": {
-    "totalFilms": 5,
+    "totalFilms": 6,
     "films": [
       {
         "key": 2522,
@@ -36898,14 +36730,7 @@
         "year": "2002",
         "rank2022": null,
         "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 3,
-    "bestRank": 227
-  },
-  "Nuri Bilge Ceyland": {
-    "totalFilms": 1,
-    "films": [
+      },
       {
         "key": 4412,
         "title": "Three Monkeys",
@@ -36914,8 +36739,8 @@
         "votes2022": 0
       }
     ],
-    "pollsAppeared": 1,
-    "bestRank": 899
+    "pollsAppeared": 3,
+    "bestRank": 227
   },
   "Octavio Getino": {
     "totalFilms": 1,
@@ -37799,7 +37624,7 @@
     "pollsAppeared": 2,
     "bestRank": 405
   },
-  "Pascal Laughier": {
+  "Pascal Laugier": {
     "totalFilms": 1,
     "films": [
       {
@@ -38786,22 +38611,8 @@
     "pollsAppeared": 1,
     "bestRank": 846
   },
-  "Peter Bodganovich": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3329,
-        "title": "Texasville",
-        "year": "1990",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 899
-  },
   "Peter Bogdanovich": {
-    "totalFilms": 4,
+    "totalFilms": 5,
     "films": [
       {
         "key": 3843,
@@ -38830,6 +38641,13 @@
         "year": "1968",
         "rank2022": 1652,
         "votes2022": 1
+      },
+      {
+        "key": 3329,
+        "title": "Texasville",
+        "year": "1990",
+        "rank2022": null,
+        "votes2022": 0
       }
     ],
     "pollsAppeared": 3,
@@ -39093,7 +38911,7 @@
       {
         "key": 351,
         "title": "Arnulf Rainer",
-        "year": "1969",
+        "year": "1960",
         "rank2022": 1105,
         "votes2022": 2
       },
@@ -39205,7 +39023,7 @@
       {
         "key": 2517,
         "title": "On the Way",
-        "year": "1980",
+        "year": "1990",
         "rank2022": null,
         "votes2022": 0
       }
@@ -39640,7 +39458,7 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Pierre Grainer-Deferre": {
+  "Pierre Granier-Deferre": {
     "totalFilms": 1,
     "films": [
       {
@@ -40543,7 +40361,7 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Reece Auguistine": {
+  "Reece Auguiste": {
     "totalFilms": 1,
     "films": [
       {
@@ -40795,7 +40613,7 @@
     "pollsAppeared": 1,
     "bestRank": 899
   },
-  "Rian Johson": {
+  "Rian Johnson": {
     "totalFilms": 1,
     "films": [
       {
@@ -41949,20 +41767,6 @@
     ],
     "pollsAppeared": 4,
     "bestRank": 155
-  },
-  "Robert Soidmak": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 2663,
-        "title": "Phantom Lady",
-        "year": "1944",
-        "rank2022": 1652,
-        "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 2,
-    "bestRank": 217
   },
   "Robert Stevenson": {
     "totalFilms": 2,
@@ -43607,7 +43411,7 @@
       },
       {
         "key": 2672,
-        "title": "Pickup on the South Street",
+        "title": "Pickup on South Street",
         "year": "1953",
         "rank2022": null,
         "votes2022": 0
@@ -44715,22 +44519,8 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Shirely Clarke": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3517,
-        "title": "The Cool World",
-        "year": "1963",
-        "rank2022": null,
-        "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 899
-  },
   "Shirley Clarke": {
-    "totalFilms": 3,
+    "totalFilms": 4,
     "films": [
       {
         "key": 2722,
@@ -44752,6 +44542,13 @@
         "year": "1961",
         "rank2022": 1652,
         "votes2022": 1
+      },
+      {
+        "key": 3517,
+        "title": "The Cool World",
+        "year": "1963",
+        "rank2022": null,
+        "votes2022": 0
       }
     ],
     "pollsAppeared": 2,
@@ -44960,9 +44757,16 @@
     "pollsAppeared": 2,
     "bestRank": 899
   },
-  "Sidney Gilliant": {
-    "totalFilms": 1,
+  "Sidney Gilliat": {
+    "totalFilms": 2,
     "films": [
+      {
+        "key": 2243,
+        "title": "Millions Like Us",
+        "year": "1943",
+        "rank2022": 1652,
+        "votes2022": 1
+      },
       {
         "key": 4095,
         "title": "The Rake's Progress",
@@ -44971,22 +44775,8 @@
         "votes2022": 0
       }
     ],
-    "pollsAppeared": 1,
+    "pollsAppeared": 2,
     "bestRank": 899
-  },
-  "Sidney Gilliat": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 2243,
-        "title": "Millions Like Us",
-        "year": "1943",
-        "rank2022": 1652,
-        "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1652
   },
   "Sidney Lanfield": {
     "totalFilms": 1,
@@ -45112,7 +44902,7 @@
     "films": [
       {
         "key": 375,
-        "title": "Athiest",
+        "title": "Atheist",
         "year": "1974",
         "rank2022": 1652,
         "votes2022": 1
@@ -45303,7 +45093,7 @@
     "pollsAppeared": 1,
     "bestRank": 1652
   },
-  "Spencher Williams": {
+  "Spencer Williams": {
     "totalFilms": 1,
     "films": [
       {
@@ -45702,7 +45492,7 @@
     "pollsAppeared": 1,
     "bestRank": 899
   },
-  "Stephan Elliot": {
+  "Stephan Elliott": {
     "totalFilms": 1,
     "films": [
       {
@@ -46633,8 +46423,8 @@
     "pollsAppeared": 3,
     "bestRank": 227
   },
-  "Taika Waitit": {
-    "totalFilms": 1,
+  "Taika Waititi": {
+    "totalFilms": 2,
     "films": [
       {
         "key": 4555,
@@ -46642,14 +46432,7 @@
         "year": "2004",
         "rank2022": 1652,
         "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1652
-  },
-  "Taika Waititi": {
-    "totalFilms": 1,
-    "films": [
+      },
       {
         "key": 1584,
         "title": "Hunt for the Wilderpeople",
@@ -46807,7 +46590,7 @@
       {
         "key": 2322,
         "title": "Mumblecore",
-        "year": "2001",
+        "year": "2011",
         "rank2022": 1652,
         "votes2022": 1
       }
@@ -46821,7 +46604,7 @@
       {
         "key": 2322,
         "title": "Mumblecore",
-        "year": "2001",
+        "year": "2011",
         "rank2022": 1652,
         "votes2022": 1
       }
@@ -47590,7 +47373,7 @@
       },
       {
         "key": 3098,
-        "title": "Sleepy Hallow",
+        "title": "Sleepy Hollow",
         "year": "1999",
         "rank2022": 1652,
         "votes2022": 1
@@ -48124,8 +47907,8 @@
     "pollsAppeared": 2,
     "bestRank": 265
   },
-  "Tracey Moffat": {
-    "totalFilms": 1,
+  "Tracey Moffatt": {
+    "totalFilms": 3,
     "films": [
       {
         "key": 2412,
@@ -48133,14 +47916,7 @@
         "year": "1987",
         "rank2022": 1652,
         "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1652
-  },
-  "Tracey Moffatt": {
-    "totalFilms": 2,
-    "films": [
+      },
       {
         "key": 458,
         "title": "Bedevil",
@@ -48523,13 +48299,20 @@
     "pollsAppeared": 1,
     "bestRank": 217
   },
-  "United Kingdom": {
-    "totalFilms": 1,
+  "Val Guest": {
+    "totalFilms": 2,
     "films": [
       {
         "key": 2772,
         "title": "Quatermass 2: Enemy from Space",
         "year": "1957",
+        "rank2022": 1652,
+        "votes2022": 1
+      },
+      {
+        "key": 3547,
+        "title": "The Day the Earth Caught Fire",
+        "year": "1961",
         "rank2022": 1652,
         "votes2022": 1
       }
@@ -48544,20 +48327,6 @@
         "key": 4037,
         "title": "The Painted Bird",
         "year": "2019",
-        "rank2022": 1652,
-        "votes2022": 1
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1652
-  },
-  "Val Guest": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 3547,
-        "title": "The Day the Earth Caught Fire",
-        "year": "1961",
         "rank2022": 1652,
         "votes2022": 1
       }
@@ -48649,7 +48418,7 @@
     "pollsAppeared": 2,
     "bestRank": 217
   },
-  "Vasili Shuskin": {
+  "Vasili Shukshin": {
     "totalFilms": 1,
     "films": [
       {
@@ -48937,7 +48706,7 @@
     "bestRank": 899
   },
   "Vincente Minnelli": {
-    "totalFilms": 12,
+    "totalFilms": 13,
     "films": [
       {
         "key": 3396,
@@ -48982,6 +48751,13 @@
         "votes2022": 2
       },
       {
+        "key": 1543,
+        "title": "Home from the Hill",
+        "year": "1960",
+        "rank2022": 1105,
+        "votes2022": 2
+      },
+      {
         "key": 288,
         "title": "An American in Paris",
         "year": "1951",
@@ -49001,31 +48777,10 @@
         "year": "1952",
         "rank2022": 1652,
         "votes2022": 1
-      },
-      {
-        "key": 3507,
-        "title": "The Cobweb",
-        "year": "1955",
-        "rank2022": 1652,
-        "votes2022": 1
       }
     ],
     "pollsAppeared": 7,
     "bestRank": 83
-  },
-  "Vinvente Minnelli": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 1543,
-        "title": "Home from the Hill",
-        "year": "1960",
-        "rank2022": 1105,
-        "votes2022": 2
-      }
-    ],
-    "pollsAppeared": 2,
-    "bestRank": 899
   },
   "Virgil Vernier": {
     "totalFilms": 1,
@@ -50106,7 +49861,7 @@
     "bestRank": 155
   },
   "Willi Forst": {
-    "totalFilms": 1,
+    "totalFilms": 2,
     "films": [
       {
         "key": 4178,
@@ -50114,14 +49869,7 @@
         "year": "1951",
         "rank2022": null,
         "votes2022": 0
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 217
-  },
-  "Willi Frost": {
-    "totalFilms": 1,
-    "films": [
+      },
       {
         "key": 2182,
         "title": "Maskerade",
@@ -50434,20 +50182,6 @@
     "pollsAppeared": 5,
     "bestRank": 55
   },
-  "Willian A. Wellman": {
-    "totalFilms": 1,
-    "films": [
-      {
-        "key": 4772,
-        "title": "Wings",
-        "year": "1927",
-        "rank2022": 1105,
-        "votes2022": 2
-      }
-    ],
-    "pollsAppeared": 1,
-    "bestRank": 1105
-  },
   "Willy Zielke": {
     "totalFilms": 1,
     "films": [
@@ -50477,12 +50211,19 @@
     "bestRank": 899
   },
   "Wim Wenders": {
-    "totalFilms": 5,
+    "totalFilms": 7,
     "films": [
       {
         "key": 2612,
         "title": "Paris, Texas",
         "year": "1984",
+        "rank2022": 185,
+        "votes2022": 16
+      },
+      {
+        "key": 4774,
+        "title": "Wings of Desire",
+        "year": "1987",
         "rank2022": 185,
         "votes2022": 16
       },
@@ -50497,6 +50238,13 @@
         "key": 3359,
         "title": "The American Friend",
         "year": "1977",
+        "rank2022": 1105,
+        "votes2022": 2
+      },
+      {
+        "key": 240,
+        "title": "Alice in the Cities",
+        "year": "1974",
         "rank2022": 1105,
         "votes2022": 2
       },
@@ -50517,27 +50265,6 @@
     ],
     "pollsAppeared": 5,
     "bestRank": 62
-  },
-  "Win Wenders": {
-    "totalFilms": 2,
-    "films": [
-      {
-        "key": 4774,
-        "title": "Wings of Desire",
-        "year": "1987",
-        "rank2022": 185,
-        "votes2022": 16
-      },
-      {
-        "key": 240,
-        "title": "Alice in the Cities",
-        "year": "1974",
-        "rank2022": 1105,
-        "votes2022": 2
-      }
-    ],
-    "pollsAppeared": 4,
-    "bestRank": 131
   },
   "Winsor McCay": {
     "totalFilms": 1,
