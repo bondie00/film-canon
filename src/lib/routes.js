@@ -31,6 +31,7 @@
 
 export const COUNTRIES_HUB = '/countries'
 export const DIRECTORS_HUB = '/directors'
+export const GENRES_HUB = '/genres'
 export const EXPLORE = '/explore'
 
 /** Append whichever of the shared filters are set. `keep` narrows which apply. */
@@ -45,6 +46,7 @@ function withFilters(path, filters, keep = ['poll', 'top']) {
 
 export const countriesHubUrl = filters => withFilters(COUNTRIES_HUB, filters)
 export const directorsHubUrl = filters => withFilters(DIRECTORS_HUB, filters)
+export const genresHubUrl = filters => withFilters(GENRES_HUB, filters)
 
 export const countryUrl = (name, filters) =>
   withFilters(`${COUNTRIES_HUB}/${encodeURIComponent(name)}`, filters)

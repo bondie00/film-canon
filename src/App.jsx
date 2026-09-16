@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage'
 import CountryOriginMain from './pages/CountryOriginMain'
 import CountryDetail from './pages/CountryDetail'
 import DirectorsMain from './pages/DirectorsMain'
+import GenresMain from './pages/GenresMain'
 import ExplorePage from './pages/ExplorePage'
 import FilmDetailPage from './pages/FilmDetailPage'
 import DirectorDetailPage from './pages/DirectorDetailPage'
@@ -64,6 +65,7 @@ function App() {
         <Route path="/countries/:countryName" element={<CountryDetail />} />
         <Route path="/directors" element={<DirectorsMain />} />
         <Route path="/directors/:name" element={<DirectorDetailPage />} />
+        <Route path="/genres" element={<GenresMain />} />
         <Route path="/visualizations/country" element={<CountryHubRedirect />} />
         <Route path="/visualizations/country/:countryName" element={<CountryDetailRedirect />} />
         <Route path="/visualizations/evolution" element={<CanonEvolution />} />
