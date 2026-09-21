@@ -90,7 +90,9 @@ export default function GridTile({ film, activePoll, square = true, fade = true 
               </>
             )
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center px-2 text-center text-white/70 text-xs font-bold uppercase tracking-wide">
+            /* No image at all: the site's hatch, so the gap reads as a surface
+               rather than a load that failed. */
+            <div className="absolute inset-0 surface-hatch flex items-center justify-center px-2 text-center text-black text-xs font-bold uppercase tracking-wide">
               {film.FilmTitle}
             </div>
           )}

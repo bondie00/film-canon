@@ -29,6 +29,9 @@
  * change should not be shaping what you're looking at.
  */
 
+import { exploreUrl } from './exploreUrl'
+import { PUBLIC_MODE } from './siteMode'
+
 export const COUNTRIES_HUB = '/countries'
 export const DIRECTORS_HUB = '/directors'
 export const GENRES_HUB = '/genres'
@@ -48,8 +51,16 @@ export const countriesHubUrl = filters => withFilters(COUNTRIES_HUB, filters)
 export const directorsHubUrl = filters => withFilters(DIRECTORS_HUB, filters)
 export const genresHubUrl = filters => withFilters(GENRES_HUB, filters)
 
+/**
+ * In the public cut there are no country or director pages, so the name links
+ * to Explore filtered to that country or director instead — the same films,
+ * on the surface the cut does have. The poll rides along; the depth does not,
+ * for the reason given on directorUrl below.
+ */
 export const countryUrl = (name, filters) =>
-  withFilters(`${COUNTRIES_HUB}/${encodeURIComponent(name)}`, filters)
+  PUBLIC_MODE
+    ? exploreUrl({ country: name, poll: filters?.poll })
+    : withFilters(`${COUNTRIES_HUB}/${encodeURIComponent(name)}`, filters)
 
 /**
  * The director detail page takes only the poll: it has no rank-depth control,
@@ -57,7 +68,9 @@ export const countryUrl = (name, filters) =>
  * to reveal or undo it.
  */
 export const directorUrl = (name, filters) =>
-  withFilters(`${DIRECTORS_HUB}/${encodeURIComponent(name)}`, filters, ['poll'])
+  PUBLIC_MODE
+    ? exploreUrl({ director: name, poll: filters?.poll })
+    : withFilters(`${DIRECTORS_HUB}/${encodeURIComponent(name)}`, filters, ['poll'])
 
 export const filmUrl = key => `/film/${key}`
 export const voterUrl = slug => `/voter/${encodeURIComponent(slug)}`

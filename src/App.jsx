@@ -11,6 +11,9 @@ import DirectorDetailPage from './pages/DirectorDetailPage'
 import VoterDetailPage from './pages/VoterDetailPage'
 import CanonEvolution from './pages/CanonEvolution'
 import DecadesPage from './pages/DecadesPage'
+import NotFound from './components/layout/NotFound'
+import PageShell from './components/layout/PageShell'
+import { PUBLIC_MODE } from './lib/siteMode'
 
 // The former Database page (/search) is now the unified /explore surface.
 // Redirect old links (including bookmarked ?poll= deep links) there.
@@ -60,21 +63,31 @@ function App() {
     <Router>
       <ScrollToTop />
       <Routes>
+        {/* The public cut: the routes every build has. */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/countries" element={<CountryOriginMain />} />
-        <Route path="/countries/:countryName" element={<CountryDetail />} />
-        <Route path="/directors" element={<DirectorsMain />} />
-        <Route path="/directors/:name" element={<DirectorDetailPage />} />
-        <Route path="/genres" element={<GenresMain />} />
-        <Route path="/visualizations/country" element={<CountryHubRedirect />} />
-        <Route path="/visualizations/country/:countryName" element={<CountryDetailRedirect />} />
-        <Route path="/visualizations/evolution" element={<CanonEvolution />} />
-        <Route path="/visualizations/decades" element={<DecadesPage />} />
         <Route path="/search" element={<SearchRedirect />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/film/:key" element={<FilmDetailPage />} />
-        <Route path="/director/:name" element={<DirectorDetailRedirect />} />
         <Route path="/voter/:slug" element={<VoterDetailPage />} />
+
+        {/* The hubs, their detail pages and the single-chart visualizations:
+            full build only. See lib/siteMode.js. */}
+        {!PUBLIC_MODE && (
+          <>
+            <Route path="/countries" element={<CountryOriginMain />} />
+            <Route path="/countries/:countryName" element={<CountryDetail />} />
+            <Route path="/directors" element={<DirectorsMain />} />
+            <Route path="/directors/:name" element={<DirectorDetailPage />} />
+            <Route path="/genres" element={<GenresMain />} />
+            <Route path="/visualizations/country" element={<CountryHubRedirect />} />
+            <Route path="/visualizations/country/:countryName" element={<CountryDetailRedirect />} />
+            <Route path="/visualizations/evolution" element={<CanonEvolution />} />
+            <Route path="/visualizations/decades" element={<DecadesPage />} />
+            <Route path="/director/:name" element={<DirectorDetailRedirect />} />
+          </>
+        )}
+
+        <Route path="*" element={<PageShell><NotFound title="Page not found" body="Nothing lives at this address." /></PageShell>} />
       </Routes>
     </Router>
   )

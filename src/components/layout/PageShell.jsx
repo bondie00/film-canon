@@ -6,9 +6,9 @@ import Footer from '../Footer'
  * content column, footer. Nothing else — pages that want the sidebar layout
  * wrap their content in <SidebarLayout>.
  *
- * `width` picks the column. The hub and detail pages run `wide` (max-w-7xl),
+ * `width` picks the column. The hub and detail pages run `wide` (max-w-7xl, 1600px on a widescreen),
  * which is what a 3/9 split and a world map need; the film and voter pages run
- * `narrow` (max-w-5xl), since a single column of prose and small charts set to
+ * `narrow` (max-w-5xl, 1080px on a widescreen), since a single column of prose and small charts set to
  * the full width would run to unreadable line lengths. Those two pages each had
  * their own copy of this wrapper before the option existed — the voter page's
  * was a verbatim duplicate, the film page's differed only in that number.
@@ -19,8 +19,8 @@ import Footer from '../Footer'
  * aligned to that same column.
  */
 const WIDTHS = {
-  wide: 'max-w-7xl',
-  narrow: 'max-w-5xl',
+  wide: 'max-w-7xl 3xl:max-w-wide',
+  narrow: 'max-w-5xl 3xl:max-w-narrow',
 }
 
 export default function PageShell({ children, width = 'wide', bleed = null }) {

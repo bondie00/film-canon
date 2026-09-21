@@ -89,8 +89,15 @@ export default function FilmDetailPage() {
 
   // The hero runs edge to edge behind the content column, so it goes in
   // PageShell's bleed slot rather than inside the column.
+  // With a backdrop the hero is a dark band, white text over the dimmed image.
+  // Without one it was a flat black slab; now it's the site's hatch, with the
+  // text flipped to black, so a film with no image still has a surface.
+  const onDark = !!backdrop
+  const t = onDark
+    ? { text: 'text-white', dim: 'text-white/40', sub: 'text-white/70', link: 'decoration-white/30 hover:decoration-white', poster: 'border-white/80' }
+    : { text: 'text-black', dim: 'text-black/30', sub: 'text-black/60', link: 'decoration-black/30 hover:decoration-black', poster: 'border-black' }
   const hero = (
-    <div className="relative bg-black">
+    <div className={`relative ${onDark ? 'bg-black' : 'surface-hatch border-b-2 border-black'}`}>
       {backdrop && (
         <img
           src={backdrop}
@@ -99,43 +106,43 @@ export default function FilmDetailPage() {
           className="absolute inset-0 w-full h-full object-cover opacity-40"
         />
       )}
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="relative max-w-5xl 3xl:max-w-narrow mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* This page had NO way back at all — the only crumb was on its
             not-found state, so arriving from global search or a shared link
             left the browser's back button as the sole exit. Explore is the
             parent overview for a film, being the page that lists them. */}
         <div className="mb-5">
-          <Crumb to={EXPLORE} label="Explore" tone="dark" />
+          <Crumb to={EXPLORE} label="Explore" tone={onDark ? 'dark' : 'light'} />
         </div>
         <div className="flex flex-col sm:flex-row gap-6">
           {poster && (
             <img
               src={poster}
               alt={film.FilmTitle}
-              className="w-40 flex-shrink-0 border-2 border-white/80 self-start"
+              className={`w-40 flex-shrink-0 border-2 ${t.poster} self-start`}
             />
           )}
-          <div className="text-white pt-1">
+          <div className={`${t.text} pt-1`}>
               <h1 className="text-4xl sm:text-5xl font-black uppercase tracking-tight leading-none">
                 {film.FilmTitle}
               </h1>
               {film.AlternateTitle && (
-                <div className="text-lg text-white/70 italic mt-1">{film.AlternateTitle}</div>
+                <div className={`text-lg ${t.sub} italic mt-1`}>{film.AlternateTitle}</div>
               )}
-              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-bold uppercase tracking-wide text-white/90">
+              <div className={`mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-bold uppercase tracking-wide ${t.text}`}>
                 {film.Year && <span>{film.Year}</span>}
-                {runtime && <><span className="text-white/40">·</span><span>{runtime}</span></>}
+                {runtime && <><span className={t.dim}>·</span><span>{runtime}</span></>}
                 {formatTags.map(tag => (
-                  <Fragment key={tag}><span className="text-white/40">·</span><span>{tag}</span></Fragment>
+                  <Fragment key={tag}><span className={t.dim}>·</span><span>{tag}</span></Fragment>
                 ))}
                 {film.directors?.length > 0 && (
                   <>
-                    <span className="text-white/40">·</span>
+                    <span className={t.dim}>·</span>
                     <span className="normal-case tracking-normal">
                       {film.directors.map((d, i) => (
                         <span key={d}>
                           {i > 0 && ', '}
-                          <Link to={directorUrl(d)} className="underline decoration-white/30 hover:decoration-white">
+                          <Link to={directorUrl(d)} className={`underline ${t.link}`}>
                             {d}
                           </Link>
                         </span>
@@ -147,10 +154,10 @@ export default function FilmDetailPage() {
               {/* Genre is secondary to the details line above: plain, smaller,
                   unbolded text rather than bordered chips, which outweighed it. */}
               {contentGenres.length > 0 && (
-                <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-widest text-white">
+                <div className={`mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-widest ${t.text}`}>
                   {contentGenres.map((g, i) => (
                     <Fragment key={g}>
-                      {i > 0 && <span className="text-white/30">·</span>}
+                      {i > 0 && <span className={t.dim}>·</span>}
                       <span>{g}</span>
                     </Fragment>
                   ))}

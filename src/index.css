@@ -29,3 +29,12 @@
     pointer-events: none;
   }
 }
+
+/* The site's one texture: faint diagonal hairlines on warm off-white. Used on
+   the header and footer surfaces, and as the fill under a film's rank line. */
+@layer components {
+  .surface-hatch {
+    background-color: #f6f6f4;
+    background-image: repeating-linear-gradient(135deg, rgba(0,0,0,0.07) 0 1px, transparent 1px 7px);
+  }
+}

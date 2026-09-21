@@ -146,7 +146,7 @@ export default function ExplorePage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={GRID_FADE}
-                className="grid grid-cols-2 md:grid-cols-3 gap-3"
+                className="grid grid-cols-2 md:grid-cols-3 3xl:grid-cols-4 gap-3"
               >
                 {pageFilms.map(f => (
                   <GridTile

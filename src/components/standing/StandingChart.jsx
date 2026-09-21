@@ -165,16 +165,28 @@ export default function StandingChart({
             tickFormatter={v => `#${v.toLocaleString()}`}
           />
           <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#d1d5db' }} />
-          {/* Depth band. Declared before the Line so it paints behind it.
-              gray-200 on the page's gray-50 background — gray-100 was only ~2% off
-              the backdrop and read as nothing. The boundary is dashed and darker
+          {/* The site's hatch (see .surface-hatch in index.css), as an SVG
+              pattern so the Area can use it as a fill. Same 7px pitch and 135°
+              angle; the base and line are a shade stronger than the CSS version
+              because a band on a chart is smaller than a header and has to hold
+              its own beside a data line. */}
+          <defs>
+            <pattern id="standing-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="7" height="7" fill="#f0f0ee" />
+              <rect width="1" height="7" fill="rgba(0,0,0,0.1)" />
+            </pattern>
+          </defs>
+          {/* Depth band. Declared before the Line so it paints behind it. The
+              hatch pattern rather than a flat gray: texture separates it from
+              the page's gray-50 backdrop the way a flat gray-100 could not, and
+              it matches the header and footer. The boundary is dashed and darker
               than the fill so it reads as a threshold rather than a second data
               series competing with the subject's line. */}
           <Area
             type="monotone"
             dataKey="floor"
             baseValue={yDomain[1]}
-            fill="#e5e7eb"
+            fill="url(#standing-hatch)"
             stroke="#9ca3af"
             strokeWidth={1.5}
             strokeDasharray="4 3"

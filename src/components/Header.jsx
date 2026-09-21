@@ -1,20 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import GlobalSearch from './search/GlobalSearch'
-
-// The Visualizations menu holds the pages that are a chart and nothing else.
-// Countries, Directors and Genres are not in it: they're entity SECTIONS — a
-// hub over a set of detail pages, each with its own address (Genres is a hub
-// alone for now) — and they sit beside Explore at the top level. Directors was in this menu until it got its own hub and
-// /directors/:name detail pages, which made it Countries' twin and left the two
-// halves of the same pair reached by different means.
-const VIZ_LINKS = [
-  { to: '/visualizations/decades', label: 'By Decade & Age' },
-  { to: '/visualizations/evolution', label: 'Canon Evolution' },
-]
+import { PUBLIC_MODE } from '../lib/siteMode'
 
 export default function Header() {
   const [vizOpen, setVizOpen] = useState(false)
+  const linkCls = 'text-gray-700 hover:text-black font-medium'
+  // The homepage has its own, larger search box in the hero; a second one in
+  // the bar above it would be the same control twice on one screen.
+  const onHome = useLocation().pathname === '/'
   const vizRef = useRef(null)
 
   // Close the dropdown when clicking outside it.
@@ -27,83 +21,95 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', onClick)
   }, [vizOpen])
 
+  // A hatched off-white bar on the hero's own 2px black rule. Plain white
+  // merged with the hero below it into one slab; solid black was too heavy.
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <header className="surface-hatch text-black border-b-2 border-black">
+      <div className="max-w-7xl 3xl:max-w-wide mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
           <div className="flex items-center">
             <Link to="/">
-              <h1 className="text-2xl font-bold text-gray-900">
-                Sight & Sound Canon Explorer
+              {/* Mixed case and bold, as it was: set in the hero's caps it read as a
+                  different face. Only the size grew. */}
+              <h1 className="text-3xl font-bold whitespace-nowrap">
+                Cinema Canon
               </h1>
             </Link>
           </div>
 
-          {/* Global search — persistent across pages (lg+ to avoid crowding the bar) */}
-          <div className="hidden lg:block flex-1 max-w-xs mx-8">
-            <GlobalSearch variant="nav" />
+          {/* Global search — persistent across pages (lg+ to avoid crowding the
+              bar). It takes whatever width the name and nav leave, up to a cap
+              that keeps it a search box rather than a banner. */}
+          <div className="hidden lg:block flex-1 max-w-xl mx-8">
+            {!onHome && <GlobalSearch variant="nav" />}
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-gray-900 font-medium">
-              Home
-            </Link>
-            <Link to="/explore" className="text-gray-700 hover:text-gray-900 font-medium">
+            {/* No Home link: the site name at the left is the way home. */}
+            <Link to="/explore" className={linkCls}>
               Explore
             </Link>
-            <Link to="/countries" className="text-gray-700 hover:text-gray-900 font-medium">
-              Countries
-            </Link>
-            <Link to="/directors" className="text-gray-700 hover:text-gray-900 font-medium">
-              Directors
-            </Link>
-            <Link to="/genres" className="text-gray-700 hover:text-gray-900 font-medium">
-              Genres
-            </Link>
+            {/* The entity sections and the Visualizations menu belong to the
+                full build. The public cut's nav is Home and Explore. */}
+            {!PUBLIC_MODE && (
+              <>
+                <Link to="/countries" className={linkCls}>
+                  Countries
+                </Link>
+                <Link to="/directors" className={linkCls}>
+                  Directors
+                </Link>
+                <Link to="/genres" className={linkCls}>
+                  Genres
+                </Link>
 
-            {/* Visualizations dropdown */}
-            <div className="relative" ref={vizRef}>
-              <button
-                onClick={() => setVizOpen(o => !o)}
-                className="flex items-center gap-1 text-gray-700 hover:text-gray-900 font-medium"
-                aria-expanded={vizOpen}
-                aria-haspopup="true"
-              >
-                Visualizations
-                <span className={`text-xs transition-transform ${vizOpen ? 'rotate-180' : ''}`}>▾</span>
-              </button>
-              {vizOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 shadow-lg rounded-md py-1 z-20">
-                  {VIZ_LINKS.map(item =>
-                    item.soon ? (
-                      <div
-                        key={item.label}
-                        className="flex items-center justify-between px-4 py-2 text-sm text-gray-400 cursor-default"
-                      >
-                        {item.label}
-                        <span className="text-[10px] uppercase tracking-wide font-bold">Soon</span>
-                      </div>
-                    ) : (
-                      <Link
-                        key={item.label}
-                        to={item.to}
-                        onClick={() => setVizOpen(false)}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 font-medium"
-                      >
-                        {item.label}
-                      </Link>
-                    )
+                {/* Visualizations dropdown */}
+                <div className="relative" ref={vizRef}>
+                  <button
+                    onClick={() => setVizOpen(o => !o)}
+                    className={`flex items-center gap-1 ${linkCls}`}
+                    aria-expanded={vizOpen}
+                    aria-haspopup="true"
+                  >
+                    Visualizations
+                    <span className={`text-xs transition-transform ${vizOpen ? 'rotate-180' : ''}`}>▾</span>
+                  </button>
+                  {vizOpen && (
+                    <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 shadow-lg rounded-md py-1 z-20">
+                      {VIZ_LINKS.map(item =>
+                        item.soon ? (
+                          <div
+                            key={item.label}
+                            className="flex items-center justify-between px-4 py-2 text-sm text-gray-400 cursor-default"
+                          >
+                            {item.label}
+                            <span className="text-[10px] uppercase tracking-wide font-bold">Soon</span>
+                          </div>
+                        ) : (
+                          <Link
+                            key={item.label}
+                            to={item.to}
+                            onClick={() => setVizOpen(false)}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 font-medium"
+                          >
+                            {item.label}
+                          </Link>
+                        )
+                      )}
+                    </div>
                   )}
                 </div>
-              )}
-            </div>
 
-            <a href="#" className="text-gray-700 hover:text-gray-900 font-medium">
-              About
-            </a>
-            <a href="#" className="text-gray-700 hover:text-gray-900 font-medium">
-              Blog
-            </a>
+                {/* About and Blog do not exist yet; the placeholders stay out
+                    of the public cut. */}
+                <a href="#" className={linkCls}>
+                  About
+                </a>
+                <a href="#" className={linkCls}>
+                  Blog
+                </a>
+              </>
+            )}
           </nav>
         </div>
       </div>

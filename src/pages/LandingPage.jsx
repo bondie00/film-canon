@@ -6,6 +6,7 @@ import GlobalSearch from '../components/search/GlobalSearch'
 import { loadFilms } from '../utils/filmsData'
 import { posterUrl, landscapeImage } from '../utils/filmImages'
 import { filmUrl } from '../lib/routes'
+import { PUBLIC_MODE } from '../lib/siteMode'
 
 const POLL_YEARS = [2022, 2012, 2002, 1992, 1982, 1972, 1962, 1952]
 const SHELF_MAX = 12 // top ~10, a little slack for ties at rank 10
@@ -30,7 +31,7 @@ export default function LandingPage() {
     return () => { cancelled = true }
   }, [])
 
-  // Top ~10 films for each poll, in rank order, plus that poll's #1 for the header.
+  // Top ~10 films for each poll, in rank order.
   const shelves = useMemo(() => {
     if (!films) return []
     return POLL_YEARS.map(year => {
@@ -42,7 +43,7 @@ export default function LandingPage() {
         .filter(Boolean)
         .sort((a, b) => a._rank - b._rank)
         .slice(0, SHELF_MAX)
-      return { year, films: ranked, topFilm: ranked[0] || null }
+      return { year, films: ranked }
     })
   }, [films])
 
@@ -52,14 +53,13 @@ export default function LandingPage() {
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+        <div className="max-w-7xl 3xl:max-w-wide mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
           <h1 className="text-5xl md:text-7xl font-black text-black uppercase tracking-tight leading-[0.95]">
             Every film<br />the critics chose.
           </h1>
           <p className="mt-5 text-lg text-gray-600 max-w-2xl">
-            Seventy years of Sight &amp; Sound's Greatest Films poll — all{' '}
-            <span className="font-bold text-black">{films ? films.length.toLocaleString() : '4,800+'}</span>{' '}
-            films that ever received a vote, from 1952 to 2022. Search them, map them, watch the canon change.
+            Seven decades of Sight &amp; Sound Greatest Films polls, gathered in one place for the
+            first time, tracing how the film canon has been made and remade.
           </p>
 
           {/* Two co-equal ways in: search the canon, or jump straight to Explore. */}
@@ -75,22 +75,12 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-sm">
-            <Stat value={films ? films.length.toLocaleString() : '—'} label="Films" />
-            <Stat value="8" label="Polls" />
-            <Stat value="1952–2022" label="Seven decades" />
-            <Stat value="117" label="Countries" />
-          </div>
         </div>
       </section>
 
-      {/* POLL SHELVES */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h2 className="text-3xl font-black text-black uppercase tracking-tight">The canon, poll by poll</h2>
-          <p className="text-gray-600 mt-1">The top ten of every poll. Click a film for its full history, or open a poll to see every ranked film.</p>
-        </div>
-
+      {/* POLL SHELVES. At 4xl the column widens past the page cap so every
+          shelf fits in one row (see tailwind.config.js). */}
+      <div className="max-w-7xl 3xl:max-w-wide 4xl:max-w-[2040px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {!films ? (
           <div className="text-center py-20">
             <div className="inline-block w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin mb-4" />
@@ -101,9 +91,10 @@ export default function LandingPage() {
         )}
       </div>
 
-      {/* VISUALIZATION GATEWAY */}
+      {/* VISUALIZATION GATEWAY — full build only; the public cut has nowhere for these to go. */}
+      {!PUBLIC_MODE && (
       <section className="border-t-2 border-black bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl 3xl:max-w-wide mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <h2 className="text-3xl font-black text-black uppercase tracking-tight mb-6">Dig deeper</h2>
           {/* All five across at lg — a 4-column grid left the fifth card alone
               on a second row looking like an afterthought. */}
@@ -122,23 +113,15 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      )}
 
       <Footer />
     </div>
   )
 }
 
-function Stat({ value, label }) {
-  return (
-    <div>
-      <div className="text-2xl font-black text-black tabular-nums leading-none">{value}</div>
-      <div className="text-xs font-bold uppercase tracking-widest text-gray-500 mt-1">{label}</div>
-    </div>
-  )
-}
-
 function PollShelf({ shelf }) {
-  const { year, films, topFilm } = shelf
+  const { year, films } = shelf
   const scrollRef = useRef(null)
   const scrollBy = (dir) => scrollRef.current?.scrollBy({ left: dir * 640, behavior: 'smooth' })
 
@@ -150,25 +133,20 @@ function PollShelf({ shelf }) {
         <div className="min-w-0">
           <div className="flex items-baseline gap-3">
             <span className="text-4xl font-black text-black tabular-nums leading-none">{year}</span>
-            {topFilm && (
-              <span className="text-sm text-gray-500 truncate">
-                Topped by <span className="font-bold text-black">{topFilm.FilmTitle}</span>
-              </span>
-            )}
           </div>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
           <button
             onClick={() => scrollBy(-1)}
             aria-label={`Scroll ${year} left`}
-            className="hidden sm:flex w-8 h-8 items-center justify-center border-2 border-black bg-white hover:bg-black hover:text-white font-black transition-colors"
+            className="hidden sm:flex 4xl:hidden w-8 h-8 items-center justify-center border-2 border-black bg-white hover:bg-black hover:text-white font-black transition-colors"
           >
             ‹
           </button>
           <button
             onClick={() => scrollBy(1)}
             aria-label={`Scroll ${year} right`}
-            className="hidden sm:flex w-8 h-8 items-center justify-center border-2 border-black bg-white hover:bg-black hover:text-white font-black transition-colors"
+            className="hidden sm:flex 4xl:hidden w-8 h-8 items-center justify-center border-2 border-black bg-white hover:bg-black hover:text-white font-black transition-colors"
           >
             ›
           </button>
@@ -183,7 +161,7 @@ function PollShelf({ shelf }) {
 
       <div
         ref={scrollRef}
-        className="flex gap-3 overflow-x-auto pb-2 snap-x"
+        className="flex gap-3 overflow-x-auto pb-2 snap-x 4xl:overflow-visible 4xl:justify-center"
         style={{ scrollbarWidth: 'thin' }}
       >
         {films.map(film => <PosterCard key={film.key} film={film} />)}
@@ -211,7 +189,9 @@ function PosterCard({ film }) {
             </div>
           </>
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center px-2 text-center text-white/80 text-xs font-bold uppercase tracking-wide">
+          /* No image at all: the site's hatch, so the gap reads as a surface
+             rather than a load that failed. */
+          <div className="absolute inset-0 surface-hatch flex items-center justify-center px-2 text-center text-black text-xs font-bold uppercase tracking-wide">
             {film.FilmTitle}
           </div>
         )}

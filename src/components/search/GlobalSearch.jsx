@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSearchIndex } from '../../hooks/useSearchIndex'
 import { filmUrl, directorUrl, voterUrl, countryUrl } from '../../lib/routes'
+import { PUBLIC_MODE } from '../../lib/siteMode'
 
 const GROUP_LABELS = {
   film: 'Films',
@@ -25,15 +26,23 @@ function flatten(results) {
   results.films.forEach(f =>
     rows.push({ type: 'film', label: f.title, sub: [f.year, f.director].filter(Boolean).join(' · '), to: filmUrl(f.key) })
   )
-  results.directors.forEach(d =>
-    rows.push({ type: 'director', label: d, sub: 'Director', to: directorUrl(d) })
-  )
+  // Directors and countries have no page of their own in the public cut, and a
+  // search row that lands on a filtered list reads as a broken promise next to
+  // the film and voter rows that open a page. They stay out of the results
+  // there; the film page still links each name to its Explore filter.
+  if (!PUBLIC_MODE) {
+    results.directors.forEach(d =>
+      rows.push({ type: 'director', label: d, sub: 'Director', to: directorUrl(d) })
+    )
+  }
   results.voters?.forEach(v =>
     rows.push({ type: 'voter', label: v.name, sub: 'Voter', to: voterUrl(v.slug) })
   )
-  results.countries.forEach(c =>
-    rows.push({ type: 'country', label: c, sub: 'Country', to: countryUrl(c) })
-  )
+  if (!PUBLIC_MODE) {
+    results.countries.forEach(c =>
+      rows.push({ type: 'country', label: c, sub: 'Country', to: countryUrl(c) })
+    )
+  }
   results.polls.forEach(p =>
     rows.push({ type: 'poll', label: `${p} poll`, sub: 'Poll year', to: `/explore?poll=${p}` })
   )
@@ -93,17 +102,21 @@ export default function GlobalSearch({ variant = 'nav', className = '' }) {
   const showDropdown = open && query.trim().length > 0
 
   return (
-    <div ref={containerRef} className={`relative ${isHero ? 'w-full max-w-2xl' : 'w-full max-w-xs'} ${className}`}>
+    <div ref={containerRef} className={`relative w-full ${isHero ? 'max-w-2xl' : ''} ${className}`}>
       <input
         type="text"
         value={query}
         onChange={(e) => { setQuery(e.target.value); setOpen(true) }}
         onFocus={() => { activate(); setOpen(true) }}
         onKeyDown={onKeyDown}
-        placeholder={isHero ? 'Search films, directors, countries…' : 'Search films, directors…'}
+        placeholder={
+          PUBLIC_MODE
+            ? (isHero ? 'Search films and voters…' : 'Search films…')
+            : (isHero ? 'Search films, directors, countries…' : 'Search films, directors…')
+        }
         aria-label="Search the canon"
         className={`w-full border-2 border-black bg-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black ${
-          isHero ? 'px-5 py-4 text-lg' : 'px-3 py-1.5 text-sm'
+          isHero ? 'px-5 py-4 text-lg' : 'px-4 py-2 text-sm'
         }`}
       />
 
