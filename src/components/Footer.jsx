@@ -11,8 +11,7 @@ export default function Footer() {
               Cinema Canon
             </h3>
             <p className="text-sm">
-              A database of every film voted for in
-              the Sight & Sound Greatest Films polls (1952-2022).
+              Every film, ballot, and poll from Sight &amp; Sound's Greatest Films, 1952–2022.
             </p>
           </div>
           <div>
@@ -30,18 +29,20 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="text-black font-semibold mb-4">Data Source</h4>
-            <p className="text-sm mb-2">
-              All data from the official Sight & Sound Greatest Films polls.
-            </p>
-            <a
-              href="https://www.bfi.org.uk/sight-and-sound"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-black underline hover:no-underline text-sm"
-            >
-              Learn more about Sight & Sound →
-            </a>
+            <h4 className="text-black font-semibold mb-4">About</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/about" className="hover:text-black">About the project</Link></li>
+              <li>
+                <a
+                  href="https://www.bfi.org.uk/sight-and-sound"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-black"
+                >
+                  Sight &amp; Sound ↗
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
         <div className="border-t border-gray-300 mt-8 pt-8 text-center text-sm">

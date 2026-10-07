@@ -60,15 +60,15 @@ export default function LandingPage() {
             <h1 className="text-5xl md:text-7xl font-black text-black uppercase tracking-tight leading-[0.95] mb-5">
               Cinema Canon
             </h1>
-            <p className="max-w-2xl text-xl leading-relaxed text-gray-700">
+            <p className="max-w-2xl text-lg leading-relaxed text-gray-700">
               Every ten years since 1952, Sight &amp; Sound has asked critics to name the greatest
-              films ever made. This site has every poll, every film that got a vote, and every
-              critic who cast one.
+              films ever made. This site has every poll, every ballot, and every film that got a
+              vote. Read across seventy years of polls and see how critics' idea of cinema
+              shifted along the way.
             </p>
-            {/* No About page yet — placeholder link. */}
-            <a href="#" className="mt-3 inline-block text-sm font-bold uppercase tracking-wide text-black underline underline-offset-4 hover:no-underline">
+            <Link to="/about" className="mt-3 inline-block text-sm font-bold uppercase tracking-wide text-black underline underline-offset-4 hover:no-underline">
               About the project →
-            </a>
+            </Link>
 
             {/* Two co-equal ways in: search the canon, or jump straight to Explore. */}
             <div className="mt-8 flex flex-col sm:flex-row sm:items-stretch gap-3">
@@ -137,8 +137,10 @@ function PollShelf({ shelf }) {
 
   if (!films.length) return null
 
+  // At 4xl the shelf shrink-wraps its row, so the year rule and Explore
+  // button end where its posters do rather than at the widest shelf.
   return (
-    <section className="mb-12">
+    <section className="mb-12 4xl:w-fit 4xl:mx-auto">
       <div className="flex items-end justify-between gap-4 mb-3 border-b-2 border-black pb-2">
         <div className="min-w-0">
           <div className="flex items-baseline gap-3">
@@ -171,7 +173,7 @@ function PollShelf({ shelf }) {
 
       <div
         ref={scrollRef}
-        className="flex gap-3 overflow-x-auto pb-2 snap-x 4xl:overflow-visible 4xl:justify-center"
+        className="flex gap-3 overflow-x-auto pb-2 snap-x 4xl:overflow-visible"
         style={{ scrollbarWidth: 'thin' }}
       >
         {films.map(film => <PosterCard key={film.key} film={film} />)}
