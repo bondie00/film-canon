@@ -32,6 +32,7 @@ export default function Footer() {
             <h4 className="text-black font-semibold mb-4">About</h4>
             <ul className="space-y-2 text-sm">
               <li><Link to="/about" className="hover:text-black">About the project</Link></li>
+              <li><Link to="/methodology" className="hover:text-black">Methodology</Link></li>
               <li>
                 <a
                   href="https://www.bfi.org.uk/sight-and-sound"

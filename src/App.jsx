@@ -11,6 +11,8 @@ import DirectorDetailPage from './pages/DirectorDetailPage'
 import VoterDetailPage from './pages/VoterDetailPage'
 import CanonEvolution from './pages/CanonEvolution'
 import DecadesPage from './pages/DecadesPage'
+import AboutPage from './pages/AboutPage'
+import MethodologyPage from './pages/MethodologyPage'
 import NotFound from './components/layout/NotFound'
 import PageShell from './components/layout/PageShell'
 import { PUBLIC_MODE } from './lib/siteMode'
@@ -69,6 +71,8 @@ function App() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/film/:key" element={<FilmDetailPage />} />
         <Route path="/voter/:slug" element={<VoterDetailPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/methodology" element={<MethodologyPage />} />
 
         {/* The hubs, their detail pages and the single-chart visualizations:
             full build only. See lib/siteMode.js. */}
