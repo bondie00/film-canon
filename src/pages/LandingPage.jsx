@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import GlobalSearch from '../components/search/GlobalSearch'
+import RandomFilmCard from '../components/home/RandomFilmCard'
 import { loadFilms } from '../utils/filmsData'
 import { posterUrl, landscapeImage } from '../utils/filmImages'
 import { filmUrl } from '../lib/routes'
@@ -49,32 +50,41 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      {/* Nav-only bar: the site name is the hero's title on this page. */}
+      <Header hideName showAbout />
 
-      {/* HERO */}
+      {/* HERO — name, what the site is, the two ways in; a random film beside it. */}
       <section className="border-b-2 border-black bg-white">
-        <div className="max-w-7xl 3xl:max-w-wide mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-          <h1 className="text-5xl md:text-7xl font-black text-black uppercase tracking-tight leading-[0.95]">
-            Every film<br />the critics chose.
-          </h1>
-          <p className="mt-5 text-lg text-gray-600 max-w-2xl">
-            Seven decades of Sight &amp; Sound Greatest Films polls, gathered in one place for the
-            first time, tracing how the film canon has been made and remade.
-          </p>
+        <div className="max-w-7xl 3xl:max-w-wide mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 grid lg:grid-cols-[1fr_360px] gap-10 items-end">
+          <div>
+            <h1 className="text-5xl md:text-7xl font-black text-black uppercase tracking-tight leading-[0.95] mb-5">
+              Cinema Canon
+            </h1>
+            <p className="max-w-2xl text-xl leading-relaxed text-gray-700">
+              Every ten years since 1952, Sight &amp; Sound has asked critics to name the greatest
+              films ever made. This site has every poll, every film that got a vote, and every
+              critic who cast one.
+            </p>
+            {/* No About page yet — placeholder link. */}
+            <a href="#" className="mt-3 inline-block text-sm font-bold uppercase tracking-wide text-black underline underline-offset-4 hover:no-underline">
+              About the project →
+            </a>
 
-          {/* Two co-equal ways in: search the canon, or jump straight to Explore. */}
-          <div className="mt-8 flex flex-col sm:flex-row sm:items-stretch gap-3">
-            <GlobalSearch variant="hero" />
-            <span className="self-center text-sm font-bold uppercase tracking-widest text-gray-400">or</span>
-            <Link
-              to="/explore"
-              className="flex items-center justify-center gap-2 border-2 border-black bg-black px-8 py-4 text-lg font-black uppercase tracking-wide text-white hover:bg-white hover:text-black transition-colors whitespace-nowrap"
-            >
-              Explore the polls
-              <span aria-hidden="true">→</span>
-            </Link>
+            {/* Two co-equal ways in: search the canon, or jump straight to Explore. */}
+            <div className="mt-8 flex flex-col sm:flex-row sm:items-stretch gap-3">
+              <GlobalSearch variant="hero" />
+              <span className="self-center text-sm font-bold uppercase tracking-widest text-gray-400">or</span>
+              <Link
+                to="/explore"
+                className="flex items-center justify-center gap-2 border-2 border-black bg-black px-8 py-4 text-lg font-black uppercase tracking-wide text-white hover:bg-white hover:text-black transition-colors whitespace-nowrap"
+              >
+                Explore the polls
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
           </div>
 
+          <RandomFilmCard films={films} />
         </div>
       </section>
 

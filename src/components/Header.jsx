@@ -3,7 +3,9 @@ import { Link, useLocation } from 'react-router-dom'
 import GlobalSearch from './search/GlobalSearch'
 import { PUBLIC_MODE } from '../lib/siteMode'
 
-export default function Header() {
+// hideName: a nav-only bar, for a page whose hero carries the site name.
+// showAbout: show the About link in the public cut too (it is always on in the full build).
+export default function Header({ hideName = false, showAbout = false }) {
   const [vizOpen, setVizOpen] = useState(false)
   const linkCls = 'text-gray-700 hover:text-black font-medium'
   // The homepage has its own, larger search box in the hero; a second one in
@@ -26,8 +28,8 @@ export default function Header() {
   return (
     <header className="surface-hatch text-black border-b-2 border-black">
       <div className="max-w-7xl 3xl:max-w-wide mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <div className="flex items-center">
+        <div className={`flex justify-between ${hideName ? 'items-center h-12' : 'items-center h-20'}`}>
+          <div className={hideName ? 'hidden' : 'flex items-center'}>
             <Link to="/">
               {/* Mixed case and bold, as it was: set in the hero's caps it read as a
                   different face. Only the size grew. */}
@@ -44,7 +46,7 @@ export default function Header() {
             {!onHome && <GlobalSearch variant="nav" />}
           </div>
 
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className={`hidden md:flex items-center space-x-8 ${hideName ? 'ml-auto' : ''}`}>
             {/* No Home link: the site name at the left is the way home. */}
             <Link to="/explore" className={linkCls}>
               Explore
@@ -100,15 +102,19 @@ export default function Header() {
                   )}
                 </div>
 
-                {/* About and Blog do not exist yet; the placeholders stay out
-                    of the public cut. */}
-                <a href="#" className={linkCls}>
-                  About
-                </a>
+                {/* Blog does not exist yet; the placeholder stays out of the
+                    public cut. About is rendered after this block. */}
                 <a href="#" className={linkCls}>
                   Blog
                 </a>
               </>
+            )}
+            {/* About does not exist yet: a placeholder in the full build, and
+                in the public cut only where a page opts in (showAbout). */}
+            {(!PUBLIC_MODE || showAbout) && (
+              <a href="#" className={linkCls}>
+                About
+              </a>
             )}
           </nav>
         </div>
